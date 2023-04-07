@@ -1,0 +1,653 @@
+<ion-header>
+  <ion-navbar>
+    <button ion-button menuToggle><ion-icon name="menu"></ion-icon></button>
+    <ion-title>Profile</ion-title>
+    <ion-buttons style="width:30%" end>
+       <ion-icon ><img style="width:70%" src="/assets/images/logo.png"></ion-icon>
+    </ion-buttons>
+  </ion-navbar>
+
+  <ion-toolbar no-border>
+    <ion-segment [(ngModel)]="tab">
+      <ion-segment-button value="home">
+        <ion-icon name='home'></ion-icon>
+      </ion-segment-button>
+     
+      <ion-segment-button value="person">
+        <ion-icon name='people'></ion-icon>
+      </ion-segment-button>
+      <ion-segment-button value="car">
+        <ion-icon name='car'></ion-icon>
+      </ion-segment-button>
+      <ion-segment-button value="tenant">
+        <ion-icon name='people'></ion-icon>
+      </ion-segment-button>
+    </ion-segment>
+  </ion-toolbar>
+</ion-header>
+
+
+<ion-content padding>
+  <div [ngSwitch]="tab">
+      <!-- ******************************* Oner Section *********************** -->
+      <ion-list no-lines *ngSwitchCase="'home'">
+        <ion-card>
+          <ion-card-content>
+            <ion-row style="background-color: #337ab7;color:#fff;">
+          <ion-col text-center style="text-align: center;">
+            <strong>Unit Details</strong>
+          </ion-col>
+        </ion-row>
+        <ion-row>
+          <ion-col><strong>Owner Name(s)</strong></ion-col>
+        </ion-row>
+         <ion-row>
+          <ion-col text-wrap col-12>
+            Sujit Kumar
+          </ion-col>
+        </ion-row>
+        <hr>
+        <ion-row>
+          <ion-col col-4 text-left><strong>Wing</strong></ion-col>
+          <ion-col col-4 text-center><strong>Unit No.</strong></ion-col>
+          <ion-col col-4 text-right><strong>Area</strong></ion-col>
+        </ion-row>
+         <ion-row>
+          <ion-col col-4 text-left>A</ion-col>
+          <ion-col col-4 text-center>1301</ion-col>
+          <ion-col col-4 text-right>650</ion-col>
+        </ion-row>
+          <hr>
+        <ion-row>
+          <ion-col col-6 text-center><strong>Intercom No.</strong></ion-col>
+          <ion-col col-6 text-center><strong>Nomination form</strong></ion-col>
+        </ion-row>
+        <ion-row>
+        
+          <ion-col col-6 text-center >None</ion-col>
+          <ion-col text-wrap col-6 text-center >No</ion-col>
+         
+        </ion-row>
+        <hr>
+        <ion-row>
+          <ion-col col-7 text-center><strong>Share Certificate No.</strong></ion-col>
+          <ion-col col-5 text-center><strong>Lien</strong></ion-col>
+        </ion-row>
+         <ion-row>
+         
+           <ion-col text-wrap col-7 text-center >---</ion-col>
+          <ion-col col-5 text-center  >No</ion-col>
+        
+        </ion-row>
+        <hr>
+         <ion-row>
+          <ion-col col-7 text-center><strong>Lease</strong></ion-col>
+          <ion-col col-5 text-center><strong></strong></ion-col>
+        </ion-row>
+        <ion-row>
+          <ion-col col-7 text-center ><strong>Yes</strong></ion-col>
+          
+          <ion-col col-5 text-center><strong></strong></ion-col>
+        </ion-row>
+          </ion-card-content>
+        </ion-card>
+       
+
+        <ion-card >
+          <ion-card-content>
+            <ion-row style="background-color: #337ab7;color:#fff;">
+          <ion-col text-center style="text-align: center;">
+            <strong>Lien Details</strong>
+          </ion-col>
+        </ion-row>
+        <ion-list > 
+        <ion-row>
+          <ion-col><strong>Bank name(s)</strong></ion-col>
+        </ion-row>
+         <ion-row>
+          <ion-col text-wrap col-12>
+            HDFC LTD
+          </ion-col>
+        </ion-row>
+         <ion-row>
+          <ion-col col-6 text-left>
+            <strong>Society NOC date</strong>
+          </ion-col>
+          <ion-col text-wrap text-right col-6>
+          25-06-2023
+          </ion-col>
+        </ion-row>
+         <ion-row>
+          <ion-col col-6 text-left>
+            <strong>Lien amount</strong>
+          </ion-col>
+          <ion-col text-wrap text-right col-6>
+            <strong>Lien status</strong>
+          </ion-col>
+        </ion-row>
+        <ion-row>
+          <ion-col col-6 text-left>
+            Rs. 2500000
+          </ion-col>
+          <ion-col text-wrap text-right col-6>
+            Active
+          </ion-col>
+        </ion-row>
+        <hr>
+      </ion-list>
+          </ion-card-content>
+        </ion-card>
+    </ion-list>
+   <!-- *************************************** Associated Member Details *********************** -->
+
+   <ion-list no-lines *ngSwitchCase="'person'">
+    <ion-item text-center >
+      <strong>Associated Member Details</strong>
+      <span text-right style="float: right;color: #5cb85c;" ><ion-icon name="add-circle" style="font-size:30px;"></ion-icon></span>
+    </ion-item>
+    <hr>
+     <!-- ***************************************Owner Details *********************** -->
+     <ion-card>
+      <ion-card-content>
+        <ion-row style="background-color: #337ab7;color:#fff;">
+        <ion-col text-center style="text-align: center;">
+          <strong>Owner Details</strong>
+        </ion-col>
+      </ion-row>
+      <ion-list >
+        <ion-row>
+        <ion-col col-4 text-left>
+          <strong>Name</strong>
+        </ion-col>
+        <ion-col text-wrap text-right col-8>
+          Ayush
+        </ion-col>
+      </ion-row>
+      <ion-row >
+        <ion-col col-4 text-left>
+          <strong>Mobile</strong>
+        </ion-col>
+        <ion-col col-8 text-wrap text-right>
+          985642462
+        </ion-col>
+      </ion-row>
+      <ion-row>
+        <ion-col col-4 text-left>
+          <strong>E-Mail ID</strong>
+        </ion-col>
+        <ion-col col-8 text-wrap text-right>
+          ayush@gmail.com
+        </ion-col>
+      </ion-row>
+       <ion-row >
+        <ion-col col-4 text-left>
+          <strong>Profile</strong>
+        </ion-col>
+        <ion-col col-8 text-wrap text-right>
+          test
+        </ion-col>
+      </ion-row>
+      </ion-list>
+      </ion-card-content>
+    </ion-card>
+    <hr>
+    <!-- ***************************************Co-Owner Details *********************** -->
+    <ion-card>
+      <ion-card-content>
+        <ion-row style="background-color: #337ab7;color:#fff;">
+        <ion-col text-center style="text-align: center;">
+          <strong>Co-Owner Details</strong>
+        </ion-col>
+      </ion-row>
+      <ion-list >
+        <ion-row>
+        <ion-col text-center>
+          <strong>No Co-Owner Details Available</strong>
+        </ion-col>
+      </ion-row>
+      </ion-list>
+       <ion-list>
+         <ion-row >
+        <ion-col col-4 text-left>
+          <strong>Name</strong>
+        </ion-col>
+        <ion-col col-8 text-wrap text-right>
+          ayush
+        </ion-col>
+      </ion-row>
+      <ion-row>
+        <ion-col col-4 text-left>
+          <strong>Relation</strong>
+        </ion-col>
+        <ion-col text-wrap col-8 text-right>
+         son
+        </ion-col>
+      </ion-row>
+      <ion-row>
+        <ion-col col-4 text-left>
+          <strong>Mobile</strong>
+        </ion-col>
+        <ion-col text-wrap col-8 text-right>
+          975642436
+        </ion-col>
+      </ion-row>
+      <ion-row>
+        <ion-col col-4 text-left>
+          <strong>E-Mail ID</strong>
+        </ion-col>
+        <ion-col text-wrap col-8 text-right>
+          accb@gmaill.com
+        </ion-col>
+      </ion-row>
+       <ion-row >
+        <ion-col col-4 text-left>
+          <strong>Profile</strong>
+        </ion-col>
+        <ion-col col-8 text-wrap text-right>
+         DOctor
+        </ion-col>
+      </ion-row>
+      <hr>
+    </ion-list>
+    </ion-card-content>
+    </ion-card>
+    <hr>
+      <!-- ***************************************Other Menber Details *********************** -->
+      <ion-card>
+        <ion-card-content>
+           <ion-row style="background-color: #337ab7;color:#fff;">
+            <ion-col text-center style="text-align: center;">
+              <strong>Other Member Details</strong>
+            </ion-col>
+          </ion-row>
+          <ion-list >
+          <ion-row>
+            <ion-col text-center>
+              <strong>No Other Member Details Available</strong>
+            </ion-col>
+          </ion-row>
+        </ion-list>
+
+        <ion-list >
+          <ion-row>
+            <ion-col col-4 text-left>
+              <strong>Name</strong>
+            </ion-col>
+            <ion-col text-wrap col-8 text-right>
+              amit
+            </ion-col>
+          </ion-row>
+          <ion-row >
+            <ion-col col-4 text-left>
+              <strong>Relation</strong>
+            </ion-col>
+            <ion-col text-wrap col-8 text-right>
+              friend
+            </ion-col>
+          </ion-row>
+          <ion-row >
+            <ion-col col-4 text-left>
+              <strong>Mobile</strong>
+            </ion-col>
+            <ion-col text-wrap col-8 text-right>
+             875241525
+            </ion-col>
+          </ion-row>
+          <ion-row >
+            <ion-col col-4 text-left>
+              <strong>E-Mail ID</strong>
+            </ion-col>
+            <ion-col text-wrap col-8 text-right>
+            abc@gmail.com
+            </ion-col>
+          </ion-row>
+           <ion-row>
+          <ion-col col-4 text-left>
+            <strong>Profile</strong>
+          </ion-col>
+          <ion-col col-8 text-wrap text-right>
+          test
+          </ion-col>
+        </ion-row>
+        <hr>
+      </ion-list>
+    </ion-card-content>
+  </ion-card>
+    </ion-list>
+     <!--  *********************************  (car) Vehicle Details ******************* -->
+    <ion-list no-lines *ngSwitchCase="'car'">
+      <ion-item text-center >
+        <strong>Vehicle Details</strong>
+        <span text-right style="float: right;color: #5cb85c;" ><ion-icon name="add-circle" style="font-size:30px;"></ion-icon></span>
+      </ion-item>
+      <ion-card>
+        <ion-card-content>
+           <ion-row style="background-color: #337ab7;color:#fff;">
+            <ion-col text-center style="text-align: center;">
+              <strong>Car Details</strong>
+            </ion-col>
+          </ion-row>
+          <ion-list >
+        <ion-row>
+          <ion-col text-center>
+            <strong>No Car Details Available</strong>
+          </ion-col>
+        </ion-row>
+      </ion-list>
+
+       <ion-list >
+        <ion-row >
+          <ion-col>
+            <strong>Car owner name</strong>
+          </ion-col>
+        </ion-row>
+        <ion-row>
+          <ion-col text-wrap>
+            SUjit Kumar
+          </ion-col>
+        </ion-row>
+         <ion-row >
+          <ion-col col-6 text-left>
+            <strong>Registration no.</strong>
+          </ion-col>
+          <ion-col text-wrap text-right >
+           None
+          </ion-col>
+          <ion-col text-wrap text-right>
+           MH47 AZ1234
+          </ion-col>
+        </ion-row>
+         <ion-row >
+          <ion-col col-5 text-left>
+            <strong>Parking type</strong>
+          </ion-col >
+          <ion-col text-wrap text-right >
+         
+          </ion-col>
+          <ion-col text-wrap text-right>
+            Not defined
+          </ion-col>
+        </ion-row>
+        <ion-row >
+          <ion-col col-6 text-left>
+            <strong>Parking slot no.</strong>
+          </ion-col>
+          <ion-col text-wrap text-right >
+           Not Defined
+          </ion-col>
+          <ion-col text-wrap text-right>
+            Not defined
+          </ion-col>
+        </ion-row>
+         <ion-row >
+          <ion-col col-6 text-left>
+            <strong>Parking sticker no.</strong>
+          </ion-col>
+
+          <ion-col text-wrap text-right >
+            not defined
+          </ion-col>
+          <ion-col text-wrap text-right >
+            Not defined
+          </ion-col>
+        </ion-row>
+        <ion-row >
+          <ion-col col-4 text-left>
+            <strong>Car make</strong>
+          </ion-col>
+
+          <ion-col text-wrap text-right>
+           Maruti
+          </ion-col>
+        </ion-row>
+        <ion-row >
+          <ion-col col-4 text-left>
+            <strong>Car model</strong>
+          </ion-col>
+
+          <ion-col text-wrap text-right>
+           Maruti Suzuki
+          </ion-col>
+        </ion-row>
+        <ion-row >
+          <ion-col col-4 text-left>
+            <strong>Car color</strong>
+          </ion-col>
+
+          <ion-col text-wrap text-right>
+           white
+          </ion-col>
+        </ion-row>
+         <hr>
+      </ion-list>
+   </ion-card-content>
+  </ion-card>
+  <!--  *********************************  (Bike) Vehicle Details ******************* -->
+    
+
+  <ion-card>
+    <ion-card-content>
+       <ion-row style="background-color: #337ab7;color:#fff;">
+        <ion-col text-center style="text-align: center;">
+          <strong>Bike Details</strong>
+        </ion-col>
+      </ion-row>
+      <ion-list >
+    <ion-row>
+      <ion-col text-center>
+        <strong>No Bike Details Available</strong>
+      </ion-col>
+    </ion-row>
+  </ion-list>
+  <ion-list >
+    <ion-row>
+      <ion-col>
+        <strong>Bike owner name</strong>
+      </ion-col>
+    </ion-row>
+    <ion-row>
+      <ion-col text-wrap>
+      Sujit kumar
+      </ion-col>
+    </ion-row>
+    <ion-row>
+      <ion-col col-6 text-left>
+        <strong>Registration no.</strong>
+      </ion-col>
+      <ion-col text-wrap text-right>
+        MH47 MF1243
+      </ion-col>
+       <ion-col text-wrap text-right>
+       None
+      </ion-col>
+    </ion-row>
+     <ion-row >
+      <ion-col col-5 text-left>
+        <strong>Parking Type</strong>
+      </ion-col>
+      <ion-col text-wrap text-right>
+        Not defined
+      </ion-col>
+      <ion-col text-wrap text-right> 
+        Not defined
+      </ion-col>
+    </ion-row>
+    <ion-row >
+      <ion-col col-6 text-left>
+        <strong>Parking slot no.</strong>
+      </ion-col>
+      <ion-col text-wrap text-right >
+        Not defined
+      </ion-col>
+      <ion-col text-wrap text-right >
+         Not defined
+      </ion-col>
+    </ion-row>
+     <ion-row>
+      <ion-col col-6 text-left>
+        <strong>Parking sticker no.</strong>
+      </ion-col >
+      <ion-col text-wrap text-right >
+        Not defined
+      </ion-col>
+      <ion-col text-wrap text-right >
+         Not defined
+      </ion-col>
+    </ion-row>
+     <ion-row >
+      <ion-col text-left col-4>
+        <strong>Bike make</strong>
+      </ion-col>
+      <ion-col text-wrap text-right>
+        Honda
+      </ion-col>
+    </ion-row>
+     <ion-row >
+      <ion-col col-4 text-left>
+        <strong>Bike model</strong>
+      </ion-col>
+      <ion-col text-wrap text-right>
+        2022
+      </ion-col>
+    </ion-row>
+    <ion-row >
+      <ion-col col-4 text-left>
+        <strong>Bike color</strong>
+      </ion-col>
+       <ion-col text-wrap text-right>
+        Red
+      </ion-col>
+    </ion-row>
+     <hr>
+  </ion-list>
+  </ion-card-content>
+</ion-card>
+  </ion-list>
+  <ion-list no-lines *ngSwitchCase="'tenant'">
+    <ion-card>
+      <ion-card-content>
+        <ion-row style="background-color: #337ab7;color:#fff;">
+          <ion-col text-center style="text-align: center;">
+            <strong>Tenant Details</strong>
+          </ion-col>
+        </ion-row>
+        <ion-list >
+          <ion-row>
+            <ion-col text-center>
+              <strong>No Tenant Details Available</strong>
+            </ion-col>
+          </ion-row>
+        </ion-list>
+        <ion-list>
+          <ion-row>
+            <ion-col>
+              <strong>Name on the Lease Document</strong>
+            </ion-col>
+          </ion-row>
+          <ion-row>
+            <ion-col text-wrap>
+             Ayush Kumar
+            </ion-col>
+          </ion-row>
+          <ion-row>
+            <ion-col col-6 text-left>
+              <strong>Lease Start Date </strong>
+            </ion-col>
+            <ion-col text-wrap text-right>
+              24-07-2022
+            </ion-col>
+          </ion-row>
+          <ion-row>
+            <ion-col col-6 text-left>
+              <strong>Lease End Date </strong>
+            </ion-col>
+            <ion-col text-wrap text-right >
+            23-07-2023
+            </ion-col>
+          </ion-row>
+          <ion-row>
+            <ion-col text-left>
+              <strong>Agent Name</strong>
+            </ion-col>
+          </ion-row>
+          <ion-row>
+            <ion-col text-wrap>
+              
+            </ion-col>
+          </ion-row>
+          <ion-row>
+            <ion-col col-6 text-left>
+              <strong>Agent Contact No</strong>
+            </ion-col>
+            <ion-col text-wrap text-right col-6 >
+             
+            </ion-col>
+          </ion-row>
+          <ion-row>
+            <ion-col col-6 text-left>
+              <strong>Member(s) </strong>
+            </ion-col>
+            <ion-col text-wrap text-right >
+             2
+            </ion-col>
+          </ion-row>
+        </ion-list>
+        </ion-card-content>
+      </ion-card>
+      <ion-list>
+        <ion-card>
+          <ion-card-content>
+            <ion-row style="background-color: #337ab7;color:#fff;">
+          <ion-col text-center style="text-align: center;">
+            <strong>Tenant occupying the unit</strong>
+          </ion-col>
+        </ion-row>
+        <ion-list >
+          <ion-row>
+            <ion-col col-3 text-left>
+              <strong>Name</strong>
+            </ion-col>
+            <ion-col col-9 text-right>
+              <strong>Amit Kumar</strong>
+            </ion-col>
+          </ion-row>
+          <ion-row>
+            <ion-col col-4 text-left>
+              <strong>Relation</strong>
+            </ion-col>
+            <ion-col col-8 text-right>
+              <strong>Friend</strong>
+            </ion-col>
+          </ion-row>
+          <ion-row>
+            <ion-col col-6 text-left>
+              <strong>Date of birth</strong>
+            </ion-col>
+            <ion-col col-6 text-right>
+              <strong>15-02-1992</strong>
+            </ion-col>
+          </ion-row>
+          <ion-row >
+            <ion-col col-6 text-left>
+              <strong>Contact no</strong>
+            </ion-col>
+            <ion-col col-6 text-right>
+              <strong>7528542562</strong>
+            </ion-col>
+          </ion-row>
+          <ion-row >
+            <ion-col col-4 text-left>
+              <strong>Email</strong>
+            </ion-col>
+            <ion-col col-8 text-right>
+              <strong>abc@gmail.com</strong>
+            </ion-col>
+          </ion-row>
+          <hr>
+        </ion-list>
+          </ion-card-content>
+        </ion-card>
+      </ion-list>
+   </ion-list>
+    </div>
+</ion-content>
