@@ -1,5 +1,240 @@
+<ion-header translucent="true">
+  <ion-toolbar>
+    <ion-title>Dashboard</ion-title>
+    <ion-buttons slot="start">
+      <ion-menu-button></ion-menu-button>
+    </ion-buttons>
+    <ion-buttons slot="end">
+      <ion-button><img style="width:70%" src="/assets/images/icon_s.png"></ion-button>
+    </ion-buttons>
+    
+  </ion-toolbar>
+   <!--           Admin and SuperAdmin tabs -->
+   <!--<ion-toolbar no-border  *ngIf="roleWise!= 'Member' && roleWise != 'AdminMember'  " style="margin-top: -15px;" >
+    <ion-segment [(ngModel)]="tab">
+      <ion-segment-button value="society">
+         <strong>My Society</strong>
+      </ion-segment-button>
+      <ion-segment-button value="admin">
+        <strong>Admin</strong>
+      </ion-segment-button>
+    </ion-segment>
+   </ion-toolbar>-->
+ <!--           Admin member tabs -->
+   <!--<ion-toolbar no-border  *ngIf="roleWise == 'AdminMember'" style="margin-top: -15px;" >
+    <ion-segment [(ngModel)]="tab">
+      <ion-segment-button value="society">
+         <strong>My Society</strong>
+      </ion-segment-button>
+      <ion-segment-button value="admin">
+        <strong>Admin</strong>
+      </ion-segment-button>
+       <ion-segment-button value="service">
+        <strong>Services</strong>
+      </ion-segment-button>
+    </ion-segment>
+   </ion-toolbar>-->
+ <!--           Members tabs -->
+  <ion-toolbar no-border  style="margin-top: -15px;" >
+    <ion-segment [(ngModel)]="tab">
+      <ion-segment-button value="society">
+         <strong>My Society</strong>
+      </ion-segment-button>
+      <ion-segment-button value="service">
+        <strong>Services</strong>
+      </ion-segment-button>
+    </ion-segment>
+  </ion-toolbar>
+  <ion-list no-lines>  
+    <ion-item text-wrap text-center text-uppercase>
+      <strong>WAY2SOCIETY - Play Ground - [ 502 ]</strong>
+     <!-- <strong (click)="selectSociety()">{{globalVars.MAP_SOCIETY_NAME}}</strong>-->
+  </ion-item>
+  </ion-list>
 
-<ion-header>
+</ion-header>
+<ion-content padding> 
+  <ion-refresher slot="fixed">
+  <ion-refresher-content></ion-refresher-content>
+</ion-refresher>
+<!-- Member Sections  -->
+<div [ngSwitch]="tab">
+  <ion-list no-lines *ngSwitchCase="'society'">
+    <ion-card >
+      <ion-card-content (click)="viewDues()">
+      <ion-row style="background-color: #337ab7;color:#fff;">
+          <ion-col style="text-align-last: center;">
+            <strong style="font-size: 15px;">Member Ledgers</strong>
+          </ion-col>
+        </ion-row>
+     <ion-item>
+      <ion-row>
+        <ion-col size="2">
+          <ion-avatar item-left>
+                  <img src="/assets/images/bills.jpg" >
+          </ion-avatar>
+        </ion-col>
+        <ion-col text-right size="10" style="text-align: right;">
+       <h2>Total Dues : <strong>Rs. {{due_amount}}</strong> </h2>
+         <h4>Due Date : <strong>{{bill_duedate}}</strong></h4>
+         <h2 style="margin-top: 10px;">Last Payment : <strong>Rs. {{receipt_amount}}</strong></h2>
+         <h4 >Last Payment Date : <strong>{{receipt_date}}</strong></h4> 
+        </ion-col>
+      </ion-row>
+       
+      </ion-item>
+            
+    </ion-card-content>
+   </ion-card>
+     
+        <ion-card >
+       <ion-card-content (click)="viewFeature()">
+       <ion-row style="background-color: #f0ad4e;color:#fff;">
+           <ion-col>
+             <strong style="font-size: 15px;">Latest Features</strong>
+           </ion-col>
+         </ion-row>
+      <ion-item>
+         <ion-row >
+           <ion-col text-center >
+             <strong>No Active Features </strong>
+           </ion-col>
+         </ion-row>
+         <!--<ion-list *ngFor="let ad of Feature_All_array">
+           <ion-row>
+             <ion-col text-wrap>
+               <strong style="font-size: 15px;"><ion-icon name="checkmark"></ion-icon> &nbsp;&nbsp;{{ad.title}}</strong>
+             </ion-col>
+           </ion-row>
+         </ion-list>-->
+       </ion-item>
+             
+     </ion-card-content>
+   </ion-card>
+ 
+  <ion-card  *ngIf="event_details_array.length != 0">
+    	<ion-card-content (click)="viewAllEvents()" >
+      <ion-row style="background-color: #f0ad4e;color:#fff;">
+          <ion-col>
+            <strong style="font-size: 15px;">Upcoming Events</strong>
+          </ion-col>
+        </ion-row>
+        <ion-item >
+        <ion-row *ngIf="event_details_array.length == 0">
+          <ion-col text-center>
+            <strong>No Upcoming Event</strong>
+          </ion-col>
+        </ion-row>
+        <!--<ion-row  *ngFor="let e of event_details_array">
+        <ion-col text-wrap>
+         <strong style="font-size: 15px;">{{e.events_title}}</strong>
+        <p *ngIf="e.events_date != '0'" >
+        <ion-icon name="calendar" primary>&nbsp;{{e.events_date}} <span *ngIf="e.event_time != '0'"> at {{e.event_time}}</span></ion-icon></p>
+        </ion-col>
+       </ion-row>-->
+        </ion-item>
+    	</ion-card-content>
+  	</ion-card>
+  
+  	<ion-card >
+    	<ion-card-content (click)="viewAllNotices()" >
+      <ion-row style="background-color: #5cb85c;color:#fff;">
+          <ion-col>
+            <strong style="font-size: 15px;">Latest Notices</strong>
+          </ion-col>
+        </ion-row>
+     <ion-item>
+        <ion-row *ngIf="notice_details_array.length == 0">
+          <ion-col text-center>
+            <strong>No Active Notice </strong>
+          </ion-col>
+        </ion-row>
+        <!--<ion-row *ngFor="let n of notice_details_array">
+        <ion-col text-wrap>
+         <strong style="font-size: 15px;">{{n.subject}}</strong>
+      			<p *ngIf="n.creation_date != '0'">
+            <ion-icon name="calendar" primary>&nbsp;{{n.creation_date}} </ion-icon></p>
+            </ion-col>
+            </ion-row>-->
+            </ion-item>
+            
+    	</ion-card-content>
+  	</ion-card>
+  
+    <ion-card  *ngIf="SRequest_details_array.length != 0">
+      <ion-card-content (click)="sRequest()">
+      <ion-row style="background-color: #337ab7;color:#fff;">
+          <ion-col>
+            <strong style="font-size: 15px;">Latest Service Requests</strong>
+          </ion-col>
+        </ion-row>
+     <ion-item>
+        <ion-row *ngIf="SRequest_details_array.length == 0">
+          <ion-col text-center>
+            <strong>No Active Service Request </strong>
+          </ion-col>
+        </ion-row>
+       <!-- <ion-list *ngFor="let s of SRequest_details_array">
+         <ion-row >
+        <ion-col text-wrap>
+         <strong style="font-size: 15px;">{{s.summery}}</strong>
+            <p *ngIf="s.dateofrequest != '0'">
+            <ion-icon name="calendar" primary>&nbsp;{{s.dateofrequest}} </ion-icon></p>
+            </ion-col>
+            </ion-row>
+         </ion-list>-->
+            </ion-item>
+            
+      </ion-card-content>
+    </ion-card>
+  </ion-list>
+  <ion-list no-lines *ngSwitchCase="'service'">
+    <ion-list  *ngFor="let s of Services_array">
+  <ion-card>
+    <ion-card-content >
+    <ion-row style="background-color: #f0ad4e;color:#fff;">
+        <ion-col style="text-align-last: center;">
+          <strong style="font-size: 15px;">Renting Registration</strong>
+        </ion-col>
+      </ion-row>
+   <ion-item>
+      <ion-row >
+        <ion-col text-center >
+          <img src="/assets/images/Agreement.png" >
+        </ion-col>
+      </ion-row>
+      <ion-list >
+       
+       </ion-list>
+          </ion-item>
+          
+    </ion-card-content>
+  </ion-card>
+  <!--<ion-list no-lines *ngSwitchCase="'service'">
+    <ion-list  *ngFor="let s of Services_array">
+   <ion-card>
+    <ion-item style="text-align: center;">
+          <ion-row style="background-color: #f0ad4e;color:#fff;">
+            <ion-col>
+              <strong>Renting Registration{{s.ServiceName}}</strong>
+           <!-- </ion-col>
+          </ion-row>
+        </ion-item>
+       
+   <ion-card-content (click)="PageUrl(s.ImplementApp,s.status,s.ServiceName,s.Desc)">
+       <ion-row>
+         <ion-col col-12 text-center >
+          <img src="{{img_link}}{{ServiceImage}}" style="width: 95%;margin-left: 2%;margin-top: -2%;">
+       </ion-col>
+       </ion-row>
+    </ion-card-content>
+   </ion-card>-->
+  </ion-list>
+  </ion-list>
+  </div>
+</ion-content>
+
+<!--<ion-header>
     <ion-buttons slot="start">
       <ion-menu-buttons menu="main-menu"></ion-menu-buttons>
     </ion-buttons>
@@ -24,15 +259,15 @@
     <ion-item text-wrap text-center text-uppercase >
       <strong >Way2Society - Demo Society [201]</strong>
   </ion-item>
-  </ion-list>
+  </ion-list>-->
 
 
   <!-- ******************************* All  section ********************* -->
-</ion-header>
+<!--</ion-header>
 
 
 <ion-content padding> 
-<!-- Member Sections  -->
+
 <div [ngSwitch]="tab">
   
 <ion-list no-lines *ngSwitchCase="'society'">
@@ -121,7 +356,7 @@
 
 <!--  ******************************************** Advertizment  ***************************************-->
 
-       <ion-card >
+      <!--<ion-card >
       <ion-card-content  >
       <ion-row style="background-color: #f0ad4e;color:#fff;">
           <ion-col style="text-align-last: center;">
@@ -400,15 +635,15 @@
     
 
  </ion-list>-->
-    </div>
+   <!-- </div>
     
-</ion-content>
+</ion-content>=-->
 <!--<ion-footer>
   <ion-toolbar>
     <ion-title>Footer</ion-title>
   </ion-toolbar>
 </ion-footer>-->
-<ion-footer >
+<!--<ion-footer >
 <div style="height: 90px;">
  
  <ion-slides pager style="margin-left: 10px;margin-top: -3%;height: 100px;">
@@ -442,15 +677,15 @@
          <button ion-fab style="width: 40px;height: 40px;background-color: #337ab7;color: white;
          border-radius: 10rem;" ><ion-icon name="copy" style="font-size: 1.5rem;"></ion-icon></button>
          <span style="font-size: 1.1rem;margin-left: -10px;">Notices</span>
-    </div>
+    </div>-->
 
      <!--<div style="float: left;width: 20%;" >
          <button ion-fab style="width: 40px;height: 40px;" ><ion-icon name="folder-open" style="font-size: 2.7rem;"></ion-icon></button>
          <span style="font-size: 1.3rem;margin-left: -32px;">Directory</span>
     </div>-->
    
-  </div>
-  </ion-slide>
+  <!--</div>
+  </ion-slide>-->
   <!--<ion-slide >
     <div style="width: 100%">
      <div style="float: left;width: 20%;">
@@ -479,6 +714,6 @@
     
   </div>
   </ion-slide>-->
- </ion-slides>
+ <!--</ion-slides>
 </div>
-</ion-footer>
+</ion-footer>-->

@@ -1,17 +1,20 @@
 
 <ion-content padding>
 	<ion-list no-lines>
-   
+    <ion-row>
+      <ion-col text-center><br><br></ion-col>
+    </ion-row>
     <ion-row>
       <ion-col text-center></ion-col>
       <ion-col size="8" text-center>
        
-          <ion-img src="/assets/images/logo.png"></ion-img>
+          <ion-img class="login-img" src="/assets/images/logo.png"></ion-img>
           
           </ion-col>
           <ion-col text-center></ion-col>
           </ion-row>
   </ion-list>
+  <br><br>
   <ion-list no-lines >
 
       <ion-item>
@@ -24,23 +27,30 @@
         <ion-input type="password" value="" [(ngModel)]="userData.Password" ></ion-input>
       </ion-item>
 
-      <ion-item>
-        <button ion-button color="primary" block (click)="signin()" >Sign In</button>
-      </ion-item>
-      <ion-item>
-        <a text-right class="item" >
+     
+       <ion-row>
+        <ion-col size="12" style="text-align: center;"> 
+        <ion-button class="sign-btn" color="primary" block (click)="signin()" >Sign In</ion-button>
+        </ion-col>
+        </ion-row>
+      
+        <ion-row>
+          <ion-col size="12" > 
+        <a text-right class="item" (click)="openForgotPasswordLink()" >
             Forgot Password ?
         </a>
-        <br>
-        <a text-right class="item" >
+        </ion-col>
+        </ion-row>
+        <ion-row>
+          <ion-col size="12" > 
+        <a text-right class="item"  (click)="openActivationLink()">
         New Account Activation
         </a>
-
-      </ion-item>
+        </ion-col>
+        </ion-row>
+     
       <ion-item text-center>
         <p style="color:#FF0000;"><strong></strong></p>
       </ion-item>
   </ion-list>
-
-  
 </ion-content>

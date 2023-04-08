@@ -1,48 +1,58 @@
-<ion-header>
-  <ion-navbar>
+<ion-header translucent="true">
+  <ion-toolbar>
     <ion-title>Select Society</ion-title>
-    <ion-buttons end>
-      <button  style="background-color: #f6f6f6;">
-        <ion-icon name="log-out" color="danger" style="font-size:30px;"></ion-icon>
-      </button>
+    <ion-buttons slot="end" style="background-color: #f6f6f6;">
+      <ion-icon name="log-out" color="danger" style="font-size:30px;"></ion-icon>
     </ion-buttons>
-  </ion-navbar>
+    <!--<ion-buttons slot="end" style="width:30%">
+      <ion-button><img style="width:70%" src="/assets/images/logo.png"></ion-button>
+    </ion-buttons>-->
+    
+  </ion-toolbar>
 </ion-header>
+
 
 <ion-content padding>
   <ion-list no-lines>
-      <ion-item text-center>
-        <ion-icon>
-          <img src="/assets/images/logo.png"/>
-        </ion-icon>
-      </ion-item>
+    <ion-row>
+      <ion-col text-center><br><br></ion-col>
+    </ion-row>
+    <ion-row>
+      <ion-col text-center></ion-col>
+      <ion-col size="8" text-center>
+       
+          <ion-img class="login-img" src="/assets/images/logo.png"></ion-img>
+          
+          </ion-col>
+          <ion-col text-center></ion-col>
+          </ion-row>
   </ion-list>
   <ion-title text-center></ion-title>
-  <ion-list>
+  <!--<ion-list>
     <ion-item>
       <ion-row>
         <ion-col>Demo Society [Admin]</ion-col>
       </ion-row>
     </ion-item>
-  </ion-list>
-  <!--<ion-list radio-group [(ngModel)]="societyMap" no-lines *ngFor="let m of maps" >
+  </ion-list>-->
+  <ion-list radio-group [(ngModel)]="societyMap" no-lines *ngFor="let m of maps" >
   	<ion-item text-wrap *ngIf="isMember(m.role)">
       <ion-row *ngIf="m.checked">
-        <ion-col (click)="societySelected(m)" col-10>
+        <ion-col size="10">
           <strong>{{m.society}} [{{m.role}}]</strong>
         </ion-col>
       
         <ion-col text-right>
-          <ion-icon name="checkmark" color="green" col-2></ion-icon>
+          <ion-icon name="checkmark" color="green" size="2"></ion-icon>
         </ion-col>
       </ion-row>
       <ion-row  *ngIf="!m.checked">
-        <ion-col (click)="societySelected(m)" col-10>
+        <ion-col (click)="societySelected(m)" size="10">
           {{m.society}} [{{m.role}}]
         </ion-col>
-        <ion-col col-2>
+        <ion-col size="2">
         </ion-col>
       </ion-row>
   	</ion-item>
-	</ion-list>-->
+	</ion-list>
 </ion-content>

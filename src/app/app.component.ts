@@ -1,7 +1,7 @@
 import { CommonModule } from '@angular/common';
 import { HttpClientModule } from '@angular/common/http';
 import { Component } from '@angular/core';
-import { IonicModule, NavParams } from '@ionic/angular';
+import { IonicModule, NavController, NavParams, Platform } from '@ionic/angular';
 import { ConnectServer } from 'src/service/connectserver';
 
 
@@ -26,5 +26,12 @@ import { LoaderView } from 'src/service/loaderview';
   ],
 })
 export class AppComponent {
-  constructor() { }
+  LoginPage: any = 'login';
+  constructor( public globalVars: GlobalVars,
+    private navCtrl: NavController) { }
+
+  logout () {
+    this.globalVars.clearStorage();
+    this.navCtrl.navigateRoot(this.LoginPage);
+}
 }
