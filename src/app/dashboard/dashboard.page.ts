@@ -6,7 +6,7 @@ import { GlobalVars } from 'src/service/globalvars';
 import { LoaderView } from 'src/service/loaderview';
 import { ConnectServer } from 'src/service/connectserver';
 import { NavigationExtras } from '@angular/router';
-import * as moment from 'moment';
+
 
 enum statusEnum  { "Raised" = 1,  "Waiting",  "In progress",  "Completed", "Cancelled"}
 enum priorityEnum  { "Critical" = 1,  "High",  "Medium",  "Low"}
@@ -43,8 +43,8 @@ export class DashboardPage implements OnInit {
   notice_expiry : any;
   event_charges: any;
  // event_detail : any;
-  event_details_array : Array<{}>;
-  notice_details_array : Array<{}>;
+  event_details_array : Array<any>;
+  notice_details_array : Array<any>;
   SRequest_details_array :Array<{}>;
   Classified_details_array : Array<{}>;
   Poll_details_array : Array<{}>;
@@ -113,7 +113,7 @@ export class DashboardPage implements OnInit {
       this.SocietySubscriptionDate="";
       this.SocietySubscriptionDate1 = "";
       var todayDate = new Date().toISOString();
-      this.currentDate=moment(todayDate).format('DD-MM-YYYY');
+      //this.currentDate=moment(todayDate).format('DD-MM-YYYY');
      // alert( this.currentDate);
      
       this.AccessUI="0";

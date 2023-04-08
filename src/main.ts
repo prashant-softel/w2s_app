@@ -20,8 +20,8 @@ bootstrapApplication(AppComponent, {
 
       useClass: IonicRouteStrategy
     },
-    importProvidersFrom(IonicStorageModule.forRoot(),
-    
+    importProvidersFrom(
+      IonicStorageModule.forRoot({}),
       IonicModule.forRoot({})),
     provideRouter(routes),
   ],

@@ -35,7 +35,7 @@
       </ion-row>
     </ion-item>
   </ion-list>-->
-  <ion-list radio-group [(ngModel)]="societyMap" no-lines *ngFor="let m of maps" >
+  <ion-list radio-group ngDefaultControl  [(ngModel)]="societyMap" no-lines *ngFor="let m of maps" >
   	<ion-item text-wrap *ngIf="isMember(m.role)">
       <ion-row *ngIf="m.checked">
         <ion-col size="10">
