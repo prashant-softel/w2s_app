@@ -7,227 +7,227 @@ export const routes: Routes = [
   },
   {
     path: '',
-    redirectTo: 'dashboard',
+    redirectTo: 'login',
     pathMatch: 'full',
   },
   {
     path: 'login',
-    loadComponent: () => import('./login/login.page').then( m => m.LoginPage)
+    loadComponent: () => import('./login/login.page').then(m => m.LoginPage)
   },
   {
     path: 'dashboard',
-    loadComponent: () => import('./dashboard/dashboard.page').then( m => m.DashboardPage)
+    loadComponent: () => import('./dashboard/dashboard.page').then(m => m.DashboardPage)
   },
   {
     path: 'about-us',
-    loadComponent: () => import('./about-us/about-us.page').then( m => m.AboutUsPage)
+    loadComponent: () => import('./about-us/about-us.page').then(m => m.AboutUsPage)
   },
   {
     path: 'profile',
-    loadComponent: () => import('./profile/profile.page').then( m => m.ProfilePage)
+    loadComponent: () => import('./profile/profile.page').then(m => m.ProfilePage)
   },
   {
     path: 'bills',
-    loadComponent: () => import('./bills/bills.page').then( m => m.BillsPage)
+    loadComponent: () => import('./bills/bills.page').then(m => m.BillsPage)
   },
   {
     path: 'blockprovider',
-    loadComponent: () => import('./blockprovider/blockprovider.page').then( m => m.BlockproviderPage)
+    loadComponent: () => import('./blockprovider/blockprovider.page').then(m => m.BlockproviderPage)
   },
   {
     path: 'classifieds',
-    loadComponent: () => import('./classifieds/classifieds.page').then( m => m.ClassifiedsPage)
+    loadComponent: () => import('./classifieds/classifieds.page').then(m => m.ClassifiedsPage)
   },
   {
     path: 'classifiedsdetails',
-    loadComponent: () => import('./classifiedsdetails/classifiedsdetails.page').then( m => m.ClassifiedsdetailsPage)
+    loadComponent: () => import('./classifiedsdetails/classifiedsdetails.page').then(m => m.ClassifiedsdetailsPage)
   },
   {
     path: 'classifiedsimageview',
-    loadComponent: () => import('./classifiedsimageview/classifiedsimageview.page').then( m => m.ClassifiedsimageviewPage)
+    loadComponent: () => import('./classifiedsimageview/classifiedsimageview.page').then(m => m.ClassifiedsimageviewPage)
   },
   {
     path: 'committeemembers',
-    loadComponent: () => import('./committeemembers/committeemembers.page').then( m => m.CommitteemembersPage)
+    loadComponent: () => import('./committeemembers/committeemembers.page').then(m => m.CommitteemembersPage)
   },
   {
     path: 'directory',
-    loadComponent: () => import('./directory/directory.page').then( m => m.DirectoryPage)
+    loadComponent: () => import('./directory/directory.page').then(m => m.DirectoryPage)
   },
   {
     path: 'documents',
-    loadComponent: () => import('./documents/documents.page').then( m => m.DocumentsPage)
+    loadComponent: () => import('./documents/documents.page').then(m => m.DocumentsPage)
   },
   {
     path: 'dues',
-    loadComponent: () => import('./dues/dues.page').then( m => m.DuesPage)
+    loadComponent: () => import('./dues/dues.page').then(m => m.DuesPage)
   },
   {
     path: 'events',
-    loadComponent: () => import('./events/events.page').then( m => m.EventsPage)
+    loadComponent: () => import('./events/events.page').then(m => m.EventsPage)
   },
   {
     path: 'features',
-    loadComponent: () => import('./features/features.page').then( m => m.FeaturesPage)
+    loadComponent: () => import('./features/features.page').then(m => m.FeaturesPage)
   },
   {
     path: 'fine',
-    loadComponent: () => import('./fine/fine.page').then( m => m.FinePage)
+    loadComponent: () => import('./fine/fine.page').then(m => m.FinePage)
   },
   {
     path: 'fineimageview',
-    loadComponent: () => import('./fineimageview/fineimageview.page').then( m => m.FineimageviewPage)
+    loadComponent: () => import('./fineimageview/fineimageview.page').then(m => m.FineimageviewPage)
   },
   {
     path: 'helpline',
-    loadComponent: () => import('./helpline/helpline.page').then( m => m.HelplinePage)
+    loadComponent: () => import('./helpline/helpline.page').then(m => m.HelplinePage)
   },
   {
     path: 'imageview',
-    loadComponent: () => import('./imageview/imageview.page').then( m => m.ImageviewPage)
+    loadComponent: () => import('./imageview/imageview.page').then(m => m.ImageviewPage)
   },
   {
     path: 'imposedetail',
-    loadComponent: () => import('./imposedetail/imposedetail.page').then( m => m.ImposedetailPage)
+    loadComponent: () => import('./imposedetail/imposedetail.page').then(m => m.ImposedetailPage)
   },
   {
     path: 'member',
-    loadComponent: () => import('./member/member.page').then( m => m.MemberPage)
+    loadComponent: () => import('./member/member.page').then(m => m.MemberPage)
   },
   {
     path: 'newuser',
-    loadComponent: () => import('./newuser/newuser.page').then( m => m.NewuserPage)
+    loadComponent: () => import('./newuser/newuser.page').then(m => m.NewuserPage)
   },
   {
     path: 'notices',
-    loadComponent: () => import('./notices/notices.page').then( m => m.NoticesPage)
+    loadComponent: () => import('./notices/notices.page').then(m => m.NoticesPage)
   },
   {
     path: 'payment',
-    loadComponent: () => import('./payment/payment.page').then( m => m.PaymentPage)
+    loadComponent: () => import('./payment/payment.page').then(m => m.PaymentPage)
   },
   {
     path: 'photoalbum',
-    loadComponent: () => import('./photoalbum/photoalbum.page').then( m => m.PhotoalbumPage)
+    loadComponent: () => import('./photoalbum/photoalbum.page').then(m => m.PhotoalbumPage)
   },
   {
     path: 'poll',
-    loadComponent: () => import('./poll/poll.page').then( m => m.PollPage)
+    loadComponent: () => import('./poll/poll.page').then(m => m.PollPage)
   },
   {
     path: 'providerdetails',
-    loadComponent: () => import('./providerdetails/providerdetails.page').then( m => m.ProviderdetailsPage)
+    loadComponent: () => import('./providerdetails/providerdetails.page').then(m => m.ProviderdetailsPage)
   },
   {
     path: 'receipts',
-    loadComponent: () => import('./receipts/receipts.page').then( m => m.ReceiptsPage)
+    loadComponent: () => import('./receipts/receipts.page').then(m => m.ReceiptsPage)
   },
   {
     path: 'recordneft',
-    loadComponent: () => import('./recordneft/recordneft.page').then( m => m.RecordneftPage)
+    loadComponent: () => import('./recordneft/recordneft.page').then(m => m.RecordneftPage)
   },
   {
     path: 'report-photo',
-    loadComponent: () => import('./report-photo/report-photo.page').then( m => m.ReportPhotoPage)
+    loadComponent: () => import('./report-photo/report-photo.page').then(m => m.ReportPhotoPage)
   },
   {
     path: 'review',
-    loadComponent: () => import('./review/review.page').then( m => m.ReviewPage)
+    loadComponent: () => import('./review/review.page').then(m => m.ReviewPage)
   },
   {
     path: 'serviceprovider',
-    loadComponent: () => import('./serviceprovider/serviceprovider.page').then( m => m.ServiceproviderPage)
+    loadComponent: () => import('./serviceprovider/serviceprovider.page').then(m => m.ServiceproviderPage)
   },
   {
     path: 'serviceproviederimageview',
-    loadComponent: () => import('./serviceproviederimageview/serviceproviederimageview.page').then( m => m.ServiceproviederimageviewPage)
+    loadComponent: () => import('./serviceproviederimageview/serviceproviederimageview.page').then(m => m.ServiceproviederimageviewPage)
   },
   {
     path: 'servicerequest',
-    loadComponent: () => import('./servicerequest/servicerequest.page').then( m => m.ServicerequestPage)
+    loadComponent: () => import('./servicerequest/servicerequest.page').then(m => m.ServicerequestPage)
   },
   {
     path: 'servicerequestimageview',
-    loadComponent: () => import('./servicerequestimageview/servicerequestimageview.page').then( m => m.ServicerequestimageviewPage)
+    loadComponent: () => import('./servicerequestimageview/servicerequestimageview.page').then(m => m.ServicerequestimageviewPage)
   },
   {
     path: 'settings',
-    loadComponent: () => import('./settings/settings.page').then( m => m.SettingsPage)
+    loadComponent: () => import('./settings/settings.page').then(m => m.SettingsPage)
   },
   {
     path: 'society',
-    loadComponent: () => import('./society/society.page').then( m => m.SocietyPage)
+    loadComponent: () => import('./society/society.page').then(m => m.SocietyPage)
   },
   {
     path: 'takepoll',
-    loadComponent: () => import('./takepoll/takepoll.page').then( m => m.TakepollPage)
+    loadComponent: () => import('./takepoll/takepoll.page').then(m => m.TakepollPage)
   },
   {
     path: 'task',
-    loadComponent: () => import('./task/task.page').then( m => m.TaskPage)
+    loadComponent: () => import('./task/task.page').then(m => m.TaskPage)
   },
   {
     path: 'tenants',
-    loadComponent: () => import('./tenants/tenants.page').then( m => m.TenantsPage)
+    loadComponent: () => import('./tenants/tenants.page').then(m => m.TenantsPage)
   },
   {
     path: 'tenantsdetails',
-    loadComponent: () => import('./tenantsdetails/tenantsdetails.page').then( m => m.TenantsdetailsPage)
+    loadComponent: () => import('./tenantsdetails/tenantsdetails.page').then(m => m.TenantsdetailsPage)
   },
   {
     path: 'updatefine',
-    loadComponent: () => import('./updatefine/updatefine.page').then( m => m.UpdatefinePage)
+    loadComponent: () => import('./updatefine/updatefine.page').then(m => m.UpdatefinePage)
   },
   {
     path: 'updateprofile',
-    loadComponent: () => import('./updateprofile/updateprofile.page').then( m => m.UpdateprofilePage)
+    loadComponent: () => import('./updateprofile/updateprofile.page').then(m => m.UpdateprofilePage)
   },
   {
     path: 'updateprovider',
-    loadComponent: () => import('./updateprovider/updateprovider.page').then( m => m.UpdateproviderPage)
+    loadComponent: () => import('./updateprovider/updateprovider.page').then(m => m.UpdateproviderPage)
   },
   {
     path: 'updatetask',
-    loadComponent: () => import('./updatetask/updatetask.page').then( m => m.UpdatetaskPage)
+    loadComponent: () => import('./updatetask/updatetask.page').then(m => m.UpdatetaskPage)
   },
   {
     path: 'vehicle',
-    loadComponent: () => import('./vehicle/vehicle.page').then( m => m.VehiclePage)
+    loadComponent: () => import('./vehicle/vehicle.page').then(m => m.VehiclePage)
   },
   {
     path: 'viewbill',
-    loadComponent: () => import('./viewbill/viewbill.page').then( m => m.ViewbillPage)
+    loadComponent: () => import('./viewbill/viewbill.page').then(m => m.ViewbillPage)
   },
   {
     path: 'viewevent',
-    loadComponent: () => import('./viewevent/viewevent.page').then( m => m.VieweventPage)
+    loadComponent: () => import('./viewevent/viewevent.page').then(m => m.VieweventPage)
   },
   {
     path: 'viewfeature',
-    loadComponent: () => import('./viewfeature/viewfeature.page').then( m => m.ViewfeaturePage)
+    loadComponent: () => import('./viewfeature/viewfeature.page').then(m => m.ViewfeaturePage)
   },
   {
     path: 'viewimage',
-    loadComponent: () => import('./viewimage/viewimage.page').then( m => m.ViewimagePage)
+    loadComponent: () => import('./viewimage/viewimage.page').then(m => m.ViewimagePage)
   },
   {
     path: 'viewimposefine',
-    loadComponent: () => import('./viewimposefine/viewimposefine.page').then( m => m.ViewimposefinePage)
+    loadComponent: () => import('./viewimposefine/viewimposefine.page').then(m => m.ViewimposefinePage)
   },
   {
     path: 'viewnotice',
-    loadComponent: () => import('./viewnotice/viewnotice.page').then( m => m.ViewnoticePage)
+    loadComponent: () => import('./viewnotice/viewnotice.page').then(m => m.ViewnoticePage)
   },
   {
     path: 'viewreceipt',
-    loadComponent: () => import('./viewreceipt/viewreceipt.page').then( m => m.ViewreceiptPage)
+    loadComponent: () => import('./viewreceipt/viewreceipt.page').then(m => m.ViewreceiptPage)
   },
   {
     path: 'viewservicerequest',
-    loadComponent: () => import('./viewservicerequest/viewservicerequest.page').then( m => m.ViewservicerequestPage)
+    loadComponent: () => import('./viewservicerequest/viewservicerequest.page').then(m => m.ViewservicerequestPage)
   },
   {
     path: 'visitor-in',
-    loadComponent: () => import('./visitor-in/visitor-in.page').then( m => m.VisitorInPage)
+    loadComponent: () => import('./visitor-in/visitor-in.page').then(m => m.VisitorInPage)
   },
 ];

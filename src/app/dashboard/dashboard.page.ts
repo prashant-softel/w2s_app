@@ -2,8 +2,7 @@ import { Component, OnInit ,CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { IonicModule } from '@ionic/angular';
-import { ApiProvider } from 'src/service/api';
-import { Observable } from 'rxjs';
+import { ConnectServer } from 'src/service/connectserver';
 
 enum statusEnum  { "Raised" = 1,  "Waiting",  "In progress",  "Completed", "Cancelled"}
 enum priorityEnum  { "Critical" = 1,  "High",  "Medium",  "Low"}
@@ -49,7 +48,7 @@ export class DashboardPage implements OnInit {
   priority: any;
   img_link: any;
   films: any | [];
-  constructor(public apiProvider: ApiProvider
+  constructor(public apiProvider: ConnectServer
   ) {
     this.bill_amount = "0.00";
       this.bill_billdate = "00-00-0000";
@@ -92,7 +91,7 @@ export class DashboardPage implements OnInit {
       next: (response: any) => {
         this.films = response.results;
         console.log(this.films);
-        alert(this.films.length)
+      
       },
       error: (err) => {
         alert('There was an error in retrieving data from the server');

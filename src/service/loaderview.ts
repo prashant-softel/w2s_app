@@ -1,13 +1,13 @@
 import { Injectable } from '@angular/core';
 import { LoadingController } from '@ionic/angular';
 
-Injectable()
+@Injectable()
 export class LoaderView {
   
   objLoader : any;
   constructor( private loadingCtrl : LoadingController) { }
  
-  showLoader(content: any) {
+  showLoader_old(content: any) {
     this.objLoader = this.loadingCtrl.create({
       spinner: 'bubbles',
       //content: content
@@ -17,9 +17,16 @@ export class LoaderView {
 
    
 }
+showLoader(content)
+{
 
-dismissLoader() {
+}
+dismissLoader_old() {
 
     this.objLoader.dismiss();
+}
+dismissLoader()
+{
+
 }
 }
