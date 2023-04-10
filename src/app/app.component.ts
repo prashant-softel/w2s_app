@@ -32,9 +32,14 @@ import { StorageService } from 'src/service/StorageService';
 })
 export class AppComponent {
   LoginPage: any = 'login';
+  DashboardPage: any = 'dashboard';
   constructor(public globalVars: GlobalVars,
     private navCtrl: NavController) { }
 
+    Dashboard(){
+      //this.globalVars.clearStorage();
+      this.navCtrl.navigateRoot(this.DashboardPage);
+    } 
   logout() {
     this.globalVars.clearStorage();
     this.navCtrl.navigateRoot(this.LoginPage);

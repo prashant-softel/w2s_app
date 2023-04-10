@@ -95,18 +95,18 @@
            </ion-col>
          </ion-row>
       <ion-item>
-         <ion-row >
+         <ion-row   *ngIf="Feature_All_array.length == 0">
            <ion-col text-center >
              <strong>No Active Features </strong>
            </ion-col>
          </ion-row>
-         <!--<ion-list *ngFor="let ad of Feature_All_array">
+         <ion-list *ngFor="let ad of Feature_All_array">
            <ion-row>
              <ion-col text-wrap>
                <strong style="font-size: 15px;"><ion-icon name="checkmark"></ion-icon> &nbsp;&nbsp;{{ad.title}}</strong>
              </ion-col>
            </ion-row>
-         </ion-list>-->
+         </ion-list>
        </ion-item>
              
      </ion-card-content>
@@ -149,13 +149,13 @@
             <strong>No Active Notice </strong>
           </ion-col>
         </ion-row>
-        <!--<ion-row *ngFor="let n of notice_details_array">
+        <ion-row *ngFor="let n of notice_details_array">
         <ion-col text-wrap>
          <strong style="font-size: 15px;">{{n.subject}}</strong>
       			<p *ngIf="n.creation_date != '0'">
             <ion-icon name="calendar" primary>&nbsp;{{n.creation_date}} </ion-icon></p>
             </ion-col>
-            </ion-row>-->
+            </ion-row>
             </ion-item>
             
     	</ion-card-content>
@@ -168,22 +168,22 @@
             <strong style="font-size: 15px;">Latest Service Requests</strong>
           </ion-col>
         </ion-row>
-     <ion-item>
+     
         <ion-row *ngIf="SRequest_details_array.length == 0">
           <ion-col text-center>
             <strong>No Active Service Request </strong>
           </ion-col>
         </ion-row>
-       <!-- <ion-list *ngFor="let s of SRequest_details_array">
+       <ion-list *ngFor="let s of SRequest_details_array" lines="full">
          <ion-row >
-        <ion-col text-wrap>
+        <ion-col text-wrap size="12">
          <strong style="font-size: 15px;">{{s.summery}}</strong>
             <p *ngIf="s.dateofrequest != '0'">
-            <ion-icon name="calendar" primary>&nbsp;{{s.dateofrequest}} </ion-icon></p>
+            <ion-icon name="calendar" primary></ion-icon>&nbsp;{{s.dateofrequest}} </p>
             </ion-col>
             </ion-row>
-         </ion-list>-->
-            </ion-item>
+         </ion-list>
+          
             
       </ion-card-content>
     </ion-card>
@@ -234,6 +234,50 @@
   </div>
 </ion-content>
 
+<ion-footer >
+  <div style="height: 90px;">
+   <ion-slides pager style="margin-left: 10px;margin-top: -3%;height: 100px;">
+    <ion-slide >
+      <div style="width: 100%;">
+       <div style="float: left;width: 20%;padding-left: 15px;">
+           <button (click)="profile()"  ion-fab style="width: 40px;height: 40px;background-color: #337ab7;color: white;
+           border-radius: 10rem;"><ion-icon name="person" style="font-size: 1.5rem;" ></ion-icon></button>
+           <span style="font-size: 1.0rem;margin-left: -5px;">Profile</span>
+      </div>
+  
+       <div style="float: left;width: 20%;" >
+       <button (click)="payment()" ion-fab style="width: 40px;height: 40px;background-color: #337ab7;color: white;
+       border-radius: 10rem;" ><ion-icon name="card" style="font-size: 1.5rem;"></ion-icon></button>
+       <span style="font-size: 1.1rem;margin-left: 6px;">Pay</span>
+      </div>
+  
+       <div style="float: left;width: 20%;">
+           <button (click)="viewAlbums()" ion-fab style="width: 40px;height: 40px;background-color: #337ab7;color: white;
+           border-radius: 10rem;"><ion-icon name="images" style="font-size: 1.5rem;"></ion-icon></button>
+           <span style="font-size: 1.1rem;margin-left: -10px;">Albums</span>
+      </div>
+  
+      <div style="float: left;width: 20%;">
+           <button  (click)="viewEvents()" ion-fab style="width: 40px;height: 40px;background-color: #337ab7;color: white;
+           border-radius: 10rem;" ><ion-icon name="calendar" style="font-size: 1.5rem;"></ion-icon></button>
+           <span style="font-size: 1.1rem;margin-left: -5px;">Events</span>
+      </div>
+  
+        <div style="float: left;width: 20%;">
+           <button (click)="viewNotices()" ion-fab style="width: 40px;height: 40px;background-color: #337ab7;color: white;
+           border-radius: 10rem;" ><ion-icon name="copy" style="font-size: 1.5rem;"></ion-icon></button>
+           <span style="font-size: 1.1rem;margin-left: -10px;">Notices</span>
+      </div>
+  
+       <!--<div style="float: left;width: 20%;" >
+           <button ion-fab style="width: 40px;height: 40px;" ><ion-icon name="folder-open" style="font-size: 2.7rem;"></ion-icon></button>
+           <span style="font-size: 1.3rem;margin-left: -32px;">Directory</span>
+      </div>-->
+     </div>
+    </ion-slide>
+  </ion-slides>
+</div>
+</ion-footer>
 <!--<ion-header>
     <ion-buttons slot="start">
       <ion-menu-buttons menu="main-menu"></ion-menu-buttons>

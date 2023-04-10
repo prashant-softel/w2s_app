@@ -1,4 +1,4 @@
-import { Component, OnInit} from '@angular/core';
+import { Component, OnInit,CUSTOM_ELEMENTS_SCHEMA} from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { IonicModule, NavController, NavParams, Platform } from '@ionic/angular';
@@ -15,7 +15,9 @@ enum priorityEnum  { "Critical" = 1,  "High",  "Medium",  "Low"}
   templateUrl: './dashboard.page.html',
   styleUrls: ['./dashboard.page.scss'],
   standalone: true,
- 
+  schemas: [
+    CUSTOM_ELEMENTS_SCHEMA
+  ],
   imports: [IonicModule, CommonModule, FormsModule]
 })
 export class DashboardPage implements OnInit {
@@ -26,6 +28,9 @@ export class DashboardPage implements OnInit {
   NoticesPage:any='notices';
   tab: string = "society";
   ServiceRequestPage:any='servicerequest';
+  PaymentPage:any='payment';
+  PhotoAlbumPage:any='photoalbum';
+  ProfilePage:any='profile';
   data : any;
   //selection:any;
   bill_amount : any;
@@ -45,14 +50,14 @@ export class DashboardPage implements OnInit {
  // event_detail : any;
   event_details_array : Array<any>;
   notice_details_array : Array<any>;
-  SRequest_details_array :Array<{}>;
-  Classified_details_array : Array<{}>;
-  Poll_details_array : Array<{}>;
-  task_by_me_array :Array <{}>;
-  Feature_member_array :Array <{}>;
-  Feature_Admin_array :Array <{}>;
-  Feature_All_array :Array <{}>;
-  Services_array :Array <{}>;
+  SRequest_details_array :Array<any>;
+  Classified_details_array : Array<any>;
+  Poll_details_array : Array<any>;
+  task_by_me_array :Array <any>;
+  Feature_member_array :Array <any>;
+  Feature_Admin_array :Array <any>;
+  Feature_All_array :Array <any>;
+  Services_array :Array <any>;
   role : string;
   roleWise : string;
   status : any; 
@@ -460,7 +465,14 @@ export class DashboardPage implements OnInit {
                    {
                        //this.navCtrl.push(this.DuesPage, {details : resolve['response']});
                        //this.navCtrl.navigateRoot(this.DuesPage, {details : resolve['response']});
-                       
+                       let navigationExtras: NavigationExtras = {
+                        queryParams: 
+                        {
+                          details :resolve['response'],
+                        }
+                      };
+                        this.navCtrl.navigateRoot(this.DuesPage,navigationExtras);
+                        //}
                       // this.router.navigate(this.DuesPage, {details : resolve['response']});
                    }
                 }
@@ -469,6 +481,13 @@ export class DashboardPage implements OnInit {
  else
  {
    //this.presentAlert(); 
+   /*let navigationExtras: NavigationExtras = {
+    queryParams: {
+        userName:'TESTTSTSTS' ,
+       
+    }
+};
+  this.navCtrl.navigateRoot(this.SocietyPage,navigationExtras);*/
  }
  }
  viewFeature()
@@ -510,5 +529,100 @@ export class DashboardPage implements OnInit {
     }
     
   }
-  
+  viewNotices()
+   {
+      var p=[];
+      p['dash']="society";
+       if(this.AccessUI == "0")
+       {
+          //this.navCtrl.navigateRoot(this.NoticesPage, {details : p});
+          this.navCtrl.navigateRoot(this.NoticesPage);
+        }
+        else
+        {
+          //this.presentAlert(); 
+        }
+      
+   }
+   payment()
+   {
+     var p=[];
+     p['dash']="society";
+      if( this.AccessUI == "0" && this.blockAcount=="0")
+     {
+      // this.navCtrl.navigateRoot(PaymentPage, {details : p});
+       this.navCtrl.navigateRoot(this.PaymentPage);
+     }
+     else
+     {
+        //this.presentAlert(); 
+     }
+   }
+   viewAlbums()
+   {
+     var p=[];
+     p['dash']="society";
+      if(this.AccessUI == "0")
+      {
+         //this.navCtrl.navigateRoot(this.PhotoAlbumPage, {details : p});
+         this.navCtrl.navigateRoot(this.PhotoAlbumPage);
+      }
+      else
+      {
+        // this.presentAlert(); 
+      }
+   }
+   profile()
+   {
+     var p=[];
+     p['dash']="society";
+     p['uID']=0;
+    // alert(this.AccessUI);
+     if(this.AccessUI == "0")
+     {
+      let navigationExtras: NavigationExtras = {
+        queryParams: 
+        {
+          details : p,
+                   
+        }
+      };
+        this.navCtrl.navigateRoot(this.ProfilePage,navigationExtras);
+       //if(this.roleWise =="Member" )
+       //{
+         //this.navCtrl.navigateRoot(this.ProfilePage, {details : p});  
+         //this.navCtrl.navigateRoot(this.ProfilePage);  
+      // }
+      /* else if(this.roleWise =="Tenant")
+       {
+         this.navCtrl.push(this.TenantProfilePage, {details : p});  
+       }
+       else
+       {
+         this.navCtrl.push(this.UpdateprofilePage);
+       }*/
+      
+    }
+     else
+     {
+         //this.presentAlert(); 
+     }
+     //if(this.roleWise =="Member" || this.roleWise =="AdminMember")
+    
+   }
+   viewEvents()
+   {
+     var p=[];
+     p['dash']="society";
+      if(this.AccessUI == "0")
+     {
+       //this.navCtrl.navigateRoot(this.EventsPage, {details : p});
+       this.navCtrl.navigateRoot(this.EventsPage);
+     }
+     else
+     {
+       //this.presentAlert(); 
+     }
+     
+   }
 } // end tag
