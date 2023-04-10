@@ -49,7 +49,7 @@ export class LoginPage implements OnInit {
     this.bHasNotification = false;
   }
   ngOnInit(): void {
-   
+    this.reinitializeData();
   }
 
   launch(url) {
@@ -239,7 +239,7 @@ export class LoginPage implements OnInit {
   }
 
   reinitializeData() {
-debugger;
+
     this.loaderView.showLoader('Initializing App ...');
 
     this.globalVars.getUserDetails().then(
@@ -256,7 +256,13 @@ debugger;
                 this.navCtrl.navigateRoot('dashboard');
               }
               else {
-                this.navCtrl.navigateForward(this.SocietyPage);
+                let navigationExtras: NavigationExtras = {
+                  queryParams: {
+                      userName:'TESTTSTSTS' ,
+                     
+                  }
+              };
+                this.navCtrl.navigateRoot(this.SocietyPage,navigationExtras);
               }
 
               this.showLogin = false;
@@ -273,7 +279,7 @@ debugger;
 
   signin() {
 
-//debugger;
+    //debugger;
     this.message = "";
     if (this.userData.Email.length == 0 || this.userData.Password.length == 0) {
       this.message = "Please enter Username and Password";
@@ -358,6 +364,7 @@ debugger;
 
 
   }
+
 }
 
 //http://way2society.com:8080/Mobile/login.php?token=V6n6EzFZjLIsjMZy6r4uJmElE4SCfawIDOxId72i-4FXQRPgasKCZ_ioETwUlcNE83j7p6aKDa-6eSbdLZ9FsQ&grant_type=refresh_token&test=test

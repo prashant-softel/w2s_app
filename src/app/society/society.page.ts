@@ -6,6 +6,7 @@ import { IonicModule, NavController, NavParams, Platform } from '@ionic/angular'
 import { GlobalVars } from 'src/service/globalvars';
 import { LoaderView } from 'src/service/loaderview';
 import { ConnectServer } from 'src/service/connectserver';
+import { ActivatedRoute } from '@angular/router';
 //import { DashboardPage } from '../dashboard/dashboard.page';
 //import { LoginPage } from '../login/login.page';
 
@@ -30,6 +31,7 @@ export class SocietyPage implements OnInit {
 	DashboardPage: any = 'dashboard';
 	constructor(private navCtrl: NavController,
 		private globalVars: GlobalVars,
+		private route: ActivatedRoute,
 		private connectServer: ConnectServer,
 		private platform: Platform,
 		private loaderView: LoaderView,
@@ -38,10 +40,16 @@ export class SocietyPage implements OnInit {
 		this.selectedMapID = 0;
 
 	}
-	ngOnInit_() {
 
-	}
 	ngOnInit() {
+
+		this.route.queryParams.subscribe(params => {
+			let userName = params["userName"];
+			alert(userName);
+
+		});
+
+
 		this.loaderView.showLoader('Loading ...');
 		this.globalVars.getMapIDArray().then(
 			value => {
