@@ -229,5 +229,13 @@ export const routes: Routes = [
   {
     path: 'visitor-in',
     loadComponent: () => import('./visitor-in/visitor-in.page').then(m => m.VisitorInPage)
+  },  {
+    path: 'cnote',
+    loadComponent: () => import('./cnote/cnote.page').then( m => m.CnotePage)
   },
+  {
+    path: 'linkflat',
+    loadComponent: () => import('./linkflat/linkflat.page').then( m => m.LinkflatPage)
+  },
+
 ];

@@ -1,8 +1,8 @@
 <?xml version='1.0' encoding='utf-8'?>
-<widget id="io.ionic.starter" version="0.0.1" xmlns="http://www.w3.org/ns/widgets" xmlns:cdv="http://cordova.apache.org/ns/1.0">
-    <name>MyApp</name>
-    <description>An awesome Ionic/Cordova app.</description>
-    <author email="hi@ionicframework.com" href="http://ionicframework.com/">Ionic Framework Team</author>
+<widget id="io.ionic.starter" version="2.2.20230401" xmlns="http://www.w3.org/ns/widgets" xmlns:cdv="http://cordova.apache.org/ns/1.0">
+    <name>Way2Society</name>
+    <description>Way2Society - Society Accounts Management</description>
+    <author email="cs@way2society.com" href="https://www.way2society.com/">W2S Team</author>
     <content src="index.html" />
     <access origin="*" />
     <allow-intent href="http://*/*" />

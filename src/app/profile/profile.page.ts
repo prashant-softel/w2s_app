@@ -1,4 +1,4 @@
-import { Component, OnInit,CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
+import { Component, OnInit,CUSTOM_ELEMENTS_SCHEMA, HostListener } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { IonicModule, NavController, NavParams, Platform } from '@ionic/angular';
@@ -153,7 +153,14 @@ export class ProfilePage implements OnInit {
     }
     //this.fetchData();
   }
-
+  @HostListener('document:ionBackButton', ['$event'])
+  overrideHardwareBackAction(event: any) {
+    event.detail.register(100, async () => {
+      event.stopImmediatePropagation();
+      event.stopPropagation();
+      event.preventDefault();
+    });
+  }
   ngOnInit() {
 
     var obj = [];

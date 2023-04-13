@@ -1,0 +1,38 @@
+<ion-header translucent="true">
+	<ion-toolbar>
+    <ion-buttons slot="start">
+			<ion-back-button defaultHref="dashboard" icon="chevron-back-outline" text="Back"></ion-back-button>
+		  </ion-buttons>
+	  <ion-title>Link Society/Flat</ion-title>
+	  <ion-buttons slot="end" style="width:30%">
+		<ion-button><img style="width:70%" src="/assets/images/logo.png"></ion-button>
+	 </ion-buttons>
+	</ion-toolbar>
+  </ion-header>
+
+<ion-content>
+  <ion-card>
+
+    <ion-card-header style="text-align: center;font-size: 1.2rem;">Link Your Society/Flat</ion-card-header>
+  
+    <ion-card-content>
+     <ion-row>
+       <ion-col>
+         <ion-item>
+          <ion-input label="Enter Four Digit Activation Code *" labelPlacement="floating"  type="text" value="" [(ngModel)]="userData.activationCode"></ion-input>
+          <!--<ion-label floating>Enter Four Digit Activation Code *</ion-label>
+          <ion-input type="text" value="" [(ngModel)]="userData.activationCode"></ion-input>-->
+        </ion-item>
+       </ion-col>
+     </ion-row>
+     <ion-row>
+       <ion-col col-1></ion-col>
+       <ion-col text-center col-10>
+     <ion-button color="primary" block (click)="submit()">Verify Activation Code</ion-button>
+    </ion-col>
+    <ion-col col-1></ion-col>
+    </ion-row>	
+  </ion-card-content>
+  
+  </ion-card>
+</ion-content>

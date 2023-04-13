@@ -43,11 +43,11 @@ export class SocietyPage implements OnInit {
 
 	ngOnInit() {
 
-		this.route.queryParams.subscribe(params => {
-			let userName = params["userName"];
-			alert(userName);
+		//this.route.queryParams.subscribe(params => {
+			//let userName = params["userName"];
+			//alert(userName);
 
-		});
+		//});
 
 
 		this.loaderView.showLoader('Loading ...');

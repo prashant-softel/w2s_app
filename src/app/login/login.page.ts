@@ -28,6 +28,7 @@ export class LoginPage implements OnInit {
   userData: { Email: string, Password: any };
   showLogin: any;
   message: any;
+  films: any | [];
   notificationDetails: any;
   bHasNotification: any;
   SocietyPage: any = 'society';
@@ -49,6 +50,7 @@ export class LoginPage implements OnInit {
     this.bHasNotification = false;
   }
   ngOnInit(): void {
+    
     this.reinitializeData();
   }
 
@@ -256,13 +258,14 @@ export class LoginPage implements OnInit {
                 this.navCtrl.navigateRoot('dashboard');
               }
               else {
-                let navigationExtras: NavigationExtras = {
-                  queryParams: {
-                      userName:'TESTTSTSTS' ,
+                //let navigationExtras: NavigationExtras = {
+                  //queryParams: {
+                      //userName:'TESTTSTSTS' ,
                      
-                  }
-              };
-                this.navCtrl.navigateRoot(this.SocietyPage,navigationExtras);
+                 // }
+              //};
+                //this.navCtrl.navigateRoot(this.SocietyPage,navigationExtras);
+                this.navCtrl.navigateRoot(this.SocietyPage);
               }
 
               this.showLogin = false;
@@ -364,6 +367,20 @@ export class LoginPage implements OnInit {
 
 
   }
+
+  /*GetData()
+  {
+    this.connectServer.getFilms().subscribe({
+      next: (response: any) => {
+        this.films = response.results;
+        console.log(this.films);
+      
+      },
+      error: (err) => {
+        alert('There was an error in retrieving data from the server');
+      }
+    });
+  }*/
 
 }
 

@@ -31,6 +31,7 @@ export class DashboardPage implements OnInit {
   PaymentPage:any='payment';
   PhotoAlbumPage:any='photoalbum';
   ProfilePage:any='profile';
+  DirectoryPage :any='directory';
   data : any;
   //selection:any;
   bill_amount : any;
@@ -74,6 +75,7 @@ export class DashboardPage implements OnInit {
   blockAcount :any;
   flash: boolean;
   router: any;
+  society:any;
 
   constructor(private navCtrl: NavController,
     private globalVars: GlobalVars,
@@ -120,7 +122,7 @@ export class DashboardPage implements OnInit {
       var todayDate = new Date().toISOString();
       //this.currentDate=moment(todayDate).format('DD-MM-YYYY');
      // alert( this.currentDate);
-     
+     this.society = "";
       this.AccessUI="0";
       this.blockAcount = "0";
 
@@ -139,7 +141,7 @@ export class DashboardPage implements OnInit {
     this.Feature_Admin_array=[];
     this.Feature_All_array=[];
     this.Services_array=[];
-    
+    this.society = this.globalVars.MAP_SOCIETY_NAME;
 
    if(this.globalVars.MAP_USER_ROLE == "Admin Member"){
       this.role = "AdminMember";
@@ -451,8 +453,10 @@ export class DashboardPage implements OnInit {
     this.navCtrl.navigateRoot(this.SocietyPage);
   }
   viewDues() {
-    if(this.AccessUI == "0" && this.blockAcount=="0" )  ///   -----------------------------------------------------------------
+    //alert("call");
+  if(this.AccessUI == "0" && this.blockAcount=="0" )  ///   -----------------------------------------------------------------
    {
+    //alert("call1");
    this.loaderView.showLoader('Loading ...');  
     var objData = [];
     objData['fetch'] =1;   /// New Version
@@ -463,6 +467,7 @@ export class DashboardPage implements OnInit {
                    this.loaderView.dismissLoader();
                    if(resolve['success'] == 1)
                    {
+                    //alert("call2");
                        //this.navCtrl.push(this.DuesPage, {details : resolve['response']});
                        //this.navCtrl.navigateRoot(this.DuesPage, {details : resolve['response']});
                        let navigationExtras: NavigationExtras = {
@@ -471,6 +476,7 @@ export class DashboardPage implements OnInit {
                           details :resolve['response'],
                         }
                       };
+                      //alert("call3");
                         this.navCtrl.navigateRoot(this.DuesPage,navigationExtras);
                         //}
                       // this.router.navigate(this.DuesPage, {details : resolve['response']});
@@ -546,10 +552,14 @@ export class DashboardPage implements OnInit {
    }
    payment()
    {
+    //alert("payment");
      var p=[];
      p['dash']="society";
+     //alert(this.AccessUI);
+     //alert(this.blockAcount);
       if( this.AccessUI == "0" && this.blockAcount=="0")
      {
+      //alert("navigate");
       // this.navCtrl.navigateRoot(PaymentPage, {details : p});
        this.navCtrl.navigateRoot(this.PaymentPage);
      }
@@ -625,4 +635,19 @@ export class DashboardPage implements OnInit {
      }
      
    }
+   directory()
+  {
+    var p=[];
+    p['dash']="society";
+     if(this.AccessUI == "0")
+    {
+      this.navCtrl.navigateRoot(this.DirectoryPage);
+      //this.navCtrl.push(DirectoryPage, {details : p}); 
+    }
+    else
+    {
+      //this.presentAlert(); 
+    }
+    
+  }
 } // end tag

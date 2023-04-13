@@ -1,0 +1,76 @@
+<ion-header translucent="true">
+  <ion-toolbar>
+    <ion-title>Debit/Credit Note Details</ion-title>
+    <ion-buttons slot="end" style="width:30%">
+      <ion-button><img style="width:70%" src="/assets/images/logo.png"></ion-button>
+   </ion-buttons>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content padding class="format">
+  <ion-row>
+      <ion-col  class="text-center">
+          <strong>{{billtype_text}}</strong>
+    </ion-col>
+  </ion-row>
+  <ion-row>
+      <ion-col>
+        <strong>Bill Date</strong>
+      </ion-col>
+      <ion-col class="text-right">
+        <strong>{{bill_date}}</strong>
+      </ion-col>
+    </ion-row>
+     <ion-row>
+      <ion-col class="text-center">
+        <strong>Bill Details</strong>
+      </ion-col>
+    </ion-row>
+    <ion-row *ngFor="let p of particulars1[0]">
+      <ion-col *ngIf="p.Credit != 0" size="8">
+        {{p.ledger_name}}
+      </ion-col>
+      <ion-col class="text-right" *ngIf="p.Credit != 0">
+        {{p.Credit}}
+      </ion-col>
+    </ion-row>
+    <ion-row>
+      <ion-col>
+        <strong>Sub Total</strong>
+      </ion-col>
+      <ion-col class="text-right">
+        <strong>{{subtotal}}</strong>
+      </ion-col>
+    </ion-row>
+    <ion-row  *ngIf="sgst != '0' ">
+      <ion-col>
+        <strong>SGST</strong>
+      </ion-col>
+      <ion-col class="text-right">
+        <strong>{{sgst}}</strong>
+      </ion-col>
+    </ion-row>
+    <ion-row *ngIf="cgst != '0'">
+      <ion-col>
+        <strong>CGST</strong>
+      </ion-col>
+      <ion-col class="text-right">
+        <strong>{{cgst}}</strong>
+      </ion-col>
+    </ion-row>
+    
+    <ion-row>
+      <ion-col>
+        <strong>Balance Amount</strong>
+      </ion-col>
+      <ion-col class="text-right">
+        <strong>{{balance}}</strong>
+      </ion-col>
+    </ion-row>
+    <ion-row *ngIf="notes != ''" >
+      <ion-col>
+        <strong>Notes : </strong>
+        <p> {{notes}}</p>
+      </ion-col>
+  </ion-row>
+</ion-content>

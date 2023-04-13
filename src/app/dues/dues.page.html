@@ -29,45 +29,44 @@
 		    </ion-col>
 		</ion-row>
 	</ion-list>
-  <!--<ion-list no-lines *ngFor="let p of particulars" (click)="viewDetails(p)">
+  <ion-list no-lines *ngFor="let p of particulars" (click)="viewDetails(p)">
 		<ion-row>
-			<ion-col col-3 >
+			<ion-col col-3 *ngIf="p.showIn == '1'">
 				<strong>{{p.mode}}</strong>
 			</ion-col>
-			<ion-col col-3 >
+			<ion-col col-3 *ngIf="p.showIn == '2'">
 				<strong>{{p.mode}}</strong>
 			</ion-col>
-			<ion-col col-3>
+			<ion-col col-3 *ngIf="p.showIn == '3'">
 				<strong>{{p.mode}}</strong>
 			</ion-col>
-			<ion-col col-3>
+			<ion-col col-3 *ngIf="p.showIn == '4'">
 				<strong>{{p.mode}}</strong>
-			</ion-col>-->
-
+			</ion-col>
 
 			<!--   Date Section -------->
-		<!--	<ion-col col-3>
+			<ion-col col-3 *ngIf="p.showIn == '1'">
 				<strong>{{p.date}}</strong>
 			</ion-col>
-			<ion-col col-3 >
+			<ion-col col-3 *ngIf="p.showIn == '2'">
 				<strong>{{p.date}}</strong>
 			</ion-col>
-			<ion-col col-3>
+			<ion-col col-3 *ngIf="p.showIn == '3'">
 				<strong>{{p.date}}</strong>
 			</ion-col>
-			<ion-col col-3 >
+			<ion-col col-3 *ngIf="p.showIn == '4'" >
 				<strong>{{p.date}}</strong>
-			</ion-col>-->
+			</ion-col>
 
 			 <!-- Debit Amount-->
-		   <!-- <ion-col text-right >
+		  <ion-col text-right *ngIf="p.debit > '0'" >
 		      	(+) {{p.debit}}
 		    </ion-col>
 
-		     <ion-col text-right *ngIf="p.credit > 0 && p.mode !='M-Bill' && p.mode !='M-DNote' && p.mode !='SInvoice' && p.mode !='M-CNote' " >
+		     <ion-col text-right *ngIf="p.credit > '0' && p.mode !='M-Bill' && p.mode !='M-DNote' && p.mode !='SInvoice' && p.mode !='M-CNote' &&  p.showIn!='2'" >
 		      	 <strong>(-) {{p.credit}}</strong>
 		    </ion-col>
-		    <ion-col text-right *ngIf="p.credit > 0 && p.mode !='M-Receipt' && p.mode !='M-DNote' && p.mode !='SInvoice' " >
+		    <ion-col text-right *ngIf="p.credit > '0' && p.mode !='M-Receipt' && p.mode !='M-DNote' && p.mode !='SInvoice' " >
 		      	(-) {{p.credit}}
 		    </ion-col>
 
@@ -79,5 +78,5 @@
 		    </ion-col>
 		</ion-row>
   <hr>
-	</ion-list>-->
+	</ion-list>
 </ion-content>

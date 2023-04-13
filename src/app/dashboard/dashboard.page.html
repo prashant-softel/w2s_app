@@ -47,7 +47,7 @@
   </ion-toolbar>
   <ion-list no-lines>  
     <ion-item text-wrap text-center text-uppercase>
-      <strong>WAY2SOCIETY - Play Ground - [ 502 ]</strong>
+      <strong (click)="selectSociety()">{{this.society}}</strong>
      <!-- <strong (click)="selectSociety()">{{globalVars.MAP_SOCIETY_NAME}}</strong>-->
   </ion-item>
   </ion-list>
@@ -252,9 +252,11 @@
       </div>
   
        <div style="float: left;width: 20%;">
-           <button (click)="viewAlbums()" ion-fab style="width: 40px;height: 40px;background-color: #337ab7;color: white;
-           border-radius: 10rem;"><ion-icon name="images" style="font-size: 1.5rem;"></ion-icon></button>
-           <span style="font-size: 1.1rem;margin-left: -10px;">Albums</span>
+        <button (click)="directory()" ion-fab style="width: 40px;height: 40px;background-color: #337ab7;color: white;
+        border-radius: 10rem;" ><ion-icon name="folder-open" style="font-size: 1.5rem;"></ion-icon></button>
+        <span style="font-size: 1.1rem;margin-left: -17px;">Directory</span>
+        <!--<button ion-fab style="width: 40px;height: 40px;" (click)="directory()"><ion-icon name="folder-open" style="font-size: 1.5rem;"></ion-icon></button>
+        <span style="font-size: 1.1rem;margin-left: -5px;">Directory</span>-->
       </div>
   
       <div style="float: left;width: 20%;">

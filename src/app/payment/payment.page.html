@@ -1,6 +1,9 @@
 <ion-header translucent="true">
   <ion-toolbar>
     <ion-title>Payment Details</ion-title>
+    <ion-buttons slot="start">
+			<ion-back-button defaultHref="dashboard" icon="chevron-back-outline" text="Back"></ion-back-button>
+		  </ion-buttons>
     <ion-buttons slot="end" style="width:30%">
       <ion-button><img style="width:70%" src="/assets/images/logo.png"></ion-button>
     </ion-buttons>
@@ -14,8 +17,8 @@
       <ion-row>
         <ion-col><p>&nbsp;</p></ion-col>
       </ion-row>
-       <ion-row>
-          <ion-col text-center>
+       <ion-row style="text-align:center">
+          <ion-col text-center >
               <p style="font-size:1em; "> Record NEFT and payment gatway disable on members.</p>
               <p> <b>Please contact your society manager.</b></p>
           </ion-col>

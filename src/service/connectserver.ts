@@ -3,6 +3,10 @@ import { HttpClient } from '@angular/common/http';
 import { GlobalVars } from './globalvars';
 //http://way2society.com:8080/W2S/
 //http://way2society.com:8080/W2S_Beta/
+var headers = new Headers();
+headers.append('Content-Type', 'application/x-www-form-urlencoded; charset=UTF-8');
+  headers.append('Accept','application/json');
+  headers.append('content-type','application/json');
 @Injectable()
 export class ConnectServer {
   serverURL='http://way2society.com:8080/W2S/';
@@ -60,9 +64,14 @@ export class ConnectServer {
         objData = [];
       }
 
-      objData['token'] = this.globalVars.USER_TOKEN;
+      objData['token'] = "wvSn5ujhqo2IgEmOgxIb2ZAGGHR-HbsaeKZZKxciGQItalHa_9fwwsmXiI__fmk_ZCN6alPT3JntWe1macKDYPcBvH0Ke5_YFUI8I2a0Z0rHgiQVy_hq0qKqrpg7WYgc";
+      objData['tkey'] = "H3uqpx6KcCTudXqhxhxSFWnYZ4BsybuT9UO-U9VqRcZ8EiSeDmdbL6GlQLc-N_1ffq4taLXyZJHObc1ZzDGREvooIh4QWhDAe76H5eVPAdi-LEU_eSABkgdTih_TCAqyulpxtmFcLF9XYn89r7Q1Mg";
+      objData['map'] = "3737";
+      
+      /*objData['token'] = this.globalVars.USER_TOKEN;
       objData['tkey'] = this.globalVars.MAP_TKEY;
       objData['map'] = this.globalVars.MAP_ID;
+*/
 
       var sURL = this.serverURL + fileURL + this.generateQueryString(objData);
       //alert(sURL);

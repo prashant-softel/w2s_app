@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, HostListener, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { IonicModule, NavController, NavParams, Platform } from '@ionic/angular';
@@ -15,6 +15,7 @@ import { NavigationExtras } from '@angular/router';
   imports: [IonicModule, CommonModule, FormsModule]
 })
 export class PaymentPage implements OnInit {
+  RecordneftPage:any='recordneft';
   paytm : boolean = false;
   PaymentLink : any;
   AllowPayment : any;
@@ -48,7 +49,14 @@ export class PaymentPage implements OnInit {
     this.EnablePaytm = "0";
     this.Enable_NEFT = "0";
    }
-
+   @HostListener('document:ionBackButton', ['$event'])
+   overrideHardwareBackAction(event: any) {
+     event.detail.register(100, async () => {
+       event.stopImmediatePropagation();
+       event.stopPropagation();
+       event.preventDefault();
+     });
+   }
   ngOnInit() {
     this.loaderView.showLoader('Loading ...');
      this.connectServer.getData("Society", null).then(
@@ -97,7 +105,7 @@ export class PaymentPage implements OnInit {
   
  }
  neftPayment() {
-   alert("Comming Soon!");
-    //this.navCtrl.push(RecordneftPage);
+   //alert("Comming Soon!");
+   this.navCtrl.navigateRoot(this.RecordneftPage);
   }
 }
