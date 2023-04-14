@@ -2,28 +2,52 @@
   <ion-toolbar>
     <ion-title>Latest Feature</ion-title>
     <ion-buttons slot="start">
-      <ion-menu-button></ion-menu-button>
-    </ion-buttons>
+			<ion-back-button defaultHref="dashboard" icon="chevron-back-outline" text="Back"></ion-back-button>
+		  </ion-buttons>
     <ion-buttons slot="end" style="width:30%">
       <ion-button><img style="width:70%" src="/assets/images/logo.png"></ion-button>
     </ion-buttons>
-    
+  </ion-toolbar>
+  <ion-toolbar no-border>
+    <ion-segment [(ngModel)]="tab">
+      <ion-segment-button value="letest">
+        Latest
+      </ion-segment-button>
+      <ion-segment-button value="previous">
+        Previous
+      </ion-segment-button>
+    </ion-segment>
   </ion-toolbar>
 </ion-header>
 
-
 <ion-content padding>
-  <ion-list no-lines   style="margin-top:0px;">
-      <ion-searchbar ></ion-searchbar>
-      <ion-card >
-            <ion-card-content >
-              <h2><strong>Integration with Security Manager App</strong></h2>
-              <ion-row>
-                <ion-col col-12 text-right><a class="item" href="#">View Details</a></ion-col>
-              </ion-row>
-            
-          </ion-card-content>
-  
-        </ion-card>
-      </ion-list>
-  </ion-content>
+	<div [ngSwitch]="tab">
+	<ion-list no-lines   *ngSwitchCase="'letest'">
+		<ion-searchbar (ionInput)="getItems($event)"></ion-searchbar>
+		<ion-card *ngFor="let p of temp_Feature_All_array" style="margin-top: -2px;">
+	  	  	<ion-card-content >
+	      		<h2><strong>{{p.title}}</strong></h2>
+	  				<ion-row>
+	  					<ion-col col-12 text-right style="text-align: right;"> <button ion-item class="link-btn" (click)="ViewFeature(p)"> View Details</button></ion-col>
+	  				</ion-row>
+	  				
+	  		</ion-card-content>
+
+  		</ion-card>
+  	</ion-list>
+
+  	<ion-list no-lines  *ngSwitchCase="'previous'">
+		<ion-searchbar (ionInput)="getItems1($event)"></ion-searchbar>
+		<ion-card *ngFor="let pre of temp_Feature_previous_array" style="margin-top: -2px;">
+	  	  	<ion-card-content >
+	      		<h2><strong>{{pre.title}}</strong></h2>
+	  				<ion-row>
+	  					<ion-col col-12 text-right style="text-align: right;"><button ion-item class="link-btn" (click)="ViewFeature(pre)"> View Details</button></ion-col>
+	  				</ion-row>
+	  				
+	  		</ion-card-content>
+
+  		</ion-card>
+  	</ion-list>
+  </div>
+</ion-content>

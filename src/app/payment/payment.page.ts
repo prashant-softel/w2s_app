@@ -97,8 +97,9 @@ export class PaymentPage implements OnInit {
     }
     else
     {
-      var httpUrl = this.PaymentLink;
+      var httpUrl =this.PaymentLink;
       let target = "_system";
+      window.open(httpUrl, '_blank', 'location=no'); 
       //var ref = cordova.InAppBrowser.open(url, target, options);
      // this.theInAppBrowser.create(httpUrl,target,this.options);
     }

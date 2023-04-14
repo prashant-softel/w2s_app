@@ -526,8 +526,15 @@ export class DashboardPage implements OnInit {
     p['dash']="society";
      if(this.AccessUI == "0")
     {
+      let navigationExtras: NavigationExtras = {
+        queryParams: 
+        {
+          details :p,
+        }
+      };
+      this.navCtrl.navigateRoot(this.ServiceRequestPage,navigationExtras);
       //this.navCtrl.navigateRoot(this.ServiceRequestPage, {details : p});  //issue please check
-      this.navCtrl.navigateRoot(this.ServiceRequestPage); 
+      //this.navCtrl.navigateRoot(this.ServiceRequestPage); 
     }
     else
     {

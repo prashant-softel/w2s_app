@@ -53,14 +53,14 @@ export class ReceiptsPage implements OnInit {
       }
   }
   viewReceipt(period){
-    //alert("Comming Soon !");
-    let navigationExtras: NavigationExtras = {
+    alert("Comming soon");
+    /*let navigationExtras: NavigationExtras = {
       queryParams: 
       {
         period_id :period,
       }
     };
-    this.navCtrl.navigateRoot(this.ViewreceiptPage,navigationExtras);
+    this.navCtrl.navigateRoot(this.ViewreceiptPage,navigationExtras);*/
   	//this.navCtrl.push(ViewreceiptPage, {period_id : period});
   }
 }

@@ -49,12 +49,9 @@ export class ViewreceiptPage implements OnInit {
      this.roleWise=this.role;
      this.particulars = [];
      
-    this.route.queryParams.subscribe(params => {
-      this.iPeriodID = params["period_id"];
-      this.iUnitID = params["period_id"];
-      });
-    //// this.iPeriodID = params.get("period_id");
-     //this.iUnitID = params.get("Unit"); 
+    
+     this.iPeriodID = "";// params.get("period_id");
+     this.iUnitID = "";//params.get("Unit"); 
      this.start_date = "";
      this.end_date = "";
   }
@@ -67,6 +64,11 @@ export class ViewreceiptPage implements OnInit {
     });
   }
   ngOnInit() {
+    this.route.queryParams.subscribe(params => {
+      this.iPeriodID = params["period_id"];
+      this.iUnitID = params["Unit"];
+      });
+     alert(this.iPeriodID) 
     this.loaderView.showLoader('Loading ...');  
     var objData = [];
     objData["PeriodID"] = this.iPeriodID;

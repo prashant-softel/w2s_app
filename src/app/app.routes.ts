@@ -237,5 +237,9 @@ export const routes: Routes = [
     path: 'linkflat',
     loadComponent: () => import('./linkflat/linkflat.page').then( m => m.LinkflatPage)
   },
+  {
+    path: 'addservicerequest',
+    loadComponent: () => import('./addservicerequest/addservicerequest.page').then( m => m.AddservicerequestPage)
+  },
 
 ];

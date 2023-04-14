@@ -90,13 +90,13 @@
         <ion-card >
        <ion-card-content (click)="viewFeature()">
        <ion-row style="background-color: #f0ad4e;color:#fff;">
-           <ion-col>
+           <ion-col style="text-align: center;">
              <strong style="font-size: 15px;">Latest Features</strong>
            </ion-col>
          </ion-row>
       <ion-item>
          <ion-row   *ngIf="Feature_All_array.length == 0">
-           <ion-col text-center >
+           <ion-col style="text-align: center;" >
              <strong>No Active Features </strong>
            </ion-col>
          </ion-row>
@@ -115,13 +115,13 @@
   <ion-card  *ngIf="event_details_array.length != 0">
     	<ion-card-content (click)="viewAllEvents()" >
       <ion-row style="background-color: #f0ad4e;color:#fff;">
-          <ion-col>
+          <ion-col style="text-align: center;">
             <strong style="font-size: 15px;">Upcoming Events</strong>
           </ion-col>
         </ion-row>
-        <ion-item >
+        <ion-list >
         <ion-row *ngIf="event_details_array.length == 0">
-          <ion-col text-center>
+          <ion-col style="text-align: center;">
             <strong>No Upcoming Event</strong>
           </ion-col>
         </ion-row>
@@ -129,23 +129,23 @@
         <ion-col text-wrap>
          <strong style="font-size: 15px;">{{e.events_title}}</strong>
         <p *ngIf="e.events_date != '0'" >
-        <ion-icon name="calendar" primary>&nbsp;{{e.events_date}} <span *ngIf="e.event_time != '0'"> at {{e.event_time}}</span></ion-icon></p>
+        <ion-icon name="calendar" primary>&nbsp;</ion-icon>{{e.events_date}} <span *ngIf="e.event_time != '0'"> at {{e.event_time}}</span></p>
         </ion-col>
        </ion-row>
-        </ion-item>
+        </ion-list>
     	</ion-card-content>
   	</ion-card>
   
   	<ion-card >
     	<ion-card-content (click)="viewAllNotices()" >
       <ion-row style="background-color: #5cb85c;color:#fff;">
-          <ion-col>
+          <ion-col style="text-align: center;">
             <strong style="font-size: 15px;">Latest Notices</strong>
           </ion-col>
         </ion-row>
-     <ion-item>
+     <ion-list>
         <ion-row *ngIf="notice_details_array.length == 0">
-          <ion-col text-center>
+          <ion-col style="text-align: center;">
             <strong>No Active Notice </strong>
           </ion-col>
         </ion-row>
@@ -153,10 +153,10 @@
         <ion-col text-wrap>
          <strong style="font-size: 15px;">{{n.subject}}</strong>
       			<p *ngIf="n.creation_date != '0'">
-            <ion-icon name="calendar" primary>&nbsp;{{n.creation_date}} </ion-icon></p>
+            <ion-icon name="calendar" primary>&nbsp;</ion-icon>{{n.creation_date}} </p>
             </ion-col>
             </ion-row>
-            </ion-item>
+            </ion-list>
             
     	</ion-card-content>
   	</ion-card>
@@ -164,13 +164,13 @@
     <ion-card  *ngIf="SRequest_details_array.length != 0">
       <ion-card-content (click)="sRequest()">
       <ion-row style="background-color: #337ab7;color:#fff;">
-          <ion-col>
+          <ion-col style="text-align: center;">
             <strong style="font-size: 15px;">Latest Service Requests</strong>
           </ion-col>
         </ion-row>
      
         <ion-row *ngIf="SRequest_details_array.length == 0">
-          <ion-col text-center>
+          <ion-col style="text-align: center;">
             <strong>No Active Service Request </strong>
           </ion-col>
         </ion-row>

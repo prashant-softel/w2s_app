@@ -39,6 +39,12 @@ export class GlobalVars {
   PROFILE_USER_MANAGEMENT = 0;
   MEMBER_DUES_AMOUNT = 0;
 
+  HOST_NAME = "https://way2society.com/"; //Server
+  MAP_LOGIN_ID = 0;
+  RENOVATION_REQUEST_ID = 0;
+  TENANT_REQUEST_ID = 0;
+  ADDRESS_PROOF_REQUEST_ID = 0;
+
 
   APP_MENU = [];
 
@@ -56,6 +62,7 @@ export class GlobalVars {
      this.PROFILE_SEND_NOTIFICATION= 0;
      this.PROFILE_SERVICE_PROVIDER= 0;
      this.PROFILE_USER_MANAGEMENT= 0;*/
+     this.MAP_LOGIN_ID = 0;
   }
 
   /*setAppMenu(role) {
