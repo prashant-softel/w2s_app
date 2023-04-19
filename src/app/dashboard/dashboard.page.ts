@@ -32,6 +32,9 @@ export class DashboardPage implements OnInit {
   PhotoAlbumPage:any='photoalbum';
   ProfilePage:any='profile';
   DirectoryPage :any='directory';
+  ClassifiedsPage:any='classifieds';
+  PollPage :any='poll';
+  ServiceproviderPage:any='serviceprovider';
   data : any;
   //selection:any;
   bill_amount : any;
@@ -657,4 +660,53 @@ export class DashboardPage implements OnInit {
     }
     
   }
+  viewPoll()
+  {
+    var p=[];
+    p['dash']="society";
+     if(this.AccessUI == "0")
+    {
+      let navigationExtras: NavigationExtras = {
+        queryParams: 
+        {
+          details :p,
+        }
+      };
+      //this.navCtrl.navigateRoot(PollPage, {details : p});
+      this.navCtrl.navigateRoot(this.PollPage,navigationExtras);
+    }
+    else
+    {
+      //this.presentAlert(); 
+    }
+   
+  }
+  sProvider()
+  {
+
+    var p=[];
+    p['dash']="society";
+    if(this.AccessUI == "0")
+    {
+      let navigationExtras: NavigationExtras = {
+        queryParams: 
+        {
+          details :p,
+        }
+      };
+      //this.navCtrl.push(ServiceproviderPage, {details : p});  
+      this.navCtrl.navigateRoot(this.ServiceproviderPage,navigationExtras);
+    }
+    else
+    {
+      //this.presentAlert(); 
+    }
+    
+  }
+
+  viewClassified(){
+   
+    this.navCtrl.navigateRoot(this.ClassifiedsPage);
+  }
+  
 } // end tag

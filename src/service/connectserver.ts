@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { HttpClient } from '@angular/common/http';
+import { HttpClient} from '@angular/common/http';
 import { GlobalVars } from './globalvars';
 //http://way2society.com:8080/W2S/
 //http://way2society.com:8080/W2S_Beta/
@@ -9,7 +9,8 @@ headers.append('Content-Type', 'application/x-www-form-urlencoded; charset=UTF-8
   headers.append('content-type','application/json');
 @Injectable()
 export class ConnectServer {
-  serverURL='http://way2society.com:8080/W2S/';
+  //serverURL='http://way2society.com:8080/W2S/';
+  serverURL='https://way2society.com:8443/W2S/';
   API_URL='';
   constructor(public http: HttpClient, private globalVars:GlobalVars ) { }
 
@@ -18,6 +19,7 @@ export class ConnectServer {
   }
 
   login(objData) {
+    
     return new Promise(resolve => {
 
       objData['device'] = this.globalVars.DEVICE_ID;
@@ -64,14 +66,14 @@ export class ConnectServer {
         objData = [];
       }
 
-      objData['token'] = "wvSn5ujhqo2IgEmOgxIb2ZAGGHR-HbsaeKZZKxciGQItalHa_9fwwsmXiI__fmk_ZCN6alPT3JntWe1macKDYPcBvH0Ke5_YFUI8I2a0Z0rHgiQVy_hq0qKqrpg7WYgc";
-      objData['tkey'] = "H3uqpx6KcCTudXqhxhxSFWnYZ4BsybuT9UO-U9VqRcZ8EiSeDmdbL6GlQLc-N_1ffq4taLXyZJHObc1ZzDGREvooIh4QWhDAe76H5eVPAdi-LEU_eSABkgdTih_TCAqyulpxtmFcLF9XYn89r7Q1Mg";
-      objData['map'] = "3737";
+      /*objData['token'] = "wvSn5ujhqo2IgEmOgxIb2ZAGGHR-HbsaeKZZKxciGQItalHa_9fwwsmXiI__fmk_5iOzMD_fWRKsjVhOojZcco5LriHVHBm83PhQ9NN9zLIaDz9vBVEdl6rqX4QNjCqt";
+      objData['tkey'] = "vuC_qblCEWnTc0IyiLWa5puajsl4pkMSMt0jvyMc74rwn28pGFjQp7yCEI1azwQ9S7i4HYZIpKsh0khpcIJlrtNOqqgL1h33SKpcKkFa51AF1P5zTnsQud77hO1_klyFwaKs4HxVqqsCC5-HdiZGmg";
+      objData['map'] = "3737";*/
       
-      /*objData['token'] = this.globalVars.USER_TOKEN;
+      objData['token'] = this.globalVars.USER_TOKEN;
       objData['tkey'] = this.globalVars.MAP_TKEY;
       objData['map'] = this.globalVars.MAP_ID;
-*/
+
 
       var sURL = this.serverURL + fileURL + this.generateQueryString(objData);
       //alert(sURL);
