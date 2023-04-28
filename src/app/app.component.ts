@@ -9,7 +9,6 @@ import { IonicStorageModule } from '@ionic/storage-angular';
 import { GlobalVars } from 'src/service/globalvars';
 import { LoaderView } from 'src/service/loaderview';
 import { StorageService } from 'src/service/StorageService';
-import { Router, NavigationExtras } from '@angular/router';
 
 //import { Platform, MenuController, Nav, AlertController } from 'ionic-angular';
 @Component({
@@ -22,7 +21,7 @@ import { Router, NavigationExtras } from '@angular/router';
     LoaderView,
     NavParams,
     StorageService
-
+     
   ],
 
   imports: [

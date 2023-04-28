@@ -14,6 +14,7 @@ import { ConnectServer } from 'src/service/connectserver';
 import { VisitorInPage } from '../visitor-in/visitor-in.page';
 import { ViewreceiptPage } from '../viewreceipt/viewreceipt.page';
 import { NavigationExtras } from '@angular/router';
+import { InAppBrowser } from '@awesome-cordova-plugins/in-app-browser/ngx';
 
 
 
@@ -22,6 +23,7 @@ import { NavigationExtras } from '@angular/router';
   templateUrl: './login.page.html',
   styleUrls: ['./login.page.scss'],
   standalone: true,
+  providers:[InAppBrowser],
   imports: [IonicModule, CommonModule, FormsModule]
 })
 export class LoginPage implements OnInit {
@@ -39,9 +41,12 @@ export class LoginPage implements OnInit {
     private connectServer: ConnectServer,
     private platform: Platform,
     private loaderView: LoaderView,
-    private params: NavParams) {
+    private params: NavParams,
+    private iab: InAppBrowser
+    
+    ) {
 
-    this.userData = { Email: "", Password: "" };
+    this.userData = { Email: "developer@way2society.com", Password: "dev" };
     this.showLogin = false;
     this.message = "";
 
@@ -54,10 +59,17 @@ export class LoginPage implements OnInit {
     this.reinitializeData();
   }
 
-  launch(url) {
-    //this.platform.ready().then(() => {
-    //  let browser = new InAppBrowser('https://ionic.io', '_self', 'location=no');
-    //});
+  launch() {
+    const browser = this.iab.create('https://ionicframework.com/');
+
+   
+    
+  
+    browser.on('loadstop').subscribe(event => {
+       browser.insertCSS({ code: "body{color: red;" });
+    });
+    
+    browser.close();
   }
 
   ionViewDidLoad() {

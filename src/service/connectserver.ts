@@ -66,9 +66,9 @@ export class ConnectServer {
         objData = [];
       }
 
-      /*objData['token'] = "wvSn5ujhqo2IgEmOgxIb2ZAGGHR-HbsaeKZZKxciGQItalHa_9fwwsmXiI__fmk_5iOzMD_fWRKsjVhOojZcco5LriHVHBm83PhQ9NN9zLIaDz9vBVEdl6rqX4QNjCqt";
-      objData['tkey'] = "vuC_qblCEWnTc0IyiLWa5puajsl4pkMSMt0jvyMc74rwn28pGFjQp7yCEI1azwQ9S7i4HYZIpKsh0khpcIJlrtNOqqgL1h33SKpcKkFa51AF1P5zTnsQud77hO1_klyFwaKs4HxVqqsCC5-HdiZGmg";
-      objData['map'] = "3737";*/
+      // objData['token'] = "wvSn5ujhqo2IgEmOgxIb2ZAGGHR-HbsaeKZZKxciGQItalHa_9fwwsmXiI__fmk_SUplr2GKJz--P_VvX1k5skPK-O-Pqb22JgcWcC2Ac9kT4rWv1N92JcDgbzph-38q";
+      // objData['tkey'] = "MOcChDngKV1DS2tQCFa0CCK5lyZeENyYQMXWvZBALili6YRqLC0lwMUIYw7zqoLsSS-DiPOfTwFKcCGZta8ePFch2IEozdos302wIISBTOjhnIX-EyHbQitV4keF95bHG54Q0npZc2Nk-09J8x5mpQ";
+      // objData['map'] = "3719";
       
       objData['token'] = this.globalVars.USER_TOKEN;
       objData['tkey'] = this.globalVars.MAP_TKEY;

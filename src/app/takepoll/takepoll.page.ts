@@ -5,7 +5,6 @@ import { IonicModule, NavController, NavParams, Platform } from '@ionic/angular'
 import { GlobalVars } from 'src/service/globalvars';
 import { LoaderView } from 'src/service/loaderview';
 import { ConnectServer } from 'src/service/connectserver';
-import { NavigationExtras } from '@angular/router';
 import { ActivatedRoute } from '@angular/router';
 import { Chart } from 'chart.js'
 ;
@@ -201,7 +200,16 @@ export class TakepollPage implements OnInit {
             		    },
             			options: 
             			{
-                           
+                            scales: 
+                            {
+                               	/*yAxes: 
+                               	[{
+                                    ticks: 
+                                    {
+                                       beginAtZero:true
+                        		    }
+                    		    }]*/
+                		    }
             			}
  					}
  				); 
