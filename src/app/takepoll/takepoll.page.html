@@ -1,13 +1,109 @@
-<ion-header [translucent]="true">
+<ion-header translucent="true">
   <ion-toolbar>
-    <ion-title>takepoll</ion-title>
+    <ion-title>Take Poll</ion-title>
+    <ion-buttons slot="start">
+			<ion-back-button defaultHref="poll" icon="chevron-back-outline" text="Back"></ion-back-button>
+		  </ion-buttons>
+    <ion-buttons slot="end" style="width:30%">
+      <ion-button><img style="width:70%" src="/assets/images/logo.png"></ion-button>
+    </ion-buttons>
   </ion-toolbar>
-</ion-header>
+ </ion-header>
 
-<ion-content [fullscreen]="true">
-  <ion-header collapse="condense">
-    <ion-toolbar>
-      <ion-title size="large">takepoll</ion-title>
-    </ion-toolbar>
-  </ion-header>
+ <ion-content padding>
+  <ion-card>
+    <ion-card-content>
+      <ion-card-title>{{question}}</ion-card-title>
+        <ion-row>
+          <ion-col col-6><strong>Poll Start Date : </strong></ion-col>
+          <ion-col class="text-right">{{start_date}}</ion-col>
+        </ion-row>
+        <ion-row>
+          <ion-col col-6><strong>Poll End Date : </strong></ion-col>
+          <ion-col class="text-right">{{end_date}}</ion-col>
+        </ion-row>
+        <ion-row>
+          <ion-col col-6><strong>Description : </strong></ion-col>
+        </ion-row>
+        <p id="additional_text"></p>
+        <br/>
+        <ion-row *ngIf="((allow_vote==0 && user_option == 0) && ( active == true))">
+          <br>
+          <ion-col col-10>
+            
+              <!--<ion-list radio-group [(ngModel)]="option_id">
+                <ion-item *ngFor="let p of options_array">
+                  <ion-label style="color: black">{{p.options}}</ion-label>
+                  <ion-radio value="{{p.option_id}}"></ion-radio>
+                </ion-item>
+              </ion-list>-->
+              <!--<ion-list [(ngModel)]="option_id">
+                <ion-item *ngFor="let p of options_array">
+                  <ion-label style="color: black">{{p.options}}</ion-label>
+                </ion-item>
+              </ion-list>-->
+             <ion-radio-group value="custom-checked" >
+                <ion-list >
+                  <ion-list *ngFor="let p of options_array">
+                    <ion-row>
+                      <ion-col>
+                        <ion-label style="color: black">{{p.options}}</ion-label>
+                      </ion-col>
+                      <ion-col class="text-right">
+                        <ion-radio  value="{{p.option_id}}" aria-label="Custom checkbox"></ion-radio>
+                      </ion-col>
+                   
+                      </ion-row>
+               
+                </ion-list>
+              </ion-list>
+              </ion-radio-group>
+          </ion-col>
+        </ion-row>
+        <ion-row *ngIf="((allow_vote==0 && user_option == 0) && ( active == true))">
+          <ion-col>
+           <ion-list  *ngIf="ReviewFlag == 1">
+             <hr>
+             <ion-row>
+              <ion-col>
+                {{ReviewQuestion}}
+             </ion-col>
+            </ion-row>
+            <ion-item *ngIf="ShowTextarea == '1'">
+                 <ion-label floating>Comments</ion-label>
+                 <ion-textarea  rows="5" [(ngModel)]="member_Comment"></ion-textarea>
+      
+                </ion-item>
+
+            </ion-list>
+            <ion-row>
+              <ion-col col-1></ion-col>
+              <ion-col text-center col-10>
+            <ion-button color="primary" block (click)="insertvote()">Submit Your Vote</ion-button>
+           </ion-col>
+           <ion-col col-1></ion-col>
+           </ion-row>	
+            <!--<ion-row>
+              <ion-col text-center>
+                  <button  ion-button round color="secondary" color="primary" (click)="insertvote()">Submit Your Vote</button>
+              </ion-col>
+          </ion-row>-->
+            </ion-col>
+            </ion-row>
+           
+            <ion-list *ngIf="user_option != 0 ">
+              <ion-row >
+                  <ion-col col-6 ><strong>Your Selection was :</strong></ion-col>
+                  <ion-col text-right>{{selected_vote}}</ion-col>
+              </ion-row>
+              <hr>
+              <ion-row *ngIf="ReviewFlag == 1">
+                  <ion-col text-left ><strong>Your Feedback :</strong></ion-col>
+              </ion-row>
+              <ion-row *ngIf="ReviewFlag == 1">
+                  <ion-col text-left >{{AddedReview}}</ion-col>
+              </ion-row>
+            </ion-list>
+    </ion-card-content>
+  </ion-card>
 </ion-content>

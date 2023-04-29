@@ -1,0 +1,95 @@
+<ion-header translucent="true">
+  <ion-toolbar>
+    <ion-title>Add New Request </ion-title>
+    <ion-buttons slot="start">
+			<ion-back-button defaultHref="servicerequest" icon="chevron-back-outline" text="Back"></ion-back-button>
+		  </ion-buttons>
+    <ion-buttons slot="end" style="width:30%">
+      <ion-button><img style="width:70%" src="/assets/images/logo.png"></ion-button>
+    </ion-buttons>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content padding>
+	<ion-list no-lines  *ngIf="Block_unit==1">
+    <ion-row>
+      <ion-col text-center style="text-align: center;"><h2 style="color: red;">Access Denied!</h2></ion-col>
+    </ion-row>
+    <ion-row>
+      <ion-col text-center style="text-align: center;">
+        <p style="white-space: initial;color: red; ">We are sorry, but your access has been blocked for this feature. Please contact your Managing Committee for resolution.</p>
+      </ion-col>
+    </ion-row>
+    <ion-row>
+      <ion-col text-center style="text-align: center;">
+        <p ><b>Reason :</b> <span style="white-space: initial;text-transform: uppercase; color: red;"> {{Block_desc}}</span> </p>
+      </ion-col>
+    </ion-row>
+  </ion-list>
+</ion-content>
+
+<!--<ion-content padding  *ngIf="Block_unit==0">
+	<ion-list no-lines>
+	  <p text-center style="color:#FF0000;text-align: center;" ><strong>{{message}}</strong></p>
+      <ion-item>
+        <ion-label floating>Title</ion-label>
+        <ion-input type="text" value="" [(ngModel)]="userData.title"></ion-input>
+      </ion-item>
+      <ion-item *ngIf="rolewise == 'Admin'">
+        <ion-label floating>Select unit*</ion-label>
+        <ion-select  [(ngModel)]="userData.unit_id">
+          <ion-select-option *ngFor="let u of Unit_list" value="{{u.unit_id}}">{{u.unit_no}} [ {{u.owner_name}} ]</ion-select-option>
+        </ion-select>
+      </ion-item>
+      <ion-item>
+        <ion-label floating>Category</ion-label>
+        <ion-select [(ngModel)]="userData.category">
+          <ion-select-option text-wrap *ngFor="let d of cat_list" value="{{d.ID}}">{{d.category}}</ion-option>
+        </ion-select>
+      </ion-item>
+
+      <ion-item>
+        <ion-label floating>Priority</ion-label>
+        <ion-select [(ngModel)]="userData.priority">
+          <ion-select-option text-wrap value=Low>Low</ion-select-option>
+          <ion-select-option text-wrap value=Medium>Medium</ion-select-option>
+          <ion-select-option text-wrap value=High>High</ion-select-option>
+        </ion-select>
+      </ion-item>
+      <ion-item style="margin-top: -5px;" *ngIf="(userData.category != renovationRequestId) && (userData.category != AddressProofId) && (userData.category != tenantRequestId)">
+        <ion-label floating>Details</ion-label>
+        <ion-textarea [(ngModel)]="userData.details" rows="5"></ion-textarea>
+      </ion-item>
+	    <ion-item *ngIf="(userData.category != renovationRequestId) && (userData.category != AddressProofId) && (userData.category != tenantRequestId)">
+		    <ion-card>
+          <img src="{{pathForImage(lastImage)}}" [hidden]="lastImage === null" style="max-height : 50vh"(click)= "selectItems()">
+        </ion-card>
+        <h3 [hidden]="lastImage !== null"></h3>
+        <button ion-button round icon-left (click)="presentActionSheet()">
+          <ion-buttons  text-center>
+            <ion-icon name="camera"></ion-icon>Attach Image</ion-buttons>
+          </button>
+        </ion-item>
+        <ion-item *ngIf="(userData.category != renovationRequestId) && (userData.category != AddressProofId) && (userData.category != tenantRequestId)">
+          <ion-row>
+            <ion-col col-2></ion-col>
+            <ion-col col-8>
+              <button ion-button color="primary" block (click)="create()">Create Request</button>
+            </ion-col>
+            <ion-col col-2></ion-col>
+          </ion-row>
+		      <p style="color: #FF0000;text-align: center;">{{message}}</p>
+        </ion-item>
+
+      <ion-item *ngIf="(userData.category == renovationRequestId) || (userData.category == AddressProofId) || (userData.category == tenantRequestId)">
+        <ion-row>
+        <ion-col col-2></ion-col>
+        <ion-col col-8>
+          <button ion-button color="primary" block (click)="create()">Next</button>
+        </ion-col>
+        <ion-col col-2></ion-col>
+    </ion-row>
+    <p style="color: #FF0000;text-align: center;">{{message}}</p>
+  </ion-item>
+  </ion-list>
+</ion-content>-->

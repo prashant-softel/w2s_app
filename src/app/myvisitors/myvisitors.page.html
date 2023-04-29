@@ -1,0 +1,273 @@
+<ion-header translucent="true">
+	<ion-toolbar>
+    <ion-buttons slot="start">
+			<ion-back-button defaultHref="dashboard" icon="chevron-back-outline" text="Back"></ion-back-button>
+		  </ion-buttons>
+	  <ion-title>My Visitor</ion-title>
+	  <ion-buttons slot="end" style="width:30%">
+		<ion-button><img style="width:70%" src="/assets/images/logo.png"></ion-button>
+	 </ion-buttons>
+	</ion-toolbar>
+  <ion-toolbar no-border >
+    <ion-segment [(ngModel)]="tab">
+      <ion-segment-button value="current"  (click) = "fetchCurrentVisitor()">
+       CURRENT
+      </ion-segment-button>
+	    <ion-segment-button value="expected"   (click) = "fetchExpectedVisitor()">
+       EXPECTED
+   	</ion-segment-button>
+    <ion-segment-button value="past"  (click) = "fetchPastVisitor()">
+        PAST
+    </ion-segment-button>
+   </ion-segment>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content padding>
+  <ion-list *ngIf="VisitorFeature== '1'">
+	  <div [ngSwitch]="tab">
+		  <!--  ************************************* Current Visitor Tab *************************  --------------->
+	    <ion-list no-lines *ngSwitchCase="'current'">
+			  <ion-card *ngFor="let p of Visitor_Inside_Array">
+			    <ion-card-content (click)="VisitorDetails(p)" *ngIf="p.Entry_flag =='1'" >
+			  	  <ion-row>
+              <ion-col size="3" class="text-left" *ngIf="p.VisitorImage !=''">
+                <img src="{{img_src}}{{p.VisitorImage}}" style="max-height : 50vh;border-radius: 50%;background-position: center center;background-size: cover;width: 100%;height: 60px;"  onerror="this.src='images/no-image.jpg';">
+              </ion-col>
+              <ion-col size="3" class="text-left"  *ngIf="p.VisitorImage ==''">
+                <img src="images/no-image.jpg" style="max-height : 50vh;border-radius: 50%;background-position: center center;background-size: cover;width: 100%;height: 65px; ">
+              </ion-col>
+              <ion-col class="text-left" size="2"><strong style="float: left;margin-top: 10px;">Name: </strong></ion-col>
+              <ion-col class="text-right" size="7" style="white-space: normal !important; width: 50%">
+                <strong style="float: right;margin-top: 10px;">{{p.VisitorName}}</strong>
+              </ion-col>
+       			</ion-row>
+       	 		<ion-row>
+              <ion-col size="3" class="text-right"></ion-col>
+              <ion-col size="4" class="text-left" style="margin-top: -10%;">
+                <strong>Purpose: </strong>
+              </ion-col>
+              <ion-col size="5"  text-wrap class="text-right" style="margin-top: -10%;">
+                <strong>{{p.purpose_name}}</strong>
+              </ion-col>
+        		</ion-row>
+            <ion-row style = "color:  green">
+              <ion-col size="6" class="text-left" style="margin-top: -4%;">
+                <strong>Approval Status: </strong>
+              </ion-col>
+              <ion-col size="6"  text-wrap class="text-right" style="margin-top: -4%;" >
+                <strong>Approved</strong>
+              </ion-col>
+            </ion-row>
+			    </ion-card-content>
+			    <ion-card-content (click)="VisitorDetails(p)" *ngIf="p.Entry_flag =='3'" >
+            <ion-row>
+              <ion-col size="3" class="text-left" *ngIf="p.VisitorImage !=''">
+                <img src="{{img_src}}{{p.VisitorImage}}" style="max-height : 50vh;border-radius: 50%;background-position: center center;background-size: cover;width: 100%;height: 60px;"  onerror="this.src='images/no-image.jpg';">
+              </ion-col>
+              <ion-col size="3" class="text-left"  *ngIf="p.VisitorImage ==''">
+                <img src="images/no-image.jpg" style="max-height : 50vh;border-radius: 50%;background-position: center center;background-size: cover;width: 100%;height: 65px; ">
+              </ion-col>
+              <ion-col class="text-left" size="2"><strong style="float: left;margin-top: 10px;">Name: </strong></ion-col>
+                <ion-col class="text-right" size="7" style="white-space: normal !important; width: 50%">
+                  <strong style="float: right;margin-top: 10px;">{{p.VisitorName}}</strong>
+              </ion-col>
+            </ion-row>
+            <ion-row>
+              <ion-col size="3" class="text-right"></ion-col>
+              <ion-col size="4" class="text-left" style="margin-top: -10%;">
+                <strong>Purpose: </strong>
+              </ion-col>
+              <ion-col size="5"  text-wrap class="text-right" style="margin-top: -10%;">
+                <strong>{{p.purpose_name}}</strong>
+              </ion-col>
+            </ion-row>
+            <ion-row style = "color: blue">
+              <ion-col size="6" class="text-left" style="margin-top: -4%;">
+                <strong>Approval Status: </strong>
+              </ion-col>
+              <ion-col size="6"  text-wrap class="text-right" style="margin-top: -4%;" >
+                <strong>Without Approval</strong>
+              </ion-col>
+            </ion-row>
+          </ion-card-content>
+          <ion-card-content (click)="VisitorDetails(p)" *ngIf="p.Entry_flag =='0'" style = "background-color:  #ffffcc">
+            <ion-row>
+              <ion-col size="3" class="text-left" *ngIf="p.VisitorImage !=''">
+                <img src="{{img_src}}{{p.VisitorImage}}" style="max-height : 50vh;border-radius: 50%;background-position: center center;background-size: cover;width: 100%;height: 60px;"  onerror="this.src='images/no-image.jpg';">
+              </ion-col>
+              <ion-col size="3" class="text-left"  *ngIf="p.VisitorImage ==''">
+                <img src="images/no-image.jpg" style="max-height : 50vh;border-radius: 50%;background-position: center center;background-size: cover;width: 100%;height: 65px; ">
+              </ion-col>
+              <ion-col class="text-left" size="2"><strong style="float: left;margin-top: 10px;">Name: </strong></ion-col>
+              <ion-col class="text-right" size="7" style="white-space: normal !important; width: 50%">
+                <strong style="float: right;margin-top: 10px;">{{p.VisitorName}}</strong>
+              </ion-col>
+            </ion-row>
+            <ion-row>
+              <ion-col size="3" class="text-right"></ion-col>
+              <ion-col size="4" class="text-left" style="margin-top: -10%;">
+                <strong>Purpose: </strong>
+              </ion-col>
+              <ion-col size="5"  text-wrap class="text-right" style="margin-top: -10%;">
+                <strong>{{p.purpose_name}}</strong>
+              </ion-col>
+            </ion-row>
+            <ion-row>
+              <ion-col  text-wrap class="text-center" style="margin-top: -4%; align-content: center;"  class="slide-in-both-ways">
+                <strong>Waiting for your approval</strong>
+              </ion-col>
+            </ion-row>
+          </ion-card-content>
+          <ion-card-content (click)="VisitorDetails(p)" *ngIf="p.Entry_flag =='2'" >
+            <ion-row>
+              <ion-col size="3" class="text-left" *ngIf="p.VisitorImage !=''">
+                <img src="{{img_src}}{{p.VisitorImage}}" style="max-height : 50vh;border-radius: 50%;background-position: center center;background-size: cover;width: 100%;height: 60px;"  onerror="this.src='images/no-image.jpg';">
+              </ion-col>
+              <ion-col size="3" class="text-left"  *ngIf="p.VisitorImage ==''">
+                <img src="images/no-image.jpg" style="max-height : 50vh;border-radius: 50%;background-position: center center;background-size: cover;width: 100%;height: 65px; ">
+              </ion-col>
+              <ion-col class="text-left" size="2"><strong style="float: left;margin-top: 10px;">Name: </strong></ion-col>
+              <ion-col class="text-right" size="7" style="white-space: normal !important; width: 50%">
+                <strong style="float: right;margin-top: 10px;">{{p.VisitorName}}</strong>
+              </ion-col>
+            </ion-row>
+            <ion-row>
+              <ion-col size="3" class="text-right"></ion-col>
+              <ion-col size="4" class="text-left" style="margin-top: -10%;">
+                <strong>Purpose: </strong>
+              </ion-col>
+              <ion-col size="5"  text-wrap class="text-right" style="margin-top: -10%;">
+                <strong>{{p.purpose_name}}</strong>
+              </ion-col>
+            </ion-row>
+            <ion-row style = "color:red">
+              <ion-col size="6" class="text-left" style="margin-top: -4%;">
+                <strong>Approval Status: </strong>
+              </ion-col>
+              <ion-col size="6"  text-wrap class="text-right" style="margin-top: -4%;" >
+                <strong>Denied</strong>
+              </ion-col>
+            </ion-row>
+          </ion-card-content>
+        </ion-card>
+			  <ion-row *ngIf="Visitor_Inside_Array.length ==0">	
+				  <p>&nbsp;</p>
+				  <p>&nbsp;</p>
+				  <ion-col size="12" style="text-align: -webkit-center;">
+            <button ion-fab style="width: 150px;height: 150px;background-color: #e0e0e0 !important;" ><ion-icon name="man" style="font-size: 12.7rem;"></ion-icon></button>
+              <p style="font-size: 2.3rem;"><strong>No Visitors Inside</strong></p>
+          </ion-col>
+     		</ion-row>
+		  </ion-list>
+<!--  ************************************* Expected Visitor Tab *************************  --------------->	
+		<ion-list *ngSwitchCase="'expected'">
+			<ion-card *ngFor="let p of Expected_Visitor_Array">
+				<ion-card-content>
+          <ion-row>
+            <ion-col size="5" class="text-left"><strong>Visitor Name:</strong></ion-col>
+            <ion-col size="7" class="text-right"><strong>{{p.fname}} {{p.lname}}</strong></ion-col>
+          </ion-row>
+          <ion-row>
+            <ion-col size="5" class="text-left"><strong>Contact No:</strong></ion-col>
+            <ion-col size="7" class="text-right"><strong>{{p.mobile}}</strong></ion-col>
+          </ion-row>
+          <ion-row>
+            <ion-col size="5" class="text-left"><strong>Purpose:</strong></ion-col>
+            <ion-col size="7" class="text-right"><strong>{{p.purpose_name}}</strong></ion-col>
+          </ion-row>
+          <ion-row>
+            <ion-col size="5" class="text-left"><strong>Expected Date:</strong></ion-col>
+            <ion-col size="7" class="text-right"><strong>{{p.expected_date}}</strong></ion-col>
+          </ion-row>
+          <ion-row>
+            <ion-col size="5" class="text-left"><strong>Expected Time:</strong></ion-col>
+            <ion-col size="7" class="text-right"><strong>{{p.expected_time}}</strong></ion-col>
+          </ion-row>
+          <ion-row *ngIf="p.note !=''">
+            <ion-col size="6">
+              <strong>Note : </strong>
+            </ion-col>
+          </ion-row>
+          <p *ngIf="p.note !=''" style="padding-left: 5px; padding-right: 5px;white-space: pre-line;">{{p.note}}</p>
+				</ion-card-content>
+			</ion-card>
+			<ion-row *ngIf="Expected_Visitor_Array.length ==0">	
+				<p>&nbsp;</p>
+				<p>&nbsp;</p>
+				<ion-col size="12" style="text-align: -webkit-center;">
+          <button ion-fab style="width: 150px;height: 150px;background-color: #e0e0e0 !important;" ><ion-icon name="man" style="font-size: 12.7rem;"></ion-icon></button>
+          <p style="font-size: 2.3rem;"><strong>No Expected Visitors</strong></p>
+        </ion-col>
+      </ion-row>
+		</ion-list>	
+ 
+<!--  ************************************* Past Visitor Tab *************************  --------------->
+		<ion-list *ngSwitchCase="'past'">
+      <ion-searchbar (ionInput)="getItems($event)"></ion-searchbar>
+  			<ion-card  *ngFor="let p of Past_visitor_temp_array">
+	  		  <ion-card-content (click)="VisitorDetails(p)">
+		  	  	<ion-row>
+              <ion-col size="3" class="text-left" *ngIf="p.VisitorImage !=''">
+                <img src="{{img_src}}{{p.VisitorImage}}" style="max-height : 50vh;border-radius: 50%;background-position: center center;background-size: cover;width: 100%;height: 60px;"  onerror="this.src='images/no-image.jpg';">
+              </ion-col>
+              <ion-col size="3" class="text-left"  *ngIf="p.VisitorImage ==''">
+                <img src="images/no-image.jpg" style="max-height : 50vh;border-radius: 50%;background-position: center center;background-size: cover;width: 100%;height: 65px; ">
+              </ion-col>
+              <ion-col class="text-left" size="2"><strong style="float: left;margin-top: 10px;">Name: </strong></ion-col>
+              <ion-col class="text-right" size="7" style="white-space: normal !important; width: 50%">
+                <strong style="float: right;margin-top: 10px;">{{p.VisitorName}}</strong>
+              </ion-col>
+       			</ion-row>
+       	 		<ion-row>
+              <ion-col size="3" class="text-right"></ion-col>
+              <ion-col size="3" class="text-left" style="margin-top: -10%;">
+                <strong>Purpose: </strong>
+              </ion-col>
+              <ion-col size="6"  text-wrap class="text-right" style="margin-top: -10%;">
+                <strong>{{p.purpose_name}}</strong>
+              </ion-col>
+        		</ion-row>
+            <ion-row>
+              <ion-col size="6" class="text-left">
+                <strong>Incomming Date</strong>
+              </ion-col>
+              <ion-col size="6" class="text-right"><strong>{{p.VisitorInDate}}</strong>
+              </ion-col>
+            </ion-row>
+			    </ion-card-content>
+			</ion-card>
+      <ion-row *ngIf="Visitor_Past_Array.length ==0">	
+				<p>&nbsp;</p>
+				<p>&nbsp;</p>
+				<ion-col size="12" style="text-align: -webkit-center;">
+          <button ion-fab style="width: 150px;height: 150px;background-color: #e0e0e0 !important;" ><ion-icon name="man" style="font-size: 12.7rem;"></ion-icon></button>
+          <p style="font-size: 2.3rem;"><strong>No Past Visitors</strong></p>
+        </ion-col>
+      </ion-row>
+		</ion-list>
+ </div>
+  <ion-fab right bottom>
+    <button ion-fab (click)="addExpectedVisitor()" style="background-color: #f6f6f6;">
+      <ion-icon name="create" style="color:#5cb85c;font-size:30px;"></ion-icon>
+    </button>
+  </ion-fab>
+  </ion-list>
+  <ion-list *ngIf="VisitorFeature =='0'">
+    <ion-row> 
+      <p>&nbsp;</p>
+      <p>&nbsp;</p>
+      <ion-col size="12" style="text-align: -webkit-center;">
+        <button ion-fab style="width: 150px;height: 150px;background-color: #e0e0e0 !important;" ><ion-icon name="man" style="font-size: 12.7rem;"></ion-icon></button>
+      </ion-col>
+    </ion-row>
+    <ion-row>
+      <ion-col size="12">
+        <strong>Note :</strong>
+        <p>This feature is available when Security Manager service is subscribed to record visitors, delivery, courier, security staff, House keeping staff.</p>
+        <p>Security Manager App enhances the security of the society. Food delivery boys, courier men, contractors, electricians, plumbers, drivers, maids etc coming inside society are verified and their visits are recorded in the system.</p>
+        <p>Members can also see log of their visitors, or attendance sheet of their maids and can even inform security about the visitors they are expecting using the App.</p>
+      </ion-col>
+    </ion-row>
+  </ion-list>
+</ion-content>

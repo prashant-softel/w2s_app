@@ -19,10 +19,10 @@ export class GlobalVars {
   DEVICE_ID = "";
   MAP_UNIT_BLOCK = 0;
   MAP_BLOCK_DESC = "";
-
+  WAR_VERSION="";
   APP_VERSION = "2.0.20181104";
   //APP_VERSION = "1.0.20180117";
-  LATEST_APP_VERSION = "";
+  LATEST_APP_VERSION = "2.1.20230401";
   APP_DOWNLOAD_LINK = "";
   /* Profile Flages    Admin  and Admin Member*/
   APPROVALS_LEASE = 0;
@@ -38,6 +38,12 @@ export class GlobalVars {
   PROFILE_SERVICE_PROVIDER = 0;
   PROFILE_USER_MANAGEMENT = 0;
   MEMBER_DUES_AMOUNT = 0;
+  LoginID = 0;
+  HOST_NAME = "https://way2society.com/"; //Server
+  MAP_LOGIN_ID = 0;
+  RENOVATION_REQUEST_ID = 0;
+  TENANT_REQUEST_ID = 0;
+  ADDRESS_PROOF_REQUEST_ID = 0;
 
 
   APP_MENU = [];
@@ -56,6 +62,7 @@ export class GlobalVars {
      this.PROFILE_SEND_NOTIFICATION= 0;
      this.PROFILE_SERVICE_PROVIDER= 0;
      this.PROFILE_USER_MANAGEMENT= 0;*/
+     this.MAP_LOGIN_ID = 0;
   }
 
   /*setAppMenu(role) {

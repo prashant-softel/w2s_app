@@ -1,12 +1,11 @@
 import { Component, OnInit,CUSTOM_ELEMENTS_SCHEMA} from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
-import { IonicModule, NavController, NavParams, Platform } from '@ionic/angular';
+import { IonicModule, NavController, NavParams, Platform,} from '@ionic/angular';
 import { GlobalVars } from 'src/service/globalvars';
 import { LoaderView } from 'src/service/loaderview';
 import { ConnectServer } from 'src/service/connectserver';
 import { NavigationExtras } from '@angular/router';
-
 
 enum statusEnum  { "Raised" = 1,  "Waiting",  "In progress",  "Completed", "Cancelled"}
 enum priorityEnum  { "Critical" = 1,  "High",  "Medium",  "Low"}
@@ -21,16 +20,28 @@ enum priorityEnum  { "Critical" = 1,  "High",  "Medium",  "Low"}
   imports: [IonicModule, CommonModule, FormsModule]
 })
 export class DashboardPage implements OnInit {
+  tab: string = "society";
   SocietyPage: any = 'society';
   DuesPage :any ='dues';
   FeaturesPage: any ='features';
   EventsPage :any='events';
   NoticesPage:any='notices';
-  tab: string = "society";
+  TaskPage:any='task'
   ServiceRequestPage:any='servicerequest';
   PaymentPage:any='payment';
   PhotoAlbumPage:any='photoalbum';
   ProfilePage:any='profile';
+  DirectoryPage :any='directory';
+  ClassifiedsPage:any='classifieds';
+  PollPage :any='poll';
+  ServiceproviderPage:any='serviceprovider';
+  ViewimposefinePage:any='viewimposefine';
+  UpdateprofilePage:any='updateprofile';
+  TenantsPage:any='tenants';
+  AddressproofRequest:any='address-proof-request';
+  ViewregistrationPage:any='viewregistration';
+  MyvisitorsPage:any='myvisitors';
+  ServicesPage:any='services';
   data : any;
   //selection:any;
   bill_amount : any;
@@ -74,6 +85,8 @@ export class DashboardPage implements OnInit {
   blockAcount :any;
   flash: boolean;
   router: any;
+  society:any;
+  UserTab:any;
 
   constructor(private navCtrl: NavController,
     private globalVars: GlobalVars,
@@ -120,10 +133,10 @@ export class DashboardPage implements OnInit {
       var todayDate = new Date().toISOString();
       //this.currentDate=moment(todayDate).format('DD-MM-YYYY');
      // alert( this.currentDate);
-     
+      this.society = "";
       this.AccessUI="0";
       this.blockAcount = "0";
-
+      this.UserTab="";
 
   }
 
@@ -139,7 +152,7 @@ export class DashboardPage implements OnInit {
     this.Feature_Admin_array=[];
     this.Feature_All_array=[];
     this.Services_array=[];
-    
+    this.society = this.globalVars.MAP_SOCIETY_NAME;
 
    if(this.globalVars.MAP_USER_ROLE == "Admin Member"){
       this.role = "AdminMember";
@@ -158,7 +171,19 @@ export class DashboardPage implements OnInit {
       this.role = this.globalVars.MAP_USER_ROLE;
     }
 
-
+    // Tab View role wise 
+    if( this.role == "Member" || this.role == "Tenant")
+    {
+      this.UserTab ="MemTab";
+    }
+    if(this.role == "Admin" || this.role == "SuperAdmin" || this.role == "Manager")
+    {
+      this.UserTab ="AdminTab";
+    }
+    if(this.role == "AdminMember" )
+    {
+      this.UserTab ="AdminMemTab";
+    }
     //this.role = this.globalVars.MAP_USER_ROLE;
     this.roleWise=this.role;
     console.log(this.role);
@@ -451,8 +476,10 @@ export class DashboardPage implements OnInit {
     this.navCtrl.navigateRoot(this.SocietyPage);
   }
   viewDues() {
-    if(this.AccessUI == "0" && this.blockAcount=="0" )  ///   -----------------------------------------------------------------
+    //alert("call");
+  if(this.AccessUI == "0" && this.blockAcount=="0" )  ///   -----------------------------------------------------------------
    {
+    //alert("call1");
    this.loaderView.showLoader('Loading ...');  
     var objData = [];
     objData['fetch'] =1;   /// New Version
@@ -463,18 +490,15 @@ export class DashboardPage implements OnInit {
                    this.loaderView.dismissLoader();
                    if(resolve['success'] == 1)
                    {
-                       //this.navCtrl.push(this.DuesPage, {details : resolve['response']});
-                       //this.navCtrl.navigateRoot(this.DuesPage, {details : resolve['response']});
+                    
                        let navigationExtras: NavigationExtras = {
                         queryParams: 
                         {
                           details :resolve['response'],
                         }
                       };
-                        this.navCtrl.navigateRoot(this.DuesPage,navigationExtras);
-                        //}
-                      // this.router.navigate(this.DuesPage, {details : resolve['response']});
-                   }
+                      this.navCtrl.navigateRoot(this.DuesPage,navigationExtras);
+                    }
                 }
    );
  }
@@ -520,8 +544,15 @@ export class DashboardPage implements OnInit {
     p['dash']="society";
      if(this.AccessUI == "0")
     {
+      let navigationExtras: NavigationExtras = {
+        queryParams: 
+        {
+          details :p,
+        }
+      };
+      this.navCtrl.navigateRoot(this.ServiceRequestPage,navigationExtras);
       //this.navCtrl.navigateRoot(this.ServiceRequestPage, {details : p});  //issue please check
-      this.navCtrl.navigateRoot(this.ServiceRequestPage); 
+      //this.navCtrl.navigateRoot(this.ServiceRequestPage); 
     }
     else
     {
@@ -546,10 +577,14 @@ export class DashboardPage implements OnInit {
    }
    payment()
    {
+    //alert("payment");
      var p=[];
      p['dash']="society";
+     //alert(this.AccessUI);
+     //alert(this.blockAcount);
       if( this.AccessUI == "0" && this.blockAcount=="0")
      {
+      //alert("navigate");
       // this.navCtrl.navigateRoot(PaymentPage, {details : p});
        this.navCtrl.navigateRoot(this.PaymentPage);
      }
@@ -572,7 +607,7 @@ export class DashboardPage implements OnInit {
         // this.presentAlert(); 
       }
    }
-   profile()
+  /* profile()
    {
      var p=[];
      p['dash']="society";
@@ -588,28 +623,51 @@ export class DashboardPage implements OnInit {
         }
       };
         this.navCtrl.navigateRoot(this.ProfilePage,navigationExtras);
-       //if(this.roleWise =="Member" )
-       //{
-         //this.navCtrl.navigateRoot(this.ProfilePage, {details : p});  
-         //this.navCtrl.navigateRoot(this.ProfilePage);  
-      // }
-      /* else if(this.roleWise =="Tenant")
-       {
-         this.navCtrl.push(this.TenantProfilePage, {details : p});  
-       }
-       else
-       {
-         this.navCtrl.push(this.UpdateprofilePage);
-       }*/
-      
+       
     }
      else
      {
          //this.presentAlert(); 
      }
-     //if(this.roleWise =="Member" || this.roleWise =="AdminMember")
     
+   }*/
+   
+  profile()
+  {
+    var p=[];
+    p['dash']="society";
+    p['uID']=0;
+   // alert(this.AccessUI);
+    if(this.AccessUI == "0")
+    {
+      if(this.roleWise =="Member" )
+      {
+        let navigationExtras: NavigationExtras = {
+          queryParams: 
+          {
+            details : p,
+                     
+          }
+        };
+          this.navCtrl.navigateRoot(this.ProfilePage,navigationExtras);
+      }
+      /*else if(this.roleWise =="Tenant")
+      {
+        this.navCtrl.push(TenantProfilePage, {details : p});  
+      }*/
+      else
+      {
+        this.navCtrl.navigateRoot(this.UpdateprofilePage);
+      }
+     
    }
+    else
+    {
+        //this.presentAlert(); 
+    }
+    //if(this.roleWise =="Member" || this.roleWise =="AdminMember")
+   
+  }
    viewEvents()
    {
      var p=[];
@@ -625,4 +683,275 @@ export class DashboardPage implements OnInit {
      }
      
    }
+   directory()
+  {
+    var p=[];
+    p['dash']="society";
+     if(this.AccessUI == "0")
+    {
+      this.navCtrl.navigateRoot(this.DirectoryPage);
+      //this.navCtrl.push(DirectoryPage, {details : p}); 
+    }
+    else
+    {
+      //this.presentAlert(); 
+    }
+    
+  }
+  viewPoll()
+  {
+    var p=[];
+    p['dash']="society";
+     if(this.AccessUI == "0")
+    {
+      let navigationExtras: NavigationExtras = {
+        queryParams: 
+        {
+          details :p,
+        }
+      };
+      //this.navCtrl.navigateRoot(PollPage, {details : p});
+      this.navCtrl.navigateRoot(this.PollPage,navigationExtras);
+    }
+    else
+    {
+      //this.presentAlert(); 
+    }
+   
+  }
+  sProvider()
+  {
+
+    var p=[];
+    p['dash']="society";
+    if(this.AccessUI == "0")
+    {
+      let navigationExtras: NavigationExtras = {
+        queryParams: 
+        {
+          details :p,
+        }
+      };
+      //this.navCtrl.push(ServiceproviderPage, {details : p});  
+      this.navCtrl.navigateRoot(this.ServiceproviderPage,navigationExtras);
+    }
+    else
+    {
+      //this.presentAlert(); 
+    }
+    
+  }
+
+  viewClassified(){
+   
+    this.navCtrl.navigateRoot(this.ClassifiedsPage);
+  }
+  PageUrl(impApp,Status,title,Desc)
+  {
+    console.log(title);
+    //alert("Comming Soon !");
+    if(this.globalVars.APP_VERSION == impApp  && Status == 1)
+    {
+      if(title == 'Renting Registration')
+      {
+        if(this.role == "Tenant")
+        {
+          alert("you are not authorized to access");
+        }
+        else{
+          if(this.AccessUI == "0")
+          {
+            var p=[];
+            p['Version']=impApp;
+            p['Desc'] = Desc; 
+            let navigationExtras: NavigationExtras = {
+              queryParams: 
+              {
+                details :p,
+              }
+            };   
+            this.navCtrl.navigateRoot(this.ServicesPage, navigationExtras);
+            //this.navCtrl.navigateRoot(this.ViewregistrationPage);
+          }
+          else
+          {
+               //this.presentAlert(); 
+          }
+        }
+      }
+      else if(title== 'My Visitors')
+      {
+        if(this.AccessUI == "0")
+        {
+          var p=[];
+          p['Version']=impApp;
+          p['Desc'] = Desc; 
+          let navigationExtras: NavigationExtras = {
+          queryParams: 
+          {
+            details :p,
+          }
+        };   
+        this.navCtrl.navigateRoot(this.ServicesPage, navigationExtras);
+          //this.navCtrl.navigateRoot(this.MyvisitorsPage); 
+        }
+        else
+        {
+          //this.presentAlert(); 
+        } 
+      }
+    }
+    else
+    {
+      // alert("6");
+      //If App version is less than Service Implemented version then show feature details from above column and add "In order to use this service, pl update your app to version x.xyz or above"
+      var p=[];
+      p['Version']=impApp;
+      p['Desc'] = Desc; 
+      let navigationExtras: NavigationExtras = {
+        queryParams: 
+        {
+          details :p,
+        }
+      };   
+      this.navCtrl.navigateRoot(this.ServicesPage, navigationExtras);
+    }
+  }
+  viewTask(){
+    if(this.AccessUI == "0")
+   {
+     //this.navCtrl.push(TaskPage);
+     this.navCtrl.navigateRoot(this.TaskPage);
+   }
+   else{
+     //this.presentAlert(); 
+   }
+  // alert("Comming Soon !");
+   
+ }
+ viewImpose() {
+  alert("Comming Soon!");
+  if(this.AccessUI == "0")
+  {
+    
+    this.navCtrl.navigateRoot(this.ViewimposefinePage);
+  }
+  else{
+    //this.presentAlert(); 
+  }
+
+}
+viewAllProvider(flag)
+{
+  
+ var p=[];
+  p['tab']='1';
+  p['dash']= "admin";
+  p['flag'] = flag;
+  if(this.AccessUI == "0")
+  {
+    let navigationExtras: NavigationExtras = {
+      queryParams: 
+      {
+        details :p,
+      }
+    };
+   this.navCtrl.navigateRoot(this.ServiceproviderPage,navigationExtras);
+  }
+  else{
+    //this.presentAlert(); 
+  }
+  
+}
+viewPendingProvider(flag)
+{
+  alert("comming soon !");
+ var p=[];
+  p['tab']='2';
+  p['dash']= "admin";
+  p['flag'] = flag;
+  /* if(this.AccessUI == "0")
+  {
+   this.navCtrl.push(ServiceproviderPage,{details : p});
+  }
+  else{
+    this.presentAlert(); 
+  }
+  */
+}
+viewTenantsInAdmin(){
+  var p=[];
+  p['dash']=this.tab;
+  if(this.AccessUI == "0")
+  {
+    let navigationExtras: NavigationExtras = {
+      queryParams: 
+      {
+        details :p,
+      }
+    };
+   this.navCtrl.navigateRoot(this.TenantsPage,navigationExtras);
+   //this.navCtrl.push(TenantsPage,{details : p});
+  }
+  else{
+    //this.presentAlert(); 
+  }
+  
+}
+viewRenovationRequest(){
+  var p=[];
+  p['dash']=this.tab;
+  console.log(p);
+  alert("comming soon !");
+  /*if(this.AccessUI == "0")
+  {
+    this.navCtrl.push(RenovationRequestPage,{details : p});
+  }
+  else{
+    this.presentAlert(); 
+  }*/
+ 
+}
+viewAddressProofRequest(){
+  var p=[];
+  p['dash']=this.tab;
+ 
+  if(this.AccessUI == "0")
+  {
+    let navigationExtras: NavigationExtras = {
+      queryParams: 
+      {
+        details :p,
+      }
+    };
+    this.navCtrl.navigateRoot(this.AddressproofRequest,navigationExtras);
+    //this.navCtrl.push(AddressproofRequest,{details : p});
+  }
+  else{
+    //this.presentAlert(); 
+  }
+  
+}
+viewServiceInAdmin() {
+  var p=[];
+  p['dash']=this.tab;
+  let navigationExtras: NavigationExtras = {
+    queryParams: 
+    {
+      details :p,
+    }
+  };
+ this.navCtrl.navigateRoot(this.ServiceRequestPage,navigationExtras);
+  //this.navCtrl.push(ServiceRequestPage,{details : p});
+}
+viewClassifiedInAdmin(){
+   alert("comming soon !");
+ // this.navCtrl.push(ClassifiedsPage);
+}
+
+viewAdminAlbums() {
+  alert("comming Soon!");
+  //this.navCtrl.push(AlbumApprovalPage);
+}
+
 } // end tag

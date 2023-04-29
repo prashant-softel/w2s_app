@@ -1,13 +1,37 @@
-<ion-header [translucent]="true">
+<ion-header translucent="true">
   <ion-toolbar>
-    <ion-title>viewevent</ion-title>
+    <ion-title>Events Details</ion-title>
+    <ion-buttons slot="start">
+			<ion-back-button defaultHref="events" icon="chevron-back-outline" text="Back"></ion-back-button>
+		  </ion-buttons>
+    <ion-buttons slot="end" style="width:30%">
+      <ion-button><img style="width:70%" src="/assets/images/logo.png"></ion-button>
+    </ion-buttons>
   </ion-toolbar>
 </ion-header>
 
-<ion-content [fullscreen]="true">
-  <ion-header collapse="condense">
-    <ion-toolbar>
-      <ion-title size="large">viewevent</ion-title>
-    </ion-toolbar>
-  </ion-header>
+<ion-content padding>
+	<ion-card>
+    <ion-card-content  style="color: #0d0d0d;">
+      <ion-card-title>{{event_title}}</ion-card-title>
+      <p  *ngIf="event_date !=end_date"><ion-icon name="calendar" primary>&nbsp;</ion-icon>{{event_date}} To {{end_date}}</p>
+      <p *ngIf="event_date==end_date"><ion-icon  name="calendar" primary>&nbsp;</ion-icon>{{event_date}} </p>
+      <p><ion-icon name="alarm" secondary>&nbsp;</ion-icon>{{event_time}}</p>
+      Event Charges: Rs.{{event_charges}} /-
+      <ion-row>
+        <ion-col text-left col-6>
+          <a *ngIf=hasLink class="item" href="#" (click)="openLink()">
+              <br />Event Link<br />
+          </a>
+        </ion-col>
+        <!--<ion-col text-right col-6 style="text-align: center;">
+          <a *ngIf=hasAttachment class="item" href="#" (click)="openWithSystemBrowser()">
+              <br />Attachment<br />
+          </a>
+        </ion-col>-->
+      </ion-row>
+      <br/>
+      <p id="event_details"></p>
+    </ion-card-content>
+  </ion-card>
 </ion-content>

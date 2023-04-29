@@ -1,11 +1,16 @@
 import { Injectable } from '@angular/core';
-import { HttpClient } from '@angular/common/http';
+import { HttpClient} from '@angular/common/http';
 import { GlobalVars } from './globalvars';
 //http://way2society.com:8080/W2S/
 //http://way2society.com:8080/W2S_Beta/
+var headers = new Headers();
+headers.append('Content-Type', 'application/x-www-form-urlencoded; charset=UTF-8');
+  headers.append('Accept','application/json');
+  headers.append('content-type','application/json');
 @Injectable()
 export class ConnectServer {
-  serverURL='http://way2society.com:8080/W2S/';
+  //serverURL='http://way2society.com:8080/W2S/';
+  serverURL='https://way2society.com:8443/W2S/';
   API_URL='';
   constructor(public http: HttpClient, private globalVars:GlobalVars ) { }
 
@@ -14,6 +19,7 @@ export class ConnectServer {
   }
 
   login(objData) {
+    
     return new Promise(resolve => {
 
       objData['device'] = this.globalVars.DEVICE_ID;
@@ -60,10 +66,14 @@ export class ConnectServer {
         objData = [];
       }
 
-      objData['token'] = this.globalVars.USER_TOKEN;
+     /*objData['token'] = "wvSn5ujhqo2IgEmOgxIb2ZAGGHR-HbsaeKZZKxciGQItalHa_9fwwsmXiI__fmk_a7u9VPr-rTJjd1vHtzfx8aCtmH01H1tBvh1i_MTycVJzK33x88e2qMGXCL-CZdrl";
+      objData['tkey'] = "VbnPa27xSPDDNDHuuQBDKaqBd0Yav0lXf8Xnr1dI8kgeD6x9jnbqwgTEjm66F-iw7RLFvMunLYIkxiyHkKIRRGyG6m7ZucowXJ_QKp6spTSCIQ_sQOMvZv0odrpEFR5C6fq0SP20IdFZlwxLzrFGsw";
+      objData['map'] = "9456";
+    */
+    objData['token'] = this.globalVars.USER_TOKEN;
       objData['tkey'] = this.globalVars.MAP_TKEY;
       objData['map'] = this.globalVars.MAP_ID;
-
+  
       var sURL = this.serverURL + fileURL + this.generateQueryString(objData);
       //alert(sURL);
 

@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, HostListener, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { IonicModule, NavController, NavParams, Platform } from '@ionic/angular';
@@ -6,7 +6,7 @@ import { GlobalVars } from 'src/service/globalvars';
 import { LoaderView } from 'src/service/loaderview';
 import { ConnectServer } from 'src/service/connectserver';
 import { NavigationExtras } from '@angular/router';
-
+import { InAppBrowser, InAppBrowserOptions } from '@ionic-native/in-app-browser/ngx';
 @Component({
   selector: 'app-payment',
   templateUrl: './payment.page.html',
@@ -15,12 +15,13 @@ import { NavigationExtras } from '@angular/router';
   imports: [IonicModule, CommonModule, FormsModule]
 })
 export class PaymentPage implements OnInit {
+  RecordneftPage:any='recordneft';
   paytm : boolean = false;
   PaymentLink : any;
   AllowPayment : any;
   EnablePaytm : any;
   Enable_NEFT : any;
-	/*options : InAppBrowserOptions = {
+	options : InAppBrowserOptions = {
       location : 'yes',//Or 'no'
       hidden : 'no', //Or  'yes'
       clearcache : 'yes',
@@ -36,19 +37,27 @@ export class PaymentPage implements OnInit {
       allowInlineMediaPlayback : 'no',//iOS only
       presentationstyle : 'pagesheet',//iOS only
       fullscreen : 'yes',//Windows only
-      );*/
+  };
   constructor(private navCtrl: NavController,
     private globalVars: GlobalVars,
     private connectServer: ConnectServer,
     private platform: Platform,
     private loaderView: LoaderView,
-    private params: NavParams) {
+    private params: NavParams,
+    private iab: InAppBrowser) {
     this.PaymentLink="";
     this.AllowPayment ="";
     this.EnablePaytm = "0";
     this.Enable_NEFT = "0";
    }
-
+   @HostListener('document:ionBackButton', ['$event'])
+   overrideHardwareBackAction(event: any) {
+     event.detail.register(100, async () => {
+       event.stopImmediatePropagation();
+       event.stopPropagation();
+       event.preventDefault();
+     });
+   }
   ngOnInit() {
     this.loaderView.showLoader('Loading ...');
      this.connectServer.getData("Society", null).then(
@@ -89,15 +98,18 @@ export class PaymentPage implements OnInit {
     }
     else
     {
-      var httpUrl = this.PaymentLink;
+      var httpUrl =this.PaymentLink;
       let target = "_system";
+      //window.open(httpUrl, '_blank', 'location=no'); 
+      const browser = this.iab.create(httpUrl,target,this.options);
+       browser.show()
       //var ref = cordova.InAppBrowser.open(url, target, options);
      // this.theInAppBrowser.create(httpUrl,target,this.options);
     }
   
  }
  neftPayment() {
-   alert("Comming Soon!");
-    //this.navCtrl.push(RecordneftPage);
+   //alert("Comming Soon!");
+   this.navCtrl.navigateRoot(this.RecordneftPage);
   }
 }

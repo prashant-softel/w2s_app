@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
-import { IonicModule, NavController, NavParams, Platform } from '@ionic/angular';
+import { IonicModule, NavController, NavParams, Platform,ActionSheetController } from '@ionic/angular';
 import { GlobalVars } from 'src/service/globalvars';
 import { LoaderView } from 'src/service/loaderview';
 import { ViewbillPage } from '../viewbill/viewbill.page';
@@ -14,31 +14,37 @@ import { ConnectServer } from 'src/service/connectserver';
 import { VisitorInPage } from '../visitor-in/visitor-in.page';
 import { ViewreceiptPage } from '../viewreceipt/viewreceipt.page';
 import { NavigationExtras } from '@angular/router';
+import { InAppBrowser } from '@awesome-cordova-plugins/in-app-browser/ngx';
 
-
-
+declare let cordova: any;
 @Component({
   selector: 'app-login',
   templateUrl: './login.page.html',
   styleUrls: ['./login.page.scss'],
   standalone: true,
+  providers:[InAppBrowser],
   imports: [IonicModule, CommonModule, FormsModule]
 })
 export class LoginPage implements OnInit {
   userData: { Email: string, Password: any };
   showLogin: any;
   message: any;
+  films: any | [];
   notificationDetails: any;
   bHasNotification: any;
   SocietyPage: any = 'society';
   DashboardPage: any = 'dashboard';
+  NewuserPage:any='newuser';
+  
   constructor(
     private navCtrl: NavController,
     private globalVars: GlobalVars,
     private connectServer: ConnectServer,
-    private platform: Platform,
     private loaderView: LoaderView,
-    private params: NavParams) {
+    private params: NavParams,
+    public actionSheet: ActionSheetController,
+    private iab: InAppBrowser,
+    private platform:Platform) {
 
     this.userData = { Email: "", Password: "" };
     this.showLogin = false;
@@ -49,13 +55,32 @@ export class LoginPage implements OnInit {
     this.bHasNotification = false;
   }
   ngOnInit(): void {
+    
     this.reinitializeData();
   }
+  launch1()
+  {
+    this.platform.ready().then(() => {
+      cordova.InAppBrowser.open('https://way2society.com/', "_system", "location=true");
+  });
+    alert("call");
+   // window.open('https://way2society.com/', "_system", "location=yes");
+  }
+  launch() {
+    try{
+      alert("call1");
+       const browser = this.iab.create('https://way2society.com/');
+       browser.on('loadstop').subscribe(event => {
+      browser.insertCSS({ code: "body{color: red;" });
+    });
 
-  launch(url) {
-    //this.platform.ready().then(() => {
-    //  let browser = new InAppBrowser('https://ionic.io', '_self', 'location=no');
-    //});
+    browser.close();
+    }
+    catch (err) {
+      alert("call2");
+      alert(err);
+    }
+    
   }
 
   ionViewDidLoad() {
@@ -256,13 +281,14 @@ export class LoginPage implements OnInit {
                 this.navCtrl.navigateRoot('dashboard');
               }
               else {
-                let navigationExtras: NavigationExtras = {
-                  queryParams: {
-                      userName:'TESTTSTSTS' ,
+                //let navigationExtras: NavigationExtras = {
+                  //queryParams: {
+                      //userName:'TESTTSTSTS' ,
                      
-                  }
-              };
-                this.navCtrl.navigateRoot(this.SocietyPage,navigationExtras);
+                 // }
+              //};
+                //this.navCtrl.navigateRoot(this.SocietyPage,navigationExtras);
+                this.navCtrl.navigateRoot(this.SocietyPage);
               }
 
               this.showLogin = false;
@@ -353,17 +379,43 @@ export class LoginPage implements OnInit {
   }*/
 
   openForgotPasswordLink() {
-    window.open("https://way2society.com/forgotpassword.php", '_blank', 'location=no');
+    
+    //var ref = cordova.InAppBrowser.open("https://way2society.com/forgotpassword.php", '_system', 'location=no');
+    //this.iab.create('https://way2society.com/forgotpassword.php', '_blank', 'location=no');
+   // const browser = this.iab.create('https://way2society.com/forgotpassword.php');
+   // browser.show()
+  
+   //const browser = this.iab.create('https://way2society.com/forgotpassword.php','_blank',{location:'no'}); 
+   window.open("https://way2society.com/forgotpassword.php", '_system', 'location=no');
+   
+   // let browser = this.InAppBrowser.create('https://ionicframework.com/');
   }
+  async presentActionSheet() {
+    
+    }
   openActivationLink() {
 
     //this.navCtrl.push(NewuserPage);
-    this.navCtrl.navigateForward(this.DashboardPage);
+    this.navCtrl.navigateForward(this.NewuserPage);
     //window.open("https://way2society.com/newuseractivation.php", '_blank', 'location=no');
     //window.open("http://localhost/beta_aws_11/newuseractivation.php", '_blank', 'location=no');
 
 
   }
+
+  /*GetData()
+  {
+    this.connectServer.getFilms().subscribe({
+      next: (response: any) => {
+        this.films = response.results;
+        console.log(this.films);
+      
+      },
+      error: (err) => {
+        alert('There was an error in retrieving data from the server');
+      }
+    });
+  }*/
 
 }
 

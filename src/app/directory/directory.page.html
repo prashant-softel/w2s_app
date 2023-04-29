@@ -1,13 +1,270 @@
-<ion-header [translucent]="true">
-  <ion-toolbar>
-    <ion-title>directory</ion-title>
+<ion-header translucent="true">
+	<ion-toolbar>
+	  <ion-title>Directory</ion-title>
+    <ion-buttons slot="start">
+			<ion-back-button defaultHref="dashboard" icon="chevron-back-outline" text="Back"></ion-back-button>
+		  </ion-buttons>
+	  <ion-buttons slot="end" style="width:30%">
+		<ion-button><img style="width:70%" src="/assets/images/logo.png"></ion-button>
+	 </ion-buttons>
+	</ion-toolbar>
+  <ion-toolbar no-border >
+    <ion-segment [(ngModel)]="tab">
+      <ion-segment-button value="member" (click)="fetchData(0)">
+  		<div text-wrap><ion-icon name='call' ></ion-icon>
+  		<!--Member--></div>
+      </ion-segment-button>
+      <ion-segment-button value="blood_group" (click)="fetchData(1)">
+        <div text-wrap><ion-icon name='water'></ion-icon>
+        <!--Blood Group--></div>
+      </ion-segment-button>
+      <ion-segment-button value="professional" (click)="fetchData(2)">
+        <div text-wrap><ion-icon name='man'></ion-icon>
+        <!--Professional--></div>
+      </ion-segment-button>
+      <ion-segment-button value="committee" (click)="fetchData(3)">
+          <div text-wrap><ion-icon name='people'></ion-icon>
+        <!--Committee--></div>
+      </ion-segment-button>
+      
+    </ion-segment>
   </ion-toolbar>
-</ion-header>
-
-<ion-content [fullscreen]="true">
-  <ion-header collapse="condense">
-    <ion-toolbar>
-      <ion-title size="large">directory</ion-title>
-    </ion-toolbar>
   </ion-header>
-</ion-content>
+
+  <ion-content padding>
+    <div [ngSwitch]="tab">
+      <ion-list no-lines *ngSwitchCase="'member'" >
+        <ion-searchbar (ionInput)="getItems1($event)"></ion-searchbar>
+        <ion-list class="list-padding"   *ngIf="role != 'Tenant'" >
+        <ion-list *ngFor="let p of temp_member_directory_array">
+        <ion-row  class="bill" >
+              <ion-col  text-wrap>
+                {{p.unit_no}}
+              </ion-col>		
+              <ion-col size="9" text-wrap>
+                {{p.other_name}}
+              </ion-col>
+            </ion-row>
+            <ion-col>
+              <ion-row >
+                <ion-col col-3 *ngIf="p.intercom_no !== '0'">
+                    <ion-icon name="home"></ion-icon>
+                </ion-col>		
+                <ion-col text-right col-9 *ngIf="p.intercom_no">
+                  {{p.intercom_no}}
+              </ion-col>
+              <ion-col text-right col-9 *ngIf="!p.intercom_no">
+                Not provided by User
+              </ion-col>
+              </ion-row>
+              <ion-row *ngIf="p.other_publish_contact !== 0">
+                <ion-col col-3>
+                  <ion-icon name="call"></ion-icon> 
+                </ion-col>
+                <ion-col text-right  col-9 *ngIf="p.mobile_o">
+                  <a href="tel:{{p.mobile_o}}" class="button button-positive">{{p.mobile_o}}</a>
+                </ion-col>
+                <ion-col text-right col-9 *ngIf="!p.mobile_o">
+                  Not provided by User
+                </ion-col>
+              </ion-row>
+              <ion-row *ngIf="p.other_publish_contact !== 0">
+                <ion-col col-3 text-wrap>
+                  <ion-icon name="mail"></ion-icon> 
+                </ion-col>
+                <ion-col col-9 text-wrap text-right *ngIf="p.other_email">
+                  {{p.other_email}}
+                </ion-col>
+                <ion-col col-9 text-wrap text-right *ngIf="!p.other_email">
+                  Not provided by User
+                </ion-col>
+              </ion-row>
+          </ion-col>
+        </ion-list>
+        </ion-list>
+        </ion-list>
+        <!-------- blood group --------->
+        <ion-list no-lines *ngSwitchCase="'blood_group'">
+          <ion-searchbar (ionInput)="getItems2($event)"></ion-searchbar>
+          <ion-list class="list-padding"  *ngIf="role != 'Tenant'">
+            <ion-list *ngFor="let p of temp_member_blood_group_array">
+              <ion-row  class="bill" >
+                <ion-col  text-wrap>
+                  {{p.unit_no}}
+                </ion-col>		
+                <ion-col size="9" text-wrap>
+                  {{p.other_name}}
+                </ion-col>
+                </ion-row>
+                <ion-col> 
+                  <ion-row *ngIf="p.intercom_no !== '0'">
+                    <ion-col col-3>
+                        <ion-icon name="home"></ion-icon>
+                    </ion-col>		
+                    <ion-col col-9 text-right *ngIf="p.intercom_no">
+                        {{p.intercom_no}}
+                    </ion-col>
+                    <ion-col col-9 text-right text-wrap *ngIf="!p.intercom_no">
+                      Not provided by User
+                    </ion-col>
+                
+                  </ion-row>
+                  <ion-row>
+                    <ion-col col-3>
+                        <ion-icon name="water"></ion-icon>
+                    </ion-col>		
+                    <ion-col col-9 text-right>
+                        {{p.booldGroup}}
+                    </ion-col>
+                  </ion-row>
+                  <ion-row *ngIf="p.other_publish_contact !== 0">
+                    <ion-col col-3>
+                      <ion-icon name="call"></ion-icon> 
+                    </ion-col>		
+                    <ion-col col-9 text-right *ngIf="p.mobile_o">
+                      <a href="tel:{{p.mobile_o}}" class="button button-positive">{{p.mobile_o}}</a>
+                    </ion-col>
+                    <ion-col col-9 text-right *ngIf="!p.mobile_o">
+                      Not provided by User
+                    </ion-col>
+                  </ion-row>
+              </ion-col>
+            </ion-list>
+          </ion-list>
+        </ion-list>
+        <!-- professional-->
+        <ion-list no-lines *ngSwitchCase="'professional'">
+          <ion-searchbar (ionInput)="getItems3($event)"></ion-searchbar>
+          <ion-list class="list-padding" *ngIf="role != 'Tenant'">
+            <ion-list *ngFor="let p of temp_member_professional_array">
+              <ion-row  class="bill" >
+                <ion-col  text-wrap>
+                  {{p.unit_no}}
+                </ion-col>		
+                <ion-col size="9" text-wrap>
+                  {{p.other_name}}
+                </ion-col>
+                </ion-row>
+                <ion-col>
+                  <ion-row *ngIf="p.intercom_no !== '0'">
+                    <ion-col col-3>
+                        <ion-icon name="home"></ion-icon>
+                    </ion-col>		
+                    <ion-col text-right col-9 *ngIf="p.intercom_no">
+                        {{p.intercom_no}}
+                    </ion-col>
+                    <ion-col text-right col-9 *ngIf="!p.intercom_no">
+                      Not provided by User
+                    </ion-col>
+                  </ion-row>
+                  <ion-row *ngIf="p.other_publish_contact !== 0">
+                    <ion-col col-3>
+                      <ion-icon name="call"></ion-icon> 
+                    </ion-col>
+                    <ion-col text-right  col-9 *ngIf="p.mobile_o">
+                      <a href="tel:{{p.mobile_o}}" class="button button-positive">{{p.mobile_o}}</a>
+                    </ion-col>
+                    <ion-col text-right col-9 *ngIf="!p.mobile_o">
+                      Not provided by User
+                    </ion-col>
+                  </ion-row>
+                  <ion-row >
+                    <ion-col col-3 text-wrap>
+                      <ion-icon name="briefcase"></ion-icon> 
+                    </ion-col>
+                    <ion-col col-9 text-wrap text-right>
+                       {{p.other_profile}}
+                    </ion-col>
+                    
+                  </ion-row>
+              </ion-col>
+              </ion-list>
+            </ion-list>
+        </ion-list>
+        <!--Committee members-->
+        <ion-list no-lines *ngSwitchCase="'committee'">
+          <ion-searchbar (ionInput)="getItems4($event)"></ion-searchbar>
+          <ion-list  class="list-padding" no-lines *ngFor="let o of temp_otherArray">		
+            <ion-row class="bill">
+             <ion-col style="text-align: center;"><strong>{{o.position}}</strong></ion-col>
+            </ion-row>
+            <ion-row>
+              <ion-col col-4>
+                <strong>Name</strong>
+              </ion-col>
+              <ion-col size="9" text-wrap >
+                 {{o.name}}
+              </ion-col>
+          </ion-row>
+          <ion-row>
+              <ion-col col-4>
+                <strong>Unit ID</strong>
+              </ion-col>
+              <ion-col size="9" text-wrap >
+                 {{o.unit_no}} ({{o.ownerStatus}})
+              </ion-col>
+          </ion-row>
+          <ion-row>
+	      		<ion-col col-4>
+	        		<strong>Mobile</strong>
+	      		</ion-col>
+	      		<ion-col size="9" text-wrap >
+	       			<a href="tel:{{o.mobile}}" class="button button-positive">{{o.mobile}}</a>
+	      		</ion-col>
+	    	</ion-row>
+	    	<ion-row>
+	      		<ion-col col-4>
+	        		<strong>Role</strong>
+	      		</ion-col>
+	      		<ion-col size="9" text-wrap>
+	       			{{o.category}}
+	      		</ion-col>
+	    	</ion-row><hr>
+	    </ion-list>
+			
+		
+		<ion-list text-center class="list-padding">
+      <ion-row class="bill">
+				<ion-col style="text-align: center;"><strong>Commitee Member</strong></ion-col>
+        </ion-row>
+	    
+			
+	    <ion-list no-lines *ngFor="let m of temp_memberArray">		
+			<ion-row>
+	      		<ion-col col-4>
+	        		<strong>Name</strong>
+	      		</ion-col>
+	      		<ion-col size="9" text-wrap >
+	       			{{m.name}}
+	      		</ion-col>
+	    	</ion-row>
+	    	<ion-row>
+	      		<ion-col col-4>
+	        		<strong>Unit ID</strong>
+	      		</ion-col>
+	      		<ion-col size="9" text-wrap >
+	       			{{m.unit_no}} ({{m.ownerStatus}})
+	      		</ion-col>
+	    	</ion-row>
+			<ion-row>
+	      		<ion-col col-4>
+	        		<strong>Mobile</strong>
+	      		</ion-col>
+	      		<ion-col col-8  size="9" text-wrap >
+	       			<a href="tel:{{m.mobile}}" class="button button-positive">{{m.mobile}}</a>
+	      		</ion-col>
+	    	</ion-row>
+	    	<ion-row>
+	      		<ion-col col-4>
+	        		<strong>Role</strong>
+	      		</ion-col>
+	      		<ion-col size="9" text-wrap >
+	       			{{m.category}}
+	      		</ion-col>
+	    	</ion-row><hr>
+        </ion-list>
+        </ion-list>
+          </ion-list>
+        </div>
+        </ion-content>
+ 

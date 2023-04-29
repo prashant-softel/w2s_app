@@ -43,11 +43,11 @@ export class SocietyPage implements OnInit {
 
 	ngOnInit() {
 
-		this.route.queryParams.subscribe(params => {
-			let userName = params["userName"];
-			alert(userName);
+		//this.route.queryParams.subscribe(params => {
+			//let userName = params["userName"];
+			//alert(userName);
 
-		});
+		//});
 
 
 		this.loaderView.showLoader('Loading ...');
@@ -88,7 +88,7 @@ export class SocietyPage implements OnInit {
 	}
 
 	isMember(role) {
-		if (role == "Member" || role == "Admin Member" || role == "Super Admin" || role == "Admin") {
+		if(role == "Member" || role == "Admin Member" || role == "Super Admin" || role == "Admin" || role == "Contractor" || role == "Tenant" || role == "Manager"){
 			return true;
 		}
 		else {
@@ -97,7 +97,9 @@ export class SocietyPage implements OnInit {
 	}
 
 	logout() {
-		this.globalVars.clearStorage();
-		this.navCtrl.navigateRoot(this.LoginPage);
+		
+			localStorage.clear();
+			this.globalVars.clearStorage();
+			this.navCtrl.navigateRoot(this.LoginPage);
 	}
 }

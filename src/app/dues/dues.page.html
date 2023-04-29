@@ -2,9 +2,9 @@
   <ion-toolbar>
     
     <ion-title>Member Ledger</ion-title>
-    <!--<ion-buttons slot="start">
-      <ion-menu-button></ion-menu-button>
-    </ion-buttons>-->
+    <ion-buttons slot="start">
+		<ion-back-button defaultHref="dashboard" icon="chevron-back-outline" text="Back"></ion-back-button>
+	  </ion-buttons>
     <ion-buttons slot="end" style="width:30%">
       <ion-button><img style="width:70%" src="/assets/images/logo.png"></ion-button>
     </ion-buttons>
@@ -15,69 +15,68 @@
 <ion-content padding>
   <ion-list>
 		<ion-row>
-		    <ion-col text-center col-3>
+		    <ion-col class="text-center" col-3 >
 		    	<strong>Type</strong>
 		    </ion-col>
-		    <ion-col text-center col-3>
+		    <ion-col class="text-center" col-3>
 		    	<strong>Date</strong>
 		    </ion-col>
-		    <ion-col text-center>
+		    <ion-col class="text-center">
 		    	<strong>Amount</strong>
 		    </ion-col>
-		    <ion-col text-center>
+		    <ion-col class="text-center">
 		    	<strong>Balance</strong>
 		    </ion-col>
 		</ion-row>
 	</ion-list>
-  <!--<ion-list no-lines *ngFor="let p of particulars" (click)="viewDetails(p)">
+  <ion-list no-lines *ngFor="let p of particulars" (click)="viewDetails(p)">
 		<ion-row>
-			<ion-col col-3 >
+			<ion-col col-3 *ngIf="p.showIn == '1'">
 				<strong>{{p.mode}}</strong>
 			</ion-col>
-			<ion-col col-3 >
+			<ion-col col-3 *ngIf="p.showIn == '2'">
 				<strong>{{p.mode}}</strong>
 			</ion-col>
-			<ion-col col-3>
+			<ion-col col-3 *ngIf="p.showIn == '3'">
 				<strong>{{p.mode}}</strong>
 			</ion-col>
-			<ion-col col-3>
+			<ion-col col-3 *ngIf="p.showIn == '4'">
 				<strong>{{p.mode}}</strong>
-			</ion-col>-->
-
+			</ion-col>
 
 			<!--   Date Section -------->
-		<!--	<ion-col col-3>
+			<ion-col col-3 *ngIf="p.showIn == '1'">
 				<strong>{{p.date}}</strong>
 			</ion-col>
-			<ion-col col-3 >
+			<ion-col col-3 *ngIf="p.showIn == '2'">
 				<strong>{{p.date}}</strong>
 			</ion-col>
-			<ion-col col-3>
+			<ion-col col-3 *ngIf="p.showIn == '3'">
 				<strong>{{p.date}}</strong>
 			</ion-col>
-			<ion-col col-3 >
+			<ion-col col-3 *ngIf="p.showIn == '4'" >
 				<strong>{{p.date}}</strong>
-			</ion-col>-->
+			</ion-col>
 
 			 <!-- Debit Amount-->
-		   <!-- <ion-col text-right >
+		  <ion-col class="text-right" *ngIf="p.debit > '0'" >
 		      	(+) {{p.debit}}
 		    </ion-col>
 
-		     <ion-col text-right *ngIf="p.credit > 0 && p.mode !='M-Bill' && p.mode !='M-DNote' && p.mode !='SInvoice' && p.mode !='M-CNote' " >
+		     <ion-col class="text-right" *ngIf="p.credit > '0' && p.mode !='M-Bill' && p.mode !='M-DNote' && p.mode !='SInvoice' && p.mode !='M-CNote' &&  p.showIn!='2'" >
 		      	 <strong>(-) {{p.credit}}</strong>
 		    </ion-col>
-		    <ion-col text-right *ngIf="p.credit > 0 && p.mode !='M-Receipt' && p.mode !='M-DNote' && p.mode !='SInvoice' " >
+		    <ion-col class="text-right" *ngIf="p.credit > '0' && p.mode !='M-Receipt' && p.mode !='M-DNote' && p.mode !='SInvoice' " >
 		      	(-) {{p.credit}}
 		    </ion-col>
 
-		   <ion-col text-right  *ngIf="p.mode !='M-Bill' && p.mode !='SInvoice' && p.mode !='M-DNote' &&  p.mode !='M-CNote' ">
+		   <ion-col class="text-right"  *ngIf="p.mode !='M-Bill' && p.mode !='SInvoice' && p.mode !='M-DNote' &&  p.mode !='M-CNote' ">
 		      	<strong>{{p.balance}}</strong>
 		    </ion-col>
-		    <ion-col text-right  *ngIf="p.mode !='M-Receipt' && p.mode !='Opening Balance'" >
+		    <ion-col class="text-right"  *ngIf="p.mode !='M-Receipt' && p.mode !='Opening Balance'" >
 		      	{{p.balance}}
 		    </ion-col>
 		</ion-row>
   <hr>
-	</ion-list>-->
+	</ion-list>
 </ion-content>

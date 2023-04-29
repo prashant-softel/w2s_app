@@ -1,34 +1,51 @@
-<ion-header>
-  <ion-navbar>
-    <button ion-button menuToggle><!--<ion-icon name="menu"></ion-icon>--></button>
-    <ion-title>About Us</ion-title>
-    <ion-buttons end>
-        <ion-icon><img src="/assets/images/icon_s.png"></ion-icon>
-    </ion-buttons>
-  </ion-navbar>
-</ion-header>
+<ion-header translucent="true">
+	<ion-toolbar>
+    <ion-buttons slot="start">
+			<ion-back-button defaultHref="dashboard" icon="chevron-back-outline" text="Back"></ion-back-button>
+		  </ion-buttons>
+	  <ion-title>About Us</ion-title>
+	  <ion-buttons slot="end" style="width:30%">
+		<ion-button><img style="width:70%" src="/assets/images/logo.png"></ion-button>
+	 </ion-buttons>
+	</ion-toolbar>
+  </ion-header>
 <ion-content padding>
 
-<ion-list no-lines>
-      <ion-item text-center>
-        
-          <img src="/assets/images/logo.png"/>
-      
-      </ion-item>
-  </ion-list>
+  <ion-list no-lines>
+    <ion-row>
+      <ion-col text-center><br><br></ion-col>
+    </ion-row>
+    <ion-row>
+      <ion-col text-center></ion-col>
+      <ion-col size="8" text-center>
+       
+          <ion-img class="login-img" src="/assets/images/logo.png"></ion-img>
+          
+          </ion-col>
+          <ion-col text-center></ion-col>
+          </ion-row>
+</ion-list>
 <ion-row text-center>
-	    <ion-col>
-	      <strong text-center><h5>Version</h5></strong>
-	      <strong text-center><h5></h5></strong>
-        <p >
-          Available Version : <u></u>
-        </p>
-	    </ion-col>
-</ion-row>
-<ion-row>
-  <ion-col text-center>
-    Copyright © 2018 <u>Way2Society</u><br/>All rights reserved.<br/>
-    <!--Design & Developed by<br/>Comnet Consultancy Services-->
+  <ion-col style="text-align: center;">
+    <strong text-center><h5>Version</h5></strong>
+    <strong text-center><h5>{{version}}</h5></strong>
+    <p *ngIf="version != latest_version">
+      Available Version : <a (click)="downloadApp()"><u>{{latest_version}}</u></a>
+    </p>
   </ion-col>
 </ion-row>
+<br>
+<ion-row>
+<ion-col text-center style="text-align: center;">
+War Version : {{war_version}}
+<!--Design & Developed by<br/>Comnet Consultancy Services-->
+</ion-col>
+</ion-row>
+<ion-row>
+<ion-col text-center style="text-align: center;">
+Copyright © 2018 <a (click)="openWebsite()"><u>Way2Society</u></a><br/>All rights reserved.<br/>
+<!--Design & Developed by<br/>Comnet Consultancy Services-->
+</ion-col>
+</ion-row>
+
 </ion-content>

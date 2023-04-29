@@ -1,13 +1,69 @@
-<ion-header [translucent]="true">
+<ion-header translucent="true">
   <ion-toolbar>
-    <ion-title>events</ion-title>
+    <ion-title>Events</ion-title>
+    <ion-buttons slot="start">
+			<ion-back-button defaultHref="dashboard" icon="chevron-back-outline" text="Back"></ion-back-button>
+		  </ion-buttons>
+    <ion-buttons slot="end" style="width:30%">
+      <ion-button><img style="width:70%" src="/assets/images/logo.png"></ion-button>
+    </ion-buttons>
+  </ion-toolbar>
+  <ion-toolbar no-border>
+    <ion-segment [(ngModel)]="tab">
+      <ion-segment-button value="active">
+        Upcoming Events
+      </ion-segment-button>
+      <ion-segment-button value="expired">
+        Past Events
+      </ion-segment-button>
+    </ion-segment>
   </ion-toolbar>
 </ion-header>
 
-<ion-content [fullscreen]="true">
-  <ion-header collapse="condense">
-    <ion-toolbar>
-      <ion-title size="large">events</ion-title>
-    </ion-toolbar>
-  </ion-header>
-</ion-content>
+<ion-content padding>
+  <div [ngSwitch]="tab">
+  <ion-list no-lines *ngSwitchCase="'active'">
+    <ion-card *ngFor="let p of particulars_active">
+     
+      <ion-card-content >
+        <ion-card-title>{{p.events_title}}</ion-card-title>
+        <p *ngIf="p.events_date !=p.end_date"><ion-icon name="calendar" primary>&nbsp;</ion-icon>{{p.events_date}} To {{p.end_date}}</p>
+        <p *ngIf="p.events_date ==p.end_date"><ion-icon name="calendar" primary>&nbsp;</ion-icon>{{p.events_date}} </p>
+        <p><ion-icon name="alarm" secondary>&nbsp;</ion-icon>{{p.event_time}}</p>
+        <p>Event Charges: Rs. {{p.event_charges}} /-</p>
+        <p text-right style="text-align: right;">
+          <button ion-item class="link-btn" (click)="viewEvent(p)"> View Details</button>
+          <!--<a class="item" href="#" (click)="viewEvent(p)">
+            View Details
+          </a>-->  
+        </p>
+      </ion-card-content>
+    </ion-card>
+    <p *ngIf=!hasActiveEvent text-center style="color: red;">No Upcoming Events To Display</p>
+    </ion-list>
+  
+    <ion-list no-lines *ngSwitchCase="'expired'">
+    <ion-card *ngFor="let p of particulars_expired">
+    
+      <ion-card-content  style="color: #0d0d0d;" >
+        <ion-card-title>{{p.events_title}}</ion-card-title>
+        <p><ion-icon name="calendar" primary>&nbsp;</ion-icon>{{p.events_date}} To {{p.end_date}}</p>
+       
+        <p><ion-icon name="alarm" secondary>&nbsp;</ion-icon>{{p.event_time}}</p>
+        <p>Event Charges: Rs. {{p.event_charges}} /-</p>
+    
+        <p text-right style="text-align: right;">
+         
+            <button ion-item class="link-btn" (click)="viewEvent(p)"> View Details</button>
+          <!--<a class="item" href="#">
+            View Details
+          </a>-->  
+        </p>
+      </ion-card-content>
+    </ion-card>
+    <p *ngIf=!hasExpiredEvent text-center style="color: red;text-align: center;">No Past Events To Display</p>
+    </ion-list>
+    </div>
+  
+    <p id="msg" text-center style="color: red;"></p>
+  </ion-content>

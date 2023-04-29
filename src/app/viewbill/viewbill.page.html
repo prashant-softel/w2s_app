@@ -1,13 +1,160 @@
-<ion-header [translucent]="true">
+<ion-header translucent="true">
   <ion-toolbar>
-    <ion-title>viewbill</ion-title>
+    <ion-title>Bill Details</ion-title>
+    <ion-buttons slot="start">
+			<ion-back-button defaultHref="dashboard" icon="chevron-back-outline" text="Back"></ion-back-button>
+		  </ion-buttons>
+    <ion-buttons slot="end" style="width:30%">
+      <ion-button><img style="width:70%" src="/assets/images/logo.png"></ion-button>
+   </ion-buttons>
   </ion-toolbar>
 </ion-header>
 
-<ion-content [fullscreen]="true">
-  <ion-header collapse="condense">
-    <ion-toolbar>
-      <ion-title size="large">viewbill</ion-title>
-    </ion-toolbar>
-  </ion-header>
+<ion-content padding class="format">
+  <ion-row>
+    <ion-col class="text-center">
+       <strong>{{billtype_text}}</strong>
+ </ion-col>
+</ion-row>
+<ion-row>
+   <ion-col class="text-center">
+     <strong>{{billfor}}</strong>
+   </ion-col>
+ </ion-row>
+ <ion-row>
+   <ion-col>
+     <strong>Bill Date</strong>
+   </ion-col>
+   <ion-col class="text-right">
+     <strong>{{billdate}}</strong>
+   </ion-col>
+ </ion-row>
+ <ion-row>
+   <ion-col>
+     <strong>Due Date</strong>
+   </ion-col>
+   <ion-col class="text-right">
+     <strong>{{duedate}}</strong>
+   </ion-col>
+ </ion-row>
+ <ion-row>
+   <ion-col class="text-center">
+     <strong>Bill Details</strong>
+   </ion-col>
+ </ion-row>
+ <ion-row *ngFor="let p of particulars">
+   <ion-col *ngIf="p.amount != '0'" size="8">
+     {{p.ledger}}
+   </ion-col>
+   <ion-col class="text-right" *ngIf="p.amount != '0'">
+     {{p.amount}}
+   </ion-col>
+ </ion-row>
+ <ion-row>
+   <ion-col>
+     <strong>Sub Total</strong>
+   </ion-col>
+   <ion-col class="text-right">
+     <strong>{{subtotal}}</strong>
+   </ion-col>
+ </ion-row>
+ <ion-row>
+   <ion-col>
+     <strong>Adjustment</strong>
+   </ion-col>
+   <ion-col class="text-right">
+     <strong>{{adjustment}}</strong>
+   </ion-col>
+</ion-row>
+<ion-row>
+   <ion-col>
+     <strong>Interest on Arrears</strong>
+   </ion-col>
+   <ion-col class="text-right">
+     <strong>{{interest}}</strong>
+   </ion-col>
+ </ion-row>
+ <ion-row  *ngIf="sgst != 0 ">
+   <ion-col>
+     <strong>SGST</strong>
+   </ion-col>
+   <ion-col class="text-right">
+     <strong>{{sgst}}</strong>
+   </ion-col>
+ </ion-row>
+ <ion-row *ngIf="cgst != 0">
+   <ion-col>
+     <strong>CGST</strong>
+   </ion-col>
+   <ion-col class="text-right">
+     <strong>{{cgst}}</strong>
+   </ion-col>
+ </ion-row>
+ <ion-row *ngIf="igst != 0">
+   <ion-col>
+     <strong>IGST</strong>
+   </ion-col>
+   <ion-col class="text-right">
+     <strong>{{igst}}</strong>
+   </ion-col>
+ </ion-row>
+ <ion-row *ngIf="cess != 0">
+   <ion-col>
+     <strong>CESS</strong>
+   </ion-col>
+   <ion-col class="text-right">
+     <strong>{{cess}}</strong>
+   </ion-col>
+ </ion-row>
+ <ion-row>
+   <ion-col>
+     <strong>Previous Arrears</strong>
+   </ion-col>
+   <ion-col>
+   </ion-col>
+ </ion-row>
+ <ion-row>
+   <ion-col>
+     Principle
+   </ion-col>
+   <ion-col class="text-right">
+     {{previous_principle}}
+   </ion-col>
+   <ion-col>
+   </ion-col>
+ </ion-row>
+ <ion-row>
+   <ion-col>
+     Interest
+   </ion-col>
+   <ion-col class="text-right">
+     {{previous_interest}}
+   </ion-col>
+   <ion-col class="text-right">
+     <strong>{{previous_arrears}}</strong>
+   </ion-col>
+ </ion-row>
+ <ion-row>
+   <ion-col>
+     <strong>Balance Amount</strong>
+   </ion-col>
+   <ion-col class="text-right">
+     <strong>{{balance}}</strong>
+   </ion-col>
+ </ion-row>
+ <ion-row>
+   <ion-col>
+     <strong>Notes</strong>
+   </ion-col>
+</ion-row>
+<ion-row>
+   <ion-col text-left id="bill_notes">
+     
+   </ion-col>
+ </ion-row>
 </ion-content>
+<ion-fab slot="fixed" vertical="bottom" horizontal="end">
+  <ion-fab-button (click)="MakePayment()" style="background-color: #f6f6f6;" end>
+    <ion-icon  name="card" style="color:#5cb85c;font-size:30px;background: white;"></ion-icon>
+  </ion-fab-button>
+</ion-fab>

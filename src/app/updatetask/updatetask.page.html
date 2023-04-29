@@ -1,13 +1,143 @@
-<ion-header [translucent]="true">
+<ion-header translucent="true">
   <ion-toolbar>
-    <ion-title>updatetask</ion-title>
+    <ion-title>Task Details</ion-title>
+    <ion-buttons slot="start">
+			<ion-back-button defaultHref="task" icon="chevron-back-outline" text="Back"></ion-back-button>
+		  </ion-buttons>
+    <ion-buttons slot="end" style="width:30%">
+      <ion-button><img style="width:70%" src="/assets/images/logo.png"></ion-button>
+    </ion-buttons>
   </ion-toolbar>
 </ion-header>
 
-<ion-content [fullscreen]="true">
-  <ion-header collapse="condense">
-    <ion-toolbar>
-      <ion-title size="large">updatetask</ion-title>
-    </ion-toolbar>
-  </ion-header>
+<ion-content>
+  <ion-card>
+    <ion-card-content>
+      <h2 style = "text-transform: uppercase;color: black;" class="text-center"><strong>{{taskDetails.Title}}</strong></h2>
+    <ion-row style="color:#000000">
+      <ion-col size="4"><strong>Notes : </strong></ion-col>
+    </ion-row>
+    <ion-row style="color:#000000">
+      <ion-col class="text-left">{{taskDetails.Description}}</ion-col>
+    </ion-row>
+    <ion-row style="color:#000000">
+      <ion-col size="4"><strong>Task No : </strong></ion-col>
+      <ion-col class="text-right">{{taskDetails.id}}</ion-col>
+    </ion-row>
+    <ion-row style="color:#000000">
+      <ion-col size="4"><strong>Created By : </strong></ion-col>
+      <ion-col class="text-right">{{raisedBy}}</ion-col>
+    </ion-row>
+    <ion-row style="color:#000000">
+      <ion-col size="5"><strong>Assigned to : </strong></ion-col>
+      <ion-col class="text-right">{{assignedTo}}</ion-col>
+    </ion-row>
+    <ion-row style="color:#000000">
+      <ion-col size="4"><strong>Raised On : </strong></ion-col>
+      <ion-col class="text-right">{{taskDetails.TimeStamp}}</ion-col>
+    </ion-row>
+    <ion-row style="color:#000000">
+      <ion-col size="4"><strong>Due by : </strong></ion-col>
+      <ion-col class="text-right">{{taskDetails.DueDate}}</ion-col>
+    </ion-row>
+    <ion-row style="color:#000000">
+      <ion-col size="4"><strong>Status : </strong></ion-col>
+      <ion-col class="text-right">{{status[taskDetails.Status]}}</ion-col>
+    </ion-row>
+    <ion-row style="color:#000000">
+      <ion-col size="4"><strong>Priority : </strong></ion-col>
+      <ion-col class="text-right">{{priority[taskDetails.Priority]}}</ion-col>
+    </ion-row>
+    <ion-row style="color:#000000">
+      <ion-col size="8"><strong>Percent Completed : </strong></ion-col>
+      <!--<ion-col text-right style = "text-transform: uppercase;">
+        {{taskDetails.PercentCompleted}}
+      </ion-col>-->
+      <ion-col size="4" class="text-right">
+        <circle-progress
+          [percent]="taskDetails.PercentCompleted"
+          [radius]="20"           
+          [outerStrokeWidth] = "5"
+          [showInnerStroke] = "false"
+          [outerStrokeColor] = "'#387ef5'"
+          [showSubtitle] = "false"            
+          [animation]="true"
+          [animationDuration]="300"
+          [titleFontSize] = "'12'">
+        </circle-progress>
+      </ion-col>
+    </ion-row>
+    <ion-row>
+      <ion-col class="text-right" size="12">
+        <a *ngIf="hasAttachment" class="item" href="#" (click)="openAttachment()">
+          Attachment<br />
+        </a>
+      </ion-col>
+    </ion-row>
+    <p class="text-right">
+      <button ion-item class="link-btn" (click)="addComment()" style="color: blue;background-color: unset;">	Update Status/Add Comment</button>
+	    <!--<a class="item" href="#" (click)="addComment()">
+            Update Status/Add Comment
+      </a>-->
+    </p>
+  </ion-card-content>
+</ion-card>
+<ion-list  *ngIf="update">
+  <hr/>
+  <ion-item>  
+    <ion-label floating> <strong>Status</strong></ion-label>
+    <ion-select placeholder = "userData.status" [(ngModel)]="userData.status">
+      <ion-select-option text-wrap value="1">Raised</ion-select-option>
+      <ion-select-option text-wrap value="2">Waiting</ion-select-option>
+      <ion-select-option text-wrap value="3">In progress</ion-select-option>
+      <ion-select-option text-wrap value="4">Completed</ion-select-option>
+      <ion-select-option text-wrap value="5">Cancelled</ion-select-option>
+    </ion-select>
+  </ion-item>
+  <ion-item>
+    <ion-label floating>Progress(%) :  <strong style = "color:#000000" text-right>{{userData.percentCompleted}}</strong></ion-label>
+    <ion-range min="0" max="100" pin ="true" [(ngModel)]="userData.percentCompleted" color="primary">
+      <ion-label range-left>0</ion-label>
+      <ion-label range-right>100</ion-label>
+    </ion-range>
+  </ion-item>
+  <ion-item>
+    <!--<ion-label floating>Comments</ion-label>-->
+    <ion-textarea label="Comments" labelPlacement="floating" placeholder="Enter comment" rows="5"  [(ngModel)]="userData.summary"></ion-textarea>
+   <!--<ion-textarea label="Comments" labelPlacement="Comments" no-wrap rows="5"></ion-textarea>-->
+  </ion-item>
+  <ion-row>
+    <ion-col size="2"></ion-col>
+    <ion-col size="4" class="text-left">
+      <ion-button color="primary" block (click)="set()">Submit</ion-button>
+      <!--<button ion-button (click)="set()">Submit</button>-->
+    </ion-col>
+    <ion-col size="4" class="text-right">
+      <ion-button color="primary" block (click)="cancelComment()">Cancel</ion-button>
+      <!--<button ion-button (click)="cancelComment()">Cancel</button>-->
+    </ion-col>
+    <ion-col size="2"></ion-col>  
+  </ion-row>
+</ion-list>
+<ion-list no-lines *ngIf = "showHistory" style="padding-left: 5px;padding-right: 5px;">
+  <ion-row class="text-center" style="text-align: center;background-color: blue;
+  color: #ffffff;">
+    <ion-col>
+    <strong>Status History</strong>
+    </ion-col>
+  </ion-row>
+
+<ion-card>
+  <ion-card-content *ngFor="let p of ts_history_details">
+    <ion-row>
+      <ion-col size="6"><strong>{{p.posted_by_name}}</strong></ion-col>
+      <ion-col class="text-right">{{p.TimeStamp}}</ion-col>
+    </ion-row>
+    <ion-row>
+      <ion-col>&nbsp;&nbsp;&nbsp;{{p.Comment}}</ion-col>
+    </ion-row>
+    <hr>
+  </ion-card-content>
+</ion-card>
+</ion-list>
 </ion-content>

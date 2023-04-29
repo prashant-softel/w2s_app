@@ -1,13 +1,102 @@
-<ion-header [translucent]="true">
+<ion-header translucent="true">
   <ion-toolbar>
-    <ion-title>viewimposefine</ion-title>
+    <ion-title>Impose Fine</ion-title>
+    <ion-buttons slot="start">
+			<ion-back-button defaultHref="dashboard" icon="chevron-back-outline" text="Back"></ion-back-button>
+		  </ion-buttons>
+    <ion-buttons slot="end" style="width:30%">
+      <ion-button><img style="width:70%" src="/assets/images/logo.png"></ion-button>
+    </ion-buttons>
+  </ion-toolbar>
+  <ion-toolbar no-border>
+    <ion-segment [(ngModel)]="tab">
+      <ion-segment-button value="letest">
+        Latest
+      </ion-segment-button>
+      <ion-segment-button value="previous">
+        Previous
+      </ion-segment-button>
+    </ion-segment>
   </ion-toolbar>
 </ion-header>
 
-<ion-content [fullscreen]="true">
-  <ion-header collapse="condense">
-    <ion-toolbar>
-      <ion-title size="large">viewimposefine</ion-title>
-    </ion-toolbar>
-  </ion-header>
+<ion-content >
+  <div [ngSwitch]="tab">
+    <ion-list no-lines *ngSwitchCase="'letest'">
+      <ion-searchbar (ionInput)="getItems1($event)"></ion-searchbar>
+        <ion-card *ngFor="let p of temp_latest_fine_array" >
+          <ion-card-content (click)="selectItems(p)" no-padding text-wrap>
+            <ion-row style="background-color: #337ab7;color:#fff;">
+              <ion-col class="text-center"><strong>{{p.owner_name}}</strong></ion-col>
+            </ion-row>
+            <br/>
+            <ion-row>
+              <ion-col size="4" >
+                <strong *ngIf="p.unit_type== 1">Unit No</strong>
+                <strong *ngIf="p.unit_type== 2">Flat No</strong>
+                <strong *ngIf="p.unit_type== 3">Shop No</strong>
+                <strong *ngIf="p.unit_type== 4">Plot No</strong>
+                <strong *ngIf="p.unit_type== 5">Gala No</strong>
+                <strong *ngIf="p.unit_type== 6">Bunglow No</strong>
+                <strong *ngIf="p.unit_type== 7">Room No</strong>
+              </ion-col>
+              <ion-col class="text-right"><strong>{{p.unit_no}}</strong></ion-col>
+            </ion-row>
+            <ion-row>
+              <ion-col size="4"><strong>Entered By :</strong></ion-col>
+              <ion-col class="text-right">{{p.ReportedBy}}</ion-col>
+            </ion-row>
+            <ion-row>
+              <ion-col size="3"><strong>Date On</strong></ion-col>
+              <ion-col class="text-right">{{p.UpdateTime}}</ion-col>
+            </ion-row>
+            <ion-row>
+              <ion-col size="6"><strong>Amount</strong></ion-col>
+              <ion-col class="text-right">Rs. {{p.amount}}</ion-col>
+            </ion-row>
+            <br/>
+          </ion-card-content>
+        </ion-card>
+        <p *ngIf="!hasLatestFine && Showmassage!= -1" class="text-center" style="color: red;">No Latest Impose Fine To Display</p>
+        <p *ngIf="Showmassage== -1 " class="text-center" style="color: red;">In order to use Impose Fine functionality, Please define the ledger to used for Fine from Set Default page of web version.</p>
+    </ion-list>
+    <ion-list no-lines *ngSwitchCase="'previous'">
+      <ion-searchbar (ionInput)="getItems2($event)"></ion-searchbar>
+        <ion-card *ngFor="let p of temp_previous_fine_array" >
+          <ion-card-content (click)="selectItems(p)" no-padding text-wrap>
+            <ion-row style="background-color: #337ab7;color:#fff;">
+              <ion-col class="text-center"><strong>{{p.owner_name}}</strong></ion-col>
+            </ion-row>
+            <br/>
+            <ion-row>
+              <ion-col size="4" >
+                <strong *ngIf="p.unit_type== 1">Unit No</strong>
+                <strong *ngIf="p.unit_type== 2">Flat No</strong>
+                <strong *ngIf="p.unit_type== 3">Shop No</strong>
+                <strong *ngIf="p.unit_type== 4">Plot No</strong>
+                <strong *ngIf="p.unit_type== 5">Gala No</strong>
+                <strong *ngIf="p.unit_type== 6">Bunglow No</strong>
+                <strong *ngIf="p.unit_type== 7">Room No</strong>
+              </ion-col>
+              <ion-col class="text-right"><strong>{{p.unit_no}}</strong></ion-col>
+            </ion-row>
+            <ion-row>
+              <ion-col size="4"><strong>Entered By :</strong></ion-col>
+              <ion-col class="text-right">{{p.ReportedBy}}</ion-col>
+            </ion-row>
+            <ion-row>
+              <ion-col size="3"><strong>Date On</strong></ion-col>
+              <ion-col class="text-right">{{p.UpdateTime}}</ion-col>
+            </ion-row>
+            <ion-row>
+              <ion-col size="6"><strong>Amount</strong></ion-col>
+              <ion-col class="text-right">Rs. {{p.amount}}</ion-col>
+            </ion-row>
+            <br/>
+          </ion-card-content>
+        </ion-card>
+         <p *ngIf="!hasPreviousFine && Showmassage != -1" class="text-center" style="color: red;">No Previous Impose Fine To Display</p>
+         <p *ngIf="Showmassage== -1 " class="text-center" style="color: red;">In order to use Impose Fine functionality, Please define the ledger to used for Fine from Set Default page of web version.</p>
+    </ion-list>
+  </div>
 </ion-content>

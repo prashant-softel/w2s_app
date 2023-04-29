@@ -1,13 +1,196 @@
-<ion-header [translucent]="true">
+<ion-header translucent="true">
   <ion-toolbar>
-    <ion-title>task</ion-title>
+    <ion-title>Task List</ion-title>
+    <ion-buttons slot="start">
+			<ion-back-button defaultHref="dashboard" icon="chevron-back-outline" text="Back"></ion-back-button>
+		  </ion-buttons>
+    <ion-buttons slot="end" style="width:30%">
+      <ion-button><img style="width:70%" src="/assets/images/logo.png"></ion-button>
+    </ion-buttons>
+    
+  </ion-toolbar>
+  <ion-toolbar no-border >
+    <ion-segment [(ngModel)]="tab">
+      <ion-segment-button value="for_me" (click) = "fetchTaskForMe()">
+        <strong>Assigned to me </strong>
+      </ion-segment-button>
+      <ion-segment-button value="by_me" (click) = "fetchTaskByMe()">
+        <strong>Assigned by me</strong>
+      </ion-segment-button>
+      <ion-segment-button value="all" (click) = "fetchTaskAll()"> <!--  -->
+        <strong>All Open</strong>
+      </ion-segment-button>
+    </ion-segment>
   </ion-toolbar>
 </ion-header>
 
-<ion-content [fullscreen]="true">
-  <ion-header collapse="condense">
-    <ion-toolbar>
-      <ion-title size="large">task</ion-title>
-    </ion-toolbar>
-  </ion-header>
+<ion-content padding>
+  <div [ngSwitch]="tab">
+    <ion-list *ngSwitchCase="'for_me'">
+      <ion-card  *ngFor="let t of tasksForMe">
+        <ion-card-content (click) = "updateTask(t)" *ngIf = "showTask == 1">
+          <ion-card-title style="font-size: 1.2rem;color: black;">{{t.Title}}</ion-card-title>
+            <ion-row>
+             
+             <ion-icon size="6" name="pencil-outline" style="color:black">&nbsp;</ion-icon>&nbsp;Task no. - {{t.id}}
+              <ion-col class="text-right" size="6">
+                <!--<circle-progress
+                  [percent]="t.PercentCompleted"
+                  [radius]="20"						
+                  [outerStrokeWidth] = "5"
+                  [showInnerStroke] = "false"
+                  [outerStrokeColor] = "'#387ef5'"
+                  [showSubtitle] = "false"						
+                  [animation]="true"
+                  [animationDuration]="300"
+                  [titleFontSize] = "'12'">
+                </circle-progress>-->
+                
+              </ion-col>
+            </ion-row>
+            <ion-row >
+              <ion-icon size="6" name="time"  style="color:black">&nbsp;</ion-icon>&nbsp;{{t.DueDate}}
+            </ion-row>
+            <ion-row>
+              <ion-icon size="8" class="text-left"  name="stats-chart-outline"  style="color:black">&nbsp; </ion-icon>&nbsp;{{status[t.Status]}}
+              <ion-icon size="4" class="text-right" style="margin-top: -20px;color:black">Progress</ion-icon>
+            </ion-row>
+            <ion-row>
+              <ion-icon  class="text-left" name="person"  style="color:black" >&nbsp; </ion-icon>&nbsp;{{t.raised_by_name}}
+            </ion-row>
+          </ion-card-content>
+        </ion-card>
+        <p text-center style="color:#FF0000;text-align: center;" ><strong>{{message}}</strong></p>
+      </ion-list>
+    
+      <ion-list *ngSwitchCase="'by_me'">
+        <ion-card   *ngFor="let t of tasksByMe">
+          <ion-card-content (click) = "updateTask(t)" *ngIf = "showTask == 1">
+            <ion-card-title style="font-size: 1.2rem;color:black">{{t.Title}}</ion-card-title>
+          <ion-row>
+          <ion-icon size="6" name="pencil-outline" style="color:black">&nbsp;</ion-icon>&nbsp;Task no. - {{t.id}}
+          <ion-col class="text-right" size="6">
+              <!-- t.PercentCompleted -->
+           <!--<circle-progress
+              [percent]="t.PercentCompleted"
+              [radius]="20"						
+              [outerStrokeWidth] = "5"
+              [showInnerStroke] = "false"
+              [outerStrokeColor] = "'#387ef5'"
+              [showSubtitle] = "false"						
+              [animation]="true"
+              [animationDuration]="300"
+              [titleFontSize] = "'12'">
+            </circle-progress>-->
+          </ion-col>
+        </ion-row>
+      <ion-row >
+        <ion-icon size="6" name="time" primary style="color:black">&nbsp;</ion-icon>&nbsp;{{t.DueDate}}
+      </ion-row>
+      <ion-row>
+        <ion-icon size="8" class="text-left" style="color:black" name="stats-chart-outline" primary>&nbsp; </ion-icon>&nbsp;{{status[t.Status]}}
+        <ion-icon size="4" class="text-right" style="margin-top: -20px;">Progress</ion-icon>
+      </ion-row>
+      <ion-row>
+        <ion-icon  class="text-left" name="person"  style="color:black" >&nbsp;</ion-icon>&nbsp;{{t.task_owner_name}} 
+      </ion-row>
+    </ion-card-content>
+  </ion-card>
+   <p text-center style="color:#FF0000;text-align: center;" ><strong>{{message}}</strong></p>
+</ion-list>
+  
+<ion-list *ngSwitchCase="'all'">
+  <ion-item style="border-bottom: unset;" lines="none">
+    <ion-label style="text-align: center;" *ngIf="Listing == '0'">Show Incomplete Task</ion-label>
+      <ion-label style="text-align: center;" *ngIf="Listing == '1'">Show Completed Task</ion-label>
+    <ion-toggle style="color:black" [(ngModel)]="toggleStatus" pulsado checked="false" (ionChange)="Change_Toggle();"></ion-toggle>
+      
+      <!--<ion-icon name='list-box' item-start></ion-icon>-->
+      <ion-icon name="list-circle-outline"  slot="start"></ion-icon>
+  </ion-item>
+  
+  <ion-list *ngIf="Listing == '0'">
+    <ion-searchbar (ionInput)="getItems($event)"></ion-searchbar>
+    <ion-card   *ngFor="let t of temp_AllOpen_Task_array">
+      <ion-card-content (click) = "updateTask(t)" *ngIf = "showTask == 1">
+        <ion-card-title style="font-size: 1.2rem;color:black">{{t.Title}}</ion-card-title>
+        <ion-row>
+          <ion-icon size="6" name="pencil-outline" style="color:black">&nbsp;</ion-icon>&nbsp;Task no. - {{t.id}}
+          <ion-col class="text-right" size="6">
+              <!-- t.PercentCompleted -->
+            <!--<circle-progress
+              [percent]="t.PercentCompleted"
+              [radius]="20"						
+              [outerStrokeWidth] = "5"
+              [showInnerStroke] = "false"
+              [outerStrokeColor] = "'#387ef5'"
+              [showSubtitle] = "false"						
+              [animation]="true"
+              [animationDuration]="300"
+              [titleFontSize] = "'12'">
+            </circle-progress>-->
+          </ion-col>
+        </ion-row>
+        <ion-row >
+          <ion-icon class="col-6" name="time" primary style="color:black">&nbsp;</ion-icon>&nbsp;{{t.DueDate}}
+        </ion-row>
+        <ion-row>
+          <ion-icon col-8 class="text-left" style="color:black" name="stats-chart-outline" primary>&nbsp;</ion-icon>&nbsp;{{status[t.Status]}} 
+          <ion-icon col-4 class="text-right" style="margin-top: -20px;">Progress</ion-icon>
+        </ion-row>
+        <ion-row>
+          <ion-icon  class="text-left" name="person" style="color:black" >&nbsp;</ion-icon>&nbsp;{{t.task_owner_name}} 
+        </ion-row>
+      </ion-card-content>
+    </ion-card>
+    <p text-center style="color:#FF0000;text-align: center;" ><strong>{{message}}</strong></p>
+  </ion-list>
+  
+  <ion-list *ngIf="Listing == '1'">
+    <ion-searchbar (ionInput)="getItems1($event)"></ion-searchbar>
+    <ion-card   *ngFor="let t of temp_Complete_Task_array">
+      <ion-card-content (click) = "updateTask(t)" *ngIf = "showTask == 1">
+       <ion-card-title style="font-size: 1.2rem;color:black">{{t.Title}}</ion-card-title>
+       <ion-row>
+         <ion-icon size="6" name="pencil-outline" style="color:black">&nbsp;</ion-icon>&nbsp;Task no. - {{t.id}}
+        <ion-col text-right size="6">
+          <!-- t.PercentCompleted -->
+          <!--<circle-progress
+            [percent]="t.PercentCompleted"
+            [radius]="20"						
+            [outerStrokeWidth] = "5"
+            [showInnerStroke] = "false"
+            [outerStrokeColor] = "'#387ef5'"
+            [showSubtitle] = "false"						
+            [animation]="true"
+            [animationDuration]="300"
+            [titleFontSize] = "'12'">
+          </circle-progress>-->
+       </ion-col>
+    </ion-row>
+    <ion-row >
+      <ion-icon size="6" name="time" primary style="color:black">&nbsp;</ion-icon>&nbsp;{{t.DueDate}}
+    </ion-row>
+    <ion-row>
+      <ion-icon size="8" class="text-left" style="color:black;" name="stats-chart-outline" primary>&nbsp; </ion-icon>&nbsp;{{status[t.Status]}}
+      <ion-icon size="4" class="text-right" style="margin-top: -20px;color:black">Progress</ion-icon>
+    </ion-row>
+    <ion-row>
+      <ion-icon  class="text-left" name="person" style="color:black" >&nbsp;</ion-icon>&nbsp;{{t.task_owner_name}} 
+    </ion-row>
+    </ion-card-content>
+   </ion-card>
+   <p text-center style="color:#FF0000; text-align: center;" ><strong>{{message}}</strong></p>
+  </ion-list>
+</ion-list>
+</div>
+<!--<ion-fab right bottom>
+  <ion-buttons end>
+    <button ion-fab (click)="addTask()" >
+      <ion-icon name="add" style="color:#ffffff;font-size:30px;"></ion-icon>
+    </button>
+  </ion-buttons>
+</ion-fab>-->
 </ion-content>
+   
+  

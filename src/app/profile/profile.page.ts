@@ -1,4 +1,4 @@
-import { Component, OnInit,CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
+import { Component, OnInit,CUSTOM_ELEMENTS_SCHEMA, HostListener } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { IonicModule, NavController, NavParams, Platform } from '@ionic/angular';
@@ -7,6 +7,7 @@ import { LoaderView } from 'src/service/loaderview';
 import { ConnectServer } from 'src/service/connectserver';
 import { NavigationExtras } from '@angular/router';
 import * as moment from 'moment'; 
+import { ActivatedRoute } from '@angular/router';
 
 @Component({
   selector: 'app-profile',
@@ -17,6 +18,7 @@ import * as moment from 'moment';
   imports: [IonicModule, CommonModule, FormsModule]
 })
 export class ProfilePage implements OnInit {
+  DuesPage:any='dues';
   tab: string = "home";
   displayData = {};
   member_id : any;
@@ -60,7 +62,8 @@ export class ProfilePage implements OnInit {
     private connectServer: ConnectServer,
     private platform: Platform,
     private loaderView: LoaderView,
-    private params: NavParams) 
+    private params: NavParams,
+    private route: ActivatedRoute) 
     { 
     this.userData={OwnerAddress:""};
     this.unit_details_array = [];
@@ -129,11 +132,29 @@ export class ProfilePage implements OnInit {
     //alert(userName);
 
  // });
-  var displayData = this.params.get("details");
+  var displayData = "";//this.params.get("details");
    // this.displayData = navParams.get("details");
   
     //console.log("navParams : ",this.displayData);
    
+    
+    //this.fetchData();
+  }
+  @HostListener('document:ionBackButton', ['$event'])
+  overrideHardwareBackAction(event: any) {
+    event.detail.register(100, async () => {
+      event.stopImmediatePropagation();
+      event.stopPropagation();
+      event.preventDefault();
+    });
+  }
+  ngOnInit() {
+    let details:any;
+    this.route.queryParams.subscribe(params => {
+      details = params["details"];
+        
+      });
+    this.displayData = details;
     if(this.displayData['tab'] != null)   // my code
     {
       switch(this.displayData['tab'])
@@ -151,13 +172,11 @@ export class ProfilePage implements OnInit {
       }
      
     }
-    //this.fetchData();
+    this.fetchData();
   }
-
-  ngOnInit() {
-
+  fetchData(){
     var obj = [];
-    obj['uID'] = 26;//this.displayData['uID'];
+    obj['uID'] =this.displayData['uID'];
     obj['fetch'] = "profileData";
     this.loaderView.showLoader('Loading ...'); 
     //this.VehicleRenewFlag();
@@ -257,7 +276,7 @@ export class ProfilePage implements OnInit {
                   {
                      // var profileDetails = resolve['response']['memberdetails'];
                      this.ShowAddressField = '0';
-                      //this.fetchData();
+                      this.fetchData();
                      //this.fetchData();
                   }
                   else
@@ -285,8 +304,15 @@ export class ProfilePage implements OnInit {
                   this.loaderView.dismissLoader();
                   if(resolve['success'] == 1)
                   {
-                    
-                      //this.navCtrl.push(DuesPage, {details : resolve['response']});
+                    let navigationExtras: NavigationExtras = {
+                      queryParams: 
+                      {
+                        details :resolve['response'],
+                      }
+                    };
+                   
+                      this.navCtrl.navigateRoot(this.DuesPage,navigationExtras);
+                    //this.navCtrl.push(DuesPage, {details : resolve['response']});
                   }
                }
   );

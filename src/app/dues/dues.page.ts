@@ -1,12 +1,12 @@
-import { Component , OnInit } from '@angular/core';
+import { Component , HostListener, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
-import { IonicModule, NavController, NavParams, Platform } from '@ionic/angular';
+import { IonicModule, NavController, NavParams, Platform,LoadingController } from '@ionic/angular';
 import { GlobalVars } from 'src/service/globalvars';
 import { LoaderView } from 'src/service/loaderview';
 import { ConnectServer } from 'src/service/connectserver';
 import { NavigationExtras } from '@angular/router';
-
+import { ActivatedRoute } from '@angular/router';
 @Component({
   selector: 'app-dues',
   templateUrl: './dues.page.html',
@@ -15,8 +15,11 @@ import { NavigationExtras } from '@angular/router';
   imports: [IonicModule, CommonModule, FormsModule]
 })
 export class DuesPage implements OnInit {
-  
-  particulars : Array<{mode : string, date : string, debit : string, credit : string, balance : number, IsOpeningBill : any, period : any, billtype:any,Unit:any,cdnid :any,inv_number : any ,inv_id : any}>;
+  //ViewBillPage='viewbill';
+  ViewBillPage: any = 'viewbill';
+  ViewreceiptPage:any='viewreceipt';
+  CnotePage:any='cnote';
+  particulars : Array<{mode : string, date : string, debit : string, credit : string, balance : number, IsOpeningBill : any, period : any, billtype:any,Unit:any,showIn:string,cdnid :any,inv_number : any ,inv_id : any}>;
   role:any;
   roleWise:any;
   showIn :any;
@@ -25,7 +28,9 @@ export class DuesPage implements OnInit {
     private connectServer: ConnectServer,
     private platform: Platform,
     private loaderView: LoaderView,
-    private params: NavParams) { 
+    private params: NavParams,
+    private route: ActivatedRoute,
+    private loadingCtrl: LoadingController) { 
     this.particulars = [];
   	this.role="";
     this.roleWise='';
@@ -46,10 +51,23 @@ export class DuesPage implements OnInit {
        
        this.roleWise=this.role;
   }
-
+  @HostListener('document:ionBackButton', ['$event'])
+  overrideHardwareBackAction(event: any) {
+    event.detail.register(100, async () => {
+      event.stopImmediatePropagation();
+      event.stopPropagation();
+      event.preventDefault();
+    });
+  }
   ngOnInit() {
-    var receiptData = this.params.get("details")['BillnReceipts'];
-      console.log('RD ' + receiptData);
+    let details:any;
+  this.route.queryParams.subscribe(params => {
+    details = params["details"];
+			
+		});
+    var receiptData = details['BillnReceipts'];
+    console.log('RD1 ' + receiptData);
+    console.log('RD 2' + receiptData.length);
 	  	for(var i = (receiptData.length - 1); i >= 0; i--)
 	    {
 	    	var sMode = receiptData[i]['Mode'];
@@ -108,7 +126,8 @@ export class DuesPage implements OnInit {
 	{
 		if((particular.mode == "M-Bill"||particular.mode == "S-Bill") && particular.IsOpeningBill == 0)
 		{
-      	this.loaderView.showLoader('Loading ...');
+      this.showLoading();   
+      this.loaderView.showLoader('Loading ...');
 	    var objData1 = [];
       	objData1['PeriodID'] = particular.period;
       	objData1['BT'] = particular.billtype;
@@ -127,23 +146,70 @@ export class DuesPage implements OnInit {
                     this.loaderView.dismissLoader();
                     if(resolve['success'] == 1)
                     {
-                     // this.navCtrl.push(ViewbillPage, {details : resolve['response']});
+                      let navigationExtras: NavigationExtras = {
+                        queryParams: 
+                        {
+                          details :resolve['response'],
+                        }
+                      };
+                      this.navCtrl.navigateRoot(this.ViewBillPage,navigationExtras);
+                     // this.navCtrl.push(ViewBillPage, {details : resolve['response']});
                     }
                  }
      		);
     	}
 		else if(particular.mode == "M-Receipt"||particular.mode == "S-Receipt")
 		{
+      let navigationExtras: NavigationExtras = {
+        queryParams: 
+        {
+          period_id : particular.period,
+          Unit : particular.Unit,
+        }
+      };
+      this.navCtrl.navigateRoot(this.ViewreceiptPage,navigationExtras);
 			//this.navCtrl.push(ViewreceiptPage, {period_id : particular.period,Unit: particular.Unit});
 		}
     else if(particular.mode == "M-DNote"||particular.mode == "S-DNote" || particular.mode == "M-CNote" || particular.mode == "S-CNote")
     {
+      let navigationExtras: NavigationExtras = {
+        queryParams: 
+        {
+          Unit : particular.Unit,
+          BT : particular.billtype,
+          cdnid : particular.cdnid,
+          mode1 : particular.mode,
+          inv_number : particular.inv_number,
+          inv_id : particular.inv_id,
+        }
+      };
+      this.navCtrl.navigateRoot(this.CnotePage,navigationExtras);
       //this.navCtrl.push(CnotePage, {Unit: particular.Unit,BT: particular.billtype,cdnid : particular.cdnid, mode1 : particular.mode,inv_number : particular.inv_number,inv_id : particular.inv_id});
     }
    else if(particular.mode == "SInvoice")
     {
+      let navigationExtras: NavigationExtras = {
+        queryParams: 
+        {
+          Unit : particular.Unit,
+          BT : particular.billtype,
+          cdnid : particular.cdnid,
+          mode1 : particular.mode,
+          inv_number : particular.inv_number,
+          inv_id : particular.inv_id,
+        }
+      };
+      this.navCtrl.navigateRoot(this.CnotePage,navigationExtras);
       //this.navCtrl.push(CnotePage, {Unit: particular.Unit,BT: particular.billtype,cdnid : particular.cdnid, mode1 : particular.mode,inv_number : particular.inv_number,inv_id : particular.inv_id});
     }
      
 	}
+  async showLoading() {
+    const loading = await this.loadingCtrl.create({
+      message: 'Please wait...',
+      duration: 5000,
+      cssClass: 'loader-css-class'
+    });
+    loading.present();
+  }
 }

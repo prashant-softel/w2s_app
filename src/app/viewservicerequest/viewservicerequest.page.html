@@ -1,13 +1,163 @@
-<ion-header [translucent]="true">
+<ion-header translucent="true">
   <ion-toolbar>
-    <ion-title>viewservicerequest</ion-title>
+    <ion-title>Service Request Details</ion-title>
+    <ion-buttons slot="start">
+			<ion-back-button defaultHref="dashboard" icon="chevron-back-outline" text="Back"></ion-back-button>
+		  </ion-buttons>
+    <ion-buttons slot="end" style="width:30%">
+      <ion-button><img style="width:70%" src="/assets/images/logo.png"></ion-button>
+    </ion-buttons>
   </ion-toolbar>
 </ion-header>
 
-<ion-content [fullscreen]="true">
-  <ion-header collapse="condense">
-    <ion-toolbar>
-      <ion-title size="large">viewservicerequest</ion-title>
-    </ion-toolbar>
-  </ion-header>
+<ion-content padding>
+	<ion-card>
+	  <!--<img src="{{img}}" style="max-height : 50vh" (click)="selectItems()">-->
+    	<ion-card-content style="color: #0d0d0d;">
+      	<ion-card-title style="font-size: x-large;">{{sr_details['summery']}}</ion-card-title>
+        <ion-row>
+          <ion-col size="4"><strong>Request No</strong></ion-col>
+          <ion-col class="text-right">{{sr_details['request_no']}}</ion-col>
+        </ion-row>
+      	<ion-row>
+      		<ion-col size="4"><strong>Unit No : </strong></ion-col>
+	   		  <ion-col class="text-right">{{sr_details['unit_no']}}</ion-col>
+      	</ion-row>
+      	<ion-row>
+      		<ion-col size="4"><strong>Raised On : </strong></ion-col>
+	   		  <ion-col class="text-right">{{sr_details['timestamp']}}</ion-col>
+      	</ion-row>
+      	<ion-row>
+      		<ion-col size="4"><strong>Status : </strong></ion-col>
+	   		  <ion-col class="text-right">{{sr_status}}</ion-col>
+      	</ion-row>
+      	<ion-row>
+      		<ion-col size="4"><strong>Priority : </strong></ion-col>
+	   		  <ion-col class="text-right">{{sr_details['priority']}}</ion-col>
+      	</ion-row>
+      	<ion-row>
+      		<ion-col size="4"><strong>Category : </strong></ion-col>
+	   		  <ion-col class="text-right">{{sr_details['category']}}</ion-col>
+      	</ion-row>
+
+      	<ion-row *ngIf="sr_details['phone'] != '0'">
+      		<ion-col size="4"><strong>Mobile : </strong></ion-col>
+	   		  <ion-col class="text-right">{{sr_details['phone']}}</ion-col>
+      	</ion-row>
+        <ion-row>
+      		<ion-col size="3"><strong>Email : </strong></ion-col>
+	   	  	<ion-col class="text-right">{{sr_details['email']}}</ion-col>
+      	</ion-row>
+        <ion-row>
+          <ion-col size="6"><strong>Supervised By : </strong></ion-col>
+          <ion-col class="text-right">{{superwise}}</ion-col>
+        </ion-row>
+      	<ion-row>
+          <ion-col class="text-right" size="12">
+            <a *ngIf=hasAttachment class="item" href="#" (click)="openAttachment()">
+             Attachment<br />
+            </a>
+          </ion-col>
+        </ion-row>
+        <ion-row>
+          <ion-col size="12">
+      			<strong>Request Details : </strong>
+      			<p id="sr_details" style="text-align: justify;"></p>
+	   		  </ion-col>
+	   		</ion-row>
+	    <ion-row>
+	      <ion-col size="12">
+      	  <p id="sr_details_id" style="text-align: justify-all;"></p>
+      	</ion-col>
+      </ion-row>
+      	<p class="text-right" >
+          <button ion-item class="link-btn" (click)="addComment()">	Update Status/Add Comment</button>
+	      
+	      </p>
+    </ion-card-content>
+  </ion-card>
+
+  <ion-list no-lines *ngIf="addcomment == 1">
+  	<ion-item *ngIf="role== 'Member' ">
+      <ion-label floating>Status</ion-label>
+        <ion-select  style="color: #0d0d0d;" [(ngModel)]="userData.status">
+          <ion-select-option text-wrap value="{{sr_status}}">{{sr_status}}</ion-select-option>
+          <ion-select-option text-wrap value="Reopen" *ngIf="sr_status == 'Closed'">Reopen</ion-select-option>
+          <ion-select-option text-wrap value="Closed" *ngIf="sr_status != 'Closed'">Closed</ion-select-option>
+        </ion-select>
+    </ion-item>
+    <ion-item *ngIf="role== 'AdminMember'||role== 'Contractor'">
+      <ion-label floating>Status</ion-label>
+      <ion-select  style="color: #0d0d0d;" [(ngModel)]="userData.status">
+        <ion-select-option text-wrap value="Assigned" *ngIf="sr_status != 'Closed'">Assigned</ion-select-option>
+        <ion-select-option text-wrap value="In process" *ngIf="sr_status != 'Closed'">In Process</ion-select-option>
+        <ion-select-option text-wrap value="Resolved" *ngIf="sr_status != 'Closed'">Resolved</ion-select-option>
+        <ion-select-option text-wrap value="Waiting for Details" *ngIf="sr_status != 'Closed'">Waiting For Details</ion-select-option>
+        <ion-select-option text-wrap value="Reopen" *ngIf="sr_status != 'Closed'">Reopen</ion-select-option>
+        <ion-select-option text-wrap value="Closed" *ngIf="sr_status != 'Closed'">Closed</ion-select-option>
+		  </ion-select>
+    </ion-item>
+    <ion-item>
+      <ion-label floating>Comments</ion-label>
+      <ion-textarea no-wrap [(ngModel)]="userData.summary" rows="10"></ion-textarea>
+    </ion-item>
+    
+    	<ion-row>
+    		<ion-col style="text-align: center;">
+          <ion-button color="primary" block (click)="submit()" style="height: 2.5em;">Update</ion-button>
+        	<!--<button ion-button color="primary" block (click)="submit()">Update</button>-->
+        </ion-col>
+        <ion-col>
+          <ion-button color="primary" block (click)="cancelComment()" style="height: 2.5em;">Cancel</ion-button>
+        	<!--<button ion-button color="primary" block (click)="cancelComment()">Cancel</button>-->
+        </ion-col>
+      </ion-row>
+   
+  </ion-list>
+  <ion-row style="background-color: #0000ff;color:#fff;">
+    <ion-col style="text-align-last: center;">
+      <strong style="font-size: 15px;">Status History</strong>
+    </ion-col>
+  </ion-row>
+  <!--<ion-list no-lines>
+  	<ion-item text-center style="--ion-item-background:  #0000ff;">
+        <strong>Status History</strong>
+      </ion-item>
+  </ion-list>-->
+
+  <ion-card>
+    <ion-card-content *ngFor="let p of sr_history_details"  style="color: #0d0d0d;">
+	    <ion-row>
+	      <ion-col size="5"><strong>{{p.raised_text}} On : </strong></ion-col>
+		   	<ion-col class="text-right">{{p.timestamp}}</ion-col>
+	    </ion-row>
+	    <ion-row>
+	      <ion-col size="5"><strong>{{p.raised_text}} By : </strong></ion-col>
+		   	<ion-col class="text-right">{{p.reportedby}}</ion-col>
+	    </ion-row>
+			<ion-row>
+	      <ion-col size="4"><strong>Status : </strong></ion-col>
+		   	<ion-col class="text-right">{{p.status}}</ion-col>
+	    </ion-row>
+	    <ion-row  *ngIf="p.phone != '0'">
+	      <ion-col size="4"><strong>Mobile : </strong></ion-col>
+		   	<ion-col class="text-right">{{p.phone}}</ion-col>
+	    </ion-row>
+	    <ion-row>
+	      <ion-col size="3"><strong>Email : </strong></ion-col>
+		   	<ion-col class="text-right">{{p.email}}</ion-col>
+	    </ion-row>
+	    <ion-row>
+	      <ion-col><strong>Comments :</strong></ion-col>
+	    </ion-row>
+	    <ion-row>
+	      <ion-col *ngIf="sr_details['summery'] != p.summery">{{p.summery}}</ion-col>
+	    </ion-row>
+	    <hr>
+	    </ion-card-content>
+  </ion-card>
+  <!--<ion-slides loop="true" pager="true" parallax="true" padding >
+		<ion-slide *ngFor="let p of img_array">
+		  <img src="{{img_src+'/'+folder+'/'+p['img']}}" style="max-height : 100vh;  max-width:100%; "></ion-slide>
+	</ion-slides>-->
 </ion-content>
