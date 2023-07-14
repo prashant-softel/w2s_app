@@ -1,4 +1,4 @@
-import { Component, OnInit,CUSTOM_ELEMENTS_SCHEMA, HostListener } from '@angular/core';
+import { Component, OnInit, CUSTOM_ELEMENTS_SCHEMA, HostListener } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { IonicModule, NavController, NavParams, Platform } from '@ionic/angular';
@@ -12,19 +12,19 @@ import { ActivatedRoute } from '@angular/router';
   selector: 'app-features',
   templateUrl: './features.page.html',
   styleUrls: ['./features.page.scss'],
-  schemas: [ CUSTOM_ELEMENTS_SCHEMA ],
+  schemas: [CUSTOM_ELEMENTS_SCHEMA],
   standalone: true,
   imports: [IonicModule, CommonModule, FormsModule]
 })
 export class FeaturesPage implements OnInit {
-  ViewfeaturePage:any='viewfeature';
-  particulars_feature : any;
-  temp_Feature_All_array : Array<any>;
-  particulars_previous_feature : any;
-  temp_Feature_previous_array : Array<any>;
+  ViewfeaturePage: any = 'viewfeature';
+  particulars_feature: any;
+  temp_Feature_All_array: Array<any>;
+  particulars_previous_feature: any;
+  temp_Feature_previous_array: Array<any>;
   more: any;
-  note:any;
-  desc:any;
+  note: any;
+  desc: any;
   tab: string = "letest";
   constructor(private navCtrl: NavController,
     private globalVars: GlobalVars,
@@ -33,13 +33,13 @@ export class FeaturesPage implements OnInit {
     private loaderView: LoaderView,
     private params: NavParams,
     private route: ActivatedRoute) {
-    this.particulars_feature =[];
-    this.temp_Feature_All_array=[];
-    this.particulars_previous_feature =[];
-    this.temp_Feature_previous_array=[];
+    this.particulars_feature = [];
+    this.temp_Feature_All_array = [];
+    this.particulars_previous_feature = [];
+    this.temp_Feature_previous_array = [];
     this.more = '0';
-    this.note ="";
-    this.desc ="";
+    this.note = "";
+    this.desc = "";
   }
   @HostListener('document:ionBackButton', ['$event'])
   overrideHardwareBackAction(event: any) {
@@ -103,10 +103,10 @@ export class FeaturesPage implements OnInit {
       this.temp_Feature_All_array= this.particulars_feature.filter(
       (p) => {
           let name: any = p;
-          if(name.title.toLowerCase().indexOf(val.toLowerCase()) > -1)
-            return (name.title.toLowerCase().indexOf(val.toLowerCase()) > -1);
-          }
-        );
+          if (name.title.toLowerCase().indexOf(val.toLowerCase()) > -1) { return (name.title.toLowerCase().indexOf(val.toLowerCase()) > -1); }
+          return null;
+        }
+      );
     }
   }
 
@@ -119,10 +119,10 @@ export class FeaturesPage implements OnInit {
       this.temp_Feature_previous_array=this.particulars_previous_feature.filter(
       (p) => {
           let name: any = p;
-          if(name.title.toLowerCase().indexOf(val.toLowerCase()) > -1)
-            return (name.title.toLowerCase().indexOf(val.toLowerCase()) > -1);
-          }
-        );
+          if (name.title.toLowerCase().indexOf(val.toLowerCase()) > -1) { return (name.title.toLowerCase().indexOf(val.toLowerCase()) > -1); }
+          return null;
+        }
+      );
     }
   }
 }

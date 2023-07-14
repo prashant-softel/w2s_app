@@ -6,7 +6,7 @@ import { GlobalVars } from 'src/service/globalvars';
 import { LoaderView } from 'src/service/loaderview';
 import { ConnectServer } from 'src/service/connectserver';
 import { NavigationExtras } from '@angular/router';
-import { NgCircleProgressModule } from 'ng-circle-progress';
+//import { NgCircleProgressModule } from 'ng-circle-progress';
 
 enum statusEnum  { "Raised" = 1,  "Waiting",  "In progress",  "Completed", "Cancelled"}
 enum priorityEnum  { "Critical" = 1,  "High",  "Medium",  "Low"}
@@ -179,8 +179,10 @@ export class TaskPage implements OnInit {
         this.temp_Complete_Task_array= this.taskForCompleted.filter(
           (p) => {
             let name: any = p;
-            if(name.Title.toLowerCase().indexOf(val.toLowerCase()) > -1)
-              return (name.Title.toLowerCase().indexOf(val.toLowerCase()) > -1);
+            if (name.Title.toLowerCase().indexOf(val.toLowerCase()) > -1) { return (name.Title.toLowerCase().indexOf(val.toLowerCase()) > -1); }
+            return null;
+            /*if(name.Title.toLowerCase().indexOf(val.toLowerCase()) > -1)
+              return (name.Title.toLowerCase().indexOf(val.toLowerCase()) > -1);*/
             }
         );
       }
@@ -194,8 +196,10 @@ export class TaskPage implements OnInit {
         this.temp_AllOpen_Task_array= this.taskForAllOpen.filter(
         (p) => {
           let name: any = p;
-          if(name.Title.toLowerCase().indexOf(val.toLowerCase()) > -1)
-            return (name.Title.toLowerCase().indexOf(val.toLowerCase()) > -1);
+          if (name.Title.toLowerCase().indexOf(val.toLowerCase()) > -1) { return (name.Title.toLowerCase().indexOf(val.toLowerCase()) > -1); }
+          return null;
+          /*if(name.Title.toLowerCase().indexOf(val.toLowerCase()) > -1)
+            return (name.Title.toLowerCase().indexOf(val.toLowerCase()) > -1);*/
           }
         );
       }

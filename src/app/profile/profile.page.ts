@@ -299,7 +299,15 @@ export class ProfilePage implements OnInit {
   {
     objData['UnitID'] = 0;
   }
-  this.connectServer.getData("MemberLedger", objData).then(
+  let navigationExtras: NavigationExtras = {
+    queryParams: 
+    {
+      details :objData['UnitID'],
+    }
+  };
+  this.globalVars.setUserUnit(objData['UnitID']);
+  this.navCtrl.navigateRoot(this.DuesPage,navigationExtras);
+  /*this.connectServer.getData("MemberLedger", objData).then(
     resolve => { 
                   this.loaderView.dismissLoader();
                   if(resolve['success'] == 1)
@@ -315,7 +323,7 @@ export class ProfilePage implements OnInit {
                     //this.navCtrl.push(DuesPage, {details : resolve['response']});
                   }
                }
-  );
+  );*/
   }
   SendActivation(MemOtherID)
   {

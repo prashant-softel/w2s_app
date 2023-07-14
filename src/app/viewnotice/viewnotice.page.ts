@@ -98,6 +98,7 @@ export class ViewnoticePage implements OnInit {
          }
        }
          let target = "_system";
+         window.open(url , '_blank', 'location=no');
         // this.theInAppBrowser.create(url,target,this.options);
         // alert(url);
         // alert(this.theInAppBrowser);

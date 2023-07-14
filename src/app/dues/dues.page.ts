@@ -60,54 +60,76 @@ export class DuesPage implements OnInit {
     });
   }
   ngOnInit() {
-    let details:any;
-  this.route.queryParams.subscribe(params => {
-    details = params["details"];
+   
+   
+    
+    let data:any;
+    this.route.queryParams.subscribe(params => {
+      data = params["details"];
 			
 		});
-    var receiptData = details['BillnReceipts'];
-    console.log('RD1 ' + receiptData);
-    console.log('RD 2' + receiptData.length);
-	  	for(var i = (receiptData.length - 1); i >= 0; i--)
-	    {
-	    	var sMode = receiptData[i]['Mode'];
-	    	var sDate = receiptData[i]['Date'];
-        var cdnid1 = 0;
-        var inv_number = 0;
-        var inv_id = 0;
-        if(receiptData[i]['Type'] == 0)
-          {
-            
-	    	    if(receiptData[i]['IsOpeningBill'] == 1)
-	    	    {
-             //var Isopening =receiptData[i]['IsOpeningBill'];
-	    		    sMode = "Opening Balance";
-               this.showIn="1";
-	    		  //sDate = "No date";
-			      }
-			      else
-			      {
-               if(receiptData[i]['BillType'] == 1 || receiptData[i]['BillType'] == true )
-				      {
-					      sMode = "S-" + sMode;
-                 cdnid1 = receiptData[i]['Cd_id'];
-                 this.showIn="2";
-				      }
-				      else
-				      {
-					      sMode = "M-" + sMode;
-                 this.showIn="3";
-                 cdnid1 = receiptData[i]['Cd_id'];
-				      }
+    console.log("data" , data);
+   
+    console.log("unit", this.globalVars.MAP_UNIT_ID);
+    let details:[];
+    var objData = [];
+    objData['fetch'] =1;   /// New Version
+    if(data == undefined)
+    {
+      objData['UnitID'] = this.globalVars.MEMBER_UNIT_ID;
+    }
+    else{
+      objData['UnitID'] = data;
+    }
+   
+    this.connectServer.getData("MemberLedger", objData).then(
+    resolve => { 
+      this.loaderView.dismissLoader();
+      if(resolve['success'] == 1)
+      {
+          details =  resolve['response'] 
+          var receiptData = details['BillnReceipts'];
+          console.log('RD1 ' + receiptData);
+          console.log('RD 2' + receiptData.length);
+	  	    for(var i = (receiptData.length - 1); i >= 0; i--)
+	        {
+	    	    var sMode = receiptData[i]['Mode'];
+	    	    var sDate = receiptData[i]['Date'];
+            var cdnid1 = 0;
+            var inv_number = 0;
+            var inv_id = 0;
+            if(receiptData[i]['Type'] == 0)
+            {
+              if(receiptData[i]['IsOpeningBill'] == 1)
+	    	      {
+                //var Isopening =receiptData[i]['IsOpeningBill'];
+	    		      sMode = "Opening Balance";
+                this.showIn="1";
+	    		      //sDate = "No date";
+			        }
+			        else
+			        {
+                if(receiptData[i]['BillType'] == 1 || receiptData[i]['BillType'] == true )
+				        {
+					        sMode = "S-" + sMode;
+                  cdnid1 = receiptData[i]['Cd_id'];
+                  this.showIn="2";
+				        }
+				        else
+				        {
+					        sMode = "M-" + sMode;
+                  this.showIn="3";
+                  cdnid1 = receiptData[i]['Cd_id'];
+				        }
+              }
             }
+            else
+          {
+            sMode =receiptData[i]['Mode'];
+            inv_number = receiptData[i]['Inv_Number'];
+            inv_id =  receiptData[i]['Inv_id']
+            this.showIn="4";
           }
-        else
-        {
-          sMode =receiptData[i]['Mode'];
-          inv_number = receiptData[i]['Inv_Number'];
-          inv_id =  receiptData[i]['Inv_id']
-           this.showIn="4";
-        }
        // alert( this.showIn);
 	        var objData = {mode : sMode, date : sDate, debit : receiptData[i]['Debit'], credit : receiptData[i]['Credit'], balance : receiptData[i]['Balance'], IsOpeningBill : receiptData[i]['IsOpeningBill'], period : receiptData[i]['PeriodID'],billtype : receiptData[i]['BillType'],Unit : receiptData[i]['UnitID'],showIn : this.showIn,cdnid : cdnid1,inv_number : inv_number , inv_id : inv_id};
 	        this.particulars.push(objData);
@@ -120,6 +142,15 @@ export class DuesPage implements OnInit {
 	        iBalance += receiptData[i]['Debit'] - receiptData[i]['Credit'];
 	        this.particulars[receiptData.length - 1 - i]['balance'] = iBalance;
 	    }
+    }
+  }
+);
+  //this.route.queryParams.subscribe(params => {
+    //details = params["details"];
+			
+		//});
+    ///pdf viewer 
+    
   }
 
 	viewDetails(particular)

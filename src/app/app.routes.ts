@@ -242,24 +242,12 @@ export const routes: Routes = [
     loadComponent: () => import('./addservicerequest/addservicerequest.page').then( m => m.AddservicerequestPage)
   },
   {
-    path: 'address-proof-request',
-    loadComponent: () => import('./address-proof-request/address-proof-request.page').then( m => m.AddressProofRequestPage)
-  },
-  {
-    path: 'address-proof-request-details',
-    loadComponent: () => import('./address-proof-request-details/address-proof-request-details.page').then( m => m.AddressProofRequestDetailsPage)
-  },
-  {
     path: 'services',
     loadComponent: () => import('./services/services.page').then( m => m.ServicesPage)
   },
   {
     path: 'myvisitors',
     loadComponent: () => import('./myvisitors/myvisitors.page').then( m => m.MyvisitorsPage)
-  },
-  {
-    path: 'viewregistration',
-    loadComponent: () => import('./viewregistration/viewregistration.page').then( m => m.ViewregistrationPage)
   },
 
 ];

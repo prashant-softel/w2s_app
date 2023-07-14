@@ -9,8 +9,8 @@ headers.append('Content-Type', 'application/x-www-form-urlencoded; charset=UTF-8
   headers.append('content-type','application/json');
 @Injectable()
 export class ConnectServer {
-  //serverURL='http://way2society.com:8080/W2S/';
-  serverURL='https://way2society.com:8443/W2S/';
+  serverURL='http://way2society.com:8080/W2S/';
+  //serverURL='https://way2society.com:8443/W2S/';
   API_URL='';
   constructor(public http: HttpClient, private globalVars:GlobalVars ) { }
 
@@ -66,14 +66,15 @@ export class ConnectServer {
         objData = [];
       }
 
-     /*objData['token'] = "wvSn5ujhqo2IgEmOgxIb2ZAGGHR-HbsaeKZZKxciGQItalHa_9fwwsmXiI__fmk_a7u9VPr-rTJjd1vHtzfx8aCtmH01H1tBvh1i_MTycVJzK33x88e2qMGXCL-CZdrl";
-      objData['tkey'] = "VbnPa27xSPDDNDHuuQBDKaqBd0Yav0lXf8Xnr1dI8kgeD6x9jnbqwgTEjm66F-iw7RLFvMunLYIkxiyHkKIRRGyG6m7ZucowXJ_QKp6spTSCIQ_sQOMvZv0odrpEFR5C6fq0SP20IdFZlwxLzrFGsw";
-      objData['map'] = "9456";
-    */
-    objData['token'] = this.globalVars.USER_TOKEN;
+      // objData['token'] = "wvSn5ujhqo2IgEmOgxIb2ZAGGHR-HbsaeKZZKxciGQItalHa_9fwwsmXiI__fmk_SUplr2GKJz--P_VvX1k5skPK-O-Pqb22JgcWcC2Ac9kT4rWv1N92JcDgbzph-38q";
+      // objData['tkey'] = "MOcChDngKV1DS2tQCFa0CCK5lyZeENyYQMXWvZBALili6YRqLC0lwMUIYw7zqoLsSS-DiPOfTwFKcCGZta8ePFch2IEozdos302wIISBTOjhnIX-EyHbQitV4keF95bHG54Q0npZc2Nk-09J8x5mpQ";
+      // objData['map'] = "3719";
+      
+      objData['token'] = this.globalVars.USER_TOKEN;
       objData['tkey'] = this.globalVars.MAP_TKEY;
       objData['map'] = this.globalVars.MAP_ID;
-  
+
+
       var sURL = this.serverURL + fileURL + this.generateQueryString(objData);
       //alert(sURL);
 

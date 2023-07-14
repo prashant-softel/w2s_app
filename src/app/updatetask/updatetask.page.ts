@@ -50,7 +50,7 @@ export class UpdatetaskPage implements OnInit {
     this.ts_history_details = [];
     //this.taskDetails = this.navParams.get("details");
     this.userData = {status : 0, percentCompleted : 0, taskid : 0,summary:""};
-    this.img_src="http://way2society.com/upload/main/";
+    this.img_src="https://way2society.com/upload/main/";
     this.status = statusEnum;
     this.priority = priorityEnum;
     this.TaskUpFlag="0";

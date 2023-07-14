@@ -10,7 +10,7 @@
   </ion-toolbar>
   <ion-toolbar no-border *ngIf="NewRole != 'Contractor'">
     <ion-segment [(ngModel)]="tab" >
-      <ion-segment-button value="me" style="min-width: 100px;">Assigned to me</ion-segment-button>
+      <ion-segment-button value="me" style="min-width: 100px;">Ass. to me</ion-segment-button>
       <ion-segment-button value="active" style="min-width: 100px;">Open</ion-segment-button>
       <ion-segment-button value="expired" style="min-width: 100px;">Closed</ion-segment-button>
     </ion-segment>
@@ -46,7 +46,7 @@
             <ion-col class="text-right">{{p.unit_no}}</ion-col>
           </ion-row>
           <p class="text-right" >
-            <button ion-item class="link-btn" (click)="viewSR(p)"> View Details</button>
+            <a (click)="viewSR(p)"> View Details</a>
             <!--<a class="item" href="#">
               View Details
             </a>-->
@@ -77,7 +77,7 @@
             <ion-col class="text-right">{{p.unit_no}}</ion-col>
           </ion-row>
           <p class="text-right">
-            <button ion-item class="link-btn" (click)="viewSR(p)"> View Details</button>
+            <a  (click)="viewSR(p)"> View Details</a>
             <!--<a class="item" href="#">
               View Details
             </a>-->
@@ -108,7 +108,7 @@
             <ion-col class="text-right">{{p.unit_no}}</ion-col>
           </ion-row>
           <p class="text-right">
-            <button ion-item class="link-btn" (click)="viewSR(p)"> View Details</button>
+            <a (click)="viewSR(p)"> View Details</a>
             <!--<a class="item" href="#">
               View Details
             </a>-->

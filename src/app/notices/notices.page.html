@@ -32,7 +32,7 @@
 	      		<p  *ngIf="p.exp_date !='0000-00-00'"><ion-icon name="calendar" danger>&nbsp;</ion-icon>Expiry Date : {{p.exp_date}}</p>
             <p *ngIf="p.exp_date =='0000-00-00'"><ion-icon name="calendar" danger>&nbsp;</ion-icon>Expiry Date : No expiry</p>
 	      		<p text-right style="text-align: right;">
-              <button ion-item class="link-btn" (click)="viewNotice(p)"> View Details</button>
+              <a (click)="viewNotice(p)"> View Details</a>
 	      			<!--<a class="item" href="#">
 	        			View Details
 	      			</a>-->
@@ -48,7 +48,7 @@
 	      		<p><ion-icon name="calendar" primary>&nbsp;</ion-icon>Post Date : {{p.creation_date}}</p>
 	      		<p><ion-icon name="calendar" danger>&nbsp;</ion-icon>Expiry Date : {{p.exp_date}}</p>
 	      		<p text-right style="text-align: right;">
-              <button ion-item class="link-btn" (click)="viewNotice(p)"> View Details</button>
+              <a (click)="viewNotice(p)"> View Details</a>
 	      			<!--<a class="item" href="#">
 	        			View Details
 	      			</a>-->

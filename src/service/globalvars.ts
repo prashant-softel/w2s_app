@@ -44,7 +44,7 @@ export class GlobalVars {
   RENOVATION_REQUEST_ID = 0;
   TENANT_REQUEST_ID = 0;
   ADDRESS_PROOF_REQUEST_ID = 0;
-
+  MEMBER_UNIT_ID =0;
 
   APP_MENU = [];
 
@@ -172,7 +172,10 @@ export class GlobalVars {
     });
    
   }
-
+  setUserUnit(member_unit) {
+    console.log("mem",member_unit);
+    this.MEMBER_UNIT_ID = member_unit;
+  } 
   clearStorage() {
     this.storage.clear();
     this.HAS_LOGGED_IN = 'hasLoggedIn';

@@ -54,7 +54,7 @@
         </ion-row>
       	<ion-row>
           <ion-col class="text-right" size="12">
-            <a *ngIf=hasAttachment class="item" href="#" (click)="openAttachment()">
+            <a *ngIf=hasAttachment class="item"  (click)="openAttachment()">
              Attachment<br />
             </a>
           </ion-col>
@@ -71,7 +71,7 @@
       	</ion-col>
       </ion-row>
       	<p class="text-right" >
-          <button ion-item class="link-btn" (click)="addComment()">	Update Status/Add Comment</button>
+          <a (click)="addComment()">	Update Status/Add Comment</a>
 	      
 	      </p>
     </ion-card-content>
@@ -98,8 +98,8 @@
 		  </ion-select>
     </ion-item>
     <ion-item>
-      <ion-label floating>Comments</ion-label>
-      <ion-textarea no-wrap [(ngModel)]="userData.summary" rows="10"></ion-textarea>
+      <!--<ion-label floating>Comments</ion-label>-->
+      <ion-textarea label="Comments" labelPlacement="floating" no-wrap [(ngModel)]="userData.summary" rows="10"></ion-textarea>
     </ion-item>
     
     	<ion-row>

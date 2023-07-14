@@ -21,69 +21,84 @@
     <p style="color:#FF0000; text-align: center;"><strong>{{message}}</strong></p>
     </ion-col>
       </ion-row>
-    <ion-item>
-      <ion-label floating>Bank Name*</ion-label> 
-        <ion-select style="color:#0d0d0d" [(ngModel)]="userData.bank_id"  (ionChange)="onSelectBank($event)">
+    <ion-row style="padding-left: 10px;padding-right: 10px;">
+      <ion-col>
+      <!--<ion-label floating>Bank Name*</ion-label>--> 
+        <ion-select label="Bank Name*" placeholder="Bank Name*" style="color:#0d0d0d" [(ngModel)]="userData.bank_id"  (ionChange)="onSelectBank($event)">
         <ion-select-option text-wrap *ngFor="let b of bank_list" value="{{b.BankID}}">{{b.BankName}} </ion-select-option>
       </ion-select>
-    </ion-item>
-    <ion-item>
+    </ion-col>
+    </ion-row>
+    <ion-row style="padding-left: 10px;padding-right: 10px;">
+      <ion-col>
       <ion-label>A/C No : {{bank_account_no}}</ion-label>
-    </ion-item>
-    <ion-item>
+      </ion-col>
+    </ion-row>
+    <ion-row style="padding-left: 10px;padding-right: 10px;">
+      <ion-col>
       <ion-label>IFSC Code : {{bank_ifsc_code}}</ion-label>
-    </ion-item>
-    <ion-item>
-      <ion-label floating>Transaction Amount *</ion-label>
-      <ion-input type="tel" maxlength="25" value="" [(ngModel)]="userData.amount"></ion-input>
-    </ion-item>
-   <!-- <ion-item>
-      <ion-label floating>Transaction Date *</ion-label>
-      <ion-datetime displayFormat="DD-MM-YYYY" min="{{userData.trnx_date}}" max="{{max_year}}"[(ngModel)]="userData.trnx_date">
-      </ion-datetime>
-    </ion-item>-->
-    <ion-item>
-    <ion-label>Transaction Date</ion-label>
-    <ion-input
+      </ion-col>
+    </ion-row>
+    <ion-row style="padding-left: 10px;padding-right: 10px;">
+      <ion-col>
+      <!--<ion-label floating>Transaction Amount *</ion-label>-->
+      <ion-input label="Transaction Amount " labelPlacement="floating" type="tel" maxlength="25" value="" [(ngModel)]="userData.amount"></ion-input>
+    </ion-col>
+    </ion-row>
+   
+    <ion-row style="padding-left: 10px;padding-right: 10px;">
+      <ion-col>
+    <!--<ion-label>Transaction Date</ion-label>-->
+    <ion-input label="Transaction Date" labelPlacement="floating"
       value="{{ userData.trnx_date | date: 'dd-MM-yyyy' }}"
       id="date"
       class="ion-text-end"
     ></ion-input>
     <ion-popover trigger="date" size="cover">
       <ng-template>
-        <ion-datetime
+        <ion-datetime style="background: #ffffff;"
         min="{{userData.trnx_date}}" max="{{max_year}}"
           presentation="date"
           [(ngModel)]="userData.trnx_date"
-          locale="sl-SI"
         ></ion-datetime>
       </ng-template>
     </ion-popover>
-  </ion-item>
-    <ion-item>
-      <ion-label floating>Transaction ID *</ion-label>
-      <ion-input type="text" maxlength="20" value="" [(ngModel)]="userData.trnx_id"></ion-input>
-    </ion-item>
-    <ion-item>
-      <ion-label floating>Payment For *</ion-label>
-      <ion-select style="color:#0d0d0d" [(ngModel)]="userData.bill_type">
+    </ion-col>
+  </ion-row>
+    <ion-row style="padding-left: 10px;padding-right: 10px;">
+      <ion-col>
+      <!--<ion-label floating>Transaction ID *</ion-label>-->
+      <ion-input label="Transaction ID *" labelPlacement="floating" type="text" maxlength="20" value="" [(ngModel)]="userData.trnx_id"></ion-input>
+      </ion-col>
+    </ion-row>
+    <ion-row style="padding-left: 10px;padding-right: 10px;">
+      <ion-col>
+      <!--<ion-label floating>Payment For *</ion-label>-->
+      <ion-select label="Payment For *" placeholder="Payment For *" style="color:#0d0d0d" [(ngModel)]="userData.bill_type">
         <ion-select-option value=0>Maintenance Bill</ion-select-option>
         <ion-select-option value=1>Supplementary Bill</ion-select-option>
       </ion-select>
-    </ion-item>
-    <ion-item>
-      <ion-label floating>Payer (your) Bank Name</ion-label>
-      <ion-input type="text" maxlength="25" value="" [(ngModel)]="userData.payer_bank"></ion-input>
-    </ion-item>
-    <ion-item>
-      <ion-label floating>Payer (your) Bank Branch Name</ion-label>
-      <ion-input type="text" maxlength="25" value="" [(ngModel)]="userData.payer_branch"></ion-input>
-    </ion-item>
-    <ion-item>
-        <ion-label floating>Comments</ion-label>
-        <ion-textarea value="" [(ngModel)]="userData.note" rows="4"></ion-textarea>
-    </ion-item>
-    <ion-row>
+      </ion-col>
+    </ion-row>
+    <ion-row style="padding-left: 10px;padding-right: 10px;">
+      <ion-col>
+      <!--<ion-label floating>Payer (your) Bank Name</ion-label>-->
+      <ion-input label="Payer (your) Bank Name" labelPlacement="floating" type="text" maxlength="25" value="" [(ngModel)]="userData.payer_bank"></ion-input>
+    </ion-col>
+    </ion-row>
+    <ion-row style="padding-left: 10px;padding-right: 10px;">
+      <ion-col>
+      <!--<ion-label floating>Payer (your) Bank Branch Name</ion-label>-->
+      <ion-input label="Payer (your) Bank Branch Name" labelPlacement="floating" type="text" maxlength="25" value="" [(ngModel)]="userData.payer_branch"></ion-input>
+    </ion-col>
+    </ion-row>
+    <ion-row style="padding-left: 10px;padding-right: 10px;">
+      <ion-col>
+        <!--<ion-label floating>Comments</ion-label>-->
+        <ion-textarea label="Comments" labelPlacement="floating" value="" [(ngModel)]="userData.note" rows="4"></ion-textarea>
+      </ion-col>
+      </ion-row>
+    <ion-row >
       <ion-col col-1></ion-col>
       <ion-col text-center col-10>
     <ion-button color="primary" block (click)="submit()">Submit</ion-button>

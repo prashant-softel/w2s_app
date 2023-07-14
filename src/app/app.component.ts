@@ -1,8 +1,8 @@
 import { CommonModule } from '@angular/common';
 import { HttpClientModule } from '@angular/common/http';
-import { Component } from '@angular/core';
+import { Component, ViewChild } from '@angular/core';
 import { FormsModule } from '@angular/forms';
-import { IonicModule, NavController, NavParams ,MenuController} from '@ionic/angular';
+import { IonicModule, NavController, NavParams, MenuController } from '@ionic/angular';
 import { ConnectServer } from 'src/service/connectserver';
 import { IonicStorageModule } from '@ionic/storage-angular';
 
@@ -10,8 +10,9 @@ import { GlobalVars } from 'src/service/globalvars';
 import { LoaderView } from 'src/service/loaderview';
 import { StorageService } from 'src/service/StorageService';
 import { Router, NavigationExtras } from '@angular/router';
-import { InAppBrowser } from '@ionic-native/in-app-browser/ngx';
-import { NgCircleProgressModule } from 'ng-circle-progress';
+//import { PdfViewerModule } from 'ng2-pdf-viewer';
+//import { LoginPage } from '../pages/login/login';
+
 //import { Platform, MenuController, Nav, AlertController } from 'ionic-angular';
 @Component({
   selector: 'app-root',
@@ -22,8 +23,7 @@ import { NgCircleProgressModule } from 'ng-circle-progress';
     , GlobalVars,
     LoaderView,
     NavParams,
-    StorageService,
-    InAppBrowser
+    StorageService
 
   ],
 
@@ -32,8 +32,7 @@ import { NgCircleProgressModule } from 'ng-circle-progress';
     HttpClientModule,
     CommonModule,
     FormsModule,
-    IonicStorageModule,
-    NgCircleProgressModule,
+    IonicStorageModule
   ],
 })
 export class AppComponent {
@@ -45,7 +44,7 @@ export class AppComponent {
   LinkflatPage: any = 'linkflat';
   AboutUsPage: any = 'about-us';
   SocietyPage:any='society';
-  
+  ClassifiedsPage:any='classifieds';
   //rootPage: any = this.LoginPage;
   pagesMember: Array<{title: string, component: any}>;
   constructor(public globalVars: GlobalVars,
@@ -54,10 +53,10 @@ export class AppComponent {
       this.pagesMember = [
         { title: 'Dashboard', component:this.DashboardPage },
         { title: 'Helpline Number', component: this.HelplinePage },
+        { title: 'Classifieds', component: this.ClassifiedsPage },
         //{ title: 'Settings', component:this.SettingsPage },
         //{title : 'VisitorInPage',component: VisitorInPage},
         { title: 'Link Another Society/Flat', component: this.LinkflatPage},
-       
         { title: 'About Us', component: this.AboutUsPage }
   
              
@@ -71,6 +70,7 @@ export class AppComponent {
       this.navCtrl.navigateRoot(this.DashboardPage);
     } 
   logout() {
+    this.menu.close();
     localStorage.clear();
     this.globalVars.clearStorage();
     this.navCtrl.navigateRoot(this.LoginPage);

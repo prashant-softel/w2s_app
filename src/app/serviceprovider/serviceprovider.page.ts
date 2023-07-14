@@ -104,7 +104,7 @@ export class ServiceproviderPage implements OnInit {
   }
 
   fetchProviders(tab){
-    alert("call");
+    //alert("call");
     this.message = "";
     this.showSearch = 1;
     if(tab == 0)
@@ -239,38 +239,34 @@ export class ServiceproviderPage implements OnInit {
       this.temp_particulars_my_array = this.particulars_my.filter(
       (p) =>{
           let name: any = p;
-          if(name.cat.toLowerCase().indexOf(val.toLowerCase()) > -1)
-          return (name.cat.toLowerCase().indexOf(val.toLowerCase()) > -1);
+          if (name.cat.toLowerCase().indexOf(val.toLowerCase()) > -1) { return (name.cat.toLowerCase().indexOf(val.toLowerCase()) > -1); }
+          return null;
         }
       );
     }
   }
-  getItems2(ev: any)
-  {
+  getItems2(ev: any) {
     this.temp_particulars_all_array = this.particulars_all;
     let val = ev.target.value;
-    if (val && val.trim() != '')
-    {
+    if (val && val.trim() != '') {
       this.temp_particulars_all_array = this.particulars_all.filter(
-      (p) => {
+        (p) => {
           let name: any = p;
-          if(name.cat.toLowerCase().indexOf(val.toLowerCase()) > -1)
-            return (name.cat.toLowerCase().indexOf(val.toLowerCase()) > -1);
+          if (name.cat.toLowerCase().indexOf(val.toLowerCase()) > -1) { return (name.cat.toLowerCase().indexOf(val.toLowerCase()) > -1); }
+          return null;
         }
       );
     }
   }
-  getItems3(ev: any)
-  {
+  getItems3(ev: any) {
     this.temp_particulars_pending_array = this.particulars_pending;
     let val = ev.target.value;
-    if (val && val.trim() != '')
-    {
+    if (val && val.trim() != '') {
       this.temp_particulars_pending_array = this.particulars_pending.filter(
-      (p) => {
+        (p) => {
           let name: any = p;
-          if(name.cat.toLowerCase().indexOf(val.toLowerCase()) > -1)
-            return (name.cat.toLowerCase().indexOf(val.toLowerCase()) > -1);
+          if (name.cat.toLowerCase().indexOf(val.toLowerCase()) > -1) { return (name.cat.toLowerCase().indexOf(val.toLowerCase()) > -1); }
+          return null;
         }
       );
     }

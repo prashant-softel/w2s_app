@@ -12,10 +12,10 @@
   <ion-toolbar no-border >
     <ion-segment [(ngModel)]="tab">
       <ion-segment-button value="for_me" (click) = "fetchTaskForMe()">
-        <strong>Assigned to me </strong>
+        <strong>Ass. to me </strong>
       </ion-segment-button>
       <ion-segment-button value="by_me" (click) = "fetchTaskByMe()">
-        <strong>Assigned by me</strong>
+        <strong>Ass. by me</strong>
       </ion-segment-button>
       <ion-segment-button value="all" (click) = "fetchTaskAll()"> <!--  -->
         <strong>All Open</strong>
@@ -34,6 +34,7 @@
              
              <ion-icon size="6" name="pencil-outline" style="color:black">&nbsp;</ion-icon>&nbsp;Task no. - {{t.id}}
               <ion-col class="text-right" size="6">
+               
                 <!--<circle-progress
                   [percent]="t.PercentCompleted"
                   [radius]="20"						
@@ -52,7 +53,7 @@
               <ion-icon size="6" name="time"  style="color:black">&nbsp;</ion-icon>&nbsp;{{t.DueDate}}
             </ion-row>
             <ion-row>
-              <ion-icon size="8" class="text-left"  name="stats-chart-outline"  style="color:black">&nbsp; </ion-icon>&nbsp;{{status[t.Status]}}
+              <ion-icon size="8" class="text-left"  name="stats-chart-outline"  style="color:black">&nbsp; </ion-icon>&nbsp;{{status[t.Status]}} &nbsp;  {{t.PercentCompleted}}%
               <ion-icon size="4" class="text-right" style="margin-top: -20px;color:black">Progress</ion-icon>
             </ion-row>
             <ion-row>

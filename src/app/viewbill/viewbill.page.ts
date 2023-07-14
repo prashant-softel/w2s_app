@@ -82,7 +82,7 @@ export class ViewbillPage implements OnInit {
     let details:any;
     this.route.queryParams.subscribe(params => {
       details = params["details"];
-        
+        //PDF Viewer call 
       });
       
     //  console.log("Display Data",details);

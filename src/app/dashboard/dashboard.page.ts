@@ -7,6 +7,7 @@ import { LoaderView } from 'src/service/loaderview';
 import { ConnectServer } from 'src/service/connectserver';
 import { NavigationExtras } from '@angular/router';
 
+
 enum statusEnum  { "Raised" = 1,  "Waiting",  "In progress",  "Completed", "Cancelled"}
 enum priorityEnum  { "Critical" = 1,  "High",  "Medium",  "Low"}
 @Component({
@@ -20,6 +21,7 @@ enum priorityEnum  { "Critical" = 1,  "High",  "Medium",  "Low"}
   imports: [IonicModule, CommonModule, FormsModule]
 })
 export class DashboardPage implements OnInit {
+ 
   tab: string = "society";
   SocietyPage: any = 'society';
   DuesPage :any ='dues';
@@ -87,7 +89,7 @@ export class DashboardPage implements OnInit {
   router: any;
   society:any;
   UserTab:any;
-
+  src : any;
   constructor(private navCtrl: NavController,
     private globalVars: GlobalVars,
     private connectServer: ConnectServer,
@@ -260,7 +262,7 @@ export class DashboardPage implements OnInit {
                             if(resolve['response']['poll'] != "")
                             {
                               var upPoll = resolve['response']['poll'];
-                              for(var iPoll= 0; iPoll <  Object.keys(upClassified).length; iPoll++)
+                              for(var iPoll= 0; iPoll <  Object.keys(upPoll).length; iPoll++)
                               {
                                 this.Poll_details_array.push(upPoll[iPoll]);
                          
@@ -479,8 +481,18 @@ export class DashboardPage implements OnInit {
     //alert("call");
   if(this.AccessUI == "0" && this.blockAcount=="0" )  ///   -----------------------------------------------------------------
    {
+    var objData = [];
+    //objData['fetch'] =1;   /// New Version
+     objData['UnitID'] = 0;
+    let navigationExtras: NavigationExtras = {
+      queryParams: 
+      {
+        details :objData['UnitID'],
+      }
+    };
+    this.navCtrl.navigateRoot(this.DuesPage,navigationExtras);
     //alert("call1");
-   this.loaderView.showLoader('Loading ...');  
+   /*this.loaderView.showLoader('Loading ...');  
     var objData = [];
     objData['fetch'] =1;   /// New Version
      objData['UnitID'] = 0;
@@ -500,7 +512,7 @@ export class DashboardPage implements OnInit {
                       this.navCtrl.navigateRoot(this.DuesPage,navigationExtras);
                     }
                 }
-   );
+   );*/
  }
  else
  {
@@ -830,7 +842,7 @@ export class DashboardPage implements OnInit {
    
  }
  viewImpose() {
-  alert("Comming Soon!");
+  //alert("Comming Soon!");
   if(this.AccessUI == "0")
   {
     
@@ -865,19 +877,26 @@ viewAllProvider(flag)
 }
 viewPendingProvider(flag)
 {
-  alert("comming soon !");
+  //alert("comming soon !");
  var p=[];
   p['tab']='2';
   p['dash']= "admin";
   p['flag'] = flag;
-  /* if(this.AccessUI == "0")
+   if(this.AccessUI == "0")
   {
-   this.navCtrl.push(ServiceproviderPage,{details : p});
+    let navigationExtras: NavigationExtras = {
+      queryParams: 
+      {
+        details :p,
+      }
+    };
+   this.navCtrl.navigateRoot(this.ServiceproviderPage,navigationExtras);
+   //this.navCtrl.push(ServiceproviderPage,{details : p});
   }
   else{
-    this.presentAlert(); 
+    //this.presentAlert(); 
   }
-  */
+  
 }
 viewTenantsInAdmin(){
   var p=[];
@@ -902,7 +921,7 @@ viewRenovationRequest(){
   var p=[];
   p['dash']=this.tab;
   console.log(p);
-  alert("comming soon !");
+  //alert("comming soon !");
   /*if(this.AccessUI == "0")
   {
     this.navCtrl.push(RenovationRequestPage,{details : p});
@@ -945,12 +964,13 @@ viewServiceInAdmin() {
   //this.navCtrl.push(ServiceRequestPage,{details : p});
 }
 viewClassifiedInAdmin(){
-   alert("comming soon !");
+   //alert("comming soon !");
+   this.navCtrl.navigateRoot(this.ClassifiedsPage);
  // this.navCtrl.push(ClassifiedsPage);
 }
 
 viewAdminAlbums() {
-  alert("comming Soon!");
+ // alert("comming Soon!");
   //this.navCtrl.push(AlbumApprovalPage);
 }
 

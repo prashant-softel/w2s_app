@@ -14,15 +14,16 @@ import { ConnectServer } from 'src/service/connectserver';
 import { VisitorInPage } from '../visitor-in/visitor-in.page';
 import { ViewreceiptPage } from '../viewreceipt/viewreceipt.page';
 import { NavigationExtras } from '@angular/router';
-import { InAppBrowser } from '@awesome-cordova-plugins/in-app-browser/ngx';
+//import { InAppBrowser } from '@ionic-native/in-app-browser/ngx';
+//import { WebIntent } from '@ionic-native/web-intent/ngx';
 
-declare let cordova: any;
+
 @Component({
   selector: 'app-login',
   templateUrl: './login.page.html',
   styleUrls: ['./login.page.scss'],
   standalone: true,
-  providers:[InAppBrowser],
+  //providers:[InAppBrowser],
   imports: [IonicModule, CommonModule, FormsModule]
 })
 export class LoginPage implements OnInit {
@@ -35,6 +36,7 @@ export class LoginPage implements OnInit {
   SocietyPage: any = 'society';
   DashboardPage: any = 'dashboard';
   NewuserPage:any='newuser';
+  payFlag: boolean;
   
   constructor(
     private navCtrl: NavController,
@@ -43,8 +45,10 @@ export class LoginPage implements OnInit {
     private loaderView: LoaderView,
     private params: NavParams,
     public actionSheet: ActionSheetController,
-    private iab: InAppBrowser,
-    private platform:Platform) {
+    private platform:Platform,
+   // private inAppBrowser: InAppBrowser
+
+   ) {
 
     this.userData = { Email: "", Password: "" };
     this.showLogin = false;
@@ -58,29 +62,32 @@ export class LoginPage implements OnInit {
     
     this.reinitializeData();
   }
-  launch1()
+  launch()
   {
-    this.platform.ready().then(() => {
-      cordova.InAppBrowser.open('https://way2society.com/', "_system", "location=true");
-  });
-    alert("call");
-   // window.open('https://way2society.com/', "_system", "location=yes");
-  }
-  launch() {
-    try{
-      alert("call1");
-       const browser = this.iab.create('https://way2society.com/');
-       browser.on('loadstop').subscribe(event => {
-      browser.insertCSS({ code: "body{color: red;" });
-    });
+    let uri = 'https://way2society.com/forgotpassword.php';//`upi://pay?pa=${UPI_ID}&pn=${UPI_NAME}&tid=${tid}&am=${totalPrice}&cu=INR&tn=${UPI_TXN_NOTE}&tr=${orderId}`;
+   alert("call 1");
 
-    browser.close();
-    }
-    catch (err) {
-      alert("call2");
-      alert(err);
-    }
-    
+   window.open("https://way2society.com/forgotpassword.php", '_system', 'location=yes');
+   // cordova.exec("InAppBrowser", "open", ['http://apache.org', '_blank', 'location=yes']);
+   // alert("call");
+    /*this.platform.ready().then(() => {
+      this.payFlag = true;
+      var browserRef = window.open('https://way2society.com',"_blank","hidden=no,location=no,clearsessioncache=yes,clearcache=yes,hardwareback=no");
+      browserRef.addEventListener('loadstop', function(e: InAppBrowserEvent) {
+      var loc = e.url;
+      alert("call"+loc);
+      if(loc == "https://way2society.com")
+      {
+            setTimeout(function () {
+              browserRef.close();
+            }, 5000);  
+      }
+      });
+      });*/
+    //this.platform.ready().then(() => {
+     //cordova.InAppBrowser.open('https://way2society.com/', "_system", "location=true");
+ // });
+   
   }
 
   ionViewDidLoad() {
@@ -282,11 +289,11 @@ export class LoginPage implements OnInit {
               }
               else {
                 //let navigationExtras: NavigationExtras = {
-                  //queryParams: {
-                      //userName:'TESTTSTSTS' ,
-                     
-                 // }
-              //};
+                //queryParams: {
+                //userName:'TESTTSTSTS' ,
+
+                // }
+                //};
                 //this.navCtrl.navigateRoot(this.SocietyPage,navigationExtras);
                 this.navCtrl.navigateRoot(this.SocietyPage);
               }
@@ -379,20 +386,8 @@ export class LoginPage implements OnInit {
   }*/
 
   openForgotPasswordLink() {
-    
-    //var ref = cordova.InAppBrowser.open("https://way2society.com/forgotpassword.php", '_system', 'location=no');
-    //this.iab.create('https://way2society.com/forgotpassword.php', '_blank', 'location=no');
-   // const browser = this.iab.create('https://way2society.com/forgotpassword.php');
-   // browser.show()
-  
-   //const browser = this.iab.create('https://way2society.com/forgotpassword.php','_blank',{location:'no'}); 
-   window.open("https://way2society.com/forgotpassword.php", '_system', 'location=no');
-   
-   // let browser = this.InAppBrowser.create('https://ionicframework.com/');
+    window.open("https://way2society.com/forgotpassword.php", '_blank', 'location=no');
   }
-  async presentActionSheet() {
-    
-    }
   openActivationLink() {
 
     //this.navCtrl.push(NewuserPage);

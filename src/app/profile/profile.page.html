@@ -61,7 +61,8 @@
           </ion-row>
         </ion-list>
           <ion-list class="text-right" *ngIf="ShowAddressField !='1'">
-            <button ion-item class="link-btn" (click)="UpdateAdd()">Update Address</button>
+            <a (click)="UpdateAdd()"><u>Update Address</u></a>
+            <!--<button ion-item class="link-btn" (click)="UpdateAdd()">Update Address</button>-->
           <!--<a href="#" (click)="UpdateAdd()">Update Address</a>-->
           </ion-list>
           <ion-list *ngIf="ShowAddressField =='1'">
@@ -122,8 +123,10 @@
         <ion-row class="text-color">
           <ion-col col-7 class="text-center"  *ngIf="detailsTenant != '' "><strong>Yes</strong></ion-col>
           <ion-col col-7 class="text-center"  *ngIf="detailsTenant == '' "><strong>No</strong></ion-col>
-         <ion-col col-5 class="text-center"  *ngIf="roleWise != 'Admin' "><button ion-item class="link-btn" (click)="ViewLedger()"><strong>{{duesAmount}}.00</strong></button></ion-col>
-         <ion-col col-5 class="text-center"  *ngIf="roleWise == 'Admin' "><button ion-item class="link-btn" (click)="ViewLedger()"><strong>{{duesAmount}}.00</strong></button></ion-col>
+         <ion-col col-5 class="text-center"  *ngIf="roleWise != 'Admin' "><a (click)="ViewLedger()"><strong>{{duesAmount}}.00</strong></a></ion-col>
+         <ion-col col-5 class="text-center"  *ngIf="roleWise == 'Admin' "><a (click)="ViewLedger()"><strong>{{duesAmount}}.00</strong></a></ion-col>
+         <!--<ion-col col-5 class="text-center"  *ngIf="roleWise != 'Admin' "><button ion-item class="link-btn" (click)="ViewLedger()"><strong>{{duesAmount}}.00</strong></button></ion-col>
+         <ion-col col-5 class="text-center"  *ngIf="roleWise == 'Admin' "><button ion-item class="link-btn" (click)="ViewLedger()"><strong>{{duesAmount}}.00</strong></button></ion-col>-->
         </ion-row>
           </ion-card-content>
         </ion-card>
@@ -238,7 +241,7 @@
     </ion-list>
       <ion-row *ngIf="roleWise == 'Admin' && p.ActiveLogin != 1 && p.other_email !=''">
         <ion-col size="12" class="text-right">
-          <button ion-item class="link-btn" (click)="SendActivation(p.mem_other_family_id)">Send Activation Email</button>
+          <a  (click)="SendActivation(p.mem_other_family_id)">Send Activation Email</a>
           <!--<a href="#" (click)="SendActivation(p.mem_other_family_id)" style="text-decoration: none;">Send Activation Email</a>-->
         </ion-col>
       </ion-row>
@@ -310,7 +313,7 @@
     </ion-list>
      <ion-row *ngIf="roleWise == 'Admin' || roleWise== 'AdminMember' && p.ActiveLogin != 1 && p.other_email !='' ">
         <ion-col sizt="12" class="text-right">
-          <button ion-item class="link-btn" (click)="SendActivation(p.mem_other_family_id)">Send Activation Email</button>
+          <a  (click)="SendActivation(p.mem_other_family_id)">Send Activation Email</a>
           <!--<a href="#" (click)="SendActivation(p.mem_other_family_id)" style="text-decoration: none;">Send Activation Email</a>-->
         </ion-col>
       </ion-row>
@@ -379,7 +382,7 @@
         </ion-list>
         <ion-row *ngIf="roleWise == 'Admin' || roleWise== 'AdminMember' && p.ActiveLogin != 1 && p.other_email !=''">
             <ion-col size="12" class="text-right">
-              <button ion-item class="link-btn" (click)="SendActivation(p.mem_other_family_id)">Send Activation Email</button>
+              <a  (click)="SendActivation(p.mem_other_family_id)">Send Activation Email</a>
               <!--<a href="#" (click)="SendActivation(p.mem_other_family_id)" style="text-decoration: none;">Send Activation Email</a>-->
             </ion-col>
           </ion-row>

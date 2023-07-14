@@ -48,7 +48,7 @@ export class ViewservicerequestPage implements OnInit {
     this.superwise="";
     this.folder= "";
     this.role = "";
-    this.img_src="http://way2society.com/upload/main/";
+    this.img_src="https://way2society.com/upload/main/";
     this.addcomment = 0;
     this.hasAttachment = false;
   }
@@ -198,6 +198,6 @@ export class ViewservicerequestPage implements OnInit {
   openAttachment()
   {
     window.open(this.img_src + this.sr_details['img'] , '_blank', 'location=no');
-    return false;
+    //return false;
   }
 }

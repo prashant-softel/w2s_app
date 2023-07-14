@@ -282,35 +282,50 @@
       <ion-row style="background-color: #337ab7;color:#fff; text-align: center;">
         <ion-col><strong>Admin Actions</strong></ion-col>
       </ion-row>
-      <ion-row style="height: 80px;margin-top: 14px;width: 100%;margin-left: 8px;">
+      <ion-row style="margin-top: 14px;width: 100%;margin-left: 8px;">
         <ion-col size="3">
           <button (click)="viewImpose()"  ion-fab style="width: 50px;height: 50px;background-color: #337ab7;color: white;
           border-radius: 10rem;"><ion-icon name="hand-left-outline" style="font-size: 1.5rem;" ></ion-icon></button>
-          <span style="font-size: 0.9rem;margin-left:10px;">Fine</span>
+        </ion-col>
+         <!-- <span style="font-size: 0.9rem;margin-left:10px;">Fine</span>-->
           <!--<button ion-fab style="width: 50px;height: 50px;" (click)="viewImpose()"><ion-icon name="hand" style="font-size: 2.7rem;"></ion-icon></button>
           <span style="font-size: 1.3rem;margin-left: -25px;">Fine</span>-->
-          </ion-col>
+         
         <ion-col size="3">
           <button (click)="viewAllProvider(1)"  ion-fab style="width: 50px;height: 50px;background-color: #337ab7;color: white;
           border-radius: 10rem;"><ion-icon name="search" style="font-size: 1.5rem;" ></ion-icon></button>
-          <span style="font-size: 0.9rem;margin-left: 5px;">S-Pro.</span>
+          </ion-col>
+         <!-- <span style="font-size: 0.9rem;margin-left: 1.0rem;">S-Pro.</span>-->
           <!--<button ion-fab style="width: 50px;height: 50px;" (click)="viewAllProvider(1)"><ion-icon name="search" style="font-size: 2.7rem;"></ion-icon></button>
           <span style="font-size: 1.3rem;margin-left: -25px;">S-Provider</span>-->
-          </ion-col>
+        
         <ion-col size="3">
           <button (click)="viewServiceInAdmin()"  ion-fab style="width: 50px;height: 50px;background-color: #337ab7;color: white;
           border-radius: 10rem;"><ion-icon name="newspaper-outline" style="font-size: 1.5rem;" ></ion-icon></button>
-          <span style="font-size: 0.9rem;margin-left: 3px;">S-Req.</span>
+          </ion-col>
+          <!--<span style="font-size: 0.9rem;margin-left: 1.0rem;">S-Req.</span>-->
          <!-- <button ion-fab style="width: 50px;height: 50px;" (click)="viewServiceInAdmin()"><ion-icon name="paper" style="font-size: 2.7rem;"></ion-icon></button>
           <span style="font-size: 1.3rem;margin-left: -25px;">S-Request</span>-->
-         </ion-col>
+        
+         
         <ion-col size="3">
           <button (click)="viewTask()"  ion-fab style="width: 50px;height: 50px;background-color: #337ab7;color: white;
           border-radius: 10rem;"><ion-icon name="toggle-outline" style="font-size: 1.5rem;" ></ion-icon></button>
-          <span style="font-size: 0.9rem;margin-left: 10px;">Task</span>
-          <!--<button ion-fab style="width: 50px;height: 50px;" (click)="viewTask()"><ion-icon name="switch" style="font-size: 2.7rem;"></ion-icon></button>
-          <span style="font-size: 1.3rem;margin-left: -25px;">Task</span>-->
           </ion-col>
+        </ion-row>
+        <ion-row>
+          <ion-col size="3">
+            <span style="font-size: 0.9rem;margin-left:15px;">Fine</span>
+          </ion-col>
+          <ion-col size="3">
+            <span style="font-size: 0.9rem;margin-left: 0.8rem;">S-Pro.</span>
+            </ion-col>
+            <ion-col size="3">
+              <span style="font-size: 0.9rem;margin-left: 0.8rem;">S-Req.</span>
+              </ion-col>
+            <ion-col size="3">
+              <span style="font-size: 0.9rem;margin-left: 1.0rem;">Task</span>
+            </ion-col>
         </ion-row>
     </ion-card-content>
   </ion-card>
@@ -322,36 +337,47 @@
         <ion-col><strong>Waiting for Approvals</strong></ion-col>
       </ion-row>
       <br/>
-      <ion-row style="height: 80px;margin-top: 14px;width: 100%;margin-left: 8px;">
-        <ion-col size="3">
+      <ion-row style="margin-top: 14px;width: 100%;margin-left: 8px;">
+        <ion-col size="4">
           <button (click)="viewTenantsInAdmin()"  ion-fab style="width: 50px;height: 50px;background-color: #337ab7;color: white;
           border-radius: 10rem;"><ion-icon name="person-add-outline" style="font-size: 1.5rem;" ></ion-icon></button>
-          <span style="font-size: 0.9rem;margin-left: 0px;">Tenants</span>
+         
           <!--<button ion-fab style="width: 50px;height: 50px;" (click)="viewTenantsInAdmin()"><ion-icon name="ios-people" style="font-size: 2.7rem;"></ion-icon></button>
           <span style="font-size: 1.3rem;margin-left: -25px;">Tenants</span>-->
         </ion-col>
-        <ion-col size="3">
+        <ion-col size="4">
           <button (click)="viewPendingProvider(2)"  ion-fab style="width: 50px;height: 50px;background-color: #337ab7;color: white;
           border-radius: 10rem;"><ion-icon name="search" style="font-size: 1.5rem;" ></ion-icon></button>
-          <span style="font-size: 0.9rem;margin-left: 5px;">S-Pro.</span>
+        
           <!--<button ion-fab style="width: 50px;height: 50px;" (click)="viewPendingProvider(2)"><ion-icon name="search" style="font-size: 2.7rem;"></ion-icon></button>
           <span style="font-size: 1.3rem;margin-left: -25px;">S-Provider</span>-->
         </ion-col>
-        <ion-col size="3">
+        <ion-col size="4">
           <button (click)="viewClassifiedInAdmin()"  ion-fab style="width: 50px;height: 50px;background-color: #337ab7;color: white;
           border-radius: 10rem;"><ion-icon name="pricetags" style="font-size: 1.5rem;" ></ion-icon></button>
-          <span style="font-size: 0.9rem;margin-left: -3px;">Classified</span>
+         
           <!--<button ion-fab style="width: 50px;height: 50px;" (click)="viewClassifiedInAdmin()"><ion-icon name="pricetags" style="font-size: 2.7rem;"></ion-icon></button>
           <span style="font-size: 1.3rem;margin-left: -25px;">Classified</span>-->
         </ion-col>
-        <ion-col size="3">
+        <!--<ion-col size="3">
           <button (click)="viewAdminAlbums()"  ion-fab style="width: 50px;height: 50px;background-color: #337ab7;color: white;
           border-radius: 10rem;"><ion-icon name="images" style="font-size: 1.5rem;" ></ion-icon></button>
-          <span style="font-size: 0.9rem;margin-left: 0px;">Photos</span>
+          <span style="font-size: 0.9rem;margin-left: 0px;">Photos</span>-->
           <!--<button ion-fab style="width: 50px;height: 50px;" (click)="viewAdminAlbums()"><ion-icon name="images" style="font-size: 2.7rem;"></ion-icon></button>
-          <span style="font-size: 1.3rem;margin-left: -25px;">Photos</span>-->
-        </ion-col>
+          <span style="font-size: 1.3rem;margin-left: -25px;">Photos</span>
+        </ion-col>-->
       </ion-row>
+      <ion-row>
+        <ion-col size="4">
+        <span style="font-size: 0.9rem;margin-left: 0.7rem;">Tenants</span>
+        </ion-col>
+        <ion-col size="4">
+          <span style="font-size: 0.9rem;margin-left: 1.0rem;">Service-Pro</span>
+          </ion-col>
+          <ion-col size="4">
+            <span style="font-size: 0.9rem;margin-left: 0.2rem;">Classified</span>
+            </ion-col>
+        </ion-row>
      
       <!--<ion-row style="height: 80px;margin-top: 14px;width: 100%;margin-left: 8px;">
         <ion-col size="3">
@@ -442,7 +468,7 @@
       <div style="float: left;">
       <button (click)="viewNotices()" ion-fab style="width: 40px;height: 40px;background-color: #337ab7;color: white;
       border-radius: 10rem;" ><ion-icon name="copy" style="font-size: 1.5rem;"></ion-icon></button>
-      <span style="font-size: 0.9rem;margin-left: -10px;">Notices</span>
+      <span style="font-size: 0.9rem;margin-left: -5px;">Notices</span>
     </div>
   </ion-col>
   

@@ -132,33 +132,29 @@ fetchClose()
 			  );
 	    }
   }
-  getItems1(ev: any) 
-  {
+  getItems1(ev: any) {
     this.temp_active_polls_array = this.active_polls_array;
     let val = ev.target.value;
-    if (val && val.trim() != '') 
-    {
+    if (val && val.trim() != '') {
       this.temp_active_polls_array = this.active_polls_array.filter(
-      (p) =>{
-        let name: any = p;
-          if(name.question.toLowerCase().indexOf(val.toLowerCase()) > -1)
-          return (name.question.toLowerCase().indexOf(val.toLowerCase()) > -1);
+        (p) => {
+          let name: any = p;
+          if (name.question.toLowerCase().indexOf(val.toLowerCase()) > -1) { return (name.question.toLowerCase().indexOf(val.toLowerCase()) > -1); }
+          return null;
         }
       );
     }
   }
 
-  getItems2(ev: any) 
-  {
+  getItems2(ev: any) {
     this.temp_inactive_polls_array = this.inactive_polls_array;
     let val = ev.target.value;
-    if (val && val.trim() != '') 
-    {
+    if (val && val.trim() != '') {
       this.temp_inactive_polls_array = this.inactive_polls_array.filter(
-      (p) => {
-        let name: any = p;
-        if(name.question.toLowerCase().indexOf(val.toLowerCase()) > -1)
-          return (name.question.toLowerCase().indexOf(val.toLowerCase()) > -1);
+        (p) => {
+          let name: any = p;
+          if (name.question.toLowerCase().indexOf(val.toLowerCase()) > -1) { return (name.question.toLowerCase().indexOf(val.toLowerCase()) > -1); }
+          return null;
         }
       );
     }

@@ -32,14 +32,14 @@
         <p><ion-icon name="alarm" secondary>&nbsp;</ion-icon>{{p.event_time}}</p>
         <p>Event Charges: Rs. {{p.event_charges}} /-</p>
         <p text-right style="text-align: right;">
-          <button ion-item class="link-btn" (click)="viewEvent(p)"> View Details</button>
+          <a (click)="viewEvent(p)"> View Details</a>
           <!--<a class="item" href="#" (click)="viewEvent(p)">
             View Details
           </a>-->  
         </p>
       </ion-card-content>
     </ion-card>
-    <p *ngIf=!hasActiveEvent text-center style="color: red;">No Upcoming Events To Display</p>
+    <p *ngIf=!hasActiveEvent text-center style="color: red; text-align: center;">No Upcoming Events To Display</p>
     </ion-list>
   
     <ion-list no-lines *ngSwitchCase="'expired'">
@@ -54,7 +54,7 @@
     
         <p text-right style="text-align: right;">
          
-            <button ion-item class="link-btn" (click)="viewEvent(p)"> View Details</button>
+            <a  (click)="viewEvent(p)"> View Details</a>
           <!--<a class="item" href="#">
             View Details
           </a>-->  

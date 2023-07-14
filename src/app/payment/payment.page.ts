@@ -6,7 +6,7 @@ import { GlobalVars } from 'src/service/globalvars';
 import { LoaderView } from 'src/service/loaderview';
 import { ConnectServer } from 'src/service/connectserver';
 import { NavigationExtras } from '@angular/router';
-import { InAppBrowser, InAppBrowserOptions } from '@ionic-native/in-app-browser/ngx';
+
 @Component({
   selector: 'app-payment',
   templateUrl: './payment.page.html',
@@ -21,7 +21,7 @@ export class PaymentPage implements OnInit {
   AllowPayment : any;
   EnablePaytm : any;
   Enable_NEFT : any;
-	options : InAppBrowserOptions = {
+	/*options : InAppBrowserOptions = {
       location : 'yes',//Or 'no'
       hidden : 'no', //Or  'yes'
       clearcache : 'yes',
@@ -37,14 +37,13 @@ export class PaymentPage implements OnInit {
       allowInlineMediaPlayback : 'no',//iOS only
       presentationstyle : 'pagesheet',//iOS only
       fullscreen : 'yes',//Windows only
-  };
+      );*/
   constructor(private navCtrl: NavController,
     private globalVars: GlobalVars,
     private connectServer: ConnectServer,
     private platform: Platform,
     private loaderView: LoaderView,
-    private params: NavParams,
-    private iab: InAppBrowser) {
+    private params: NavParams) {
     this.PaymentLink="";
     this.AllowPayment ="";
     this.EnablePaytm = "0";
@@ -100,9 +99,7 @@ export class PaymentPage implements OnInit {
     {
       var httpUrl =this.PaymentLink;
       let target = "_system";
-      //window.open(httpUrl, '_blank', 'location=no'); 
-      const browser = this.iab.create(httpUrl,target,this.options);
-       browser.show()
+      window.open(httpUrl, '_blank', 'location=no'); 
       //var ref = cordova.InAppBrowser.open(url, target, options);
      // this.theInAppBrowser.create(httpUrl,target,this.options);
     }
