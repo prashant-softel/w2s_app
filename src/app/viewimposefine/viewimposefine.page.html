@@ -99,9 +99,9 @@
          <p *ngIf="Showmassage== -1 " class="text-center" style="color: red;">In order to use Impose Fine functionality, Please define the ledger to used for Fine from Set Default page of web version.</p>
     </ion-list>
   </div>
-  <!--<ion-fab slot="fixed" vertical="bottom" horizontal="end"  *ngIf="roleWise== 'AdminMember' ">
-    <ion-fab-button style="background-color: #f6f6f6;">
-      <ion-icon name="create" style="color:#5cb85c;font-size:30px;"></ion-icon>
+  <ion-fab slot="fixed" vertical="bottom" horizontal="end"  *ngIf="roleWise== 'AdminMember' ">
+    <ion-fab-button  (click)="addFine()" style="background-color: #f6f6f6;">
+      <ion-icon name="create" style="color:#fff;font-size:30px;"></ion-icon>
     </ion-fab-button>
-    </ion-fab>-->
+    </ion-fab>
  </ion-content>
