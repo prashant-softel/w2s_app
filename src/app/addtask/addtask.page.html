@@ -1,0 +1,120 @@
+<ion-header translucent="true">
+  <ion-toolbar>
+    <ion-title>Add Task</ion-title>
+    <ion-buttons slot="start">
+			<ion-back-button defaultHref="dashboard" icon="chevron-back-outline" text="Back"></ion-back-button>
+		  </ion-buttons>
+    <ion-buttons slot="end" style="width:30%">
+      <ion-button><img style="width:70%" src="/assets/images/logo.png"></ion-button>
+    </ion-buttons>
+    
+  </ion-toolbar>
+</ion-header>
+<ion-content>
+	<ion-list no-lines>
+		<ion-row>
+			<ion-col>
+				<p text-center style="color:#FF0000;" ><strong>{{message}}</strong></p>
+			</ion-col>
+		</ion-row>
+		<ion-row style="padding-left: 10px;padding-right: 10px;">
+			<ion-col>
+				<ion-input label="Title" labelPlacement="floating" type="text" maxlength="20" value=""[(ngModel)]="userData.title"></ion-input>
+			</ion-col>
+		</ion-row>
+		<ion-row style="padding-left: 10px;padding-right: 10px;">
+			<ion-col size="6">
+				<ion-select placeholder="Assign Task To" style="color:#0d0d0d" [(ngModel)]="userData.mapping_id">
+			  		<ion-select-option text-wrap *ngFor = "let m of mem_list" value="{{m.mapping_id}}">{{m.mapping_name}}</ion-select-option>
+				</ion-select>
+			</ion-col>
+			<ion-col size="6">
+		  		<ion-input label="Due Date" labelPlacement="floating"
+					value="{{ userData.duedate | date: 'dd/MM/yyyy' }}"
+					id="date"
+					class="ion-text-end"
+		  			></ion-input>
+		  		<ion-popover trigger="date" size="cover">
+				<ng-template>
+			  	<ion-datetime style="background: #ffffff;"
+			  		min="{{userData.duedate}}" max="{{max_year}}"
+					presentation="date"
+					[(ngModel)]="userData.duedate"
+			  	></ion-datetime>
+				</ng-template>
+		  		</ion-popover>
+		  	</ion-col>
+		</ion-row>
+		<ion-row style="padding-left: 10px;padding-right: 10px;">
+			<ion-col size="6">
+				<ion-select label="Status" placeholder="Raised" style="color:#0d0d0d" [(ngModel)]="userData.status">
+					<ion-select-option value="1" [selected] = "true">Raised</ion-select-option>
+					<ion-select-option value="2">Waiting</ion-select-option>
+					<ion-select-option value="3">In progress</ion-select-option>
+					<ion-select-option value="4">Completed</ion-select-option>
+					<ion-select-option value="5">Cancelled</ion-select-option>
+				  </ion-select>
+			</ion-col>
+			<ion-col size="6">
+				<ion-select label="Priority" placeholder="Low" style="color:#0d0d0d" [(ngModel)]="userData.priority">
+					<ion-select-option value="1" [selected] = "true">Low</ion-select-option>
+					<ion-select-option value="2">Medium</ion-select-option>
+					<ion-select-option value="3">High</ion-select-option>
+					<ion-select-option value="4">Critical</ion-select-option>
+				</ion-select>
+			</ion-col>
+		</ion-row>
+		<ion-row style="padding-left: 10px;padding-right: 10px;">
+			<ion-col>
+				<ion-label floating>Progress(%) :  <strong style = "color:#000000" text-end>{{userData.percentcomplete}}</strong></ion-label>
+				<ion-range min="0" max="100" pin ="true" [(ngModel)]="userData.percentcomplete" color="primary">
+		    		<ion-label range-left>0</ion-label>
+		    		<ion-label range-right>100</ion-label>
+				</ion-range>
+			</ion-col>
+		</ion-row>
+		<ion-row style="padding-left: 10px;padding-right: 10px;">
+			<ion-col>
+			  <ion-textarea label="Comments" labelPlacement="floating" value="" [(ngModel)]="userData.desc" rows="4"></ion-textarea>
+			</ion-col>
+		</ion-row>
+		<ion-row >
+			<ion-col col-1></ion-col>
+			<ion-col text-center col-10>
+		  		<ion-button color="primary" block (click)="createTask()">Add Task</ion-button>
+		  		
+		 	</ion-col>
+		 	<ion-col col-1></ion-col>
+		</ion-row>
+		<ion-row>
+			<ion-col>
+				<p style="color:#FF0000;">{{message}}</p>
+			</ion-col>
+		</ion-row>
+		<!--<ion-item>
+			<ion-label floating>Progress(%) :  <strong style = "color:#000000" text-end>{{userData.percentcomplete}}</strong></ion-label>
+				<ion-range min="0" max="100" pin ="true" [(ngModel)]="userData.percentcomplete" color="primary">
+		    		<ion-label range-left>0</ion-label>
+		    		<ion-label range-right>100</ion-label>
+					</ion-range>
+				</ion-item>
+			<ion-item>
+				<ion-label floating>Comments</ion-label>
+				<ion-textarea  rows="5" [(ngModel)]="userData.desc"></ion-textarea>
+			</ion-item>
+			<ion-item>
+				<ion-card>
+					<img src="{{pathForImage(lastImage)}}" [hidden]="lastImage === null" style="max-height : 50vh" (click)=	"selectItems()">
+				</ion-card>
+				<h3 [hidden]="lastImage !== null"></h3>
+				<button ion-button round icon-left (click)="presentActionSheet()">
+			    	<ion-buttons  text-center>
+			    		<ion-icon name="camera"></ion-icon>Select Image		
+			   	</ion-buttons>
+	  		</button>
+				
+		</ion-item>-->
+	
+		
+</ion-list>
+</ion-content>
