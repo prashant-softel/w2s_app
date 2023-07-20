@@ -1,5 +1,5 @@
 import { Routes } from '@angular/router';
-
+//
 export const routes: Routes = [
   {
     path: 'home',
@@ -229,7 +229,8 @@ export const routes: Routes = [
   {
     path: 'visitor-in',
     loadComponent: () => import('./visitor-in/visitor-in.page').then(m => m.VisitorInPage)
-  },  {
+  },
+  {
     path: 'cnote',
     loadComponent: () => import('./cnote/cnote.page').then( m => m.CnotePage)
   },
@@ -249,5 +250,8 @@ export const routes: Routes = [
     path: 'myvisitors',
     loadComponent: () => import('./myvisitors/myvisitors.page').then( m => m.MyvisitorsPage)
   },
-
+  {
+    path: 'addtask',
+    loadComponent: () => import('./addtask/addtask.page').then(m => m.AddTaskPage)
+  },
 ];

@@ -18,8 +18,8 @@
     </ion-col>
   </ion-row>
   <ion-row>
-    <ion-col text-center>
-      <p style="white-space: initial;color: red;">We are sorry, but your access has been blocked for this feature. Please contact your Managing Committee for resolution.</p>
+    <ion-col text-center >
+      <p style="white-space: initial;color: red;">We are sorry, but your access has been blocked for this feature. Please contact your Managing Committee for resolution. </p>
     </ion-col>
   </ion-row>
   <ion-row>
@@ -72,7 +72,20 @@
           <ion-label>send email notification</ion-label>
          </ion-col>
          </ion-row>
-      
+         <ion-row>
+          <ion-col>
+            <ion-card>
+              <img src="{{pathForImage(lastImage)}}" [hidden]="lastImage === null" style="max-height : 50vh" (click)=	"selectItems()">
+              </ion-card>
+              <h3 [hidden]="lastImage !== null"></h3>
+              <button ion-button round icon-left (click)="presentActionSheet()">
+                    <ion-buttons  text-center>
+                     <ion-icon name="camera"></ion-icon>Select Image
+                     </ion-buttons>
+                    </button>
+          </ion-col>
+         </ion-row>
+         
         <ion-row >
           <ion-col col-1></ion-col>
           <ion-col text-center col-10>
