@@ -19,6 +19,9 @@ import { ActivatedRoute } from '@angular/router';
 })
 export class ProfilePage implements OnInit {
   DuesPage:any='dues';
+  MemberPage:any='member';
+  VehiclePage:any='vehicle';
+  AddtenantPage:any='addtenent';
   tab: string = "home";
   displayData = {};
   member_id : any;
@@ -345,18 +348,18 @@ export class ProfilePage implements OnInit {
                     }
                );
 }
-showMemberDetails(p) {
+/*showMemberDetails(p) {
   if(this.globalVars.PROFILE_EDIT_MEMBER == 1)
    {
     p['unitID']=this.displayData['uID'];
-  //this.navCtrl.push(MemberPage, {show : 1, data : p});
+  
    }
   else 
  {
      p['unitID']=this.displayData['uID'];
-   //this.navCtrl.push(MemberPage, {show : 1, data : p});
+  
   }
- }
+ }*/
  renewVehcle(p)
  { 
    p['VehiclType'] ='car';
@@ -373,18 +376,47 @@ showMemberDetails(p) {
  }
  addTenant()
 {
-   var p = [];
-   p['unit_id']=this.memberUnitID;
-   console.log(p);
-   //this.navCtrl.push(AddtenantPage, {details :p});
+  var objData = [];
+ // objData['add'] = 1;
+ // objData['member_id'] =this.member_id;
+  objData['unit_id'] = this.memberUnitID;
+  let navigationExtras: NavigationExtras = {
+      queryParams: 
+      {
+        details :objData,
+      }
+    };
+    this.navCtrl.navigateRoot(this.AddtenantPage,navigationExtras);
+  
 }
 addMember() {
-alert("Comming Soon !");
-  //this.navCtrl.push(MemberPage, {add : 1, member_id : this.member_id, unitID : this.displayData['uID']});
+  var objData = [];
+  objData['add'] = 1;
+  objData['member_id'] =this.member_id;
+  objData['unitID'] = this.memberUnitID;
+  let navigationExtras: NavigationExtras = {
+      queryParams: 
+      {
+        details :objData,
+      }
+    };
+    this.navCtrl.navigateRoot(this.MemberPage,navigationExtras);
+ 
 }
 addVehicle() {
+  var objData = [];
+  objData['add'] = 1;
+  objData['member_id'] =this.member_id;
+  objData['unitID'] = this.memberUnitID;
+  let navigationExtras: NavigationExtras = {
+      queryParams: 
+      {
+        details :objData,
+      }
+    };
+    this.navCtrl.navigateRoot(this.VehiclePage,navigationExtras);
   //p
-  alert("Comming Soon !");
+  //alert("Comming Soon !");
   //this.navCtrl.push(VehiclePage, {add : 1, member_id : this.member_id, unitID : this.displayData['uID']});
 }
 } // End Tags
