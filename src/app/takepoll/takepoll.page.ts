@@ -7,17 +7,21 @@ import { LoaderView } from 'src/service/loaderview';
 import { ConnectServer } from 'src/service/connectserver';
 import { NavigationExtras } from '@angular/router';
 import { ActivatedRoute } from '@angular/router';
-import { Chart } from 'chart.js'
+//import { Chart,registerables  } from 'chart.js';
+//import Chart from 'chart.js/auto';
+import { Chart, BarElement, BarController, CategoryScale, Decimation, Filler, Legend, Title, Tooltip, registerables} from 'chart.js';
 ;
 @Component({
   selector: 'app-takepoll',
   templateUrl: './takepoll.page.html',
   styleUrls: ['./takepoll.page.scss'],
   standalone: true,
-  imports: [IonicModule, CommonModule, FormsModule]
+  imports: [IonicModule, CommonModule, FormsModule],
+  
 })
 export class TakepollPage implements OnInit {
   @ViewChild('barCanvas') barCanvas;
+  
   barChart: any;
   voted :number =0;
   options : Array<any>;
@@ -34,6 +38,7 @@ export class TakepollPage implements OnInit {
   allow_vote:number;
   additional_content:string;
   labels:Array<any>;
+  
   counter:Array<any>;
   old_option_id: number;
   user_option:number;
@@ -57,6 +62,7 @@ export class TakepollPage implements OnInit {
     private loaderView: LoaderView,
     private params: NavParams,
     private route: ActivatedRoute) {
+		
     this.options=[];
 		this.option_id=0;
 		this.old_option_id=0;
@@ -85,6 +91,9 @@ export class TakepollPage implements OnInit {
 		this.CheckcommentStatus=false;
 		this.ShowTextarea = "0";
 		this.AddedReview="";
+		Chart.register(...registerables);
+		//Chart.register(BarElement, BarController, CategoryScale, Decimation, Filler, Legend, Title, Tooltip);
+    
    }
 
   ngOnInit() {
@@ -110,7 +119,7 @@ export class TakepollPage implements OnInit {
  		this.Revote = 0;
  		var obj = [];
 		obj['fetch'] = 2;
-    obj['group_id']=this.group_id;
+    	obj['group_id']=this.group_id;
 		obj['poll_id']=this.poll_id;
 		obj['society_id']=this.society_id;
 		this.connectServer.getData("Polls", obj).then(
@@ -121,10 +130,10 @@ export class TakepollPage implements OnInit {
 		  	       	this.polls = resolve['response']['vote'];
 		  	        this.options_array = resolve['response']['options'];
 		  	        this.option_id=resolve['response']['options'][0]['option_id'];
-                this.old_option_id=this.option_id;
+                	this.old_option_id=this.option_id;
 		  	        this.start_date=this.details['start_date'];
 		  	        this.end_date=this.details['end_date'];
-					      this.poll_id=this.details['poll_id'];
+					this.poll_id=this.details['poll_id'];
 		  	        this.poll_status=this.details['poll_status'];
 		  	        this.question=this.details['question'];
 		  	        this.allow_vote=this.details['allow_vote'];
@@ -145,13 +154,13 @@ export class TakepollPage implements OnInit {
 		  	        {
 		  	            this.user_option  = 0;
 		  	            this.option_id = 0;
-		  	            //document.getElementById("Disribution_vote").style.display='block';
+		  	            document.getElementById("Disribution_vote").style.display='block';
 		  	        }
-								if(this.user_option !=0 || this.allow_vote ==1)
-		  	       {
-		  	            //document.getElementById("Disribution_vote").style.display='block';
+					if(this.user_option !=0 || this.allow_vote ==1)
+		  	       	{
+		  	            document.getElementById("Disribution_vote").style.display='block';
 		  	        }
-                console.log("option array" , this.options_array);
+					console.log("option array" , this.options_array);
 		  	      	for(var i=0;i<this.options_array.length;i++)
 		  	        {
 		  	            this.labels[i]=this.options_array[i]['options'];
@@ -164,7 +173,7 @@ export class TakepollPage implements OnInit {
                             labels: this.labels,
                             datasets:
                             [{
-                                //label: this.labels,
+                                label: this.labels.toString(),//this.labels,
                                 data: this.counter,
                                 backgroundColor: 
                                 [
@@ -201,10 +210,19 @@ export class TakepollPage implements OnInit {
             		    },
             			options: 
             			{
-                           
+                            scales: 
+                            {
+                               /*	yAxes: 
+                               	[{
+                                    ticks: 
+                                    {
+                                       beginAtZero:true
+                        		    }
+                    		    }]*/
+                		    }
             			}
  					}
- 				); 
+ 				);
 		  	                  	
 			}
 		  	                  	
@@ -221,13 +239,11 @@ insertvote()
  	}
  	else
  	{
- 		
-     let details:any;
-    this.route.queryParams.subscribe(params => {
-      details = params["details"];
-        
-      });
-    this.details=details;//this.navParams.get("details");
+		let details:any;
+    	this.route.queryParams.subscribe(params => {
+      		details = params["details"];
+     	});
+    	this.details=details;//this.navParams.get("details");
  		this.group_id=this.details['group_id'];
  		this.poll_id=this.details['poll_id'];
  		this.society_id=this.details['society_id'];
@@ -244,12 +260,46 @@ insertvote()
 		        if(resolve['success'] == 1)
 		  	    {
 		  	       // this.displayData(this.navParams.get("details"));
-                this.displayData(details);
+                	this.displayData(details);
 		  	    }
 		  	}
 		);
-
 	}
+}
+RevoteOption() {
+	this.Revote = 1;
+  }
+
+  cancelRevoteOption() {
+	this.Revote = 0;
+  }
+
+  updatevote()
+  { 
+	let details:any;
+    this.route.queryParams.subscribe(params => {
+      		details = params["details"];
+    });
+ 	this.details=details;//this.navParams.get("details");
+ 	this.poll_id=this.details['poll_id'];
+ 	this.society_id=this.details['society_id'];
+ 	var obj = [];
+ 	obj['set'] = 2;
+	obj['poll_id']=this.poll_id;
+	obj['society_id']=this.society_id;
+	obj['option_id']=this.option_id;
+	obj['old_option_id']=this.old_option_id;
+	obj['mem_review']=this.member_Comment;
+	this.connectServer.getData("Polls", obj).then(
+		 resolve => { 
+		    this.loaderView.dismissLoader();
+		    if(resolve['success'] == 1)
+		  	{
+		  	    this.displayData(this.details);
+				//this.displayData(this.navParams.get("details"));
+		  	}
+		}
+	);
 }
   
 }
