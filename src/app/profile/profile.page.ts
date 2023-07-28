@@ -21,7 +21,7 @@ export class ProfilePage implements OnInit {
   DuesPage:any='dues';
   MemberPage:any='member';
   VehiclePage:any='vehicle';
-  AddtenantPage:any='addtenent';
+  AddtenantPage:any='addtenant';
   tab: string = "home";
   displayData = {};
   member_id : any;

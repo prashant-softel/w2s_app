@@ -23,6 +23,7 @@ enum priorityEnum  { "Critical" = 1,  "High",  "Medium",  "Low"}
 
 export class TaskPage implements OnInit {
   UpdatetaskPage : any ='updatetask';
+  AddtaskPage :any='addtask';
   tab : string;
 	tasksByMe : Array<any>; 
 	tasksForMe : Array<any>;
@@ -156,7 +157,7 @@ export class TaskPage implements OnInit {
     } 
   
     public addTask(){
-      //this.navCtrl.push(AddtaskPage);
+      this.navCtrl.navigateRoot(this.AddtaskPage);
     }
     Change_Toggle() 
     {

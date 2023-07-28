@@ -254,4 +254,8 @@ export const routes: Routes = [
     path: 'addtask',
     loadComponent: () => import('./addtask/addtask.page').then(m => m.AddTaskPage)
   },
+  {
+    path: 'addtenant',
+    loadComponent: () => import('./addtenant/addtenant.page').then(m => m.AddTenantPage)
+  },
 ];
