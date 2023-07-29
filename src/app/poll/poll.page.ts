@@ -16,18 +16,18 @@ import { ActivatedRoute } from '@angular/router';
   imports: [IonicModule, CommonModule, FormsModule]
 })
 export class PollPage implements OnInit {
-  TakepollPage:any='takepoll';
+  TakepollPage: any = 'takepoll';
   tab: string = "active";
-	message1:string;
-	message2:string;
-	active_polls_array: Array<any>;
-	inactive_polls_array : Array<any>;
-	temp_active_polls_array : Array<any>;
-	temp_inactive_polls_array : Array<any>;
-	active_polls_array_loaded : number;
-	inactive_polls_array_loaded : number;
-	pollmessage: any;
-	displayData = {};
+  message1: string;
+  message2: string;
+  active_polls_array: Array<any>;
+  inactive_polls_array: Array<any>;
+  temp_active_polls_array: Array<any>;
+  temp_inactive_polls_array: Array<any>;
+  active_polls_array_loaded: number;
+  inactive_polls_array_loaded: number;
+  pollmessage: any;
+  displayData = {};
   constructor(private navCtrl: NavController,
     private globalVars: GlobalVars,
     private connectServer: ConnectServer,
@@ -37,13 +37,13 @@ export class PollPage implements OnInit {
     private route: ActivatedRoute) {
     this.active_polls_array = [];
     this.inactive_polls_array = [];
-    this.temp_active_polls_array= [];
+    this.temp_active_polls_array = [];
     this.temp_inactive_polls_array = [];
-    this.active_polls_array_loaded  = 0;
+    this.active_polls_array_loaded = 0;
     this.inactive_polls_array_loaded = 0;
-    this.message1="";
-    this.message2="";
-    this.pollmessage="";
+    this.message1 = "";
+    this.message2 = "";
+    this.pollmessage = "";
   }
   @HostListener('document:ionBackButton', ['$event'])
   overrideHardwareBackAction(event: any) {
@@ -55,82 +55,70 @@ export class PollPage implements OnInit {
   }
   ngOnInit() {
     console.log('ionViewDidLoad PollPage');
-    let details:any;
+    let details: any;
     this.route.queryParams.subscribe(params => {
       details = params["details"];
-        
-      });
-     this.displayData = details;//this.navParams.get("details");
-     console.log(this.displayData);
-     if(this.displayData['dash']=="society")
-     {
-     this.fetchActive();
-     this.pollmessage= 1;
-     }
-     else
-     {
-      this.pollmessage= 2;
-     }
+
+    });
+    this.displayData = details;//this.navParams.get("details");
+    console.log(this.displayData);
+    if (this.displayData['dash'] == "society") {
+      this.fetchActive();
+      this.pollmessage = 1;
+    }
+    else {
+      this.pollmessage = 2;
+    }
   }
- 
-  fetchActive() 
-  { 	
-  	this.message1 = "";	
-  	if(!this.active_polls_array_loaded)
-  	{
-  	  var obj = [];
-		  obj['fetch'] = 0;
-		  this.connectServer.getData("Polls", obj).then(
-			  resolve => { 
-		        this.loaderView.dismissLoader();
-		        if(resolve['success'] == 1)
-		  	    {
-              var ActivePollList =resolve['response']['vote'];
-              for(var i = 0; i < ActivePollList.length; i++)
-              {
-                this.active_polls_array.push(ActivePollList[i]) 
-                this.temp_active_polls_array = this.active_polls_array;	
-                this.active_polls_array_loaded = 1;
-              }
-		        } 
-				    else
-            {
+
+  fetchActive() {
+    this.message1 = "";
+    if (!this.active_polls_array_loaded) {
+      var obj = [];
+      obj['fetch'] = 0;
+      this.connectServer.getData("Polls", obj).then(
+        resolve => {
+          this.loaderView.dismissLoader();
+          if (resolve['success'] == 1) {
+            var ActivePollList = resolve['response']['vote'];
+            for (var i = 0; i < ActivePollList.length; i++) {
+              this.active_polls_array.push(ActivePollList[i])
+              this.temp_active_polls_array = this.active_polls_array;
               this.active_polls_array_loaded = 1;
-              this.message1 = "Cannot find Active Polls";
             }
-			    }
-		  );
-	  }
-  }
-  
-fetchClose() 
-{	
-  	this.message2 = "";
-  	if(!this.inactive_polls_array_loaded)
-  	{
-  		var obj = [];
-		  obj['fetch'] = 1;
-		  this.connectServer.getData("Polls", obj).then(
-		    	resolve => { 
-              this.loaderView.dismissLoader();
-              if(resolve['success'] == 1)
-              {
-                var InactivePolls  = resolve['response']['vote'];
-                for(var iCnt=0; iCnt < InactivePolls.length; iCnt++)
-                {
-                  this.inactive_polls_array.push(InactivePolls[iCnt]);
-                  this.temp_inactive_polls_array = this.inactive_polls_array;
-                  this.inactive_polls_array_loaded = 1;	
-                }
-              }
-              else
-              {
-                this.message2 = "Cannot find Inactive Polls";
-                //this.inactive_polls_array_loaded = 1;	
-              }
           }
-			  );
-	    }
+          else {
+            this.active_polls_array_loaded = 1;
+            this.message1 = "Cannot find Active Polls";
+          }
+        }
+      );
+    }
+  }
+
+  fetchClose() {
+    this.message2 = "";
+    if (!this.inactive_polls_array_loaded) {
+      var obj = [];
+      obj['fetch'] = 1;
+      this.connectServer.getData("Polls", obj).then(
+        resolve => {
+          this.loaderView.dismissLoader();
+          if (resolve['success'] == 1) {
+            var InactivePolls = resolve['response']['vote'];
+            for (var iCnt = 0; iCnt < InactivePolls.length; iCnt++) {
+              this.inactive_polls_array.push(InactivePolls[iCnt]);
+              this.temp_inactive_polls_array = this.inactive_polls_array;
+              this.inactive_polls_array_loaded = 1;
+            }
+          }
+          else {
+            this.message2 = "Cannot find Inactive Polls";
+            //this.inactive_polls_array_loaded = 1;	
+          }
+        }
+      );
+    }
   }
   getItems1(ev: any) {
     this.temp_active_polls_array = this.active_polls_array;
@@ -159,24 +147,23 @@ fetchClose()
       );
     }
   }
-  
-takepoll(p)
-{
-  if(this.tab =="active")
-  {
-    p['active'] =true;
-  }
-  else
-  {
-    p['active'] =false;
-  }
-  let navigationExtras: NavigationExtras = {
-    queryParams: 
-    {
-      details :p,
+
+  takepoll(p) {
+    if (this.tab == "active") {
+      p['active'] = true;
     }
-  };
-  //this.navCtrl.navigateRoot(this.ProviderDetailsPage,navigationExtras);
-  this.navCtrl.navigateRoot(this.TakepollPage, navigationExtras);
-}
+    else {
+      p['active'] = false;
+    }
+    let navigationExtras: NavigationExtras = {
+      queryParams:
+      {
+        details: p,
+      }
+    };
+    this.navCtrl.navigateForward(this.TakepollPage, { state: { details: p } });
+
+    //this.navCtrl.navigateRoot(this.ProviderDetailsPage,navigationExtras);
+    // this.navCtrl.navigateRoot(this.TakepollPage, navigationExtras);
+  }
 }

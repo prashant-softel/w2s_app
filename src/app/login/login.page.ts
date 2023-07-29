@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
-import { IonicModule, NavController, NavParams, Platform,ActionSheetController } from '@ionic/angular';
+import { IonicModule, NavController, NavParams, Platform, ActionSheetController } from '@ionic/angular';
 import { GlobalVars } from 'src/service/globalvars';
 import { LoaderView } from 'src/service/loaderview';
 import { ViewbillPage } from '../viewbill/viewbill.page';
@@ -35,9 +35,9 @@ export class LoginPage implements OnInit {
   bHasNotification: any;
   SocietyPage: any = 'society';
   DashboardPage: any = 'dashboard';
-  NewuserPage:any='newuser';
+  NewuserPage: any = 'newuser';
   payFlag: boolean;
-  
+
   constructor(
     private navCtrl: NavController,
     private globalVars: GlobalVars,
@@ -45,10 +45,10 @@ export class LoginPage implements OnInit {
     private loaderView: LoaderView,
     private params: NavParams,
     public actionSheet: ActionSheetController,
-    private platform:Platform,
-   // private inAppBrowser: InAppBrowser
+    private platform: Platform,
+    // private inAppBrowser: InAppBrowser
 
-   ) {
+  ) {
 
     this.userData = { Email: "", Password: "" };
     this.showLogin = false;
@@ -59,17 +59,16 @@ export class LoginPage implements OnInit {
     this.bHasNotification = false;
   }
   ngOnInit(): void {
-    
+
     this.reinitializeData();
   }
-  launch()
-  {
+  launch() {
     let uri = 'https://way2society.com/forgotpassword.php';//`upi://pay?pa=${UPI_ID}&pn=${UPI_NAME}&tid=${tid}&am=${totalPrice}&cu=INR&tn=${UPI_TXN_NOTE}&tr=${orderId}`;
-   alert("call 1");
+    alert("call 1");
 
-   window.open("https://way2society.com/forgotpassword.php", '_system', 'location=yes');
-   // cordova.exec("InAppBrowser", "open", ['http://apache.org', '_blank', 'location=yes']);
-   // alert("call");
+    window.open("https://way2society.com/forgotpassword.php", '_system', 'location=yes');
+    // cordova.exec("InAppBrowser", "open", ['http://apache.org', '_blank', 'location=yes']);
+    // alert("call");
     /*this.platform.ready().then(() => {
       this.payFlag = true;
       var browserRef = window.open('https://way2society.com',"_blank","hidden=no,location=no,clearsessioncache=yes,clearcache=yes,hardwareback=no");
@@ -85,9 +84,9 @@ export class LoginPage implements OnInit {
       });
       });*/
     //this.platform.ready().then(() => {
-     //cordova.InAppBrowser.open('https://way2society.com/', "_system", "location=true");
- // });
-   
+    //cordova.InAppBrowser.open('https://way2society.com/', "_system", "location=true");
+    // });
+
   }
 
   ionViewDidLoad() {
@@ -283,7 +282,8 @@ export class LoginPage implements OnInit {
             value => {
               this.loaderView.dismissLoader();
 
-              if (value != null && value.hasOwnProperty('MAP_ID') && value.hasOwnProperty('MAP_SOCIETY_NAME') && value.hasOwnProperty('MAP_USER_ROLE') && value.hasOwnProperty('MAP_SOCIETY_ID')) {
+              // if (value != null && value.hasOwnProperty('MAP_ID') && value.hasOwnProperty('MAP_SOCIETY_NAME') && value.hasOwnProperty('MAP_USER_ROLE') && value.hasOwnProperty('MAP_SOCIETY_ID')) {
+              if (value != null && value.hasOwnProperty('MAP_ID') && value.hasOwnProperty('MAP_SOCIETY_NAME') && value.hasOwnProperty('MAP_USER_ROLE')) {
                 this.globalVars.setMapDetails(value.MAP_ID, value.MAP_SOCIETY_NAME, value.MAP_USER_ROLE, value.MAP_TKEY, value.MAP_SOCIETY_ID, value.MAP_UNIT_ID, value.MAP_UNIT_NO, value.UNIT_BLOCK, value.BLOCK_DESC);
                 this.navCtrl.navigateRoot('dashboard');
               }

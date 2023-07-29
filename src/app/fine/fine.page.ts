@@ -1,37 +1,40 @@
-import { Component, HostListener, OnInit } from '@angular/core';
-import { CommonModule } from '@angular/common';
-import { FormsModule } from '@angular/forms';
-import { IonicModule, NavController, NavParams, Platform, } from '@ionic/angular';
-import { GlobalVars } from 'src/service/globalvars';
-import { LoaderView } from 'src/service/loaderview';
-import { ConnectServer } from 'src/service/connectserver';
-import { NavigationExtras } from '@angular/router';
+import { Component } from '@angular/core';
+import { NavController, NavParams, ActionSheetController, ToastController, Platform, LoadingController, IonicModule } from '@ionic/angular';
+
+import { File } from '@ionic-native/file/ngx';
+import { FileTransfer, FileTransferObject } from '@ionic-native/file-transfer/ngx';
 import { FilePath } from '@ionic-native/file-path/ngx';
 import { Camera } from '@ionic-native/camera/ngx';
-import { File } from '@ionic-native/file/ngx';
-// image
+import { GlobalVars } from 'src/service/globalvars';
+import { ViewimposefinePage } from '../viewimposefine/viewimposefine.page';
+import { FineimageviewPage } from '../fineimageview/fineimageview.page';
+import { ConnectServer } from 'src/service/connectserver';
+import { LoaderView } from 'src/service/loaderview';
+import { CommonModule } from '@angular/common';
+import { FormsModule } from '@angular/forms';
+
+
+declare var cordova: any;
 @Component({
   selector: 'app-fine',
   templateUrl: './fine.page.html',
   styleUrls: ['./fine.page.scss'],
   standalone: true,
-  imports: [IonicModule, CommonModule, FormsModule]
+  imports: [IonicModule, CommonModule, FormsModule],
+  providers: [Camera, FileTransfer, File, FilePath]
 })
-export class FinePage implements OnInit {
-  FineimageviewPage: any = 'fineimageview';
+export class FinePage {
   userData: { period_id: any, Ledger_id: any, unit_id: any, amount: any, desc: any, img: any, periodDate: any, sendEmail: any };
-  FetchPeriod: Array<any>;
-  UnitList: Array<any>;
-  //UnitList : Array<{}>;
+  FetchPeriod: Array<{}>;
+  UnitList: Array<{}>;
   message: string;
   options: any;
   base64Image: any;
   lastImage: string = null;
-  //loading: Loading;
+  loading: any;
   LedgerName: string;
   LedgerId: any;
-  LedgerDetail: Array<any>;
-  //LedgerDetail: Array<{}>;
+  LedgerDetail: Array<{}>;
   fine_id: any;
   type: string;
   update: any;
@@ -41,46 +44,58 @@ export class FinePage implements OnInit {
   //sendcheck: num=1;
   checked: boolean = true;
   disabled: any;
-  ViewimposefinePage: any = 'viewimposefine';
 
-  constructor(private navCtrl: NavController,
-    private globalVars: GlobalVars,
+
+  constructor(public navCtrl: NavController,
+    public navParams: NavParams,
     private connectServer: ConnectServer,
-    private platform: Platform,
     private loaderView: LoaderView,
-    private params: NavParams,
     private camera: Camera,
-    // private transfer: Transfer,
+    private transfer: FileTransfer,
     private file: File,
-    private filePath: FilePath
-  ) {
-
+    private filePath: FilePath,
+    public actionSheetCtrl: ActionSheetController,
+    public toastCtrl: ToastController,
+    public platform: Platform,
+    public loadingCtrl: LoadingController,
+    private globalVars: GlobalVars) {
     this.userData = { period_id: "", Ledger_id: "", unit_id: "", amount: "", desc: "", img: "", periodDate: "", sendEmail: "" };
-
+    this.fetchPeriodDetails();
     this.FetchPeriod = [];
+    //this.fetchLedgerName();
     this.LedgerDetail = [];
     this.LedgerName = "";
+    //this.LedgerId="";
+    //this.FetchUnitDetails();
     this.UnitList = [];
     this.fine_id = 0;
     this.type = "";
     this.update = true;
     this.setMassege = "";
     this.disabled = false;
+    //this.checked=this.userData['sendEmail'];
+
 
   }
 
-  ngOnInit() {
-    this.fetchPeriodDetails();
+  ionViewDidLoad() {
+    console.log('ionViewDidLoad FinePage');
     if (this.checked == true) {
       this.userData['sendEmail'] = "1";
     }
     else {
       this.userData['sendEmail'] = "0";
     }
-
+    // if(this.globalVars.MAP_UNIT_BLOCK == undefined)
+    // {
+    // this.Block_unit = 0
+    // }
+    // else
+    //{
     this.Block_unit = this.globalVars.MAP_UNIT_BLOCK;
     this.Block_desc = this.globalVars.MAP_BLOCK_DESC;
-
+    // }
+    //  this.disabled="false";
   }
 
   fetchPeriodDetails() {
@@ -90,6 +105,7 @@ export class FinePage implements OnInit {
     this.connectServer.getData("ImposeFineServlet", objData).then(
       resolve => {
         this.fetchLedgerName();
+        //this.FetchUnitDetails();
         this.loaderView.dismissLoader();
         if (resolve['success'] == 1) {
           console.log(resolve);
@@ -107,8 +123,8 @@ export class FinePage implements OnInit {
         }
       }
     );
-  }
 
+  }
   fetchLedgerName() {
     //this.loaderView.showLoader('Loading ...');
     var objData = [];
@@ -122,13 +138,16 @@ export class FinePage implements OnInit {
           this.LedgerDetail = resolve['response']['Fine'];
           //alert(this.LedgerDetail.length);
           this.userData.Ledger_id = this.LedgerDetail[0]['FineID'];
+
         }
         else {
+
           //alert("Please select default fine ledger");
           //this.navCtrl.setRoot(ViewimposefinePage);
         }
       }
     );
+
   }
 
   FetchUnitDetails() {
@@ -146,30 +165,32 @@ export class FinePage implements OnInit {
           //  console.log(this.userData.memberEmail);
           for (var i = 0; i < UnitList.length; i++) {
             this.UnitList.push(UnitList[i]);
+
           }
           // this.userData.unit_no=this.UnitList[0]['unit_no'];
           //	 this.userData.owner_name=this.UnitList[0]['owner_name'];
         }
       }
     );
+
   }
 
-
-  getSelect(isChecked) {
-    alert(isChecked);
+  getSelect(isChecked, value) {
     if (isChecked === true) {
       this.userData['sendEmail'] = "1";
     }
     else {
       this.userData['sendEmail'] = 0;
     }
-    alert(this.userData['sendEmail']);
+    //alert(this.userData['sendEmail']);
   }
 
   submit() {
+
     this.disabled = true;
     //alert(this.userData['sendEmail']);
     this.userData['set'] = "addImposeFine";
+
     this.connectServer.getData("ImposeFineServlet", this.userData).then(
       resolve => {
         //this.loaderView.dismissLoader();
@@ -177,14 +198,18 @@ export class FinePage implements OnInit {
         if (resolve['success'] == 1) {
           this.message = resolve['response']['message'];
           this.fine_id = resolve['response']['new_fine_id'];
+
+
           if (this.lastImage === null) {
             alert("Fine would be added in next bill.");
-            this.navCtrl.navigateRoot(this.ViewimposefinePage);
-            //this.navCtrl.setRoot(ViewimposefinePage);
+            //need to be
+            // this.navCtrl.setRoot(ViewimposefinePage);
+
           }
           else {
-            //this.uploadImage();
+            this.uploadImage();
           }
+
         }
         else {
           this.message = resolve['response']['message'];
@@ -193,28 +218,23 @@ export class FinePage implements OnInit {
     );
   }
 
+
+
+
   /*  ---------------------------- Image View Functions  -----------------------*/
 
   public selectItems() {
     this.loaderView.showLoader('Loading ...');
-    let navigationExtras: NavigationExtras = {
-      queryParams:
-      {
-        details: this.userData['img'],
-      }
-    };
+    // this.navCtrl.push(FineimageviewPage, this.userData['img']);
+    this.navCtrl.navigateForward('fineimageview', { state: { details: this.userData['img'] } });
 
-    this.navCtrl.navigateRoot(this.FineimageviewPage, navigationExtras);
-
-    //this.navCtrl.navigateRoot(this.FineimageviewPage);
-    //this.navCtrl.push(FineimageviewPage,this.userData['img']);
   }
 
 
 
-  public presentActionSheet() {
-    let actionSheet = this.actionSheetCtrl.create({
-      title: 'Select Image Source',
+  public async presentActionSheet() {
+    let actionSheet = await this.actionSheetCtrl.create({
+      header: 'Select Image Source',
       buttons: [{
         text: 'Load from Library', handler: () => {
           this.takePicture(this.camera.PictureSourceType.PHOTOLIBRARY);
@@ -229,7 +249,9 @@ export class FinePage implements OnInit {
         role: 'cancel'
       }]
     });
-    actionSheet.present();
+    await actionSheet.present();
+    // actionSheet.;
+
   }
 
   public takePicture(sourceType) {// Create options for the Camera Dialog
@@ -284,12 +306,13 @@ export class FinePage implements OnInit {
     );
   }
 
-  private presentToast(text) {
-    let toast = this.toastCtrl.create({
+  private async presentToast(text) {
+    let toast = await this.toastCtrl.create({
       message: text,
       duration: 3000,
       position: 'top'
     });
+
     toast.present();
   }
 
@@ -322,8 +345,8 @@ export class FinePage implements OnInit {
       params: { 'fileName': filename, 'fine_id': this.fine_id, 'feature': 3, 'token': this.globalVars.USER_TOKEN, 'tkey': this.globalVars.MAP_TKEY }
     };
 
-    const fileTransfer: TransferObject = this.transfer.create();
-    this.loading = this.loadingCtrl.create({ content: 'Uploading...', });
+    const fileTransfer: FileTransferObject = this.transfer.create();
+    this.loading = this.loadingCtrl.create({ message: 'Uploading...', });
     this.loading.present();
 
     //alert(targetPath);
@@ -340,7 +363,9 @@ export class FinePage implements OnInit {
         p['tab'] = '1';
         p['dash'] = "admin";
 
-        this.navCtrl.setRoot(ViewimposefinePage, { details: p });
+        // this.navCtrl.setRoot(ViewimposefinePage, { details: p });
+        this.navCtrl.navigateForward('viewimposefine', { state: { details: p } });
+
       },
         err => {
           this.loading.dismissAll()
@@ -349,9 +374,13 @@ export class FinePage implements OnInit {
           p['tab'] = '1';
           p['dash'] = "admin";
 
-          this.navCtrl.setRoot(ViewimposefinePage, { details: p });
+          // this.navCtrl.setRoot(ViewimposefinePage, { details: p });
+          this.navCtrl.navigateForward('viewimposefine', { state: { details: p } });
         }
       );
   }
 
 }
+
+
+

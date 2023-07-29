@@ -43,32 +43,32 @@ export class AppComponent {
   SettingsPage: any = 'settings';
   LinkflatPage: any = 'linkflat';
   AboutUsPage: any = 'about-us';
-  SocietyPage:any='society';
-  ClassifiedsPage:any='classifieds';
+  SocietyPage: any = 'society';
+  ClassifiedsPage: any = 'classifieds';
   //rootPage: any = this.LoginPage;
-  pagesMember: Array<{title: string, component: any}>;
+  pagesMember: Array<{ title: string, component: any }>;
   constructor(public globalVars: GlobalVars,
     private navCtrl: NavController,
-    public menu: MenuController) { 
-      this.pagesMember = [
-        { title: 'Dashboard', component:this.DashboardPage },
-        { title: 'Helpline Number', component: this.HelplinePage },
-        { title: 'Classifieds', component: this.ClassifiedsPage },
-        //{ title: 'Settings', component:this.SettingsPage },
-        //{title : 'VisitorInPage',component: VisitorInPage},
-        { title: 'Link Another Society/Flat', component: this.LinkflatPage},
-        { title: 'About Us', component: this.AboutUsPage }
-  
-             
-           
-  
-      ];
-    }
+    public menu: MenuController) {
+    this.pagesMember = [
+      { title: 'Dashboard', component: this.DashboardPage },
+      { title: 'Helpline Number', component: this.HelplinePage },
+      { title: 'Classifieds', component: this.ClassifiedsPage },
+      //{ title: 'Settings', component:this.SettingsPage },
+      //{title : 'VisitorInPage',component: VisitorInPage},
+      { title: 'Link Another Society/Flat', component: this.LinkflatPage },
+      { title: 'About Us', component: this.AboutUsPage }
 
-    Dashboard(){
-      //this.globalVars.clearStorage();
-      this.navCtrl.navigateRoot(this.DashboardPage);
-    } 
+
+
+
+    ];
+  }
+
+  Dashboard() {
+    //this.globalVars.clearStorage();
+    this.navCtrl.navigateRoot(this.DashboardPage);
+  }
   logout() {
     this.menu.close();
     localStorage.clear();
@@ -84,10 +84,10 @@ export class AppComponent {
     // close the menu when clicking a link from the menu
     this.menu.close();
     // navigate to the new page if it is not the current page
-   // this.nav.setRoot(page.component);
-    var p=[];
-    p['dash']="society";
-    console.log(p,"page:",page);
+    // this.nav.setRoot(page.component);
+    var p = [];
+    p['dash'] = "society";
+    console.log(p, "page:", page);
     /*if(page.title == "Dashboard"){
       this.navCtrl.navigateRoot(page.component, {details : p});
       
@@ -96,6 +96,6 @@ export class AppComponent {
 
         this.navCtrl.navigateRoot(page.component, {details : p});    
       }*/
-      this.navCtrl.navigateRoot(page.component); 
+    this.navCtrl.navigateRoot(page.component);
   }
 }
