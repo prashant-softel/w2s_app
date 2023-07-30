@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { NavController, NavParams, ActionSheetController, ToastController, Platform, LoadingController, IonicModule } from '@ionic/angular';
 
 import { File } from '@ionic-native/file/ngx';
@@ -23,18 +23,21 @@ declare var cordova: any;
   imports: [IonicModule, CommonModule, FormsModule],
   providers: [Camera, FileTransfer, File, FilePath]
 })
-export class FinePage {
+export class FinePage implements OnInit {
+  FineimageviewPage: any = 'fineimageview';
   userData: { period_id: any, Ledger_id: any, unit_id: any, amount: any, desc: any, img: any, periodDate: any, sendEmail: any };
-  FetchPeriod: Array<{}>;
-  UnitList: Array<{}>;
+  FetchPeriod: Array<any>;
+  UnitList: Array<any>;
+  //UnitList : Array<{}>;
   message: string;
   options: any;
   base64Image: any;
   lastImage: string = null;
-  loading: any;
+  //loading: Loading;
   LedgerName: string;
   LedgerId: any;
-  LedgerDetail: Array<{}>;
+  LedgerDetail: Array<any>;
+  //LedgerDetail: Array<{}>;
   fine_id: any;
   type: string;
   update: any;
@@ -44,58 +47,49 @@ export class FinePage {
   //sendcheck: num=1;
   checked: boolean = true;
   disabled: any;
+  ViewimposefinePage: any = 'viewimposefine';
 
-
-  constructor(public navCtrl: NavController,
-    public navParams: NavParams,
+  constructor(private navCtrl: NavController,
+    private globalVars: GlobalVars,
     private connectServer: ConnectServer,
+    private platform: Platform,
     private loaderView: LoaderView,
+    private params: NavParams,
     private camera: Camera,
     private transfer: FileTransfer,
     private file: File,
     private filePath: FilePath,
-    public actionSheetCtrl: ActionSheetController,
-    public toastCtrl: ToastController,
-    public platform: Platform,
-    public loadingCtrl: LoadingController,
-    private globalVars: GlobalVars) {
+    private actionSheetCtrl: ActionSheetController,
+    private toastCtrl: ToastController,
+    private loadingCtrl: LoadingController
+  ) {
+
     this.userData = { period_id: "", Ledger_id: "", unit_id: "", amount: "", desc: "", img: "", periodDate: "", sendEmail: "" };
-    this.fetchPeriodDetails();
+
     this.FetchPeriod = [];
-    //this.fetchLedgerName();
     this.LedgerDetail = [];
     this.LedgerName = "";
-    //this.LedgerId="";
-    //this.FetchUnitDetails();
     this.UnitList = [];
     this.fine_id = 0;
     this.type = "";
     this.update = true;
     this.setMassege = "";
     this.disabled = false;
-    //this.checked=this.userData['sendEmail'];
-
 
   }
 
-  ionViewDidLoad() {
-    console.log('ionViewDidLoad FinePage');
+  ngOnInit() {
+    this.fetchPeriodDetails();
     if (this.checked == true) {
       this.userData['sendEmail'] = "1";
     }
     else {
       this.userData['sendEmail'] = "0";
     }
-    // if(this.globalVars.MAP_UNIT_BLOCK == undefined)
-    // {
-    // this.Block_unit = 0
-    // }
-    // else
-    //{
+
     this.Block_unit = this.globalVars.MAP_UNIT_BLOCK;
     this.Block_desc = this.globalVars.MAP_BLOCK_DESC;
-    // }
-    //  this.disabled="false";
+
   }
 
   fetchPeriodDetails() {
@@ -105,7 +99,6 @@ export class FinePage {
     this.connectServer.getData("ImposeFineServlet", objData).then(
       resolve => {
         this.fetchLedgerName();
-        //this.FetchUnitDetails();
         this.loaderView.dismissLoader();
         if (resolve['success'] == 1) {
           console.log(resolve);
@@ -123,8 +116,8 @@ export class FinePage {
         }
       }
     );
-
   }
+
   fetchLedgerName() {
     //this.loaderView.showLoader('Loading ...');
     var objData = [];
@@ -138,16 +131,13 @@ export class FinePage {
           this.LedgerDetail = resolve['response']['Fine'];
           //alert(this.LedgerDetail.length);
           this.userData.Ledger_id = this.LedgerDetail[0]['FineID'];
-
         }
         else {
-
           //alert("Please select default fine ledger");
           //this.navCtrl.setRoot(ViewimposefinePage);
         }
       }
     );
-
   }
 
   FetchUnitDetails() {
@@ -165,32 +155,30 @@ export class FinePage {
           //  console.log(this.userData.memberEmail);
           for (var i = 0; i < UnitList.length; i++) {
             this.UnitList.push(UnitList[i]);
-
           }
           // this.userData.unit_no=this.UnitList[0]['unit_no'];
           //	 this.userData.owner_name=this.UnitList[0]['owner_name'];
         }
       }
     );
-
   }
 
-  getSelect(isChecked, value) {
+
+  getSelect(isChecked) {
+    alert(isChecked);
     if (isChecked === true) {
       this.userData['sendEmail'] = "1";
     }
     else {
       this.userData['sendEmail'] = 0;
     }
-    //alert(this.userData['sendEmail']);
+    alert(this.userData['sendEmail']);
   }
 
   submit() {
-
     this.disabled = true;
     //alert(this.userData['sendEmail']);
     this.userData['set'] = "addImposeFine";
-
     this.connectServer.getData("ImposeFineServlet", this.userData).then(
       resolve => {
         //this.loaderView.dismissLoader();
@@ -198,18 +186,14 @@ export class FinePage {
         if (resolve['success'] == 1) {
           this.message = resolve['response']['message'];
           this.fine_id = resolve['response']['new_fine_id'];
-
-
           if (this.lastImage === null) {
             alert("Fine would be added in next bill.");
-            //need to be
-            // this.navCtrl.setRoot(ViewimposefinePage);
-
+            this.navCtrl.navigateRoot(this.ViewimposefinePage);
+            //this.navCtrl.setRoot(ViewimposefinePage);
           }
           else {
-            this.uploadImage();
+            //this.uploadImage();
           }
-
         }
         else {
           this.message = resolve['response']['message'];
@@ -218,16 +202,22 @@ export class FinePage {
     );
   }
 
-
-
-
   /*  ---------------------------- Image View Functions  -----------------------*/
 
   public selectItems() {
     this.loaderView.showLoader('Loading ...');
-    // this.navCtrl.push(FineimageviewPage, this.userData['img']);
-    this.navCtrl.navigateForward('fineimageview', { state: { details: this.userData['img'] } });
 
+    // let navigationExtras: NavigationExtras = {
+    //   queryParams:
+    //   {
+    //     details: this.userData['img'],
+    //   }
+    // };
+
+    // this.navCtrl.navigateRoot(this.FineimageviewPage, navigationExtras);
+
+    //this.navCtrl.navigateRoot(this.FineimageviewPage);
+    //this.navCtrl.push(FineimageviewPage,this.userData['img']);
   }
 
 
@@ -249,9 +239,7 @@ export class FinePage {
         role: 'cancel'
       }]
     });
-    await actionSheet.present();
-    // actionSheet.;
-
+    actionSheet.present();
   }
 
   public takePicture(sourceType) {// Create options for the Camera Dialog
@@ -264,6 +252,7 @@ export class FinePage {
     // Get the data of an image
     this.camera.getPicture(options).then(
       (imagePath) => {
+        console.log({ "imagePath": imagePath });
         // Special handling for Android library
         if (this.platform.is('android') && sourceType === this.camera.PictureSourceType.PHOTOLIBRARY) {
           this.filePath.resolveNativePath(imagePath).then(
@@ -312,18 +301,37 @@ export class FinePage {
       duration: 3000,
       position: 'top'
     });
-
     toast.present();
   }
 
   // Always get the accurate path to your apps folder
   public pathForImage(img) {
+    console.log({ "selected img": img });
     if (img === null) {
       return '';
     }
     else {
-      return cordova.file.dataDirectory + img;
-      //return "file:///data/user/0/io.ionic.starter/cache/"+img
+      let win: any = window;
+      // return win.Ionic.WebView.convertFileSrc(img)
+      return this.file.dataDirectory + img;
+      // console.log({"hg": win.Ionic.WebView.convertFileSrc("file:///data/user/0/io.ionic.starter/cache/" + img)});
+      // console.log({ "hgshjsj": win.Ionic.WebView.convertFileSrc(img) });
+      // return win.Ionic.WebView.convertFileSrc(img);
+    }
+  }
+  public pathForImage1(img) {
+    if (img === null) {
+      return '';
+    }
+    else {
+      let win: any = window;
+      // return win.Ionic.WebView.convertFileSrc(img)
+      // return cordova.file.dataDirectory + img;
+      console.log({ "hg": win.Ionic.WebView.convertFileSrc("file:///data/user/0/io.ionic.starter/cache/" + img) });
+      // console.log({"hgshjsj": win.Ionic.WebView.convertFileSrc( img)});
+      // return win.Ionic.WebView.convertFileSrc("file:///data/user/0/io.ionic.starter/cache/" + img);
+      return "file:///data/user/0/io.ionic.starter/cache/" + img;
+
     }
   }
 
@@ -346,8 +354,8 @@ export class FinePage {
     };
 
     const fileTransfer: FileTransferObject = this.transfer.create();
-    this.loading = this.loadingCtrl.create({ message: 'Uploading...', });
-    this.loading.present();
+    // this.loading = this.loadingCtrl.create({ content: 'Uploading...', });
+    // this.loading.present();
 
     //alert(targetPath);
 
@@ -356,7 +364,7 @@ export class FinePage {
     // Use the FileTransfer to upload the image
     fileTransfer.upload(targetPath, encodeURI(url), options).then
       (data => {
-        this.loading.dismissAll()
+        // this.loading.dismissAll()
         this.presentToast('Image successful uploaded.');
         alert("Fine added successfully.");
         var p = [];
@@ -364,18 +372,22 @@ export class FinePage {
         p['dash'] = "admin";
 
         // this.navCtrl.setRoot(ViewimposefinePage, { details: p });
-        this.navCtrl.navigateForward('viewimposefine', { state: { details: p } });
+        //need to handle next page state data
+        this.navCtrl.navigateForward("viewimposefine", { state: p });
+
 
       },
         err => {
-          this.loading.dismissAll()
+          // this.loading.dismissAll()
           this.presentToast('Error while uploading file.');
           var p = [];
           p['tab'] = '1';
           p['dash'] = "admin";
 
           // this.navCtrl.setRoot(ViewimposefinePage, { details: p });
-          this.navCtrl.navigateForward('viewimposefine', { state: { details: p } });
+
+          //need to handle next page state data
+          this.navCtrl.navigateForward("viewimposefine", { state: p });
         }
       );
   }

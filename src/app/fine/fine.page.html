@@ -1,99 +1,112 @@
-<!--
-  Generated template for the FinePage page.
-
-  See http://ionicframework.com/docs/components/#navigation for more info on
-  Ionic pages and navigation.
--->
-<ion-header>
+<ion-header translucent="true">
   <ion-toolbar>
     <ion-title>Impose Fine</ion-title>
-    <ion-buttons style="width:30%" end>
-      <ion-icon><img style="width:70%" src="images/logo.png"></ion-icon>
+    <ion-buttons slot="start">
+      <ion-back-button defaultHref="viewimposefine" icon="chevron-back-outline" text="Back"></ion-back-button>
+    </ion-buttons>
+    <ion-buttons slot="end" style="width:30%">
+      <ion-button><img style="width:70%" src="/assets/images/logo.png"></ion-button>
     </ion-buttons>
   </ion-toolbar>
 </ion-header>
 
 <ion-content padding *ngIf="Block_unit==1">
   <ion-list no-line>
-    <ion-item>
-      <ion-row>
-        <ion-col text-center>
-          <h2 style="color: red;">Access Denied!</h2>
-        </ion-col>
-      </ion-row>
-      <ion-row>
-        <ion-col text-center>
-          <p style="white-space: initial;color: red;">We are sorry, but your access has been blocked for this feature.
-            Please contact your Managing Committee for resolution.</p>
-        </ion-col>
-      </ion-row>
-      <ion-row>
-        <ion-col text-center>
-          <p><b>Reason :</b> <span style="white-space: initial;text-transform: uppercase;color: red;">
-              {{Block_desc}}</span> </p>
-        </ion-col>
-      </ion-row>
-    </ion-item>
-
+    <ion-row>
+      <ion-col text-center>
+        <h2 style="color: red;">Access Denied!</h2>
+      </ion-col>
+    </ion-row>
+    <ion-row>
+      <ion-col text-center>
+        <p style="white-space: initial;color: red;">We are sorry, but your access has been blocked for this feature.
+          Please contact your Managing Committee for resolution. </p>
+      </ion-col>
+    </ion-row>
+    <ion-row>
+      <ion-col text-center>
+        <p><b>Reason :</b> <span style="white-space: initial;text-transform: uppercase;color: red;">
+            {{Block_desc}}</span> </p>
+      </ion-col>
+    </ion-row>
   </ion-list>
 </ion-content>
-<ion-content padding *ngIf="Block_unit==0">
 
+<ion-content padding *ngIf="Block_unit==0">
   <ion-list no-lines *ngIf="setMassege== 1 ">
     <p text-center style="color:#FF0000;"><strong>{{message}}</strong></p>
-    <!--<ion-item>
-          <ion-input type="text" hidden [(ngModel)]="userDate.LedgerId" ngControl="LedgerId"></ion-input>
-          </ion-item>-->
-    <ion-item>
-      <ion-label>Bill Period : {{type}}</ion-label>
-    </ion-item>
+    <ion-row style="padding-left: 10px;padding-right: 10px;">
+      <ion-col>
+        <ion-label>Bill Period : {{type}}</ion-label>
+      </ion-col>
+    </ion-row>
+    <ion-row style="padding-left: 10px;padding-right: 10px;">
+      <ion-col>
 
-    <!--<ion-item>
-              <ion-label floating>Select Period</ion-label>
-                <ion-select [(ngModel)]="userData.ID">
-                <ion-option text-wrap *ngFor="let p of FetchPeriod " value="{{p.ID}}">{{p.Type}}</ion-option>
-                </ion-select>
-            </ion-item>-->
-    <ion-item>
-      <ion-label floating>Select Unit *</ion-label>
-      <ion-select [(ngModel)]="userData.unit_id">
-        <!-- <ion-select-option text-wrap *ngFor="let u of UnitList"
-          value="{{u.unit_id}}">{{u.unit_name}}</ion-select-option> -->
-      </ion-select>
-    </ion-item>
-    <ion-item>
-      <ion-label floating>Amount *</ion-label>
-      <ion-input type="text" value="" [(ngModel)]="userData.amount"></ion-input>
-    </ion-item>
-    <ion-item>
-      <ion-label floating>Description *</ion-label>
-      <ion-textarea [(ngModel)]="userData.desc" rows="5"></ion-textarea>
-    </ion-item>
-    <!--<ion-item>
-            <ion-label>send email notification</ion-label>
-            <ion-checkbox checked="true" value="1" [(ngModel)]="userData.sendEmail"></ion-checkbox>
-          </ion-item>-->
-    <ion-item>
-      <ion-label>send email notification</ion-label>
-      <!-- <ion-checkbox [(ngModel)]="checked" (ngModelChange)="getSelect(checked, value)"></ion-checkbox> -->
-    </ion-item>
+        <ion-select placeholder="Select Unit *" style="color:#0d0d0d" [(ngModel)]="userData.unit_id">
+          <ion-select-option *ngFor="let u of UnitList" value="{{u.unit_id}}">{{u.unit_name}}</ion-select-option>
+        </ion-select>
+        <!--<ion-select label="Select Unit *" placeholder="Select Unit *" style="color:#0d0d0d" [(ngModel)]="userData.unit_id">
+            <ion-select-option *ngFor="let u of UnitList" value="{{u.unit_id}}">{{u.unit_name}}</ion-select-option>
+          </ion-select>-->
+      </ion-col>
+    </ion-row>
 
-    <ion-item>
-      <ion-card>
-        <img src="{{pathForImage(lastImage)}}" [hidden]="lastImage === null" style="max-height : 50vh"
-          (click)="selectItems()">
-      </ion-card>
-      <h3 [hidden]="lastImage !== null"></h3>
-      <button ion-button round icon-left (click)="presentActionSheet()">
-        <ion-buttons text-center>
-          <ion-icon name="camera"></ion-icon>Select Image
-        </ion-buttons>
-      </button>
-    </ion-item>
-    <ion-item>
-      <button ion-button color="primary" block (click)="submit()" [disabled]="disabled">Submit</button>
-      <p style="color:#FF0000;">{{message}}</p>
-    </ion-item>
+    <ion-row style="padding-left: 10px;padding-right: 10px;">
+      <ion-col>
+        <ion-input label="Amount " labelPlacement="floating" type="tel" maxlength="25" value=""
+          [(ngModel)]="userData.amount"></ion-input>
+      </ion-col>
+    </ion-row>
+
+    <ion-row style="padding-left: 10px;padding-right: 10px;">
+      <ion-col>
+        <ion-textarea label="Description *" labelPlacement="floating" value="" [(ngModel)]="userData.desc"
+          rows="4"></ion-textarea>
+      </ion-col>
+    </ion-row>
+
+    <ion-row style="padding-left: 10px;padding-right: 10px;">
+      <ion-col size="1">
+        <ion-checkbox [(ngModel)]="checked" (ngModelChange)="getSelect(checked)"></ion-checkbox>
+
+
+      </ion-col>
+      <ion-col>
+        <ion-label>send email notification</ion-label>
+      </ion-col>
+    </ion-row>
+    <ion-row>
+      <ion-col>
+        <ion-card>
+          <img src="{{pathForImage(lastImage)}}" [hidden]="lastImage === null" style="max-height : 50vh"
+            (click)="selectItems()">
+        </ion-card>
+        <ion-card>
+          <img src="{{pathForImage1(lastImage)}}" [hidden]="lastImage === null" style="max-height : 50vh"
+            (click)="selectItems()">
+        </ion-card>
+        <h3 [hidden]="lastImage !== null"></h3>
+        <button ion-button round icon-left (click)="presentActionSheet()">
+          <ion-buttons text-center>
+            <ion-icon name="camera"></ion-icon>Select Image
+          </ion-buttons>
+        </button>
+      </ion-col>
+    </ion-row>
+
+    <ion-row>
+      <ion-col col-1></ion-col>
+      <ion-col text-center col-10>
+        <ion-button color="primary" block (click)="submit()">Submit</ion-button>
+      </ion-col>
+      <ion-col col-1></ion-col>
+    </ion-row>
+    <ion-row>
+      <ion-col>
+        <p style="color:#FF0000;">{{message}}</p>
+      </ion-col>
+    </ion-row>
   </ion-list>
   <br />
   <br />
