@@ -205,7 +205,7 @@
 		</ion-card-content>
 	</ion-card>
   	</ion-list>
-  	<!--<ion-list>
+  	<ion-list>
 		<ion-row style="background-color: #337ab7;color:#fff;">
 			<ion-col text-center>
 				 <strong style="font-size: 12px;">Lease Document </strong>
@@ -217,20 +217,26 @@
 		   			<ion-input label="Document name" labelPlacement="floating" type="text"  value="" [(ngModel)]="userData.uploadDoc[iIndex]['DocName']" ></ion-input>
 			   	</ion-col>
 			</ion-row>
-			 <ion-item>
-				Selected file : {{userData.uploadDoc[iIndex]['Doc_img']}}
-				<ion-card>
-					<img src="" [hidden]="userData.uploadDoc[iIndex]['Doc_img'] === null" style="max-height : 50vh"(click)= "selectItems()">
-  				</ion-card>
+			<ion-row>
+				<ion-col>
+					Selected file : {{userData.uploadDoc[iIndex]['Doc_img']}}
+				  <ion-card>
+					<img src="" [hidden]="userData.uploadDoc[iIndex]['Doc_img'] === null" style="max-height : 50vh"
+					  (click)="selectItems()">
+				  </ion-card>
+				  <ion-card>
+					<img src="" [hidden]="userData.uploadDoc[iIndex]['Doc_img'] === null" style="max-height : 50vh"
+					  (click)="selectItems()">
+				  </ion-card>
 				  <h3 [hidden]="userData.uploadDoc[iIndex]['Doc_img']!== null"></h3>
-					<button ion-button round icon-left (click)="presentActionSheet('document', iIndex)">
-				  <ion-buttons  text-center>
-				  <ion-icon name="camera"></ion-icon>Attach Image
-				  </ion-buttons>
-					</button>
-			</ion-item>
+				  <ion-button shape="round" icon-left (click)="presentActionSheet('document', iIndex)"><ion-buttons text-center>
+					<ion-icon slot="start" name="camera"></ion-icon>Select Image
+				  </ion-buttons></ion-button>
+				  
+				</ion-col>
+			  </ion-row>
 		 </ion-list>
-	</ion-list>-->
+	</ion-list>
 	<ion-row>
 		<ion-col style="text-align:right ;">
 			<p  (click)="AddMoreDoc()">

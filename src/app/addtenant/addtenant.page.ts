@@ -1,13 +1,18 @@
 import { Component, OnInit,CUSTOM_ELEMENTS_SCHEMA, HostListener } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
-import { IonicModule, NavController, NavParams, Platform,} from '@ionic/angular';
+import { NavController, NavParams, ActionSheetController, ToastController, Platform, LoadingController, IonicModule } from '@ionic/angular';
+import { File } from '@ionic-native/file/ngx';
+import { FileTransfer, FileTransferObject } from '@ionic-native/file-transfer/ngx';
+import { FilePath } from '@ionic-native/file-path/ngx';
+import { Camera } from '@ionic-native/camera/ngx';
 import { GlobalVars } from 'src/service/globalvars';
 import { LoaderView } from 'src/service/loaderview';
 import { ConnectServer } from 'src/service/connectserver';
 import { NavigationExtras } from '@angular/router';
 import { ActivatedRoute } from '@angular/router';
 
+declare var cordova: any;
 enum statusEnum  { "Raised" = 1,  "Waiting",  "In progress",  "Completed", "Cancelled"}
 enum priorityEnum  { "Critical" = 1,  "High",  "Medium",  "Low"}
 @Component({
@@ -18,7 +23,8 @@ enum priorityEnum  { "Critical" = 1,  "High",  "Medium",  "Low"}
   schemas: [
     CUSTOM_ELEMENTS_SCHEMA
   ],
-  imports: [IonicModule, CommonModule, FormsModule,]
+  imports: [IonicModule, CommonModule, FormsModule,],
+  providers: [Camera, FileTransfer, File, FilePath]
 })
 
 export class AddTenantPage implements OnInit {
@@ -49,7 +55,14 @@ export class AddTenantPage implements OnInit {
     private platform: Platform,
     private loaderView: LoaderView,
     private params: NavParams,
-    private route: ActivatedRoute) { 
+    private route: ActivatedRoute,
+    private camera: Camera,
+    private transfer: FileTransfer,
+    private file: File,
+    private filePath: FilePath,
+    private actionSheetCtrl: ActionSheetController,
+    private toastCtrl: ToastController,
+    private loadingCtrl: LoadingController) { 
       
       this.displayData= [];
       
@@ -202,16 +215,18 @@ export class AddTenantPage implements OnInit {
 		this.userData.uploadDoc[this.docindex]={DocName:"",Doc_img:""};
   }
 
- /* public selectItems()
-  {
-    this.loaderView.showLoader('Loading ...');
-    //this.navCtrl.push(ServiceproviederimageviewPage,this.userData['img'],this.userData['Doc_img']);
-  }*/
+  /*  ---------------------------- Image View Functions  -----------------------*/
 
- /* public presentActionSheet(documentType, documentIndex)
+  public selectItems() {
+    this.loaderView.showLoader('Loading ...');
+
+  }
+  
+ 
+  public async presentActionSheet(documentType, documentIndex)
   {
-		let actionSheet = this.actionSheetCtrl.create({
-		title: 'Select Image Source',
+		let actionSheet = await this.actionSheetCtrl.create({
+    header: 'Select Image Source',
 		buttons: [{text: 'Load from Library',handler: () => {
         this.takePicture(this.camera.PictureSourceType.PHOTOLIBRARY, documentType, documentIndex);}},
 		    {
@@ -224,9 +239,9 @@ export class AddTenantPage implements OnInit {
 			  }]
 		  });
 		  actionSheet.present();
-		}*/
+		}
 
-   /* public takePicture(sourceType, documentType, documentIndex)
+   public takePicture(sourceType, documentType, documentIndex)
 		{// Create options for the Camera Dialog
 		  var options = {
 		    quality: 100,
@@ -259,19 +274,19 @@ export class AddTenantPage implements OnInit {
 					this.presentToast('Error while selecting image.');
         }
     );
-  }*/
+  }
 
 	// Create a new name for the image
-	/*private createFileName()
+	private createFileName()
   {
 		var d = new Date(),
 		n = d.getTime(),
 		newFileName =  n + ".jpg";
 		return newFileName;
-  }*/
+  }
 
 	// Copy the image to a local folder
-	/*private copyFileToLocalDir(namePath, currentName, newFileName, documentType, documentIndex)
+	private copyFileToLocalDir(namePath, currentName, newFileName, documentType, documentIndex)
   {
 		this.file.copyFile(namePath, currentName, cordova.file.dataDirectory, newFileName).then(
       success => {
@@ -290,21 +305,21 @@ export class AddTenantPage implements OnInit {
         this.presentToast('Error while storing file.');
       }
     );
-  }*/
+  }
 
-	/*private presentToast(text)
+	private async presentToast(text)
   {
-		let toast = this.toastCtrl.create({
+		let toast = await this.toastCtrl.create({
       message: text,
       duration: 3000,
       position: 'top'
     });
 		toast.present();
-  }*/
+  }
 
 	// Always get the accurate path to your apps folder
 	/*--------------------------------  fetch image --------------------------*/
-	/*public pathForImage(img)
+	public pathForImage(img)
   {
 		if (img === null)
     {
@@ -315,7 +330,22 @@ export class AddTenantPage implements OnInit {
 			return cordova.file.dataDirectory + img;
 			//return "file:///data/user/0/io.ionic.starter/cache/"+img
     }
-  }*/
+  }
+  public pathForImage1(img) {
+    if (img === null) {
+      return '';
+    }
+    else {
+      let win: any = window;
+      // return win.Ionic.WebView.convertFileSrc(img)
+      // return cordova.file.dataDirectory + img;
+      console.log({ "hg": win.Ionic.WebView.convertFileSrc("file:///data/user/0/io.ionic.starter/cache/" + img) });
+      // console.log({"hgshjsj": win.Ionic.WebView.convertFileSrc( img)});
+      // return win.Ionic.WebView.convertFileSrc("file:///data/user/0/io.ionic.starter/cache/" + img);
+      return "file:///data/user/0/io.ionic.starter/cache/" + img;
+
+    }
+  }
 	/*-------------------------------- fetch Doc image --------------------------*/
  /* public pathForDoc(Doc_img)
   {
@@ -334,7 +364,7 @@ export class AddTenantPage implements OnInit {
     }
   }*/
 
-  /*public uploadDocument(documentId, documentName)
+  public uploadDocument(documentId, documentName)
   {
 		// Destination URL
 		//var url = "http://192.169.1.117/beta_aws_2/ads";
@@ -352,22 +382,23 @@ export class AddTenantPage implements OnInit {
 			mimeType: "multipart/form-data",
 			params : {'fileName': filename, 'unitid' : this.unitid, 'feature' : 8, 'token' : this.globalVars.USER_TOKEN, 'tkey' : this.globalVars.MAP_TKEY, 'DocName' : documentId}
 		};
-
-		const fileTransfer: TransferObject = this.transfer.create();
-		this.loading = this.loadingCtrl.create({content: 'Please wait... \nUploading document(s) will take some time.',});
-		this.loading.present();
+    //const fileTransfer: FileTransferObject = this.transfer.create();
+		const fileTransfer: FileTransferObject = this.transfer.create();
+		//this.loading = this.loadingCtrl.create({content: 'Please wait... \nUploading document(s) will take some time.',});
+		//this.loading.present();
     // Use the FileTransfer to upload the image
+    
 		fileTransfer.upload(targetPath, encodeURI(url), options).then
 			(data =>{
-						this.loading.dismissAll()
+					//	this.loading.dismissAll()
 						this.presentToast('Image successful uploaded.');
 					
 					},
           err => {
-						this.loading.dismissAll()
+					//	this.loading.dismissAll()
 						this.presentToast('Error while uploading file.');
 					}
 			);
-		}*/
+		}
 
 }

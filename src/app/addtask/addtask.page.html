@@ -78,6 +78,23 @@
 			  <ion-textarea label="Comments" labelPlacement="floating" value="" [(ngModel)]="userData.desc" rows="4"></ion-textarea>
 			</ion-col>
 		</ion-row>
+		<ion-row>
+			<ion-col>
+			  <ion-card>
+				<img src="{{pathForImage(lastImage)}}" [hidden]="lastImage === null" style="max-height : 50vh"
+				  (click)="selectItems()">
+			  </ion-card>
+			  <ion-card>
+				<img src="{{pathForImage1(lastImage)}}" [hidden]="lastImage === null" style="max-height : 50vh"
+				  (click)="selectItems()">
+			  </ion-card>
+			  <h3 [hidden]="lastImage !== null"></h3>
+			  <ion-button shape="round" icon-left (click)="presentActionSheet()"><ion-buttons text-center>
+				<ion-icon slot="start" name="camera"></ion-icon>Select Image
+			  </ion-buttons></ion-button>
+			  
+			</ion-col>
+		  </ion-row>
 		<ion-row >
 			<ion-col col-1></ion-col>
 			<ion-col text-center col-10>

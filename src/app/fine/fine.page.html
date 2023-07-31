@@ -83,7 +83,12 @@
             (click)="selectItems()">
         </ion-card>
         <h3 [hidden]="lastImage !== null"></h3>
-        <button ion-button round icon-left (click)="presentActionSheet()">
+       <!-- <ion-button shape="round" (click)="presentActionSheet()">
+          <ion-buttons text-center>
+            <ion-icon name="camera"></ion-icon>Select Image
+          </ion-buttons>
+        </ion-button>-->
+        <button ion-button  shape="round"  icon-left (click)="presentActionSheet()">
           <ion-buttons text-center>
             <ion-icon name="camera"></ion-icon>Select Image
           </ion-buttons>
