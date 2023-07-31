@@ -82,10 +82,6 @@
           <img src="{{pathForImage(lastImage)}}" [hidden]="lastImage === null" style="max-height : 50vh"
             (click)="selectItems()">
         </ion-card>
-        <ion-card>
-          <img src="{{pathForImage1(lastImage)}}" [hidden]="lastImage === null" style="max-height : 50vh"
-            (click)="selectItems()">
-        </ion-card>
         <h3 [hidden]="lastImage !== null"></h3>
         <button ion-button round icon-left (click)="presentActionSheet()">
           <ion-buttons text-center>

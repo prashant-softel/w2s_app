@@ -12,6 +12,7 @@ import { ConnectServer } from 'src/service/connectserver';
 import { LoaderView } from 'src/service/loaderview';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
+import { DomSanitizer } from '@angular/platform-browser';
 
 
 declare var cordova: any;
@@ -33,6 +34,7 @@ export class FinePage implements OnInit {
   options: any;
   base64Image: any;
   lastImage: string = null;
+  myImagePath: string = null;
   //loading: Loading;
   LedgerName: string;
   LedgerId: any;
@@ -61,7 +63,8 @@ export class FinePage implements OnInit {
     private filePath: FilePath,
     private actionSheetCtrl: ActionSheetController,
     private toastCtrl: ToastController,
-    private loadingCtrl: LoadingController
+    private loadingCtrl: LoadingController,
+    private sanitizer: DomSanitizer
   ) {
 
     this.userData = { period_id: "", Ledger_id: "", unit_id: "", amount: "", desc: "", img: "", periodDate: "", sendEmail: "" };
@@ -253,6 +256,7 @@ export class FinePage implements OnInit {
     this.camera.getPicture(options).then(
       (imagePath) => {
         console.log({ "imagePath": imagePath });
+        this.myImagePath = imagePath;
         // Special handling for Android library
         if (this.platform.is('android') && sourceType === this.camera.PictureSourceType.PHOTOLIBRARY) {
           this.filePath.resolveNativePath(imagePath).then(
@@ -304,37 +308,16 @@ export class FinePage implements OnInit {
     toast.present();
   }
 
-  // Always get the accurate path to your apps folder
   public pathForImage(img) {
-    console.log({ "selected img": img });
     if (img === null) {
       return '';
     }
     else {
       let win: any = window;
-      // return win.Ionic.WebView.convertFileSrc(img)
-      return this.file.dataDirectory + img;
-      // console.log({"hg": win.Ionic.WebView.convertFileSrc("file:///data/user/0/io.ionic.starter/cache/" + img)});
-      // console.log({ "hgshjsj": win.Ionic.WebView.convertFileSrc(img) });
-      // return win.Ionic.WebView.convertFileSrc(img);
+      console.log({ "pathForImage3": win.Ionic.WebView.convertFileSrc(this.myImagePath) });
+      return win.Ionic.WebView.convertFileSrc(this.myImagePath);
     }
   }
-  public pathForImage1(img) {
-    if (img === null) {
-      return '';
-    }
-    else {
-      let win: any = window;
-      // return win.Ionic.WebView.convertFileSrc(img)
-      // return cordova.file.dataDirectory + img;
-      console.log({ "hg": win.Ionic.WebView.convertFileSrc("file:///data/user/0/io.ionic.starter/cache/" + img) });
-      // console.log({"hgshjsj": win.Ionic.WebView.convertFileSrc( img)});
-      // return win.Ionic.WebView.convertFileSrc("file:///data/user/0/io.ionic.starter/cache/" + img);
-      return "file:///data/user/0/io.ionic.starter/cache/" + img;
-
-    }
-  }
-
   public uploadImage() {
     // Destination URL
     //var url = "http://localhost/beta_aws_3";
