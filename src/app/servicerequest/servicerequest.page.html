@@ -118,7 +118,13 @@
       <p *ngIf=!hasExpiredSRL text-center style="color: red; text-align: center;">No Closed/Resolved Service Request to display</p>
     </ion-list>
   </div>
-  <p id="msg" text-center style="color: red;text-align: center;"></p>
+  <p  id="msg" text-center style="color: red;text-align: center;"></p>
+
+  <ion-fab slot="fixed" vertical="bottom" horizontal="end" *ngIf="NewRole !='Contractor'" >
+    <ion-fab-button (click)="addSR()" style="background-color: #f6f6f6;">
+      <ion-icon name="add" style="color:#fff;font-size:30px;"></ion-icon>
+    </ion-fab-button>
+    </ion-fab>
 	  <!--<ion-fab right bottom  *ngIf="NewRole !='Contractor'">
       <button ion-fab (click)="addSR()" style="background-color: #f6f6f6;">
         <ion-icon name="create" style="color:#5cb85c;font-size:30px;"></ion-icon>

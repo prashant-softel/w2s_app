@@ -258,4 +258,8 @@ export const routes: Routes = [
     path: 'addtenant',
     loadComponent: () => import('./addtenant/addtenant.page').then(m => m.AddTenantPage)
   },
+  {
+    path: 'addprovider',
+    loadComponent: () => import('./addprovider/addprovider.page').then(m => m.AddProviderPage)
+  },
 ];

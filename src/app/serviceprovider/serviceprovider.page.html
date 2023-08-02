@@ -261,7 +261,13 @@
 				</ion-list>
 			</ion-grid>
 		</ion-list>
-	</div>
+	</div> 
+	<ion-fab slot="fixed" vertical="bottom" horizontal="end">
+		<ion-fab-button (click)="addServiceProvider()" style="background-color: #f6f6f6;">
+		  <ion-icon name="add" style="color:#fff;font-size:30px;"></ion-icon>
+		</ion-fab-button>
+	</ion-fab>
+
 <!--<p id="msg" text-center style="color: red;"></p>
 	<ion-fab right bottom>
       <button ion-fab (click)="addServiceProvider()" style="background-color: #f6f6f6;">
