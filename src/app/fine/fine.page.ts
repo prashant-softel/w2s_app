@@ -189,7 +189,7 @@ export class FinePage implements OnInit {
         if (resolve['success'] == 1) {
           this.message = resolve['response']['message'];
           this.fine_id = resolve['response']['new_fine_id'];
-          if (this.lastImage === null) {
+          if (true || this.lastImage === null) {
             alert("Fine would be added in next bill.");
             this.navCtrl.navigateRoot(this.ViewimposefinePage);
             //this.navCtrl.setRoot(ViewimposefinePage);
