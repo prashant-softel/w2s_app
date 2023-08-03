@@ -51,10 +51,10 @@
 				<img src="{{pathForImage(profileImage)}}" [hidden]="profileImage === null" style="max-height : 50vh"
 				  (click)="selectItems()">
 			  </ion-card>
-			  <ion-card>
+			 <!-- <ion-card>
 				<img src="{{pathForImage1(profileImage)}}" [hidden]="profileImage === null" style="max-height : 50vh"
 				  (click)="selectItems()">
-			  </ion-card>
+			  </ion-card>-->
 			  <h3 [hidden]="profileImage !== null"></h3>
 			
 			  <ion-button shape="round" icon-left (click)="presentActionSheet('profile', -1)"><ion-buttons text-center>

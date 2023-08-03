@@ -36,6 +36,7 @@ export class AddTaskPage implements OnInit {
   options:any;
 	base64Image:any;
 	lastImage: string = null;
+  myImagePath: string = null;
 	//loading: Loading;
 	task_id : any;
   TaskPage :any='task';
@@ -165,6 +166,7 @@ export class AddTaskPage implements OnInit {
     this.camera.getPicture(options).then(
       (imagePath) => {
         console.log({ "imagePath": imagePath });
+        this.myImagePath = imagePath;
         // Special handling for Android library
         if (this.platform.is('android') && sourceType === this.camera.PictureSourceType.PHOTOLIBRARY) {
           this.filePath.resolveNativePath(imagePath).then(
@@ -222,8 +224,11 @@ private async presentToast(text) {
   }
   else {
     let win: any = window;
+    console.log({ "pathForImage3": win.Ionic.WebView.convertFileSrc(this.myImagePath) });
+    return win.Ionic.WebView.convertFileSrc(this.myImagePath);
+   // let win: any = window;
     // return win.Ionic.WebView.convertFileSrc(img)
-    return this.file.dataDirectory + img;
+    //return this.file.dataDirectory + img;
     
   }
 }

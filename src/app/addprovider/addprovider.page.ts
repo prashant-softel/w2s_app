@@ -48,6 +48,7 @@ export class AddProviderPage implements OnInit {
  options:any;
  base64Image:any;
  profileImage: string = null;
+ myImagePath: string = null;
  //loading: Loading;
  unitindex:number=0;
  docindex:number=0;
@@ -415,6 +416,7 @@ public takePicture(sourceType, documentType, documentIndex)
 		// Get the data of an image
 		this.camera.getPicture(options).then(
 			(imagePath) => {
+        this.myImagePath = imagePath;
           // Special handling for Android library
           if (this.platform.is('android') && sourceType === this.camera.PictureSourceType.PHOTOLIBRARY)
           {
@@ -484,14 +486,17 @@ public takePicture(sourceType, documentType, documentIndex)
       }
       else {
         let win: any = window;
+      console.log({ "pathForImage3": win.Ionic.WebView.convertFileSrc(this.myImagePath) });
+      return win.Ionic.WebView.convertFileSrc(this.myImagePath);
+        //let win: any = window;
         // return win.Ionic.WebView.convertFileSrc(img)
-        return this.file.dataDirectory + img;
+       // return this.file.dataDirectory + img;
         // console.log({"hg": win.Ionic.WebView.convertFileSrc("file:///data/user/0/io.ionic.starter/cache/" + img)});
         // console.log({ "hgshjsj": win.Ionic.WebView.convertFileSrc(img) });
         // return win.Ionic.WebView.convertFileSrc(img);
       }
     }
-    public pathForImage1(img) {
+   /* public pathForImage1(img) {
       if (img === null) {
         return '';
       }
@@ -505,7 +510,7 @@ public takePicture(sourceType, documentType, documentIndex)
         return "file:///data/user/0/io.ionic.starter/cache/" + img;
   
       }
-    }
+    }*/
    
 	/*-------------------------------- fetch Doc image --------------------------*/
   
@@ -516,14 +521,17 @@ public takePicture(sourceType, documentType, documentIndex)
       }
       else {
         let win: any = window;
+      console.log({ "pathForImage3": win.Ionic.WebView.convertFileSrc(this.myImagePath) });
+      return win.Ionic.WebView.convertFileSrc(this.myImagePath);
+        //let win: any = window;
         // return win.Ionic.WebView.convertFileSrc(img)
-        return this.file.dataDirectory + Doc_img;
+       //return this.file.dataDirectory + Doc_img;
         // console.log({"hg": win.Ionic.WebView.convertFileSrc("file:///data/user/0/io.ionic.starter/cache/" + img)});
         // console.log({ "hgshjsj": win.Ionic.WebView.convertFileSrc(img) });
         // return win.Ionic.WebView.convertFileSrc(img);
       }
     }
-    public pathForDoc1(Doc_img) {
+   /* public pathForDoc1(Doc_img) {
       if (Doc_img === null) {
         return '';
       }
@@ -537,7 +545,7 @@ public takePicture(sourceType, documentType, documentIndex)
         return "file:///data/user/0/io.ionic.starter/cache/" + Doc_img;
   
       }
-    }
+    }*/
 
     public uploadDocument(documentId, documentName)
 		{

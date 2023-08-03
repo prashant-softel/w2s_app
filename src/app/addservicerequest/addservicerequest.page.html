@@ -38,28 +38,32 @@
         </ion-col>
       </ion-row>
       <ion-row *ngIf="rolewise == 'Admin'">
-        <ion-col>
-          <ion-select placeholder="Select Unit *" style="color:#0d0d0d" [(ngModel)]="userData.unit_id">
+          <ion-col size="8">
+          <ion-select label="Select Unit *" label-placement="fixed" placeholder="Select Unit *" style="color:#0d0d0d" [(ngModel)]="userData.unit_id">
             <ion-select-option *ngFor="let u of Unit_list" value="{{u.unit_id}}">{{u.unit_no}} [ {{u.owner_name}} ]</ion-select-option>
           </ion-select>
         </ion-col>
+        <ion-col size="4"></ion-col>
       </ion-row>
       <ion-row>
-        <ion-col>
-          <ion-select placeholder="Category" style="color:#0d0d0d" [(ngModel)]="userData.category">
+        <ion-col size="8">
+        <!--<ion-select label="Fixed label" label-placement="fixed" placeholder="Favorite fruit">-->
+          <ion-select label="Category" label-placement="fixed"  placeholder="Select Category" style="color:#0d0d0d" [(ngModel)]="userData.category">
             <ion-select-option *ngFor="let d of cat_list" value="{{d.ID}}">{{d.category}}</ion-select-option>
           </ion-select>
         </ion-col>
+        <ion-col size="4"></ion-col>
       </ion-row>
 
       <ion-row>
-        <ion-col>
-          <ion-select placeholder="Priority" style="color:#0d0d0d" [(ngModel)]="userData.priority">
+        <ion-col size="8">
+          <ion-select label="Priority" label-placement="fixed" placeholder="Select Priority" style="color:#0d0d0d" [(ngModel)]="userData.priority">
             <ion-select-option  text-wrap value=Low>Low</ion-select-option>
             <ion-select-option  text-wrap value=Medium>Medium</ion-select-option>
             <ion-select-option  text-wrap value=High>High</ion-select-option>
           </ion-select>
         </ion-col>
+        <ion-col size="4"></ion-col>
       </ion-row>
       <ion-row style="margin-top: -5px;" *ngIf="(userData.category != renovationRequestId) && (userData.category != AddressProofId) && (userData.category != tenantRequestId)">
         <ion-col>
@@ -73,10 +77,10 @@
           <img src="{{pathForImage(lastImage)}}" [hidden]="lastImage === null" style="max-height : 50vh"
             (click)="selectItems()">
           </ion-card>
-          <ion-card>
+          <!--<ion-card>
           <img src="{{pathForImage1(lastImage)}}" [hidden]="lastImage === null" style="max-height : 50vh"
             (click)="selectItems()">
-          </ion-card>
+          </ion-card>-->
           <h3 [hidden]="lastImage !== null"></h3>
           <ion-button shape="round" icon-left (click)="presentActionSheet()"><ion-buttons text-center>
           <ion-icon slot="start" name="camera"></ion-icon>Select Image

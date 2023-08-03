@@ -30,6 +30,7 @@ export class AddservicerequestPage implements OnInit {
   options : any;
   base64Image :any;
   lastImage : string = null;
+  myImagePath: string = null;
   loading : any ;//Loading;
   servicerequest_id : any;
   Block_unit=0;
@@ -251,6 +252,7 @@ export class AddservicerequestPage implements OnInit {
     this.camera.getPicture(options).then(
       (imagePath) => {
         console.log({ "imagePath": imagePath });
+        this.myImagePath = imagePath;
         // Special handling for Android library
         if (this.platform.is('android') && sourceType === this.camera.PictureSourceType.PHOTOLIBRARY) {
           this.filePath.resolveNativePath(imagePath).then(
@@ -310,14 +312,17 @@ export class AddservicerequestPage implements OnInit {
     }
     else {
       let win: any = window;
+      console.log({ "pathForImage3": win.Ionic.WebView.convertFileSrc(this.myImagePath) });
+      return win.Ionic.WebView.convertFileSrc(this.myImagePath);
+      //let win: any = window;
       // return win.Ionic.WebView.convertFileSrc(img)
-      return this.file.dataDirectory + img;
+      //return this.file.dataDirectory + img;
       // console.log({"hg": win.Ionic.WebView.convertFileSrc("file:///data/user/0/io.ionic.starter/cache/" + img)});
       // console.log({ "hgshjsj": win.Ionic.WebView.convertFileSrc(img) });
       // return win.Ionic.WebView.convertFileSrc(img);
     }
   }
-  public pathForImage1(img) {
+ /* public pathForImage1(img) {
     if (img === null) {
       return '';
     }
@@ -331,7 +336,7 @@ export class AddservicerequestPage implements OnInit {
       return "file:///data/user/0/io.ionic.starter/cache/" + img;
 
     }
-  }
+  }*/
 
   public uploadImage() {
     // Destination URL

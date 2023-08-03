@@ -38,6 +38,7 @@ export class AddTenantPage implements OnInit {
 	Tenantindex:number=0;
 	docindex:number=0;
 	documentImage : Array <any>;
+  myImagePath: string = null;
 	addmoredoc : number;
 	base64Image:any;
 	//loading: Loading;
@@ -252,6 +253,7 @@ export class AddTenantPage implements OnInit {
 		  // Get the data of an image
 		  this.camera.getPicture(options).then(
 			  (imagePath) => {
+          this.myImagePath = imagePath;
           // Special handling for Android library
           if (this.platform.is('android') && sourceType === this.camera.PictureSourceType.PHOTOLIBRARY)
           {
@@ -327,11 +329,14 @@ export class AddTenantPage implements OnInit {
     }
     else
     {
-			return cordova.file.dataDirectory + img;
+      let win: any = window;
+      console.log({ "pathForImage3": win.Ionic.WebView.convertFileSrc(this.myImagePath) });
+      return win.Ionic.WebView.convertFileSrc(this.myImagePath);
+			//return cordova.file.dataDirectory + img;
 			//return "file:///data/user/0/io.ionic.starter/cache/"+img
     }
   }
-  public pathForImage1(img) {
+ /* public pathForImage1(img) {
     if (img === null) {
       return '';
     }
@@ -345,7 +350,7 @@ export class AddTenantPage implements OnInit {
       return "file:///data/user/0/io.ionic.starter/cache/" + img;
 
     }
-  }
+  }*/
 	/*-------------------------------- fetch Doc image --------------------------*/
  /* public pathForDoc(Doc_img)
   {

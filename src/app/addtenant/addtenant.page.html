@@ -224,10 +224,10 @@
 					<img src="" [hidden]="userData.uploadDoc[iIndex]['Doc_img'] === null" style="max-height : 50vh"
 					  (click)="selectItems()">
 				  </ion-card>
-				  <ion-card>
+				  <!--<ion-card>
 					<img src="" [hidden]="userData.uploadDoc[iIndex]['Doc_img'] === null" style="max-height : 50vh"
 					  (click)="selectItems()">
-				  </ion-card>
+				  </ion-card>-->
 				  <h3 [hidden]="userData.uploadDoc[iIndex]['Doc_img']!== null"></h3>
 				  <ion-button shape="round" icon-left (click)="presentActionSheet('document', iIndex)"><ion-buttons text-center>
 					<ion-icon slot="start" name="camera"></ion-icon>Select Image
