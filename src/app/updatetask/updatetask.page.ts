@@ -50,7 +50,7 @@ export class UpdatetaskPage implements OnInit {
     this.ts_history_details = [];
     //this.taskDetails = this.navParams.get("details");
     this.userData = {status : 0, percentCompleted : 0, taskid : 0,summary:""};
-    this.img_src="https://way2society.com/upload/main/";
+    this.img_src="https://way2society.com/upload/";
     this.status = statusEnum;
     this.priority = priorityEnum;
     this.TaskUpFlag="0";
@@ -142,6 +142,7 @@ export class UpdatetaskPage implements OnInit {
 
    openAttachment()
    {
+   // window.open(url, '_blank', 'location=no');
      window.open(this.img_src + this.taskDetails['Attachment'] , '_blank', 'location=no');
      return false;
    }
