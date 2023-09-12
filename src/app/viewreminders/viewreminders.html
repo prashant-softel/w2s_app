@@ -1,0 +1,171 @@
+<!--
+  Generated template for the ViewremindersPage page.
+
+  See http://ionicframework.com/docs/components/#navigation for more info on
+  Ionic pages and navigation.
+-->
+<ion-header>
+
+  <ion-toolbar>
+    <ion-title>Reminders</ion-title>
+  </ion-toolbar>
+
+  <ion-toolbar no-border style="margin-top: -15px;">
+    <br>
+    <ion-segment [(ngModel)]="tab">
+      <!-- <ion-segment-button value="past" (click)="pastRemaining()">
+         <strong><b>Past Remaining</b></strong>
+      </ion-segment-button> -->
+
+      <ion-segment-button value="remaining" (click)="remaining()">
+        <strong><b>Open</b></strong>
+      </ion-segment-button>
+
+      <ion-segment-button value="completed" (click)="completed()">
+        <strong><b>Completed</b></strong>
+      </ion-segment-button>
+    </ion-segment>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content no-padding>
+  <div [ngSwitch]="tab">
+    <ion-list no-lines *ngSwitchCase="'remaining'">
+      <ion-card *ngFor="let p of remainingShow">
+        <ion-card-content (click)="callSocietyPage(p)" no-padding text-wrap>
+          <ion-card-header style="font-size: 20px;">
+            {{p.society_name}}
+          </ion-card-header>
+          <ion-list style="margin-top: -15px;">
+            <ion-row>
+              <ion-col col-4 style="margin-left: 13px;">
+                <strong>Date & Time :</strong>
+              </ion-col>
+              <ion-col text-right>
+                {{p.reminder_date}} &nbsp;{{p.reminder_time}}
+              </ion-col>
+            </ion-row>
+            <ion-row>
+              <ion-col col-4 style="margin-left: 13px;">
+                <strong>Area :</strong>
+              </ion-col>
+              <ion-col text-right>
+                {{p.Locality}}
+              </ion-col>
+            </ion-row>
+            <ion-row *ngIf="p.note !== ''">
+              <ion-col col-6 style="margin-left: 13px;">
+                <strong>Note</strong>
+              </ion-col>
+            </ion-row>
+            <ion-row style="margin-top: -5px;">
+              <ion-col text-left style="padding-left: 16px;padding-right: 10px;">
+                {{p.note.substring(0,50)}}
+              </ion-col>
+            </ion-row>
+          </ion-list>
+        </ion-card-content>
+      </ion-card>
+    </ion-list>
+    <ion-list no-lines *ngSwitchCase="'completed'">
+      <ion-card *ngFor="let p of completedShow">
+        <ion-card-content (click)="callSocietyPage(p)" no-padding text-wrap>
+          <ion-card-header style="font-size: 20px;">
+            {{p.society_name}}
+          </ion-card-header>
+          <ion-list style="margin-top: -15px;">
+            <ion-row>
+              <ion-col col-4 style="margin-left: 13px;">
+                <strong>Date & Time :</strong>
+              </ion-col>
+              <ion-col text-right>
+                {{p.reminder_date}}&nbsp;{{p.reminder_time}}
+              </ion-col>
+            </ion-row>
+            <ion-row>
+              <ion-col col-4 style="margin-left: 13px;">
+                <strong>Area :</strong>
+              </ion-col>
+              <ion-col text-right>
+                {{p.Locality}}
+              </ion-col>
+            </ion-row>
+            <ion-row *ngIf="p.note !== ''">
+              <ion-col col-6 style="margin-left: 13px;">
+                <strong>Note</strong>
+              </ion-col>
+            </ion-row>
+            <ion-row style="margin-top: -5px;">
+              <ion-col text-left style="padding-left: 16px;padding-right: 10px;">
+                <!-- {{p.reminder_note}}--><!-- .substring(0,15)-->
+                {{p.note.substring(0,50)}}
+              </ion-col>
+            </ion-row>
+          </ion-list>
+        </ion-card-content>
+      </ion-card>
+    </ion-list>
+  </div>
+  <!-- <ion-list>
+      <ion-row>
+          <ion-col text-center col-3>
+            <strong>Date</strong>
+          </ion-col>
+          <ion-col text-center col-3>
+            <strong>Time</strong>
+          </ion-col>
+          <ion-col text-center col-3>
+            <strong>Note</strong>
+          </ion-col>
+          <ion-col text-center col-3>
+            <strong>Society</strong>
+          </ion-col>
+      </ion-row>
+    </ion-list>
+
+    <div [ngSwitch]="tab">
+        <ion-item *ngSwitchCase="'remaining'">
+            <ion-list *ngFor="let p of remainingShow">
+          <ion-row *ngIf = "p.status === 0 && p.reminder_note != ''" (click)="callSocietyPage(p)" >
+              <ion-col text-center col-2 *ngIf="p.reminder_date !== ''">
+                  <strong>{{p.reminder_date}}</strong>
+              </ion-col>
+              <ion-col text-center col-2 *ngIf="p.reminder_time !== '00:00:00'" >
+                  {{p.reminder_time}}
+              </ion-col>
+            
+              <ion-col text-center col-4 *ngIf="p.reminder_note != ''" >
+                <strong>{{p.reminder_note}}</strong>	
+              </ion-col>
+
+              <ion-col text-center col-4 *ngIf="p.society_name !== ''" >
+                <strong>{{p.society_name}}</strong>  
+              </ion-col>   
+          </ion-row>
+
+        <hr>
+        </ion-list>
+        </ion-item>
+        <ion-item *ngSwitchCase="'completed'">
+          <ion-list *ngFor="let p of completedShow">
+            <ion-row *ngIf = "p.status !== 0" (click)="callSocietyPage(p)">
+                <ion-col text-center col-3 *ngIf="p.reminder_date !== ''">
+                    <strong>{{p.reminder_date}}</strong>
+                </ion-col>
+                <ion-col text-center col-3 *ngIf="p.reminder_time !== '00:00:00'">
+                    {{p.reminder_time}}
+                </ion-col>
+                <ion-col text-center col-3 *ngIf="p.reminder_note !== ''">
+                  <strong>{{p.reminder_note}}</strong>
+                </ion-col>
+                <ion-col text-center col-3 *ngIf="p.society_name !== ''" >
+                  <strong>{{p.society_name}}</strong>  
+                </ion-col>   
+            </ion-row>
+            <hr>
+          </ion-list>
+        </ion-item>
+
+     
+    </div>-->
+</ion-content>

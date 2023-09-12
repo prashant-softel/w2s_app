@@ -1,0 +1,163 @@
+<!--
+  Generated template for the Feedback page.
+
+  See http://ionicframework.com/docs/components/#navigation for more info on
+  Ionic pages and navigation.
+-->
+<ion-header>
+
+  <ion-toolbar>
+    <ion-title>
+      Add Survey
+    </ion-title>
+    <!--<ion-buttons end>
+      <ion-img src="assets/images/icon.png" style="width: 20px;height: 20px;" />
+    </ion-buttons>-->
+  </ion-toolbar>
+
+</ion-header>
+
+
+<ion-content padding>
+
+  <ion-item>
+    <h2 text-wrap>
+      Please give us your valuable feedback ...</h2>
+
+    <ion-item>
+      <label class="item item-input item-stacked-label">
+        <span class="input-label"><strong>Name of Society *</strong></span><br><br>
+        <textarea placeholder="society name" [(ngModel)]="surveyDetails.society_name" rows="3"
+          style="width:100%;"></textarea>
+      </label>
+    </ion-item>
+    <ion-item>
+      <label class="item item-input item-stacked-label">
+        <span class="input-label"><strong>Address *</strong></span><br><br>
+        <textarea placeholder="society Address" [(ngModel)]="surveyDetails.society_add" rows="5"
+          style="width:100%;"></textarea>
+      </label>
+    </ion-item>
+
+    <ion-item>
+      <ion-input type="text" placeholder="Landmark" style="width:100%;"
+        [(ngModel)]="surveyDetails.landmark"></ion-input>
+    </ion-item>
+    <!-- <ion-item>
+          <ion-input type="text" placeholder="Area" [(ngModel)]="surveyDetails.area" style="width:100%;"></ion-input>
+        </ion-item>-->
+    <ion-item>
+      <ion-select placeholder="Area *" [(ngModel)]="surveyDetails.area" style="width:100%; max-width: 75%"
+        (ionChange)="fetchLocality()">
+        <ion-select-option *ngFor="let a of area_Array" value="{{a.id}}">{{a.area}}</ion-select-option>
+      </ion-select>
+    </ion-item>
+    <ion-item>
+      <ion-select placeholder="Locality *" [(ngModel)]="surveyDetails.locality" style="width:100%; max-width: 75%"
+        (ionChange)="fetchPincode()">
+        <ion-select-option *ngFor="let a of Locality_array" value="{{a.id}}">{{a.Locality}}</ion-select-option>
+      </ion-select>
+    </ion-item>
+    <ion-item>
+      <ion-input type="tel" placeholder="PIN Code *" [(ngModel)]="surveyDetails.pin_code"
+        style="width:100%;"></ion-input>
+    </ion-item>
+    <ion-item>
+      <ion-input type="text" placeholder="Society email" [(ngModel)]="surveyDetails.email"
+        style="width:100%;"></ion-input>
+    </ion-item>
+    <ion-item>
+      <ion-input type="tel" placeholder="No of Units *" [(ngModel)]="surveyDetails.no_of_units"
+        style="width:100%;"></ion-input>
+    </ion-item>
+    <ion-item>
+      <ion-select placeholder="Billingcycle" [(ngModel)]="surveyDetails.billingcycle">
+        <ion-select-option value="Yearly">Yearly</ion-select-option>
+        <ion-select-option value="HalfYerly">HalfYearly</ion-select-option>
+        <ion-select-option value="Quadruple">Quadruple</ion-select-option>
+        <ion-select-option value="Quarterly">Quarterly</ion-select-option>
+        <ion-select-option value="BiMonthly">BiMonthly</ion-select-option>
+        <ion-select-option value="Monthly">Monthly</ion-select-option>
+      </ion-select>
+    </ion-item>
+
+    <ion-item>
+      <ion-input type="text" placeholder="Manager Name" [(ngModel)]="surveyDetails.managerName"
+        style="width:100%;"></ion-input>
+    </ion-item>
+    <ion-item>
+      <ion-input type="tel" placeholder="Manager Contact No" [(ngModel)]="surveyDetails.manager_contactNo"
+        style="width:100%;"></ion-input>
+    </ion-item>
+    <ion-item>
+      <ion-input type="text" placeholder="Secretary Name" [(ngModel)]="surveyDetails.secretoryName"
+        style="width:100%;"></ion-input>
+    </ion-item>
+    <ion-item>
+      <ion-input type="tel" placeholder="Secretory Contact No" [(ngModel)]="surveyDetails.secretory_contactNo"
+        style="width:100%;"></ion-input>
+    </ion-item>
+    <br /><br />
+    <ion-row>
+      <ion-col>
+        <strong style="white-space: initial !important;">How much currently paying for accounting service:</strong>
+      </ion-col>
+    </ion-row>
+    <br /><br />
+    <ion-row>
+      <ion-col col-5>
+        <ion-item>
+          <ion-input type="tel" placeholder="Amount" [(ngModel)]="surveyDetails.Amount" style="width:100%;"></ion-input>
+        </ion-item>
+      </ion-col>
+      <ion-col col-2>
+        <span> Per</span>
+      </ion-col>
+      <ion-col col-5>
+        <ion-item>
+          <ion-select placeholder="Per Cycle" [(ngModel)]="surveyDetails.perCycle">
+            <ion-select-option value="Unit">Unit</ion-select-option>
+            <ion-select-option value="Month">Month</ion-select-option>
+            <ion-select-option value="Quater">Quarter</ion-select-option>
+            <ion-select-option value="Other">Other</ion-select-option>
+          </ion-select>
+        </ion-item>
+      </ion-col>
+    </ion-row>
+    <br /><br />
+    <ion-row>
+      <ion-col>
+        <strong style="white-space: initial !important;">Using online Accounting portal?</strong>
+      </ion-col>
+    </ion-row>
+    <ion-row>
+      <ion-col>
+        <strong style="white-space: initial !important;">If yes, Name of Portal</strong>
+      </ion-col>
+    </ion-row>
+    <br />
+    <ion-item>
+      <ion-input type="text" placeholder="Name of portal" [(ngModel)]="surveyDetails.portalName"
+        style="width:100%;"></ion-input>
+    </ion-item>
+    <ion-item>
+      <ion-input type="text" placeholder="Charges Paying" [(ngModel)]="surveyDetails.chargespaying"
+        style="width:100%;"></ion-input>
+    </ion-item>
+    <br />
+    <ion-item>
+      <label class="item item-input item-stacked-label">
+        <span class="input-label"><strong>Notes</strong></span><br><br>
+        <textarea placeholder="Additional information/suggestions that you might want to share ..."
+          [(ngModel)]="surveyDetails.notes" rows="5" style="width:100%;"></textarea>
+      </label>
+    </ion-item>
+    <ion-button ion-button style="background-color: #337ab7;color:#fff;" block (click)="submit()">Submit</ion-button>
+    <ion-item text-center>
+      <p style="color:#FF0000;">{{message}}</p>
+    </ion-item>
+    <!--</ion-card-content>-->
+
+    <!-- </ion-card>-->
+  </ion-item>
+</ion-content>

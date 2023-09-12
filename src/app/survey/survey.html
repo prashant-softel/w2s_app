@@ -1,0 +1,89 @@
+<!--
+  Generated template for the Survey page.
+
+  See http://ionicframework.com/docs/components/#navigation for more info on
+  Ionic pages and navigation.
+-->
+<!-- <ion-header>
+  <ion-toolbar color='navbar'>
+    <ion-title>Way2Society Survey App</ion-title>
+
+  </ion-toolbar>
+</ion-header> -->
+<ion-header translucent="true">
+  <ion-toolbar>
+    <ion-title>Society Survey</ion-title>
+    <ion-buttons slot="start">
+      <ion-menu-button></ion-menu-button>
+    </ion-buttons>
+    <ion-buttons slot="end">
+      <ion-button><ion-img style="width:70%" src="/assets/images/icon_s.png"></ion-img></ion-button>
+    </ion-buttons>
+
+  </ion-toolbar>
+  <!-- <ion-header>
+  <ion-toolbar color="navbar">
+    <ion-button ion-button menuToggle><ion-icon name="menu"></ion-icon></ion-button>
+    <ion-title color="theme">Society Survey</ion-title>
+
+  </ion-toolbar> -->
+</ion-header>
+
+<ion-content padding>
+  <ion-list no-lines>
+
+    <ion-item text-center>
+      <ion-img src="assets/images/logo.png" />
+    </ion-item>
+  </ion-list>
+  <br />
+  <ion-list no-lines>
+    <ion-item text-wrap>
+      Welcome to the Way2Society Survey App !
+      <ion-row><ion-col col-12 text-center>(21 Feb 2020 )</ion-col></ion-row>
+    </ion-item>
+    <!-- <ion-item text-wrap>
+        Kindly enter the Doctor's Registration Number to proceed with the feedback survey.<br>
+        Your feedback is valuable to us to help us grow and provide you with better service and experience. 
+    </ion-item>-->
+  </ion-list>
+
+  <ion-list no-lines>
+    <ion-button ion-button style="background-color: #337ab7;color:#fff;" block (click)="fetchDetails1()">Start
+      Survey</ion-button>
+    <!--<ion-item text-center>
+        <p style="color:#FF0000;">{{message}}</p>
+      </ion-item>-->
+  </ion-list>
+  <br /><br />
+  <ion-list no-lines>
+    <ion-button ion-button style="background-color: #337ab7;color:#fff;" block (click)="viewServey()">View
+      Survey</ion-button>
+    <!-- <ion-item text-center>
+        <p style="color:#FF0000;">{{message}}</p>
+      </ion-item> -->
+  </ion-list>
+  <br /><br />
+  <ion-list no-lines>
+    <ion-button ion-button style="background-color: #337ab7;color:#fff;" block (click)="viewReminders()">View
+      Reminders</ion-button>
+    <ion-item text-center>
+      <p style="color:#FF0000;">{{message}}</p>
+    </ion-item>
+  </ion-list>
+
+</ion-content>
+
+<ion-footer>
+  <ion-toolbar>
+    <!--<ion-title>Footer</ion-title>-->
+
+    <ion-item>
+      <ion-col text-right>
+        <ion-img src="assets/images/logo_bizlo.png" style="height: 20px;" />
+        &nbsp;&nbsp;&nbsp;
+        <ion-img src="assets/images/uniforeva.png" style="height: 20px;" />
+      </ion-col>
+    </ion-item>
+  </ion-toolbar>
+</ion-footer>

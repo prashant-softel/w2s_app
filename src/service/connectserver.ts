@@ -1,32 +1,34 @@
 import { Injectable } from '@angular/core';
-import { HttpClient} from '@angular/common/http';
+import { HttpClient } from '@angular/common/http';
 import { GlobalVars } from './globalvars';
 //http://way2society.com:8080/W2S/
 //http://way2society.com:8080/W2S_Beta/
 var headers = new Headers();
 headers.append('Content-Type', 'application/x-www-form-urlencoded; charset=UTF-8');
-  headers.append('Accept','application/json');
-  headers.append('content-type','application/json');
+headers.append('Accept', 'application/json');
+headers.append('content-type', 'application/json');
 @Injectable()
 export class ConnectServer {
-  serverURL='http://way2society.com:8080/W2S/';
+  // serverURL='http://way2society.com:8080/W2S/';
+  serverURL = 'http://3.109.157.17:8080/Unichem_web/';
+
   //serverURL='https://way2society.com:8443/W2S/';
-  API_URL='';
-  constructor(public http: HttpClient, private globalVars:GlobalVars ) { }
+  API_URL = '';
+  constructor(public http: HttpClient, private globalVars: GlobalVars) { }
 
   getFilms() {
     return this.http.get('https://swapi.dev/api/films');
   }
 
   login(objData) {
-    
+
     return new Promise(resolve => {
 
       objData['device'] = this.globalVars.DEVICE_ID;
       var sURL = this.serverURL + "Login" + this.generateQueryString(objData);
       //alert(sURL);
       this.http.get(sURL)
-       // .map(res => res.json())
+        // .map(res => res.json())
         .subscribe(data => {
           resolve(data);
         }, error => {
@@ -46,7 +48,7 @@ export class ConnectServer {
       objData['FBCode'] = '0';
       var sURL = this.serverURL + "NewUser" + this.generateQueryString(objData);
       this.http.get(sURL)
-        
+
         .subscribe(data => {
           resolve(data);
         }, error => {
@@ -69,7 +71,7 @@ export class ConnectServer {
       // objData['token'] = "wvSn5ujhqo2IgEmOgxIb2ZAGGHR-HbsaeKZZKxciGQItalHa_9fwwsmXiI__fmk_SUplr2GKJz--P_VvX1k5skPK-O-Pqb22JgcWcC2Ac9kT4rWv1N92JcDgbzph-38q";
       // objData['tkey'] = "MOcChDngKV1DS2tQCFa0CCK5lyZeENyYQMXWvZBALili6YRqLC0lwMUIYw7zqoLsSS-DiPOfTwFKcCGZta8ePFch2IEozdos302wIISBTOjhnIX-EyHbQitV4keF95bHG54Q0npZc2Nk-09J8x5mpQ";
       // objData['map'] = "3719";
-      
+
       objData['token'] = this.globalVars.USER_TOKEN;
       objData['tkey'] = this.globalVars.MAP_TKEY;
       objData['map'] = this.globalVars.MAP_ID;
@@ -79,7 +81,7 @@ export class ConnectServer {
       //alert(sURL);
 
       this.http.get(sURL)
-       // .map(res => res.json())
+        // .map(res => res.json())
         .subscribe(data => {
           //alert('Received : ' + data['success']);
           console.log(data);
@@ -103,11 +105,11 @@ export class ConnectServer {
   }
   postData() {
     this.http.post("https://httpbin.org/post", "firstname=Nic")
-        .subscribe(data => {
+      .subscribe(data => {
 
-        }, error => {
-            console.log(JSON.stringify(error.json()));
-        });
+      }, error => {
+        console.log(JSON.stringify(error.json()));
+      });
   }
 
   sendImage(albumId, image) {

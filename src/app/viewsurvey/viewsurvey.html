@@ -1,0 +1,92 @@
+<!--
+  Generated template for the ViewsurveyPage page.
+
+  See http://ionicframework.com/docs/components/#navigation for more info on
+  Ionic pages and navigation.
+-->
+<ion-header>
+
+	<ion-toolbar>
+		<ion-title>
+			View Survey List
+		</ion-title>
+		<!--<ion-buttons end>
+      <ion-img src="assets/images/icon.png" style="width: 20px;height: 20px;" />
+    </ion-buttons>-->
+	</ion-toolbar>
+
+
+</ion-header>
+<ion-content padding>
+	<ion-list no-lines>
+		<ion-searchbar (ionInput)="getItems1($event)"></ion-searchbar>
+		<ion-card *ngFor="let p of temp_surveyList_array">
+			<ion-card-content (click)="viewSurveDetails(p)">
+				<ion-card-title><strong style="font-size: 20px;padding-left: 5px;padding-right: 5px;">
+						{{p.society_name}}</strong></ion-card-title>
+				<!--<ion-row>
+	<ion-col text-left>
+	  	<strong style="font-size: 17px;">{{p.society_add}}</strong>
+	</ion-col>
+ </ion-row>-->
+				<ion-row>
+					<ion-col col-4>
+						<strong>Area</strong>
+					</ion-col>
+					<ion-col text-right>
+						{{p.Area1}}
+					</ion-col>
+				</ion-row>
+				<ion-row>
+					<ion-col col-4>
+						<strong>Locality</strong>
+					</ion-col>
+					<ion-col text-right>
+						{{p.Locality}}
+					</ion-col>
+				</ion-row>
+				<ion-row>
+					<ion-col col-4>
+						<strong>Email</strong>
+					</ion-col>
+					<ion-col text-right *ngIf="p.society_email !=''">
+						{{p.society_email}}
+					</ion-col>
+					<ion-col text-right *ngIf="p.society_email ==''">
+						Not Added
+					</ion-col>
+				</ion-row>
+				<ion-row>
+					<ion-col col-6>
+						<strong>No of Units</strong>
+					</ion-col>
+					<ion-col text-right>
+						{{p.no_of_units}}
+					</ion-col>
+				</ion-row>
+				<ion-row>
+					<ion-col col-4>
+						<strong>Reported By </strong>
+					</ion-col>
+					<ion-col text-right>
+						{{p.LoginName}}
+					</ion-col>
+				</ion-row>
+				<ion-row>
+					<ion-col col-4>
+						<strong>Raised On</strong>
+					</ion-col>
+					<ion-col text-right>
+						{{p.UpdatedTimestamp}}
+					</ion-col>
+				</ion-row>
+				<p text-right>
+					<a class="item" href="#">
+						View Details
+					</a>
+				</p>
+			</ion-card-content>
+		</ion-card>
+		<!--<p *ngIf=!hasActiveSRL text-center style="color: red;"> No Survey To Display</p>-->
+	</ion-list>
+</ion-content>

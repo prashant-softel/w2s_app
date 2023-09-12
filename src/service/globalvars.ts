@@ -20,7 +20,6 @@ export class GlobalVars {
   MAP_UNIT_BLOCK = 0;
   MAP_BLOCK_DESC = "";
   WAR_VERSION = "";
-  APP_VERSION = "2.0.20230803";
   //APP_VERSION = "1.0.20180117";
   LATEST_APP_VERSION = "2.1.20230803";
   APP_DOWNLOAD_LINK = "";
@@ -47,6 +46,11 @@ export class GlobalVars {
   MEMBER_UNIT_ID = 0;
 
   APP_MENU = [];
+
+  USER_ROLE = "2";    // 1 is for Managers & 2 is for MRs
+  MENU_ARR = [];
+
+  APP_VERSION = "0.9.20170921";
 
   constructor(public storage: StorageService) {
 

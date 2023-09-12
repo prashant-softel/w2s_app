@@ -1,0 +1,159 @@
+<!--
+  Generated template for the UpdatesurveyPage page.
+
+  See http://ionicframework.com/docs/components/#navigation for more info on
+  Ionic pages and navigation.
+-->
+<ion-header>
+
+  <ion-toolbar color="theme">
+    <ion-title>
+      Update Survey
+    </ion-title>
+    <!--<ion-buttons end>
+      <ion-img src="assets/images/icon.png" style="width: 20px;height: 20px;" />
+    </ion-buttons>-->
+  </ion-toolbar>
+
+
+</ion-header>
+
+
+<ion-content padding>
+  <ion-item>
+    <label class="item item-input item-stacked-label">
+      <span class="input-label"><strong>Name of Society *</strong></span><br><br>
+      <textarea placeholder="society name" [(ngModel)]="updateSurvey.societyName" rows="3"
+        style="width:100%;"></textarea>
+    </label>
+  </ion-item>
+
+  <ion-item>
+    <label class="item item-input item-stacked-label">
+      <span class="input-label"><strong>Address *</strong></span><br><br>
+      <textarea placeholder="society Address" [(ngModel)]="updateSurvey.societyAdd" rows="5"
+        style="width:100%;"></textarea>
+    </label>
+  </ion-item>
+  <ion-item>
+    <ion-input type="text" placeholder="Landmark" style="width:100%;" [(ngModel)]="updateSurvey.Landmark"></ion-input>
+  </ion-item>
+  <ion-item>
+    <ion-select placeholder="Area *" [(ngModel)]="updateSurvey.Area" style="width:100%; max-width: 75%"
+      (ionChange)="fetchLocality()"> <!--(ionChange)="fetchLocality()"-->
+      <ion-select-option *ngFor="let a of area_Array" value="{{a.id}}">{{a.area}}</ion-select-option>
+    </ion-select>
+  </ion-item>
+  <!-- <ion-item>
+          <ion-input type="text" placeholder="Area" [(ngModel)]="updateSurvey.Area" style="width:100%;"></ion-input>
+        </ion-item>-->
+  <ion-item>
+    <ion-select placeholder="Locality *" [(ngModel)]="updateSurvey.locality" style="width:100%; max-width: 75%"
+      (ionChange)="fetchPincode()"> <!--(ionChange)="fetchPincode()"-->
+      <ion-select-option *ngFor="let a of Locality_array" value="{{a.id}}">{{a.Locality}}</ion-select-option>
+    </ion-select>
+  </ion-item>
+  <!--<ion-item>
+          <ion-input type="text" placeholder="Area" [(ngModel)]="updateSurvey.locality" style="width:100%;"></ion-input>
+        </ion-item>-->
+  <ion-item>
+    <ion-input type="tel" placeholder="PIN Code *" [(ngModel)]="updateSurvey.pin_code" style="width:100%;"></ion-input>
+  </ion-item>
+  <ion-item>
+    <ion-input type="text" placeholder="Society email" [(ngModel)]="updateSurvey.email" style="width:100%;"></ion-input>
+  </ion-item>
+  <ion-item>
+    <ion-input type="tel" placeholder="No of Units *" [(ngModel)]="updateSurvey.no_units"
+      style="width:100%;"></ion-input>
+  </ion-item>
+  <ion-item>
+    <ion-select placeholder="Billingcycle" [(ngModel)]="updateSurvey.BillingCycle">
+      <ion-select-option value="Yearly">Yearly</ion-select-option>
+      <ion-select-option value="HalfYerly">HalfYearly</ion-select-option>
+      <ion-select-option value="Quadruple">Quadruple</ion-select-option>
+      <ion-select-option value="Quarterly">Quarterly</ion-select-option>
+      <ion-select-option value="BiMonthly">BiMonthly</ion-select-option>
+      <ion-select-option value="Monthly">Monthly</ion-select-option>
+    </ion-select>
+  </ion-item>
+  <ion-item>
+    <ion-input type="text" placeholder="Manager Name" [(ngModel)]="updateSurvey.managerName"
+      style="width:100%;"></ion-input>
+  </ion-item>
+  <ion-item>
+    <ion-input type="tel" placeholder="Manager Contact No" [(ngModel)]="updateSurvey.managerContact"
+      style="width:100%;"></ion-input>
+  </ion-item>
+  <ion-item>
+    <ion-input type="text" placeholder="Secretary Name" [(ngModel)]="updateSurvey.secretaryName"
+      style="width:100%;"></ion-input>
+  </ion-item>
+  <ion-item>
+    <ion-input type="tel" placeholder="Secretory Contact No" [(ngModel)]="updateSurvey.secContact"
+      style="width:100%;"></ion-input>
+  </ion-item>
+  <br /><br />
+  <ion-row>
+    <ion-col>
+      <strong style="white-space: initial !important;">How much currently paying for accounting service:</strong>
+    </ion-col>
+  </ion-row>
+  <br /><br />
+  <ion-row>
+    <ion-col col-4>
+      <ion-item>
+        <ion-input type="tel" placeholder="Amount" [(ngModel)]="updateSurvey.service_amount"
+          style="width:100%;"></ion-input>
+      </ion-item>
+    </ion-col>
+    <ion-col col-2>
+      <span>Per</span>
+    </ion-col>
+    <ion-col col-6>
+      <ion-item style="padding-left: 0px;">
+        <ion-select placeholder="Per Cycle" [(ngModel)]="updateSurvey.cycle" style="padding-left: 0px;width: 100%;">
+          <ion-select-option value="Unit">Unit</ion-select-option>
+          <ion-select-option value="Month">Month</ion-select-option>
+          <ion-select-option value="Quater">Quarter</ion-select-option>
+          <ion-select-option value="Other">Other</ion-select-option>
+        </ion-select>
+      </ion-item>
+    </ion-col>
+  </ion-row>
+  <br /><br />
+  <ion-row>
+    <ion-col>
+      <strong style="white-space: initial !important;">Using online Accounting portal?</strong>
+    </ion-col>
+  </ion-row>
+  <ion-row>
+    <ion-col>
+      <strong style="white-space: initial !important;">If yes, Name of Portal</strong>
+    </ion-col>
+  </ion-row>
+  <br />
+  <ion-item>
+    <ion-input type="text" placeholder="Name of portal" [(ngModel)]="updateSurvey.portalName"
+      style="width:100%;"></ion-input>
+  </ion-item>
+  <ion-item>
+    <ion-input type="text" placeholder="Charegs Paying" [(ngModel)]="updateSurvey.charges"
+      style="width:100%;"></ion-input>
+  </ion-item>
+  <br />
+  <ion-item>
+    <label class="item item-input item-stacked-label">
+      <span class="input-label"><strong>Notes</strong></span><br><br>
+      <textarea placeholder="Additional information/suggestions that you might want to share ..."
+        [(ngModel)]="updateSurvey.note" rows="5" style="width:100%;"></textarea>
+    </label>
+  </ion-item>
+  <ion-button ion-button color="primary" block (click)="Update()">Update</ion-button>
+  <ion-item text-center>
+    <p style="color:#FF0000;">{{message}}</p>
+  </ion-item>
+  <!--</ion-card-content>-->
+
+  <!-- </ion-card>-->
+
+</ion-content>

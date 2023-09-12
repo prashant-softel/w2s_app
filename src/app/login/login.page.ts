@@ -4,15 +4,15 @@ import { FormsModule } from '@angular/forms';
 import { IonicModule, NavController, NavParams, Platform, ActionSheetController } from '@ionic/angular';
 import { GlobalVars } from 'src/service/globalvars';
 import { LoaderView } from 'src/service/loaderview';
-import { ViewbillPage } from '../viewbill/viewbill.page';
-import { ViewnoticePage } from '../viewnotice/viewnotice.page';
-import { VieweventPage } from '../viewevent/viewevent.page';
-import { ViewimposefinePage } from '../viewimposefine/viewimposefine.page';
-import { TakepollPage } from '../takepoll/takepoll.page';
-import { ClassifiedsdetailsPage } from '../classifiedsdetails/classifiedsdetails.page';
+// import { ViewbillPage } from '../viewbill/viewbill.page';
+// import { ViewnoticePage } from '../viewnotice/viewnotice.page';
+// import { VieweventPage } from '../viewevent/viewevent.page';
+// import { ViewimposefinePage } from '../viewimposefine/viewimposefine.page';
+// import { TakepollPage } from '../takepoll/takepoll.page';
+// import { ClassifiedsdetailsPage } from '../classifiedsdetails/classifiedsdetails.page';
 import { ConnectServer } from 'src/service/connectserver';
-import { VisitorInPage } from '../visitor-in/visitor-in.page';
-import { ViewreceiptPage } from '../viewreceipt/viewreceipt.page';
+// import { VisitorInPage } from '../visitor-in/visitor-in.page';
+// import { ViewreceiptPage } from '../viewreceipt/viewreceipt.page';
 import { NavigationExtras } from '@angular/router';
 //import { InAppBrowser } from '@ionic-native/in-app-browser/ngx';
 //import { WebIntent } from '@ionic-native/web-intent/ngx';
@@ -37,6 +37,8 @@ export class LoginPage implements OnInit {
   DashboardPage: any = 'dashboard';
   NewuserPage: any = 'newuser';
   payFlag: boolean;
+  loginID: number;
+
 
   constructor(
     private navCtrl: NavController,
@@ -57,6 +59,8 @@ export class LoginPage implements OnInit {
     this.notificationDetails = [];
 
     this.bHasNotification = false;
+    this.loginID = 0;
+
   }
   ngOnInit(): void {
 
@@ -90,29 +94,19 @@ export class LoginPage implements OnInit {
   }
 
   ionViewDidLoad() {
-
-    ////For Testing notification
-    /* this.notificationDetails['map_id'] = 3719;
-        this.notificationDetails['page_ref'] = "5";
-         this.notificationDetails['details'] = "169/241";
-        this.notificationDetails['pagename'] = "TakepollPage";
-   
-       this.bHasNotification = true;
-   */
-
-    if (this.params.get("notification_details") != null) {
-      this.bHasNotification = true;
-      this.notificationDetails = this.params.get("notification_details");
-      alert(this.notificationDetails);
-    }
-    if (this.params.get("activation_details") != null) {
-      this.showLogin = false;
-      this.userData = this.params.get("activation_details");
-      this.signin();
-    }
-    else {
-      this.verifyToken();
-    }
+    // if (this.params.get("notification_details") != null) {
+    //   this.bHasNotification = true;
+    //   this.notificationDetails = this.params.get("notification_details");
+    //   alert(this.notificationDetails);
+    // }
+    // if (this.params.get("activation_details") != null) {
+    //   this.showLogin = false;
+    //   this.userData = this.params.get("activation_details");
+    //   this.signin();
+    // }
+    // else {
+    //   this.verifyToken();
+    // }
   }
 
   processNotification() {
@@ -120,16 +114,16 @@ export class LoginPage implements OnInit {
     this.loaderView.showLoader('Initializing App ...');
 
     var pages = [];
-    pages['ViewbillPage'] = ViewbillPage;
-    pages['ViewnoticePage'] = ViewnoticePage;
-    pages['VieweventPage'] = VieweventPage;
-    pages['ViewimposefinePage'] = ViewimposefinePage;
-    pages['TakepollPage'] = TakepollPage;
-    pages['ClassifiedsdetailsPage'] = ClassifiedsdetailsPage;
-    //pages['ProviderDetailsPage'] = ProviderDetailsPage;
-    //  pages['ViewServiceRequestPage'] = ViewServiceRequestPage;
-    pages['VisitorInPage'] = VisitorInPage;
-    pages['ViewreceiptPage'] = ViewreceiptPage;
+    // pages['ViewbillPage'] = ViewbillPage;
+    // pages['ViewnoticePage'] = ViewnoticePage;
+    // pages['VieweventPage'] = VieweventPage;
+    // pages['ViewimposefinePage'] = ViewimposefinePage;
+    // pages['TakepollPage'] = TakepollPage;
+    // pages['ClassifiedsdetailsPage'] = ClassifiedsdetailsPage;
+    // //pages['ProviderDetailsPage'] = ProviderDetailsPage;
+    // //  pages['ViewServiceRequestPage'] = ViewServiceRequestPage;
+    // pages['VisitorInPage'] = VisitorInPage;
+    // pages['ViewreceiptPage'] = ViewreceiptPage;
 
     // alert("calling");
 
@@ -169,175 +163,71 @@ export class LoginPage implements OnInit {
     }
   }
 
-  verifyToken() {
-
-    this.loaderView.showLoader('Initializing App ...');
-
-    /*this.loaderView.dismissLoader();
-                        this.showLogin = true;
-
-                        return;
-*/
-    this.globalVars.getUserDetails().then(
-      value => {
-        if (value != null && value.hasOwnProperty('USER_TOKEN') && value.hasOwnProperty('USER_NAME')) {
-          //console.log(value);
-          this.globalVars.setUserDetails(value.USER_TOKEN, value.USER_NAME);
-
-          var objdataRefresh = [];
-          objdataRefresh['token'] = value.USER_TOKEN;
-          objdataRefresh['grant_type'] = "refresh_token";
-          objdataRefresh['deviceID'] = this.globalVars.DEVICE_ID;
-
-          this.connectServer.login(objdataRefresh).then(
-            resolve => {
-              this.message = "";
-              this.loaderView.dismissLoader();
-
-              if (resolve != null && resolve.hasOwnProperty('success')) {
-                this.globalVars.LATEST_APP_VERSION = resolve['version'];
-                this.globalVars.APP_DOWNLOAD_LINK = resolve['app_link'];
-
-                if (resolve['success'] == 0) {
-                  this.message = resolve['message'];
-                }
-                else if (resolve['success'] == 1) {
-                  this.globalVars.getMapDetails().then(
-                    value => {
-                      //console.log('Map Details' + value);
-                      this.globalVars.setUserDetails(resolve['response']['token'], resolve['response']['name']);
-
-                      this.globalVars.setMapIDArray(resolve['response']['map']);
-
-                      var bMapFound = false;
-                      var iMapID = 0;
-
-                      var mapIDArray = resolve['response']['map'];
-                      if (value != null || this.bHasNotification == true) {
-                        //iMapID = value.MAP_ID;
-                        //alert(this.bHasNotification);
-                        if (this.bHasNotification == true) {
-                          iMapID = this.notificationDetails.map_id;
-                          //  alert(iMapID);
-                        }
-                        else {
-                          iMapID = value.MAP_ID;
-                        }
-
-                        if (mapIDArray.length > 0) {
-                          for (var i = 0; i < mapIDArray.length; i++) {
-
-                            if (iMapID == mapIDArray[i]['map']) {
-                              bMapFound = true;
-
-                              this.globalVars.setMapDetails(mapIDArray[i]['map'], mapIDArray[i]['society'], mapIDArray[i]['role'], mapIDArray[i]['tkey'], mapIDArray[i]['society_id'], mapIDArray[i]['unit_id'], mapIDArray[i]['unit_no'], mapIDArray[i]['isblock'], mapIDArray[i]['block_reason']);
-                            }
-                          }
-                        }
-
-                        if (iMapID > 0 && bMapFound == true) {
-                          if (this.bHasNotification == true) {
-                            this.processNotification();
-                          }
-                          else {
-                            this.navCtrl.navigateRoot(this.DashboardPage);
-                          }
-                        }
-                        else {
-                          this.navCtrl.navigateRoot(this.SocietyPage);
-                        }
-                      }
-                      else {
-                        this.navCtrl.navigateRoot(this.SocietyPage);
-                      }
-                    }
-                  );
-
-
-                }
-
-              }
-            }
-          );
-        }
-        else {
-          this.loaderView.dismissLoader();
-          this.showLogin = true;
-        }
-      }
-    );
-
-  }
 
   reinitializeData() {
 
-    this.loaderView.showLoader('Initializing App ...');
+    this.loaderView.showLoader('Initializing App');
 
     this.globalVars.getUserDetails().then(
       value => {
+        this.loaderView.dismissLoader();
         if (value != null && value.hasOwnProperty('USER_TOKEN') && value.hasOwnProperty('USER_NAME')) {
           this.globalVars.setUserDetails(value.USER_TOKEN, value.USER_NAME);
+          console.log("inlogin user role : " + this.globalVars.USER_ROLE)
+          if (this.globalVars.USER_ROLE == "1") {
+            // this.navCtrl.navigateRoot();
+          }
+          else {
 
-          this.globalVars.getMapDetails().then(
-            value => {
-              this.loaderView.dismissLoader();
-
-              // if (value != null && value.hasOwnProperty('MAP_ID') && value.hasOwnProperty('MAP_SOCIETY_NAME') && value.hasOwnProperty('MAP_USER_ROLE') && value.hasOwnProperty('MAP_SOCIETY_ID')) {
-              if (value != null && value.hasOwnProperty('MAP_ID') && value.hasOwnProperty('MAP_SOCIETY_NAME') && value.hasOwnProperty('MAP_USER_ROLE')) {
-                this.globalVars.setMapDetails(value.MAP_ID, value.MAP_SOCIETY_NAME, value.MAP_USER_ROLE, value.MAP_TKEY, value.MAP_SOCIETY_ID, value.MAP_UNIT_ID, value.MAP_UNIT_NO, value.UNIT_BLOCK, value.BLOCK_DESC);
-                this.navCtrl.navigateRoot('dashboard');
-              }
-              else {
-                //let navigationExtras: NavigationExtras = {
-                //queryParams: {
-                //userName:'TESTTSTSTS' ,
-
-                // }
-                //};
-                //this.navCtrl.navigateRoot(this.SocietyPage,navigationExtras);
-                this.navCtrl.navigateRoot(this.SocietyPage);
-              }
-
-              this.showLogin = false;
-            }
-          );
+            this.goToSurvey();
+          }
+          this.showLogin = false;
         }
         else {
-          this.loaderView.dismissLoader();
           this.showLogin = true;
         }
       }
     );
+  }
+  goToSurvey() {
+    //this.loaderView.showLoader('Verifying Details');
+
+    var obj = [];
+    obj['isActive'] = 0;
+    obj['surveyID'] = 1;
+    obj['bool_questions'] = true;
+    obj['bool_ratings'] = false;
+    obj['bool_doctors'] = false;
+    var surveyDetails = {};
+
+    this.navCtrl.navigateRoot("Survey", { state: { details: { loginID: this.loginID } } });
   }
 
   signin() {
 
-    //debugger;
     this.message = "";
     if (this.userData.Email.length == 0 || this.userData.Password.length == 0) {
       this.message = "Please enter Username and Password";
+      //this.presentToast();
     }
     else {
-      this.loaderView.showLoader('Verifying Details ...');
+      this.loaderView.showLoader('Verifying Details');
       //var serverResponse = [];
-      this.userData['deviceID'] = this.globalVars.DEVICE_ID;
-      this.message = "Verifying Details. Please Wait ...";
+
+      //this.message = "Verifying Details. Please Wait ...";  
       this.connectServer.login(this.userData).then(
         resolve => {
           this.message = "";
           this.loaderView.dismissLoader();
 
           if (resolve != null && resolve.hasOwnProperty('success')) {
-            this.globalVars.LATEST_APP_VERSION = resolve['version'];
-            this.globalVars.APP_DOWNLOAD_LINK = resolve['app_link'];
-
             if (resolve['success'] == 0) {
-              this.message = resolve['response']['message'];
+              this.message = "Enter valid User ID and Password";
+
             }
             else if (resolve['success'] == 1) {
               this.globalVars.setUserDetails(resolve['response']['token'], resolve['response']['name']);
-
-              this.globalVars.setMapIDArray(resolve['response']['map']);
+              this.loginID = resolve['response']['LoginID'];
 
               setTimeout(() => {
                 this.loaderView.dismissLoader();
@@ -346,12 +236,12 @@ export class LoginPage implements OnInit {
 
             }
 
+
           }
         }
       );
     }
   }
-
   /*login() {
       facebookConnectPlugin.login(['email'], function(response) {
           alert('Logged in');

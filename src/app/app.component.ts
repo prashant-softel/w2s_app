@@ -42,7 +42,7 @@ export class AppComponent {
   HelplinePage: any = 'helpline';
   SettingsPage: any = 'settings';
   LinkflatPage: any = 'linkflat';
-  AboutUsPage: any = 'about-us';
+  AboutUsPage: any = 'AboutusPage';
   SocietyPage: any = 'society';
   ClassifiedsPage: any = 'classifieds';
   //rootPage: any = this.LoginPage;
@@ -51,12 +51,12 @@ export class AppComponent {
     private navCtrl: NavController,
     public menu: MenuController) {
     this.pagesMember = [
-      { title: 'Dashboard', component: this.DashboardPage },
-      { title: 'Helpline Number', component: this.HelplinePage },
-      { title: 'Classifieds', component: this.ClassifiedsPage },
+      // { title: 'Dashboard', component: this.DashboardPage },
+      // { title: 'Helpline Number', component: this.HelplinePage },
+      // { title: 'Classifieds', component: this.ClassifiedsPage },
       //{ title: 'Settings', component:this.SettingsPage },
       //{title : 'VisitorInPage',component: VisitorInPage},
-      { title: 'Link Another Society/Flat', component: this.LinkflatPage },
+      // { title: 'Link Another Society/Flat', component: this.LinkflatPage },
       { title: 'About Us', component: this.AboutUsPage }
 
 
