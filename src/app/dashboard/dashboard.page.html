@@ -63,14 +63,14 @@
   </ion-toolbar>-->
   <ion-list no-lines>
     <ion-list text-wrap text-center text-uppercase style="margin-top: 15px;text-align: center;color:black">
-      <strong style="white-space: nowrap;" (click)="selectSociety()">{{this.society}} </strong>
+      <strong style="white-space: pre-wrap;" (click)="selectSociety()">{{this.society}} </strong>
       <!-- <strong (click)="selectSociety()">{{globalVars.MAP_SOCIETY_NAME}}</strong>-->
     </ion-list>
   </ion-list>
 
 </ion-header>
 <ion-content padding>
-  <ion-refresher slot="fixed">
+  <ion-refresher slot="fixed" (ionRefresh)="doRefresh($event)">
     <ion-refresher-content></ion-refresher-content>
   </ion-refresher>
   <!-- Member Sections  -->

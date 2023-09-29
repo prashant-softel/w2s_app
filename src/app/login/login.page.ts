@@ -13,7 +13,7 @@ import { ClassifiedsdetailsPage } from '../classifiedsdetails/classifiedsdetails
 import { ConnectServer } from 'src/service/connectserver';
 import { VisitorInPage } from '../visitor-in/visitor-in.page';
 import { ViewreceiptPage } from '../viewreceipt/viewreceipt.page';
-import { NavigationExtras } from '@angular/router';
+import { NavigationExtras, Router } from '@angular/router';
 //import { InAppBrowser } from '@ionic-native/in-app-browser/ngx';
 //import { WebIntent } from '@ionic-native/web-intent/ngx';
 
@@ -46,6 +46,8 @@ export class LoginPage implements OnInit {
     private params: NavParams,
     public actionSheet: ActionSheetController,
     private platform: Platform,
+    private router: Router,
+
     // private inAppBrowser: InAppBrowser
 
   ) {
@@ -61,6 +63,7 @@ export class LoginPage implements OnInit {
   ngOnInit(): void {
 
     this.reinitializeData();
+    this.ionViewDidLoad()
   }
   launch() {
     let uri = 'https://way2society.com/forgotpassword.php';//`upi://pay?pa=${UPI_ID}&pn=${UPI_NAME}&tid=${tid}&am=${totalPrice}&cu=INR&tn=${UPI_TXN_NOTE}&tr=${orderId}`;
@@ -100,9 +103,9 @@ export class LoginPage implements OnInit {
        this.bHasNotification = true;
    */
 
-    if (this.params.get("notification_details") != null) {
+    if (this.router.getCurrentNavigation()?.extras?.state['notification_details'] != null) {
       this.bHasNotification = true;
-      this.notificationDetails = this.params.get("notification_details");
+      this.notificationDetails = this.router.getCurrentNavigation()?.extras?.state['notification_details'];
       alert(this.notificationDetails);
     }
     if (this.params.get("activation_details") != null) {
