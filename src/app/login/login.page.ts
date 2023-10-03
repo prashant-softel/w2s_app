@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
-import { IonicModule, NavController, NavParams, Platform,ActionSheetController } from '@ionic/angular';
+import { IonicModule, NavController, NavParams, Platform, ActionSheetController } from '@ionic/angular';
 import { GlobalVars } from 'src/service/globalvars';
 import { LoaderView } from 'src/service/loaderview';
 import { ViewbillPage } from '../viewbill/viewbill.page';
@@ -13,16 +13,17 @@ import { ClassifiedsdetailsPage } from '../classifiedsdetails/classifiedsdetails
 import { ConnectServer } from 'src/service/connectserver';
 import { VisitorInPage } from '../visitor-in/visitor-in.page';
 import { ViewreceiptPage } from '../viewreceipt/viewreceipt.page';
-import { NavigationExtras } from '@angular/router';
-import { InAppBrowser } from '@awesome-cordova-plugins/in-app-browser/ngx';
+import { NavigationExtras, Router } from '@angular/router';
+//import { InAppBrowser } from '@ionic-native/in-app-browser/ngx';
+//import { WebIntent } from '@ionic-native/web-intent/ngx';
 
-declare let cordova: any;
+
 @Component({
   selector: 'app-login',
   templateUrl: './login.page.html',
   styleUrls: ['./login.page.scss'],
   standalone: true,
-  providers:[InAppBrowser],
+  //providers:[InAppBrowser],
   imports: [IonicModule, CommonModule, FormsModule]
 })
 export class LoginPage implements OnInit {
@@ -34,8 +35,9 @@ export class LoginPage implements OnInit {
   bHasNotification: any;
   SocietyPage: any = 'society';
   DashboardPage: any = 'dashboard';
-  NewuserPage:any='newuser';
-  
+  NewuserPage: any = 'newuser';
+  payFlag: boolean;
+
   constructor(
     private navCtrl: NavController,
     private globalVars: GlobalVars,
@@ -43,8 +45,12 @@ export class LoginPage implements OnInit {
     private loaderView: LoaderView,
     private params: NavParams,
     public actionSheet: ActionSheetController,
-    private iab: InAppBrowser,
-    private platform:Platform) {
+    private platform: Platform,
+    private router: Router,
+
+    // private inAppBrowser: InAppBrowser
+
+  ) {
 
     this.userData = { Email: "", Password: "" };
     this.showLogin = false;
@@ -55,32 +61,35 @@ export class LoginPage implements OnInit {
     this.bHasNotification = false;
   }
   ngOnInit(): void {
-    
+
     this.reinitializeData();
-  }
-  launch1()
-  {
-    this.platform.ready().then(() => {
-      cordova.InAppBrowser.open('https://way2society.com/', "_system", "location=true");
-  });
-    alert("call");
-   // window.open('https://way2society.com/', "_system", "location=yes");
+    this.ionViewDidLoad()
   }
   launch() {
-    try{
-      alert("call1");
-       const browser = this.iab.create('https://way2society.com/');
-       browser.on('loadstop').subscribe(event => {
-      browser.insertCSS({ code: "body{color: red;" });
-    });
+    let uri = 'https://way2society.com/forgotpassword.php';//`upi://pay?pa=${UPI_ID}&pn=${UPI_NAME}&tid=${tid}&am=${totalPrice}&cu=INR&tn=${UPI_TXN_NOTE}&tr=${orderId}`;
+    alert("call 1");
 
-    browser.close();
-    }
-    catch (err) {
-      alert("call2");
-      alert(err);
-    }
-    
+    window.open("https://way2society.com/forgotpassword.php", '_system', 'location=yes');
+    // cordova.exec("InAppBrowser", "open", ['http://apache.org', '_blank', 'location=yes']);
+    // alert("call");
+    /*this.platform.ready().then(() => {
+      this.payFlag = true;
+      var browserRef = window.open('https://way2society.com',"_blank","hidden=no,location=no,clearsessioncache=yes,clearcache=yes,hardwareback=no");
+      browserRef.addEventListener('loadstop', function(e: InAppBrowserEvent) {
+      var loc = e.url;
+      alert("call"+loc);
+      if(loc == "https://way2society.com")
+      {
+            setTimeout(function () {
+              browserRef.close();
+            }, 5000);  
+      }
+      });
+      });*/
+    //this.platform.ready().then(() => {
+    //cordova.InAppBrowser.open('https://way2society.com/', "_system", "location=true");
+    // });
+
   }
 
   ionViewDidLoad() {
@@ -94,9 +103,9 @@ export class LoginPage implements OnInit {
        this.bHasNotification = true;
    */
 
-    if (this.params.get("notification_details") != null) {
+    if (this.router.getCurrentNavigation()?.extras?.state['notification_details'] != null) {
       this.bHasNotification = true;
-      this.notificationDetails = this.params.get("notification_details");
+      this.notificationDetails = this.router.getCurrentNavigation()?.extras?.state['notification_details'];
       alert(this.notificationDetails);
     }
     if (this.params.get("activation_details") != null) {
@@ -276,17 +285,18 @@ export class LoginPage implements OnInit {
             value => {
               this.loaderView.dismissLoader();
 
-              if (value != null && value.hasOwnProperty('MAP_ID') && value.hasOwnProperty('MAP_SOCIETY_NAME') && value.hasOwnProperty('MAP_USER_ROLE') && value.hasOwnProperty('MAP_SOCIETY_ID')) {
+              // if (value != null && value.hasOwnProperty('MAP_ID') && value.hasOwnProperty('MAP_SOCIETY_NAME') && value.hasOwnProperty('MAP_USER_ROLE') && value.hasOwnProperty('MAP_SOCIETY_ID')) {
+              if (value != null && value.hasOwnProperty('MAP_ID') && value.hasOwnProperty('MAP_SOCIETY_NAME') && value.hasOwnProperty('MAP_USER_ROLE')) {
                 this.globalVars.setMapDetails(value.MAP_ID, value.MAP_SOCIETY_NAME, value.MAP_USER_ROLE, value.MAP_TKEY, value.MAP_SOCIETY_ID, value.MAP_UNIT_ID, value.MAP_UNIT_NO, value.UNIT_BLOCK, value.BLOCK_DESC);
                 this.navCtrl.navigateRoot('dashboard');
               }
               else {
                 //let navigationExtras: NavigationExtras = {
-                  //queryParams: {
-                      //userName:'TESTTSTSTS' ,
-                     
-                 // }
-              //};
+                //queryParams: {
+                //userName:'TESTTSTSTS' ,
+
+                // }
+                //};
                 //this.navCtrl.navigateRoot(this.SocietyPage,navigationExtras);
                 this.navCtrl.navigateRoot(this.SocietyPage);
               }
@@ -379,20 +389,8 @@ export class LoginPage implements OnInit {
   }*/
 
   openForgotPasswordLink() {
-    
-    //var ref = cordova.InAppBrowser.open("https://way2society.com/forgotpassword.php", '_system', 'location=no');
-    //this.iab.create('https://way2society.com/forgotpassword.php', '_blank', 'location=no');
-   // const browser = this.iab.create('https://way2society.com/forgotpassword.php');
-   // browser.show()
-  
-   //const browser = this.iab.create('https://way2society.com/forgotpassword.php','_blank',{location:'no'}); 
-   window.open("https://way2society.com/forgotpassword.php", '_system', 'location=no');
-   
-   // let browser = this.InAppBrowser.create('https://ionicframework.com/');
+    window.open("https://way2society.com/forgotpassword.php", '_blank', 'location=no');
   }
-  async presentActionSheet() {
-    
-    }
   openActivationLink() {
 
     //this.navCtrl.push(NewuserPage);

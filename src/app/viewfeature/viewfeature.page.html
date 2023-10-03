@@ -16,10 +16,10 @@
           <ion-card-title style="font-size: x-large;">{{Title}}</ion-card-title>
      	<ion-row *ngIf="Images!= '' || Attachment != '' ">
      		<ion-col *ngIf="Images != ''">
-     			<a href="#" (click)= viewImage(Images)>View image</a>
+     			<a  (click)= viewImage(Images)>View image</a>
      		</ion-col>
      		<ion-col *ngIf="Attachment != ''">
-     			<a href="#" (click)="attachment(Attachment)">View attachment</a>
+     			<a  (click)="attachment(Attachment)">View attachment</a>
      		</ion-col>
      	</ion-row>
           <p id="notice_details"></p>

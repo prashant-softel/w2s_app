@@ -1,13 +1,22 @@
-<ion-header [translucent]="true">
+<ion-header translucent="true">
   <ion-toolbar>
-    <ion-title>viewimage</ion-title>
+    <ion-title>View Image</ion-title>
+    <ion-buttons slot="start">
+			<ion-back-button defaultHref="photoalbum" icon="chevron-back-outline" text="Back"></ion-back-button>
+		  </ion-buttons>
+    <ion-buttons slot="end" style="width:30%">
+      <ion-button><img style="width:70%" src="/assets/images/logo.png"></ion-button>
+    </ion-buttons>
   </ion-toolbar>
 </ion-header>
 
-<ion-content [fullscreen]="true">
-  <ion-header collapse="condense">
-    <ion-toolbar>
-      <ion-title size="large">viewimage</ion-title>
-    </ion-toolbar>
-  </ion-header>
+
+<ion-content padding>
+  <ion-slides>
+  <ion-slide  *ngFor="let details of imagearray1">
+    <img src="{{'https://way2society.com/uploads' + '/' + details['folder'] + '/' + details['url']}}" alt="">
+  </ion-slide>
+</ion-slides>
+ 
+
 </ion-content>

@@ -32,115 +32,16 @@
                 </ion-row>
               </ion-col>
               </ion-row>
-              <ion-item *ngFor="let p of pagesMember"  (click)="openPage(p)">
+              <ion-item *ngFor="let p of pagesMember"  (click)="openPage(p)" lines="none">
                 {{p.title}}
                 </ion-item>
-                <ion-item menuClose ion-item (click)="logout()">
+                <ion-item lines="none" menuClose ion-item (click)="logout()">
                   Logout
               </ion-item>
-        <!--<ion-item (click)="Dashboard()">
-          <ion-label>Dashboard</ion-label>
-        </ion-item>
-        <ion-item>
-          <ion-label>Helpline Number</ion-label>
-        </ion-item>
-        <ion-item>
-
-          <ion-label>Settings</ion-label>
-        </ion-item>
-        <ion-item>
-         
-          <ion-label>Link Another Society/Flat</ion-label>
-        </ion-item>
-        <ion-item>
-         
-          <ion-label>About Us</ion-label>
-        </ion-item>
-        <ion-item (click)="logout()">
-          
-          <ion-label>Logout</ion-label>
-        </ion-item>-->
+       
       </ion-list>
     </ion-content>
   </ion-menu>
   <ion-router-outlet id="main"></ion-router-outlet>
 </ion-app>
-
-<!--<ion-app>
-  <ion-router-outlet></ion-router-outlet>
-</ion-app>-->
-<!--<ion-app>
-  <ion-split-pane>
-    <ion-menu type="overlay">
-      <ion-header>
-        <ion-toolbar color="primary">
-          <ion-title>{{AppName}}</ion-title>
-        </ion-toolbar>
-      </ion-header>
-      <ion-content>
-        <ion-list>
-          <ion-menu-toggle auto-hide="false">
-            <ion-item *ngFor="let p of appPages" >
-              <ion-icon slot="start" [name]="p.icon"></ion-icon>
-              <ion-label>
-                {{p.title}}
-              </ion-label>
-            </ion-item>
-            
-             <ion-item >
-              <ion-icon slot="start" name="md-power"></ion-icon>
-              <ion-label>
-                Logout
-              </ion-label>
-             </ion-item>
-          </ion-menu-toggle>
-
-
-
-
-        </ion-list>
-      </ion-content>
-    </ion-menu>
-    <ion-router-outlet main></ion-router-outlet>
-  </ion-split-pane>
-</ion-app>-->
-<!--<ion-app>
-  <ion-split-pane>
-    <ion-menu type="overlay">
-      <ion-header>
-        <ion-toolbar color="primary">
-          <ion-title>Way2Society</ion-title>
-        </ion-toolbar>
-      </ion-header>
-      <ion-content>
-        <ion-list>
-          <ion-menu-toggle auto-hide="false">
-            <ion-item>
-              <ion-icon slot="start" ></ion-icon>
-              <ion-label>
-                Home
-              </ion-label>
-            </ion-item>
-            <ion-item >
-              <ion-icon slot="start" ></ion-icon>
-              <ion-label>
-                Setting
-              </ion-label>
-             </ion-item>
-             <ion-item >
-              <ion-icon slot="start" name="md-power"></ion-icon>
-              <ion-label>
-                Logout
-              </ion-label>
-             </ion-item>
-          </ion-menu-toggle>
-
-
-
-
-        </ion-list>
-      </ion-content>
-    </ion-menu>
-    <ion-router-outlet main></ion-router-outlet>
-  </ion-split-pane>
-</ion-app>-->
+<!--<ion-nav [root]="rootPage" #content swipeBackEnabled="false"></ion-nav>-->

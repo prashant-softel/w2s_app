@@ -16,6 +16,7 @@ import { NavigationExtras } from '@angular/router';
 })
 export class ViewimposefinePage implements OnInit {
   ImposedetailPage:any ='imposedetail';
+  FinePage:any='fine';
   role : string;
   roleWise : string;
   imposeDetails : any;
@@ -111,8 +112,10 @@ export class ViewimposefinePage implements OnInit {
       this.temp_latest_fine_array= this.particulars_latest.filter(
         (p) => {
           let name: any = p;
-          if(name.owner_name.toLowerCase().indexOf(val.toLowerCase()) > -1)
-            return (name.owner_name.toLowerCase().indexOf(val.toLowerCase()) > -1);
+          if (name.owner_name.toLowerCase().indexOf(val.toLowerCase()) > -1) { return (name.owner_name.toLowerCase().indexOf(val.toLowerCase()) > -1); }
+          return null;
+          //if(name.owner_name.toLowerCase().indexOf(val.toLowerCase()) > -1)
+            //return (name.owner_name.toLowerCase().indexOf(val.toLowerCase()) > -1);
           }
       );
     }
@@ -126,8 +129,10 @@ export class ViewimposefinePage implements OnInit {
       this.temp_previous_fine_array=this.particulars_previous.filter(
         (p) => {
           let name: any = p;
-          if(name.owner_name.toLowerCase().indexOf(val.toLowerCase()) > -1)
-            return (name.owner_name.toLowerCase().indexOf(val.toLowerCase()) > -1);
+          if (name.owner_name.toLowerCase().indexOf(val.toLowerCase()) > -1) { return (name.owner_name.toLowerCase().indexOf(val.toLowerCase()) > -1); }
+          return null;
+          /*if(name.owner_name.toLowerCase().indexOf(val.toLowerCase()) > -1)
+            return (name.owner_name.toLowerCase().indexOf(val.toLowerCase()) > -1);*/
         }
       );
     }
@@ -135,7 +140,8 @@ export class ViewimposefinePage implements OnInit {
 
   addFine()  
   {
-    alert("comming soon!");
+    //alert("comming soon!");
+    this.navCtrl.navigateRoot(this.FinePage);
     //this.navCtrl.push(FinePage);
   }
 

@@ -183,8 +183,10 @@ addExpectedVisitor()
        this.Past_visitor_temp_array =  this.Visitor_Past_Array.filter(
         (p) => {
           let name: any = p;
-          if(name.VisitorName.toLowerCase().indexOf(val.toLowerCase()) > -1)
-            return (name.VisitorName.toLowerCase().indexOf(val.toLowerCase()) > -1);
+          if (name.VisitorName.toLowerCase().indexOf(val.toLowerCase()) > -1) { return (name.VisitorName.toLowerCase().indexOf(val.toLowerCase()) > -1); }
+          return null;
+         /* if(name.VisitorName.toLowerCase().indexOf(val.toLowerCase()) > -1)
+            return (name.VisitorName.toLowerCase().indexOf(val.toLowerCase()) > -1);*/
           }
         );
       }

@@ -46,15 +46,15 @@
     </ion-row>
     <ion-row style="color:#000000">
       <ion-col size="4"><strong>Priority : </strong></ion-col>
-      <ion-col class="text-right">{{priority[taskDetails.Priority]}}</ion-col>
+      <ion-col class="text-right">{{priority[taskDetails.Priority]}} </ion-col>
     </ion-row>
     <ion-row style="color:#000000">
-      <ion-col size="8"><strong>Percent Completed : </strong></ion-col>
+      <ion-col size="8"><strong>Percent Completed : </strong> {{taskDetails.PercentCompleted}}%</ion-col>
       <!--<ion-col text-right style = "text-transform: uppercase;">
         {{taskDetails.PercentCompleted}}
       </ion-col>-->
       <ion-col size="4" class="text-right">
-        <circle-progress
+       <!-- <circle-progress
           [percent]="taskDetails.PercentCompleted"
           [radius]="20"           
           [outerStrokeWidth] = "5"
@@ -64,12 +64,12 @@
           [animation]="true"
           [animationDuration]="300"
           [titleFontSize] = "'12'">
-        </circle-progress>
+        </circle-progress>-->
       </ion-col>
     </ion-row>
     <ion-row>
       <ion-col class="text-right" size="12">
-        <a *ngIf="hasAttachment" class="item" href="#" (click)="openAttachment()">
+        <a *ngIf="hasAttachment" class="item"  (click)="openAttachment()">
           Attachment<br />
         </a>
       </ion-col>

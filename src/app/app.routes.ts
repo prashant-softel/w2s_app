@@ -1,5 +1,5 @@
 import { Routes } from '@angular/router';
-
+//
 export const routes: Routes = [
   {
     path: 'home',
@@ -229,7 +229,8 @@ export const routes: Routes = [
   {
     path: 'visitor-in',
     loadComponent: () => import('./visitor-in/visitor-in.page').then(m => m.VisitorInPage)
-  },  {
+  },
+  {
     path: 'cnote',
     loadComponent: () => import('./cnote/cnote.page').then( m => m.CnotePage)
   },
@@ -242,14 +243,6 @@ export const routes: Routes = [
     loadComponent: () => import('./addservicerequest/addservicerequest.page').then( m => m.AddservicerequestPage)
   },
   {
-    path: 'address-proof-request',
-    loadComponent: () => import('./address-proof-request/address-proof-request.page').then( m => m.AddressProofRequestPage)
-  },
-  {
-    path: 'address-proof-request-details',
-    loadComponent: () => import('./address-proof-request-details/address-proof-request-details.page').then( m => m.AddressProofRequestDetailsPage)
-  },
-  {
     path: 'services',
     loadComponent: () => import('./services/services.page').then( m => m.ServicesPage)
   },
@@ -258,8 +251,15 @@ export const routes: Routes = [
     loadComponent: () => import('./myvisitors/myvisitors.page').then( m => m.MyvisitorsPage)
   },
   {
-    path: 'viewregistration',
-    loadComponent: () => import('./viewregistration/viewregistration.page').then( m => m.ViewregistrationPage)
+    path: 'addtask',
+    loadComponent: () => import('./addtask/addtask.page').then(m => m.AddTaskPage)
   },
-
+  {
+    path: 'addtenant',
+    loadComponent: () => import('./addtenant/addtenant.page').then(m => m.AddTenantPage)
+  },
+  {
+    path: 'addprovider',
+    loadComponent: () => import('./addprovider/addprovider.page').then(m => m.AddProviderPage)
+  },
 ];

@@ -1,0 +1,424 @@
+<ion-header translucent="true">
+  <ion-toolbar>
+    <ion-title>Add Provider</ion-title>
+    <ion-buttons slot="start">
+			<ion-back-button defaultHref="dashboard" icon="chevron-back-outline" text="Back"></ion-back-button>
+		  </ion-buttons>
+    <ion-buttons slot="end" style="width:30%">
+      <ion-button><img style="width:70%" src="/assets/images/logo.png"></ion-button>
+    </ion-buttons>
+    
+  </ion-toolbar>
+</ion-header>
+<ion-content padding>
+<ion-content padding *ngIf="Block_unit==1">
+	<ion-list no-line >
+		<ion-row style="padding-left: 10px;padding-right: 10px;">
+		  	<ion-col style="text-align: center;">
+				<h2 style="color: red;">Access Denied!</h2>
+	  		</ion-col>
+		</ion-row>
+		<ion-row style="padding-left: 10px;padding-right: 10px;">
+	  		<ion-col style="text-align: center;">
+				<p style="white-space: initial;color: red;">We are sorry, but your access has been blocked for this feature. Please contact your Managing Committee for resolution.</p>
+	  		</ion-col>
+		</ion-row>
+		<ion-row style="padding-left: 10px;padding-right: 10px;">
+	  		<ion-col style="text-align: center;">
+	   			<p ><b>Reason :</b> <span style="white-space: initial;text-transform: uppercase;color: red;"> {{Block_desc}}</span> </p>
+	  		</ion-col>
+		</ion-row>
+	</ion-list>
+</ion-content>
+
+<ion-content padding *ngIf="Block_unit==0">
+	<ion-list no-lines style="padding-left: 10px;padding-right: 10px;">
+		<p text-center style="color:#FF0000;" ><strong>{{message}}</strong></p>
+    	<ion-row>
+			<ion-col>
+				<ion-input label="Enter Society Staff-Id *" labelPlacement="floating" type="text"  value="" [(ngModel)]="userData.staffid" ></ion-input>
+        	</ion-col>
+		</ion-row>
+    	<p  style="color:#FF0000;margin-bottom: -4px; text-align: right;" ><strong>Last Added Staff Id : {{staffID}} </strong></p>
+		<ion-row style="padding-left: 10px;padding-right: 10px;">
+			<ion-col>
+				<ion-input label="Full Name *" labelPlacement="floating" type="text"  value="" [(ngModel)]="userData.name" (keyup)="keyUpChecker($event)" ></ion-input>
+			</ion-col>
+		</ion-row>
+		<ion-row>
+			<ion-col>
+			  <ion-card>
+				<img src="{{pathForImage(profileImage)}}" [hidden]="profileImage === null" style="max-height : 50vh"
+				  (click)="selectItems()">
+			  </ion-card>
+			 <!-- <ion-card>
+				<img src="{{pathForImage1(profileImage)}}" [hidden]="profileImage === null" style="max-height : 50vh"
+				  (click)="selectItems()">
+			  </ion-card>-->
+			  <h3 [hidden]="profileImage !== null"></h3>
+			
+			  <ion-button shape="round" icon-left (click)="presentActionSheet('profile', -1)"><ion-buttons text-center>
+				<ion-icon slot="start" name="camera"></ion-icon>Select Image
+				</ion-buttons></ion-button>
+			</ion-col>
+		  </ion-row>
+		<!--<ion-row>
+			<ion-col>
+			<ion-card>
+			  <img src="{{pathForImage(profileImage)}}" [hidden]="profileImage === null" style="max-height : 50vh"(click)= "selectItems()">
+			</ion-card>
+			<h3 [hidden]="profileImage !== null"></h3>
+			  <button ion-button round icon-left (click)="presentActionSheet('profile', -1)">
+			<ion-buttons  text-center>
+			<ion-icon name="camera"></ion-icon>Attach Image
+			</ion-buttons>
+			  </button>
+			</ion-col>
+		</ion-row>-->
+		<div style="padding-left: 10px;padding-right: 10px;">
+			<ion-list *ngFor="let Cat of userData.cat_id; let iIndex=index;">
+				<ion-select label="Category *" placeholder="" style="color:#0d0d0d" [(ngModel)]="userData.cat_id[iIndex]" (ionChange)="catSelected()">
+					<ion-select-option *ngFor="let d of cat_list" value="{{d.cat_id}}">{{d.cat}}</ion-select-option>
+				</ion-select>
+			</ion-list>
+        </div>
+
+		<ion-row *ngIf="addmorecat == 1" style="padding-left: 10px;padding-right: 10px;">
+			<ion-col>
+				<p style="text-align: right;" >
+				<a class="item" (click)="AddMoreCat()">Add More Category</a></p>
+			</ion-col>
+		</ion-row>
+		<ion-row style="padding-left: 10px;padding-right: 10px;">
+			<ion-col>
+				<ion-input label="Date Of Birth *" labelPlacement="floating"
+					value="{{ userData.dob | date: 'dd-MM-yyyy' }}"
+					id="dob"
+					class="ion-text-end"
+					></ion-input>
+					<ion-popover trigger="dob" size="cover">
+						<ng-template>
+			  				<ion-datetime style="background: #ffffff;"
+			  					min="1950" max="{{todayDate}}"
+								presentation="dob"
+								[(ngModel)]="userData.dob"
+			  				></ion-datetime>
+						</ng-template>
+		  			</ion-popover>
+			</ion-col>
+		</ion-row>
+		<ion-row style="padding-left: 10px;padding-right: 10px;">
+			<ion-col>
+				<ion-input label="Identification Marks" labelPlacement="floating" type="text"  value="" [(ngModel)]="userData.identity_mark"  ></ion-input>
+			</ion-col>		
+		</ion-row>
+		<ion-row style="padding-left: 10px;padding-right: 10px;">
+			<ion-col>
+				<ion-input label="Working in Society Since *" labelPlacement="floating"
+					value="{{ userData.working_since | date: 'dd-MM-yyyy' }}"
+					id="sincedate"
+					class="ion-text-end"
+					></ion-input>
+					<ion-popover trigger="sincedate" size="cover">
+						<ng-template>
+			  				<ion-datetime style="background: #ffffff;"
+			  					min="2008" max="{{todayDate}}"
+								presentation="sincedate"
+								[(ngModel)]="userData.working_since"
+			  				></ion-datetime>
+						</ng-template>
+		  			</ion-popover>
+			</ion-col>
+		</ion-row>
+		<ion-row style="padding-left: 10px;padding-right: 10px;">
+			<ion-col>
+				<ion-input label="Education " labelPlacement="floating" type="text"  value="" [(ngModel)]="userData.education"  ></ion-input>
+			</ion-col>
+		</ion-row>
+		
+		<ion-row style="padding-left: 10px;padding-right: 10px;">
+			<ion-col>
+				<ion-select label="Married" placeholder="" style="color:#0d0d0d" [(ngModel)]="userData.married">
+					<ion-select-option value="yes">Yes</ion-select-option>
+					<ion-select-option value="no">No</ion-select-option>
+				</ion-select>
+			</ion-col> 
+		</ion-row>
+	</ion-list>
+	<ion-row *ngIf="addContact == 0" style="padding-left: 10px;padding-right: 10px;">
+		<ion-col>
+			<p style="text-align: right;" >
+			<a (click)="AddContactDetail()" class="item" >Add Contact Details</a></p>
+		</ion-col>
+	</ion-row>
+	  
+	<ion-list *ngIf="addContact == 1" >
+		<ion-list style="text-align: center;">
+			<ion-row style="background-color: #337ab7;color:#fff;">
+				<ion-col>
+					<strong style="font-size: 12px;">Add Contact Details</strong>
+				</ion-col>
+			</ion-row>
+		</ion-list>
+	  
+		<ion-row style="padding-left: 10px;padding-right: 10px;">
+			<ion-col>
+				<ion-textarea label="Current Address *" labelPlacement="floating" value="" [(ngModel)]="userData.cur_add" rows="4"></ion-textarea>
+			</ion-col>
+		</ion-row>
+	  
+		<ion-row style="padding-left: 10px;padding-right: 10px;">
+			<ion-col>
+				<ion-input label="Contact No * " labelPlacement="floating" type="tel"  value="" [(ngModel)]="userData.cont_no"  ></ion-input>
+			</ion-col>
+		</ion-row>
+	  
+		<ion-row style="padding-left: 10px;padding-right: 10px;">
+			<ion-col>
+				<ion-input label="Alternate Contact No " labelPlacement="floating" type="tel"  value="" [(ngModel)]="userData.alt_cont_no"  ></ion-input>
+			</ion-col>
+		</ion-row>
+	  
+		<ion-row style="padding-left: 10px;padding-right: 10px;">
+			<ion-col>
+				<ion-textarea label="Permanent Address" labelPlacement="floating" value="" [(ngModel)]="userData.per_add" rows="4"></ion-textarea>
+			</ion-col>
+		</ion-row>
+	  
+		<ion-row style="padding-left: 10px;padding-right: 10px;">
+			<ion-col>
+				<ion-input label="Contact No " labelPlacement="floating" type="tel"  value="" [(ngModel)]="userData.per_cont_no"  ></ion-input>
+			</ion-col>
+		</ion-row>
+	  
+		<ion-row style="padding-left: 10px;padding-right: 10px;">
+			<ion-col>
+				<ion-input label="Alternate Contact No " labelPlacement="floating" type="tel"  value="" [(ngModel)]="userData.per_alt_cont_no"  ></ion-input>
+			</ion-col>
+		</ion-row>
+	</ion-list>
+	<ion-row *ngIf="addContact == 1 && refDetail== 0" style="padding-left: 10px;padding-right: 10px;">
+		<ion-col>
+		   <p style="text-align: right;" >
+	  		<a class="item" (click)="AddRefDetail()">Add Reference Details</a></p>
+		</ion-col>
+	</ion-row>
+    <ion-list *ngIf="refDetail == 1">
+		<ion-list style="text-align: center;">
+			<ion-row style="background-color: #337ab7;color:#fff;">
+				<ion-col>
+					<strong style="font-size: 12px;">Reference Details</strong>
+				</ion-col>
+			</ion-row>
+		</ion-list>
+
+		<ion-row style="padding-left: 10px;padding-right: 10px;">
+			<ion-col>
+				<ion-input label="Reference Name " labelPlacement="floating" type="text"  value="" [(ngModel)]="userData.ref_name"  ></ion-input>
+			 </ion-col>
+		</ion-row>
+
+		<ion-row style="padding-left: 10px;padding-right: 10px;">
+			<ion-col>
+				<ion-textarea label="Reference Address" labelPlacement="floating" value="" [(ngModel)]="userData.ref_add" rows="4"></ion-textarea>
+			 </ion-col>
+		</ion-row>
+
+		<ion-row style="padding-left: 10px;padding-right: 10px;">
+			<ion-col>
+				<ion-input label="Contact No " labelPlacement="floating" type="tel"  value="" [(ngModel)]="userData.ref_cont_no"  ></ion-input>
+			 </ion-col>
+		</ion-row>
+
+		<ion-row style="padding-left: 10px;padding-right: 10px;">
+			<ion-col>
+				<ion-input label="Alternate Contact No" labelPlacement="floating" type="tel"  value="" [(ngModel)]="userData.ref_alt_cont_no"  ></ion-input>
+			</ion-col>
+		</ion-row>
+	</ion-list>
+	  
+	<ion-row *ngIf="addContact == 1 && refDetail== 1 && addFamily == 0" style="padding-left: 10px;padding-right: 10px;">
+		<ion-col>
+		    <p style="text-align: right;">
+			<a class="item" (click)="AddFamilyDetail()">Add Family Details</a></p>
+		</ion-col>
+  	</ion-row>
+  	<ion-list *ngIf="addFamily== 1">
+		<ion-list style="text-align: center;">
+			<ion-row style="background-color: #337ab7;color:#fff;">
+				<ion-col>
+					<strong style="font-size: 12px;">Others & Family Details</strong>
+				</ion-col>
+			</ion-row>
+		</ion-list>
+
+		<ion-row style="padding-left: 10px;padding-right: 10px;">
+			<ion-col>
+				<ion-input label="Father Name" labelPlacement="floating" type="text"  value="" [(ngModel)]="userData.f_name"  ></ion-input>
+			</ion-col>
+		</ion-row>
+
+		<ion-row style="padding-left: 10px;padding-right: 10px;">
+			<ion-col>
+				<ion-input label="Father Contact No/Address" labelPlacement="floating" type="text"  value="" [(ngModel)]="userData.f_occu"  ></ion-input>
+			</ion-col>
+		</ion-row>
+
+		<ion-row style="padding-left: 10px;padding-right: 10px;">
+			<ion-col>
+				<ion-input label="Mother Name" labelPlacement="floating" type="text"  value="" [(ngModel)]="userData.m_name"  ></ion-input>
+			</ion-col>
+		</ion-row>
+
+		<ion-row style="padding-left: 10px;padding-right: 10px;">
+			<ion-col>
+				<ion-input label="Mother Contact No/Address" labelPlacement="floating" type="text"  value="" [(ngModel)]="userData.m_occu"  ></ion-input>
+			</ion-col>
+		</ion-row>
+
+		<ion-row style="padding-left: 10px;padding-right: 10px;">
+			<ion-col>
+				<ion-input label="Husband / Wife Name" labelPlacement="floating" type="text"  value="" [(ngModel)]="userData.hus_wife_name"  ></ion-input>
+			</ion-col>
+		</ion-row>
+
+		<ion-row style="padding-left: 10px;padding-right: 10px;">
+			<ion-col>
+				<ion-input label="Husband / Wife Contact No/Address" labelPlacement="floating" type="text"  value="" [(ngModel)]="userData.hus_wife_occu"  ></ion-input>
+			</ion-col>
+		</ion-row>
+
+		<ion-row style="padding-left: 10px;padding-right: 10px;">
+			<ion-col>
+				<ion-input label="Son / Daughter Name" labelPlacement="floating" type="text"  value="" [(ngModel)]="userData.son_dot_name"  ></ion-input>
+			</ion-col>
+		</ion-row>
+
+		<ion-row style="padding-left: 10px;padding-right: 10px;">
+			<ion-col>
+				<ion-input label="Son / Daughter Contact No/Address" labelPlacement="floating" type="text"  value="" [(ngModel)]="userData.son_dot_occu"  ></ion-input>
+			 </ion-col>
+		</ion-row>
+
+		<ion-row style="padding-left: 10px;padding-right: 10px;">
+			<ion-col>
+				<ion-input label="Other Name" labelPlacement="floating" type="text"  value="" [(ngModel)]="userData.other_name"  ></ion-input>
+			</ion-col>
+		</ion-row>
+
+		<ion-row style="padding-left: 10px;padding-right: 10px;">
+			<ion-col>
+				<ion-input label="Other Contact No/Address" labelPlacement="floating" type="text"  value="" [(ngModel)]="userData.other_occu"  ></ion-input>
+			</ion-col>
+		</ion-row>
+  </ion-list>
+
+  <!-- *******************************   Document  Function *********************************-->
+
+	<ion-row style="padding-left: 10px;padding-right: 10px;" *ngIf="addContact == 1 && refDetail== 1 && addFamily == 1 && addDocument == 0 ">
+		<ion-col>
+	   		<p style="text-align: right;" >
+			<a class="item"(click)="AddDocumentDetails()">Document Attached</a></p>
+		</ion-col>
+  	</ion-row>
+
+  	<ion-list style="padding-left: 10px;padding-right: 10px;" *ngIf="addDocument == 1" >
+		<ion-list style="text-align: center;">
+			<ion-row style="background-color: #337ab7;color:#fff;">
+				<ion-col>
+					<strong style="font-size: 12px;">Document Attached</strong>
+				</ion-col>
+			</ion-row>
+		</ion-list>
+		<div *ngFor="let doc of userData.document_id; let iIndex=index;">
+			<ion-list>
+				<ion-select label="Select document Name" placeholder="" style="color:#0d0d0d" [(ngModel)]="userData.document_id[iIndex]" (ionChange)="docSelected()">
+					<ion-select-option *ngFor="let d of doc_list" value="{{d.document_id}}">{{d.document}}</ion-select-option>
+				</ion-select>
+			</ion-list>
+			<ion-row *ngIf="showButton(iIndex)">
+				<ion-col>
+					Selected file : {{userData.Doc_img[iIndex]}}
+				  <ion-card>
+					<img src="" [hidden]="userData.Doc_img[iIndex] === null" style="max-height : 50vh"
+					  (click)="selectItems()">
+				  </ion-card>
+				 <!-- <ion-card>
+					<img src="userData.Doc_img[iIndex] === null" [hidden]="lastImage === null" style="max-height : 50vh"
+					  (click)="selectItems()">
+				  </ion-card>-->
+				  <h3 [hidden]="userData.Doc_img[iIndex] !== null"></h3>
+				 
+				  <ion-button shape="round" icon-left (click)="presentActionSheet('document', iIndex)"><ion-buttons text-center>
+					<ion-icon slot="start" name="camera"></ion-icon>Attach Image
+					</ion-buttons></ion-button>
+				</ion-col>
+			
+			  </ion-row>
+			<!--<ion-item *ngIf="showButton(iIndex)">
+			Selected file : {{userData.Doc_img[iIndex]}}
+			  <ion-card>
+			<img src="" [hidden]="userData.Doc_img[iIndex] === null" style="max-height : 50vh"(click)= "selectItems()">
+
+			</ion-card>
+			  <h3 [hidden]="userData.Doc_img[iIndex]!== null"></h3>
+				<button ion-button round icon-left (click)="presentActionSheet('document', iIndex)">
+			  <ion-buttons  text-center>
+			  <ion-icon name="camera"></ion-icon>Attach Image
+			  </ion-buttons>
+				</button>
+			</ion-item>-->
+		</div>
+		<ion-row style="padding-left: 10px;padding-right: 10px;" *ngIf="addmoredoc == 1">
+			<ion-col>
+	   			<p style="text-align: right;" >
+				<a class="item"(click)="AddMoreDoc()">Add More Document</a></p>
+			</ion-col>
+		</ion-row>
+	</ion-list>
+<!-- *******************************   Unit Function *********************************-->
+
+<ion-row style="padding-left: 10px;padding-right: 10px;" *ngIf="addContact == 1 && refDetail== 1 && addFamily == 1 && addDocument == 1 && addUnits == 0">
+	<ion-col>
+   		<p style="text-align: right;">
+		<a class="item" (click)="AddUnitDetails()">Working in units</a></p>
+	</ion-col>
+</ion-row>
+
+<ion-list style="padding-left: 10px;padding-right: 10px;" *ngIf="addUnits == 1">
+	<ion-list style="text-align: center;">
+		<ion-row style="background-color: #337ab7;color:#fff;">
+			<ion-col>
+				<strong style="font-size: 12px;">Working in Following Units</strong>
+			</ion-col>
+		</ion-row>
+	</ion-list>
+	<div>
+	  	<ion-list *ngFor="let Unit of userData.unit_id; let iIndex=index;">
+			<ion-select label="Select Unit " placeholder="" style="color:#0d0d0d" [(ngModel)]="userData.unit_id[iIndex]"  (ionChange)="unitSelected()">
+				<ion-select-option *ngFor="let d of Unit_list" value="{{d.unit_id}}">{{d.unit_no}} [ {{d.owner_name}} ]</ion-select-option>
+			</ion-select>
+		</ion-list>
+		</div>
+	<ion-row *ngIf="addmore == 1">
+		<ion-col>
+  		 	<p text-right >
+			<a class="item"(click)="AddMoreUnit()">Add More Units</a></p>
+		</ion-col>
+	</ion-row>
+  	<ion-row>
+		<ion-col col-2></ion-col>
+		<ion-col col-8 style="text-align: center;">
+			<ion-button color="primary" block (click)="create()">Register</ion-button>
+	    	
+			
+		</ion-col>
+		<ion-col col-2></ion-col>
+	</ion-row>
+	<ion-row>
+		<ion-col style="text-align: center;">
+			<p style="color:#FF0000;">{{message}}</p>
+		</ion-col>
+		</ion-row>
+</ion-list>
+</ion-content>

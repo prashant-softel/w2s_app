@@ -20,7 +20,10 @@
            <!--<a *ngIf=hasLink class="item" href="#" (click)="openWithSystemBrowser()">
             <br />View Attachment<br />
           </a>-->
+          <ion-list style="text-align: right;">
+          <a *ngIf=hasLink  (click)="openWithSystemBrowser()"> View Attachment</a>
           <br />
+          </ion-list>
           <!--<button ion-button (click)="openWithSystemBrowser('https://way2society.com')">Open with System browser</button>-->
           <p id="notice_details"></p>
       </ion-card-content>

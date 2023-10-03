@@ -7,6 +7,7 @@ import { LoaderView } from 'src/service/loaderview';
 import { ConnectServer } from 'src/service/connectserver';
 import { NavigationExtras } from '@angular/router';
 import { ActivatedRoute } from '@angular/router';
+//import { PhotoViewer } from '@ionic-native/photo-viewer';
 @Component({
   selector: 'app-viewevent',
   templateUrl: './viewevent.page.html',
@@ -91,10 +92,13 @@ export class VieweventPage implements OnInit {
 
     document.getElementById("event_details").innerHTML = this.event_detail;
   }
+
+  
   public openWithSystemBrowser(){
     var url ="";
       if(this.Event_ver == 1)
       {
+        
         url="https://way2society.com/W2S_DocViewer.php?url="+this.event_attachment+"&doc_version=1";
       }
       else if(this.Event_ver == 2)
@@ -108,7 +112,9 @@ export class VieweventPage implements OnInit {
           url="https://way2society.com/W2S_DocViewer.php?url="+this.GdriveAttachId+"&doc_version=2";
         }
       }
-        let target = "_system";
+        let target = "_system"
+        window.open(url, '_blank', 'location=no');
+      //  PhotoViewer.show(url, 'Optional Title');
         //this.theInAppBrowser.create(url,target,this.options);
    }
 

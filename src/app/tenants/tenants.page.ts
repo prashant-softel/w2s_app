@@ -130,8 +130,10 @@ export class TenantsPage implements OnInit {
       this.temp_Tenants_active_array= this.Tenants_active.filter(
       (p) => {
         let name: any = p;
-        if(name.unit_no.toLowerCase().indexOf(val.toLowerCase()) > -1)
-            return (name.unit_no.toLowerCase().indexOf(val.toLowerCase()) > -1);
+        if (name.unit_no.toLowerCase().indexOf(val.toLowerCase()) > -1) { return (name.unit_no.toLowerCase().indexOf(val.toLowerCase()) > -1); }
+        return null;
+        /*if(name.unit_no.toLowerCase().indexOf(val.toLowerCase()) > -1)
+            return (name.unit_no.toLowerCase().indexOf(val.toLowerCase()) > -1);*/
         }
       );
     }
@@ -145,8 +147,10 @@ export class TenantsPage implements OnInit {
       this.temp_Tenants_pending_array=this.Tenants_pending.filter(
         (p) => {
           let name: any = p;
-          if(name.unit_no.toLowerCase().indexOf(val.toLowerCase()) > -1)
-            return (name.unit_no.toLowerCase().indexOf(val.toLowerCase()) > -1);
+          if (name.unit_no.toLowerCase().indexOf(val.toLowerCase()) > -1) { return (name.unit_no.toLowerCase().indexOf(val.toLowerCase()) > -1); }
+        return null;
+         /* if(name.unit_no.toLowerCase().indexOf(val.toLowerCase()) > -1)
+            return (name.unit_no.toLowerCase().indexOf(val.toLowerCase()) > -1);*/
           }
         );
       }

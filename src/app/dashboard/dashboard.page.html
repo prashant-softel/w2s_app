@@ -7,49 +7,51 @@
     <ion-buttons slot="end">
       <ion-button><img style="width:70%" src="/assets/images/icon_s.png"></ion-button>
     </ion-buttons>
-    
+
   </ion-toolbar>
-  
-<!--           Admin and SuperAdmin tabs -->
-<ion-toolbar no-border  *ngIf="roleWise!= 'Member' && roleWise != 'AdminMember' && roleWise != 'Contractor' && roleWise != 'Tenant' "  style="margin-top: -15px;" >
-  <ion-segment [(ngModel)]="tab">
-    <ion-segment-button value="society">
-       <strong>My Society</strong>
-    </ion-segment-button>
-    <ion-segment-button value="admin">
-      <strong>Admin</strong>
-    </ion-segment-button>
-  </ion-segment>
- </ion-toolbar>
-<!--           Admin member tabs -->
- <ion-toolbar no-border *ngIf="roleWise == 'AdminMember'"  style="margin-top: -15px;" >
-  <ion-segment [(ngModel)]="tab">
-    <ion-segment-button value="society">
-       <strong>My Society</strong>
-    </ion-segment-button>
-    <ion-segment-button value="admin">
-      <strong>Admin</strong>
-    </ion-segment-button>
-     <ion-segment-button value="service">
-      <strong>Services</strong>
-    </ion-segment-button>
-  </ion-segment>
- </ion-toolbar>
-<!--           Members tabs -->
-<ion-toolbar no-border  *ngIf="roleWise == 'Member' || roleWise == 'Tenant' "  style="margin-top: -15px;" >
-  <ion-segment [(ngModel)]="tab">
-    <ion-segment-button value="society">
-       <strong>My Society</strong>
-    </ion-segment-button>
-    <ion-segment-button value="service">
-      <strong>Services</strong>
-    </ion-segment-button>
-  </ion-segment>
-</ion-toolbar>
+
+  <!--           Admin and SuperAdmin tabs -->
+  <ion-toolbar no-border
+    *ngIf="roleWise!= 'Member' && roleWise != 'AdminMember' && roleWise != 'Contractor' && roleWise != 'Tenant' "
+    style="margin-top: -15px;">
+    <ion-segment [(ngModel)]="tab">
+      <ion-segment-button value="society">
+        <strong>My Society</strong>
+      </ion-segment-button>
+      <ion-segment-button value="admin">
+        <strong>Admin</strong>
+      </ion-segment-button>
+    </ion-segment>
+  </ion-toolbar>
+  <!--           Admin member tabs -->
+  <ion-toolbar no-border *ngIf="roleWise == 'AdminMember'" style="margin-top: -15px;">
+    <ion-segment [(ngModel)]="tab">
+      <ion-segment-button value="society">
+        <strong>My Society</strong>
+      </ion-segment-button>
+      <ion-segment-button value="admin">
+        <strong>Admin</strong>
+      </ion-segment-button>
+      <ion-segment-button value="service">
+        <strong>Services</strong>
+      </ion-segment-button>
+    </ion-segment>
+  </ion-toolbar>
+  <!--           Members tabs -->
+  <ion-toolbar no-border *ngIf="roleWise == 'Member' || roleWise == 'Tenant' " style="margin-top: -15px;">
+    <ion-segment [(ngModel)]="tab">
+      <ion-segment-button value="society">
+        <strong>My Society</strong>
+      </ion-segment-button>
+      <ion-segment-button value="service">
+        <strong>Services</strong>
+      </ion-segment-button>
+    </ion-segment>
+  </ion-toolbar>
 
 
- <!--           Members tabs -->
- <!-- <ion-toolbar no-border  style="margin-top: -15px;" >
+  <!--           Members tabs -->
+  <!-- <ion-toolbar no-border  style="margin-top: -15px;" >
     <ion-segment [(ngModel)]="tab">
       <ion-segment-button value="society">
          <strong>My Society</strong>
@@ -59,301 +61,335 @@
       </ion-segment-button>
     </ion-segment>
   </ion-toolbar>-->
-  <ion-list no-lines>  
+  <ion-list no-lines>
     <ion-list text-wrap text-center text-uppercase style="margin-top: 15px;text-align: center;color:black">
-      <strong (click)="selectSociety()">{{this.society}}</strong>
-     <!-- <strong (click)="selectSociety()">{{globalVars.MAP_SOCIETY_NAME}}</strong>-->
-  </ion-list>
+      <strong style="white-space: pre-wrap;" (click)="selectSociety()">{{this.society}} </strong>
+      <!-- <strong (click)="selectSociety()">{{globalVars.MAP_SOCIETY_NAME}}</strong>-->
+    </ion-list>
   </ion-list>
 
 </ion-header>
-<ion-content padding> 
-  <ion-refresher slot="fixed">
-  <ion-refresher-content></ion-refresher-content>
-</ion-refresher>
-<!-- Member Sections  -->
-<div [ngSwitch]="tab">
-  <ion-list  *ngSwitchCase="'society'">
-    <ion-card  *ngIf="roleWise != 'Admin' && roleWise != 'SuperAdmin' && roleWise != 'Contractor' && roleWise != 'Tenant' && roleWise != 'Manager'">
-      <ion-card-content (click)="viewDues()">
-      <ion-row style="background-color: #337ab7;color:#fff;">
-          <ion-col style="text-align-last: center;">
-            <strong style="font-size: 15px;">Member Ledgers</strong>
-          </ion-col>
-        </ion-row>
-     
-      <ion-row>
-        <ion-col size="1">
-          <ion-avatar item-left>
-                  <img src="/assets/images/bills.jpg" >
-          </ion-avatar>
-        </ion-col>
-        <ion-col text-right size="11" style="text-align: right;">
-       <h2>Total Dues : <strong>Rs. {{due_amount}}</strong> </h2>
-         <h4>Due Date : <strong>{{bill_duedate}}</strong></h4>
-         <h2 style="margin-top: 10px;">Last Payment : <strong>Rs. {{receipt_amount}}</strong></h2>
-         <h4 >Last Payment Date : <strong>{{receipt_date}}</strong></h4> 
-        </ion-col>
-      </ion-row>
-      </ion-card-content>
-    </ion-card>
-    <!--   *********************   View task Section (Admin and SuperAdmin) ******************  -->
-    <ion-list *ngIf="task_by_me_array.length != 0">
-      <ion-card  *ngIf="roleWise == 'Admin' || roleWise == 'SuperAdmin' || roleWise == 'Manager'" >
-        <ion-card-content (click)="viewTask()" >
-          <ion-row style="background-color: #5cb85c;color:#fff;">
-            <ion-col style="text-align: center;">
-              <strong style="font-size: 15px;">Latest Tasks</strong>
+<ion-content padding>
+  <ion-refresher slot="fixed" (ionRefresh)="doRefresh($event)">
+    <ion-refresher-content></ion-refresher-content>
+  </ion-refresher>
+  <!-- Member Sections  -->
+  <div [ngSwitch]="tab">
+    <ion-list *ngSwitchCase="'society'">
+      <ion-card
+        *ngIf="roleWise != 'Admin' && roleWise != 'SuperAdmin' && roleWise != 'Contractor' && roleWise != 'Tenant' && roleWise != 'Manager'">
+        <ion-card-content (click)="viewDues()">
+          <ion-row style="background-color: #337ab7;color:#fff;">
+            <ion-col style="text-align-last: center;">
+              <strong style="font-size: 15px;">Member Ledgers</strong>
             </ion-col>
           </ion-row>
-      
-          <ion-row *ngIf="task_by_me_array.length == 0">
-            <ion-col style="text-align: center;">
-              <strong>No Active Task </strong>
+
+          <ion-row>
+            <ion-col size="1">
+              <ion-avatar item-left>
+                <img src="/assets/images/bills.jpg">
+              </ion-avatar>
+            </ion-col>
+            <ion-col text-right size="11" style="text-align: right;">
+              <h2>Total Dues : <strong>Rs. {{due_amount}}</strong> </h2>
+              <h4>Due Date : <strong>{{bill_duedate}}</strong></h4>
+              <h2 style="margin-top: 10px;">Last Payment : <strong>Rs. {{receipt_amount}}</strong></h2>
+              <h4>Last Payment Date : <strong>{{receipt_date}}</strong></h4>
             </ion-col>
           </ion-row>
-          <ion-list >
-            <ion-row *ngFor="let TaskByMe of task_by_me_array">
-              <ion-col  text-wrap><strong>{{TaskByMe.Title}}</strong>
-                <p><ion-icon name="time" primary>&nbsp;</ion-icon>&nbsp;{{TaskByMe.DueDate}} </p>
-                <p><ion-icon name="stats-chart-outline">&nbsp;</ion-icon>&nbsp;{{status[TaskByMe.Status]}} </p>
+        </ion-card-content>
+      </ion-card>
+      <!--   *********************   View task Section (Admin and SuperAdmin) ******************  -->
+      <ion-list *ngIf="task_by_me_array.length != 0">
+        <ion-card *ngIf="roleWise == 'Admin' || roleWise == 'SuperAdmin' || roleWise == 'Manager'">
+          <ion-card-content (click)="viewTask()">
+            <ion-row style="background-color: #5cb85c;color:#fff;">
+              <ion-col style="text-align: center;">
+                <strong style="font-size: 15px;">Latest Tasks</strong>
               </ion-col>
             </ion-row>
-          <hr>
-          
-        </ion-list>
-      </ion-card-content>
-    </ion-card>
-  </ion-list>
 
-    <ion-card >
-       <ion-card-content (click)="viewFeature()">
-       <ion-row style="background-color: #f0ad4e;color:#fff;">
-           <ion-col style="text-align: center;">
-             <strong style="font-size: 15px;">Latest Features</strong>
-           </ion-col>
-         </ion-row>
-      
-         <ion-row   *ngIf="Feature_All_array.length == 0">
-           <ion-col style="text-align: center;" >
-             <strong>No Active Features </strong>
-           </ion-col>
-         </ion-row>
-         <ion-list *ngFor="let ad of Feature_All_array">
-           <ion-row>
-             <ion-col text-wrap>
-               <strong style="font-size: 15px;"><ion-icon name="checkmark"></ion-icon> &nbsp;&nbsp;{{ad.title}}</strong>
-             </ion-col>
-           </ion-row>
-         </ion-list>
-       
-             
-     </ion-card-content>
-   </ion-card>
- 
-  <ion-card  *ngIf="event_details_array.length != 0">
-    	<ion-card-content (click)="viewAllEvents()" >
-      <ion-row style="background-color: #f0ad4e;color:#fff;">
-          <ion-col style="text-align: center;">
-            <strong style="font-size: 15px;">Upcoming Events</strong>
-          </ion-col>
-        </ion-row>
-        <ion-list >
-        <ion-row *ngIf="event_details_array.length == 0">
-          <ion-col style="text-align: center;">
-            <strong>No Upcoming Event</strong>
-          </ion-col>
-        </ion-row>
-        <ion-row  *ngFor="let e of event_details_array">
-        <ion-col text-wrap>
-         <strong style="font-size: 15px;">{{e.events_title}}</strong>
-        <p *ngIf="e.events_date != '0'" >
-        <ion-icon name="calendar" primary>&nbsp;</ion-icon>{{e.events_date}} <span *ngIf="e.event_time != '0'"> at {{e.event_time}}</span></p>
-        </ion-col>
-       </ion-row>
-        </ion-list>
-    	</ion-card-content>
-  	</ion-card>
-  
-  	<ion-card >
-    	<ion-card-content (click)="viewAllNotices()" >
-      <ion-row style="background-color: #5cb85c;color:#fff;">
-          <ion-col style="text-align: center;">
-            <strong style="font-size: 15px;">Latest Notices</strong>
-          </ion-col>
-        </ion-row>
-     <ion-list>
-        <ion-row *ngIf="notice_details_array.length == 0">
-          <ion-col style="text-align: center;">
-            <strong>No Active Notice </strong>
-          </ion-col>
-        </ion-row>
-        <ion-row *ngFor="let n of notice_details_array">
-        <ion-col text-wrap>
-         <strong style="font-size: 15px;">{{n.subject}}</strong>
-      			<p *ngIf="n.creation_date != '0'">
-            <ion-icon name="calendar" primary>&nbsp;</ion-icon>{{n.creation_date}} </p>
-            </ion-col>
+            <ion-row *ngIf="task_by_me_array.length == 0">
+              <ion-col style="text-align: center;">
+                <strong>No Active Task </strong>
+              </ion-col>
             </ion-row>
+            <ion-list>
+              <ion-row *ngFor="let TaskByMe of task_by_me_array">
+                <ion-col text-wrap><strong>{{TaskByMe.Title}}</strong>
+                  <p><ion-icon name="time" primary>&nbsp;</ion-icon>&nbsp;{{TaskByMe.DueDate}} </p>
+                  <p><ion-icon name="stats-chart-outline">&nbsp;</ion-icon>&nbsp;{{status[TaskByMe.Status]}} </p>
+                </ion-col>
+              </ion-row>
+              <hr>
+
             </ion-list>
-            
-    	</ion-card-content>
-  	</ion-card>
-  
-    <ion-card  *ngIf="SRequest_details_array.length != 0">
-      <ion-card-content (click)="sRequest()">
-      <ion-row style="background-color: #337ab7;color:#fff;">
-          <ion-col style="text-align: center;">
-            <strong style="font-size: 15px;">Latest Service Requests</strong>
-          </ion-col>
-        </ion-row>
-     
-        <ion-row *ngIf="SRequest_details_array.length == 0">
-          <ion-col style="text-align: center;">
-            <strong>No Active Service Request </strong>
-          </ion-col>
-        </ion-row>
-       <ion-list *ngFor="let s of SRequest_details_array" lines="full">
-         <ion-row >
-        <ion-col text-wrap size="12">
-         <strong style="font-size: 15px;">{{s.summery}}</strong>
-            <p *ngIf="s.dateofrequest != '0'">
-            <ion-icon name="calendar" primary></ion-icon>&nbsp;{{s.dateofrequest}} </p>
+          </ion-card-content>
+        </ion-card>
+      </ion-list>
+
+      <ion-card>
+        <ion-card-content (click)="viewFeature()">
+          <ion-row style="background-color: #f0ad4e;color:#fff;">
+            <ion-col style="text-align: center;">
+              <strong style="font-size: 15px;">Latest Features</strong>
             </ion-col>
-            </ion-row>
-          </ion-list>       
-      </ion-card-content>
-    </ion-card>
-    <!--   *********************   View Classified Section (All User) ******************  --> 
-    <ion-list *ngIf="roleWise != 'Contractor'">
-      <ion-card (click)="viewClassified()" *ngIf="Classified_details_array.length != 0">
-        <ion-card-content >
-          <ion-row style="background-color: #f0ad4e;color:#fff;text-align: center;">
-            <ion-col><strong style="font-size: 15px;">Latest Classifieds</strong></ion-col>
           </ion-row>
-       <ion-list>
-          <ion-row *ngIf="Classified_details_array.length == 0">
-            <ion-col text-center style="text-align: center;"><strong>No Active Classified </strong></ion-col>
+
+          <ion-row *ngIf="Feature_All_array.length == 0">
+            <ion-col style="text-align: center;">
+              <strong>No Active Features </strong>
+            </ion-col>
           </ion-row>
-          <ion-list  *ngFor="let c of Classified_details_array">
+          <ion-list *ngFor="let ad of Feature_All_array">
             <ion-row>
               <ion-col text-wrap>
-                <strong style="font-size: 15px;">{{c.ad_title}}</strong>
-                  <p *ngIf="c.post_date != '0'">
-                  <ion-icon name="calendar" primary>&nbsp;</ion-icon>{{c.post_date}} </p>
-                  <p><ion-icon name="location-outline" primary>&nbsp;&nbsp;</ion-icon>{{c.location}} </p>
+                <strong style="font-size: 15px;"><ion-icon name="checkmark"></ion-icon>
+                  &nbsp;&nbsp;{{ad.title}}</strong>
               </ion-col>
             </ion-row>
           </ion-list>
-        </ion-list>
-      </ion-card-content>
-    </ion-card>
-  </ion-list>
-<!--   *********************   View Poll Section (All User) ******************  --> 
-<ion-list *ngIf="roleWise != 'Contractor'">
-  <ion-card (click)="viewPoll()" *ngIf="Poll_details_array.length != 0">
-    <ion-card-content >
-      <ion-row style="background-color: #5cb85c;color:#fff; text-align: center;">
-        <ion-col><strong style="font-size: 15px;">Latest Polls</strong></ion-col>
-      </ion-row>
-      <ion-list>
-        <ion-row *ngIf="Poll_details_array.length == 0">
-          <ion-col text-center style="text-align: center;"><strong>No Active Poll </strong></ion-col>
-      </ion-row>
-      <ion-list *ngFor="let poll of Poll_details_array">
-      <ion-row >
-        <ion-col text-wrap>
-          <strong style="font-size: 15px;">{{poll.question}}</strong>
-          <p *ngIf="poll.start_date != '0'">
-          <ion-icon name="calendar" primary>&nbsp;</ion-icon>{{poll.start_date}} </p>
-        </ion-col>
-      </ion-row>
+
+
+        </ion-card-content>
+      </ion-card>
+
+      <ion-card *ngIf="event_details_array.length != 0">
+        <ion-card-content (click)="viewAllEvents()">
+          <ion-row style="background-color: #f0ad4e;color:#fff;">
+            <ion-col style="text-align: center;">
+              <strong style="font-size: 15px;">Upcoming Events</strong>
+            </ion-col>
+          </ion-row>
+          <ion-list>
+            <ion-row *ngIf="event_details_array.length == 0">
+              <ion-col style="text-align: center;">
+                <strong>No Upcoming Event</strong>
+              </ion-col>
+            </ion-row>
+            <ion-row *ngFor="let e of event_details_array">
+              <ion-col text-wrap>
+                <strong style="font-size: 15px;">{{e.events_title}}</strong>
+                <p *ngIf="e.events_date != '0'">
+                  <ion-icon name="calendar" primary>&nbsp;</ion-icon>{{e.events_date}} <span
+                    *ngIf="e.event_time != '0'"> at {{e.event_time}}</span>
+                </p>
+              </ion-col>
+            </ion-row>
+          </ion-list>
+        </ion-card-content>
+      </ion-card>
+
+      <ion-card>
+        <ion-card-content (click)="viewAllNotices()">
+          <ion-row style="background-color: #5cb85c;color:#fff;">
+            <ion-col style="text-align: center;">
+              <strong style="font-size: 15px;">Latest Notices</strong>
+            </ion-col>
+          </ion-row>
+          <ion-list>
+            <ion-row *ngIf="notice_details_array.length == 0">
+              <ion-col style="text-align: center;">
+                <strong>No Active Notice </strong>
+              </ion-col>
+            </ion-row>
+            <ion-row *ngFor="let n of notice_details_array">
+              <ion-col text-wrap>
+                <strong style="font-size: 15px;">{{n.subject}}</strong>
+                <p *ngIf="n.creation_date != '0'">
+                  <ion-icon name="calendar" primary>&nbsp;</ion-icon>{{n.creation_date}}
+                </p>
+              </ion-col>
+            </ion-row>
+          </ion-list>
+
+        </ion-card-content>
+      </ion-card>
+
+      <ion-card *ngIf="SRequest_details_array.length != 0">
+        <ion-card-content (click)="sRequest()">
+          <ion-row style="background-color: #337ab7;color:#fff;">
+            <ion-col style="text-align: center;">
+              <strong style="font-size: 15px;">Latest Service Requests</strong>
+            </ion-col>
+          </ion-row>
+
+          <ion-row *ngIf="SRequest_details_array.length == 0">
+            <ion-col style="text-align: center;">
+              <strong>No Active Service Request </strong>
+            </ion-col>
+          </ion-row>
+          <ion-list *ngFor="let s of SRequest_details_array" lines="full">
+            <ion-row>
+              <ion-col text-wrap size="12">
+                <strong style="font-size: 15px;">{{s.summery}}</strong>
+                <p *ngIf="s.dateofrequest != '0'">
+                  <ion-icon name="calendar" primary></ion-icon>&nbsp;{{s.dateofrequest}}
+                </p>
+              </ion-col>
+            </ion-row>
+          </ion-list>
+        </ion-card-content>
+      </ion-card>
+      <!--   *********************   View Classified Section (All User) ******************  -->
+      <ion-list *ngIf="roleWise != 'Contractor'">
+        <ion-card (click)="viewClassified()" *ngIf="Classified_details_array.length != 0">
+          <ion-card-content>
+            <ion-row style="background-color: #f0ad4e;color:#fff;text-align: center;">
+              <ion-col><strong style="font-size: 15px;">Latest Classifieds</strong></ion-col>
+            </ion-row>
+            <ion-list>
+              <ion-row *ngIf="Classified_details_array.length == 0">
+                <ion-col text-center style="text-align: center;"><strong>No Active Classified </strong></ion-col>
+              </ion-row>
+              <ion-list *ngFor="let c of Classified_details_array">
+                <ion-row>
+                  <ion-col text-wrap>
+                    <strong style="font-size: 15px;">{{c.ad_title}}</strong>
+                    <p *ngIf="c.post_date != '0'">
+                      <ion-icon name="calendar" primary>&nbsp;</ion-icon>{{c.post_date}}
+                    </p>
+                    <p><ion-icon name="location-outline" primary>&nbsp;&nbsp;</ion-icon>{{c.location}} </p>
+                  </ion-col>
+                </ion-row>
+              </ion-list>
+            </ion-list>
+          </ion-card-content>
+        </ion-card>
+      </ion-list>
+      <!--   *********************   View Poll Section (All User) ******************  -->
+      <ion-list *ngIf="roleWise != 'Contractor'">
+        <ion-card (click)="viewPoll()" *ngIf="Poll_details_array.length != 0">
+          <ion-card-content>
+            <ion-row style="background-color: #5cb85c;color:#fff; text-align: center;">
+              <ion-col><strong style="font-size: 15px;">Latest Polls</strong></ion-col>
+            </ion-row>
+            <ion-list>
+              <ion-row *ngIf="Poll_details_array.length == 0">
+                <ion-col text-center style="text-align: center;"><strong>No Active Poll </strong></ion-col>
+              </ion-row>
+              <ion-list *ngFor="let poll of Poll_details_array">
+                <ion-row>
+                  <ion-col text-wrap>
+                    <strong style="font-size: 15px;">{{poll.question}}</strong>
+                    <p *ngIf="poll.start_date != '0'">
+                      <ion-icon name="calendar" primary>&nbsp;</ion-icon>{{poll.start_date}}
+                    </p>
+                  </ion-col>
+                </ion-row>
+              </ion-list>
+            </ion-list>
+          </ion-card-content>
+        </ion-card>
+      </ion-list>
     </ion-list>
-  </ion-list>
-</ion-card-content>
-</ion-card>
-</ion-list>
-</ion-list>
 
     <!-- ***************************** Admin section *******************************  -->
-<ion-list no-lines *ngSwitchCase="'admin'">
-  <ion-card>
-    <ion-card-content >
-      <ion-row style="background-color: #337ab7;color:#fff; text-align: center;">
-        <ion-col><strong>Admin Actions</strong></ion-col>
-      </ion-row>
-      <ion-row style="height: 80px;margin-top: 14px;width: 100%;margin-left: 8px;">
-        <ion-col size="3">
-          <button (click)="viewImpose()"  ion-fab style="width: 50px;height: 50px;background-color: #337ab7;color: white;
-          border-radius: 10rem;"><ion-icon name="hand-left-outline" style="font-size: 1.5rem;" ></ion-icon></button>
-          <span style="font-size: 0.9rem;margin-left:10px;">Fine</span>
-          <!--<button ion-fab style="width: 50px;height: 50px;" (click)="viewImpose()"><ion-icon name="hand" style="font-size: 2.7rem;"></ion-icon></button>
+    <ion-list no-lines *ngSwitchCase="'admin'">
+      <ion-card>
+        <ion-card-content>
+          <ion-row style="background-color: #337ab7;color:#fff; text-align: center;">
+            <ion-col><strong>Admin Actions</strong></ion-col>
+          </ion-row>
+          <ion-row style="margin-top: 14px;width: 100%;margin-left: 8px;">
+            <ion-col size="3">
+              <button (click)="viewImpose()" ion-fab style="width: 50px;height: 50px;background-color: #337ab7;color: white;
+          border-radius: 10rem;"><ion-icon name="hand-left-outline" style="font-size: 1.5rem;"></ion-icon></button>
+            </ion-col>
+            <!-- <span style="font-size: 0.9rem;margin-left:10px;">Fine</span>-->
+            <!--<button ion-fab style="width: 50px;height: 50px;" (click)="viewImpose()"><ion-icon name="hand" style="font-size: 2.7rem;"></ion-icon></button>
           <span style="font-size: 1.3rem;margin-left: -25px;">Fine</span>-->
-          </ion-col>
-        <ion-col size="3">
-          <button (click)="viewAllProvider(1)"  ion-fab style="width: 50px;height: 50px;background-color: #337ab7;color: white;
-          border-radius: 10rem;"><ion-icon name="search" style="font-size: 1.5rem;" ></ion-icon></button>
-          <span style="font-size: 0.9rem;margin-left: 5px;">S-Pro.</span>
-          <!--<button ion-fab style="width: 50px;height: 50px;" (click)="viewAllProvider(1)"><ion-icon name="search" style="font-size: 2.7rem;"></ion-icon></button>
-          <span style="font-size: 1.3rem;margin-left: -25px;">S-Provider</span>-->
-          </ion-col>
-        <ion-col size="3">
-          <button (click)="viewServiceInAdmin()"  ion-fab style="width: 50px;height: 50px;background-color: #337ab7;color: white;
-          border-radius: 10rem;"><ion-icon name="newspaper-outline" style="font-size: 1.5rem;" ></ion-icon></button>
-          <span style="font-size: 0.9rem;margin-left: 3px;">S-Req.</span>
-         <!-- <button ion-fab style="width: 50px;height: 50px;" (click)="viewServiceInAdmin()"><ion-icon name="paper" style="font-size: 2.7rem;"></ion-icon></button>
-          <span style="font-size: 1.3rem;margin-left: -25px;">S-Request</span>-->
-         </ion-col>
-        <ion-col size="3">
-          <button (click)="viewTask()"  ion-fab style="width: 50px;height: 50px;background-color: #337ab7;color: white;
-          border-radius: 10rem;"><ion-icon name="toggle-outline" style="font-size: 1.5rem;" ></ion-icon></button>
-          <span style="font-size: 0.9rem;margin-left: 10px;">Task</span>
-          <!--<button ion-fab style="width: 50px;height: 50px;" (click)="viewTask()"><ion-icon name="switch" style="font-size: 2.7rem;"></ion-icon></button>
-          <span style="font-size: 1.3rem;margin-left: -25px;">Task</span>-->
-          </ion-col>
-        </ion-row>
-    </ion-card-content>
-  </ion-card>
 
-  <!--  **************************** Waiting For Apporval In Admin Section **************** -->
-  <ion-card>
-    <ion-card-content style="text-align: center;">
-      <ion-row style="background-color: #f0ad4e;color:#fff;text-align: center;">
-        <ion-col><strong>Waiting for Approvals</strong></ion-col>
-      </ion-row>
-      <br/>
-      <ion-row style="height: 80px;margin-top: 14px;width: 100%;margin-left: 8px;">
-        <ion-col size="3">
-          <button (click)="viewTenantsInAdmin()"  ion-fab style="width: 50px;height: 50px;background-color: #337ab7;color: white;
-          border-radius: 10rem;"><ion-icon name="person-add-outline" style="font-size: 1.5rem;" ></ion-icon></button>
-          <span style="font-size: 0.9rem;margin-left: 0px;">Tenants</span>
-          <!--<button ion-fab style="width: 50px;height: 50px;" (click)="viewTenantsInAdmin()"><ion-icon name="ios-people" style="font-size: 2.7rem;"></ion-icon></button>
-          <span style="font-size: 1.3rem;margin-left: -25px;">Tenants</span>-->
-        </ion-col>
-        <ion-col size="3">
-          <button (click)="viewPendingProvider(2)"  ion-fab style="width: 50px;height: 50px;background-color: #337ab7;color: white;
-          border-radius: 10rem;"><ion-icon name="search" style="font-size: 1.5rem;" ></ion-icon></button>
-          <span style="font-size: 0.9rem;margin-left: 5px;">S-Pro.</span>
-          <!--<button ion-fab style="width: 50px;height: 50px;" (click)="viewPendingProvider(2)"><ion-icon name="search" style="font-size: 2.7rem;"></ion-icon></button>
+            <ion-col size="3">
+              <button (click)="viewAllProvider(1)" ion-fab style="width: 50px;height: 50px;background-color: #337ab7;color: white;
+          border-radius: 10rem;"><ion-icon name="search" style="font-size: 1.5rem;"></ion-icon></button>
+            </ion-col>
+            <!-- <span style="font-size: 0.9rem;margin-left: 1.0rem;">S-Pro.</span>-->
+            <!--<button ion-fab style="width: 50px;height: 50px;" (click)="viewAllProvider(1)"><ion-icon name="search" style="font-size: 2.7rem;"></ion-icon></button>
           <span style="font-size: 1.3rem;margin-left: -25px;">S-Provider</span>-->
-        </ion-col>
-        <ion-col size="3">
-          <button (click)="viewClassifiedInAdmin()"  ion-fab style="width: 50px;height: 50px;background-color: #337ab7;color: white;
-          border-radius: 10rem;"><ion-icon name="pricetags" style="font-size: 1.5rem;" ></ion-icon></button>
-          <span style="font-size: 0.9rem;margin-left: -3px;">Classified</span>
-          <!--<button ion-fab style="width: 50px;height: 50px;" (click)="viewClassifiedInAdmin()"><ion-icon name="pricetags" style="font-size: 2.7rem;"></ion-icon></button>
+
+            <ion-col size="3">
+              <button (click)="viewServiceInAdmin()" ion-fab style="width: 50px;height: 50px;background-color: #337ab7;color: white;
+          border-radius: 10rem;"><ion-icon name="newspaper-outline" style="font-size: 1.5rem;"></ion-icon></button>
+            </ion-col>
+            <!--<span style="font-size: 0.9rem;margin-left: 1.0rem;">S-Req.</span>-->
+            <!-- <button ion-fab style="width: 50px;height: 50px;" (click)="viewServiceInAdmin()"><ion-icon name="paper" style="font-size: 2.7rem;"></ion-icon></button>
+          <span style="font-size: 1.3rem;margin-left: -25px;">S-Request</span>-->
+
+
+            <ion-col size="3">
+              <button (click)="viewTask()" ion-fab style="width: 50px;height: 50px;background-color: #337ab7;color: white;
+          border-radius: 10rem;"><ion-icon name="toggle-outline" style="font-size: 1.5rem;"></ion-icon></button>
+            </ion-col>
+          </ion-row>
+          <ion-row>
+            <ion-col size="3">
+              <span style="font-size: 0.9rem;margin-left:15px;">Fine</span>
+            </ion-col>
+            <ion-col size="3">
+              <span style="font-size: 0.9rem;margin-left: 0.8rem;">S-Pro.</span>
+            </ion-col>
+            <ion-col size="3">
+              <span style="font-size: 0.9rem;margin-left: 0.8rem;">S-Req.</span>
+            </ion-col>
+            <ion-col size="3">
+              <span style="font-size: 0.9rem;margin-left: 1.0rem;">Task</span>
+            </ion-col>
+          </ion-row>
+        </ion-card-content>
+      </ion-card>
+
+      <!--  **************************** Waiting For Apporval In Admin Section **************** -->
+      <ion-card>
+        <ion-card-content style="text-align: center;">
+          <ion-row style="background-color: #f0ad4e;color:#fff;text-align: center;">
+            <ion-col><strong>Waiting for Approvals</strong></ion-col>
+          </ion-row>
+          <br />
+          <ion-row style="margin-top: 14px;width: 100%;margin-left: 8px;">
+            <ion-col size="4">
+              <button (click)="viewTenantsInAdmin()" ion-fab style="width: 50px;height: 50px;background-color: #337ab7;color: white;
+          border-radius: 10rem;"><ion-icon name="person-add-outline" style="font-size: 1.5rem;"></ion-icon></button>
+
+              <!--<button ion-fab style="width: 50px;height: 50px;" (click)="viewTenantsInAdmin()"><ion-icon name="ios-people" style="font-size: 2.7rem;"></ion-icon></button>
+          <span style="font-size: 1.3rem;margin-left: -25px;">Tenants</span>-->
+            </ion-col>
+            <ion-col size="4">
+              <button (click)="viewPendingProvider(2)" ion-fab style="width: 50px;height: 50px;background-color: #337ab7;color: white;
+          border-radius: 10rem;"><ion-icon name="search" style="font-size: 1.5rem;"></ion-icon></button>
+
+              <!--<button ion-fab style="width: 50px;height: 50px;" (click)="viewPendingProvider(2)"><ion-icon name="search" style="font-size: 2.7rem;"></ion-icon></button>
+          <span style="font-size: 1.3rem;margin-left: -25px;">S-Provider</span>-->
+            </ion-col>
+            <ion-col size="4">
+              <button (click)="viewClassifiedInAdmin()" ion-fab style="width: 50px;height: 50px;background-color: #337ab7;color: white;
+          border-radius: 10rem;"><ion-icon name="pricetags" style="font-size: 1.5rem;"></ion-icon></button>
+
+              <!--<button ion-fab style="width: 50px;height: 50px;" (click)="viewClassifiedInAdmin()"><ion-icon name="pricetags" style="font-size: 2.7rem;"></ion-icon></button>
           <span style="font-size: 1.3rem;margin-left: -25px;">Classified</span>-->
-        </ion-col>
-        <ion-col size="3">
+            </ion-col>
+            <!--<ion-col size="3">
           <button (click)="viewAdminAlbums()"  ion-fab style="width: 50px;height: 50px;background-color: #337ab7;color: white;
           border-radius: 10rem;"><ion-icon name="images" style="font-size: 1.5rem;" ></ion-icon></button>
-          <span style="font-size: 0.9rem;margin-left: 0px;">Photos</span>
-          <!--<button ion-fab style="width: 50px;height: 50px;" (click)="viewAdminAlbums()"><ion-icon name="images" style="font-size: 2.7rem;"></ion-icon></button>
-          <span style="font-size: 1.3rem;margin-left: -25px;">Photos</span>-->
-        </ion-col>
-      </ion-row>
-     
-      <!--<ion-row style="height: 80px;margin-top: 14px;width: 100%;margin-left: 8px;">
+          <span style="font-size: 0.9rem;margin-left: 0px;">Photos</span>-->
+            <!--<button ion-fab style="width: 50px;height: 50px;" (click)="viewAdminAlbums()"><ion-icon name="images" style="font-size: 2.7rem;"></ion-icon></button>
+          <span style="font-size: 1.3rem;margin-left: -25px;">Photos</span>
+        </ion-col>-->
+          </ion-row>
+          <ion-row>
+            <ion-col size="4">
+              <span style="font-size: 0.9rem;margin-left: 0.7rem;">Tenants</span>
+            </ion-col>
+            <ion-col size="4">
+              <span style="font-size: 0.9rem;margin-left: 1.0rem;">Service-Pro</span>
+            </ion-col>
+            <ion-col size="4">
+              <span style="font-size: 0.9rem;margin-left: 0.2rem;">Classified</span>
+            </ion-col>
+          </ion-row>
+
+          <!--<ion-row style="height: 80px;margin-top: 14px;width: 100%;margin-left: 8px;">
         <ion-col size="3">
           <button (click)="viewAddressProofRequest()"  ion-fab style="width: 50px;height: 50px;background-color: #337ab7;color: white;
           border-radius: 10rem;"><ion-icon name="document-text-outline" style="font-size: 1.5rem;" ></ion-icon></button>
@@ -366,95 +402,124 @@
           <span style="font-size: 0.9rem;margin-left: -6px;">Renovation</span>
         </ion-col>
       </ion-row>-->
-      <br>
-    </ion-card-content>
-  </ion-card>
-</ion-list>
+          <br>
+        </ion-card-content>
+      </ion-card>
+    </ion-list>
 
-  <!-- Service Tab For Member -->
-  <ion-list no-lines *ngSwitchCase="'service'">
-    <ion-list  *ngFor="let s of Services_array">
-  <ion-card>
-    <ion-card-content >
-    <ion-row style="background-color: #f0ad4e;color:#fff;">
-        <ion-col style="text-align-last: center;">
-          <strong style="font-size: 15px;">{{s.ServiceName}}</strong>
-        </ion-col>
-      </ion-row>
-   <ion-item (click)="PageUrl(s.ImplementApp,s.status,s.ServiceName,s.Desc)">
-      <ion-row >
-        <ion-col text-center >
-          <img src="{{img_link}}{{s.ServiceImage}}" >
-        </ion-col>
-      </ion-row>
-      <ion-list >
-       
-       </ion-list>
-          </ion-item>
-          
-    </ion-card-content>
-    
-  </ion-card>
- 
-  </ion-list>
-  </ion-list>
+    <!-- Service Tab For Member -->
+    <ion-list no-lines *ngSwitchCase="'service'">
+      <ion-list *ngFor="let s of Services_array">
+        <ion-card>
+          <ion-card-content>
+            <ion-row style="background-color: #f0ad4e;color:#fff;">
+              <ion-col style="text-align-last: center;">
+                <strong style="font-size: 15px;">{{s.ServiceName}}</strong>
+              </ion-col>
+            </ion-row>
+            <ion-item (click)="PageUrl(s.ImplementApp,s.status,s.ServiceName,s.Desc)">
+              <ion-row>
+                <ion-col text-center>
+                  <img src="{{img_link}}{{s.ServiceImage}}">
+                </ion-col>
+              </ion-row>
+              <ion-list>
+
+              </ion-list>
+            </ion-item>
+
+          </ion-card-content>
+
+        </ion-card>
+
+      </ion-list>
+    </ion-list>
   </div>
 </ion-content>
 <ion-footer>
-  <ion-row>
+  <ion-row class="scroll">
     <ion-col>
-      <div style="float: left;padding-left: 15px;">
-        <button (click)="profile()"  ion-fab style="width: 40px;height: 40px;background-color: #337ab7;color: white;
-        border-radius: 10rem;"><ion-icon name="person" style="font-size: 1.5rem;" ></ion-icon></button>
-        <span style="font-size: 0.9rem;margin-left: -5px;">Profile</span>
-   </div>
+      <div style="text-align:center;padding-left: 15px;">
+        <button (click)="profile()" ion-fab style="width: 43px;height: 43px;background-color: #337ab7;color: white;
+        border-radius: 10rem;"><ion-icon name="person" style="font-size: 1.5rem;"></ion-icon></button>
+        <span style="font-size: 0.9rem;">Profile</span>
+      </div>
     </ion-col>
-    <ion-col *ngIf="roleWise != 'Admin' && roleWise != 'SuperAdmin' && roleWise != 'Contractor' && roleWise != 'Tenant' && roleWise != 'Manager'">
-      <div style="float: left;" >
-        <button (click)="payment()" ion-fab style="width: 40px;height: 40px;background-color: #337ab7;color: white;
-        border-radius: 10rem;" ><ion-icon name="card" style="font-size: 1.5rem;"></ion-icon></button>
-        <span style="font-size: 0.9rem;margin-left: -12px;">Payment</span>
-       </div>
+    <ion-col
+      *ngIf="roleWise != 'Admin' && roleWise != 'SuperAdmin' && roleWise != 'Contractor' && roleWise != 'Tenant' && roleWise != 'Manager'">
+      <div style="text-align:center;">
+        <button (click)="payment()" ion-fab style="width: 43px;height: 43px;background-color: #337ab7;color: white;
+        border-radius: 10rem;"><ion-icon name="card" style="font-size: 1.5rem;"></ion-icon></button>
+        <span style="font-size: 0.9rem;">Payment</span>
+      </div>
     </ion-col>
     <ion-col *ngIf="roleWise != 'Member' && roleWise != 'AdminMember'">
-      <div style="float: left;" >
-        <button (click)="directory()" ion-fab style="width: 40px;height: 40px;background-color: #337ab7;color: white;
-        border-radius: 10rem;" ><ion-icon name="folder-open" style="font-size: 1.5rem;"></ion-icon></button>
-        <span style="font-size: 0.9rem;margin-left: -12px;">Directory</span>
-    
+      <div style="text-align:center;">
+        <button (click)="directory()" ion-fab style="width: 43px;height: 43px;background-color: #337ab7;color: white;
+        border-radius: 10rem;"><ion-icon name="folder-open" style="font-size: 1.5rem;"></ion-icon></button>
+        <span style="font-size: 0.9rem;">Directory</span>
+
       </div>
     </ion-col>
     <ion-col>
-      <div style="float: left;">
-        <button (click)="sRequest()" ion-fab style="width: 40px;height: 40px;background-color: #337ab7;color: white;
-        border-radius: 10rem;" ><ion-icon name="document-text-outline" style="font-size: 1.5rem;"></ion-icon></button>
-        <span style="font-size: 0.9rem;margin-left: -21px;">S.Request</span>
-        </div>
+      <div style="text-align:center;">
+        <button (click)="sRequest()" ion-fab style="width: 43px;height: 43px;background-color: #337ab7;color: white;
+        border-radius: 10rem;"><ion-icon name="document-text-outline" style="font-size: 1.5rem;"></ion-icon></button>
+        <span style="font-size: 0.9rem;">S.Request</span>
+      </div>
     </ion-col>
     <ion-col>
-      <div style="float: left;">
-        <button  (click)="viewEvents()" ion-fab style="width: 40px;height: 40px;background-color: #337ab7;color: white;
-        border-radius: 10rem;" ><ion-icon name="calendar" style="font-size: 1.5rem;"></ion-icon></button>
-        <span style="font-size: 0.9rem;margin-left: -5px;">Events</span>
-   </div>
+      <div style="text-align:center;">
+        <button (click)="viewEvents()" ion-fab style="width: 43px;height: 43px;background-color: #337ab7;color: white;
+        border-radius: 10rem;"><ion-icon name="calendar" style="font-size: 1.5rem;"></ion-icon></button>
+        <span style="font-size: 0.9rem;">Events</span>
+      </div>
     </ion-col>
     <ion-col>
-      <div style="float: left;">
-      <button (click)="viewNotices()" ion-fab style="width: 40px;height: 40px;background-color: #337ab7;color: white;
-      border-radius: 10rem;" ><ion-icon name="copy" style="font-size: 1.5rem;"></ion-icon></button>
-      <span style="font-size: 0.9rem;margin-left: -10px;">Notices</span>
-    </div>
-  </ion-col>
-  
+      <div style="text-align:center;">
+        <button (click)="viewNotices()" ion-fab style="width: 43px;height: 43px;background-color: #337ab7;color: white;
+      border-radius: 10rem;"><ion-icon name="copy" style="font-size: 1.5rem;"></ion-icon></button>
+        <span style="font-size: 0.9rem;">Notices</span>
+      </div>
+    </ion-col>
+    <ion-col>
+      <div style="text-align:center;">
+        <button (click)="sProvider()" ion-fab style="width: 43px;height: 43px;background-color: #337ab7;color: white;
+      border-radius: 10rem;"><ion-icon name="search" style="font-size: 1.5rem;"></ion-icon></button>
+        <span style="font-size: 0.9rem;">S-Pro.</span>
+      </div>
+    </ion-col>
+    <ion-col>
+      <div style="text-align:center;">
+        <button (click)="viewPoll()" ion-fab style="width: 43px;height: 43px;background-color: #337ab7;color: white;
+      border-radius: 10rem;"><ion-icon name="podium" style="font-size: 1.5rem;"></ion-icon></button>
+        <span style="font-size: 0.9rem;">Polls</span>
+      </div>
+    </ion-col>
+    <ion-col>
+      <div style="text-align:center;">
+        <button (click)="viewAlbums()" ion-fab style="width: 43px;height: 43px;background-color: #337ab7;color: white;
+      border-radius: 10rem;"><ion-icon name="images" style="font-size: 1.5rem;"></ion-icon></button>
+        <span style="font-size: 0.9rem;">Albums</span>
+      </div>
+    </ion-col>
+    <ion-col>
+      <div style="text-align:center;">
+        <button (click)="viewClassified()" ion-fab style="width: 43px;height: 43px;background-color: #337ab7;color: white;
+      border-radius: 10rem;"><ion-icon name="pricetags" style="font-size: 1.5rem;"></ion-icon></button>
+        <span style="font-size: 0.9rem;">Classified</span>
+      </div>
+    </ion-col>
+
   </ion-row>
-  </ion-footer>
+</ion-footer>
 <!--<ion-footer >
   <ion-toolbar>
   <div style="height: 90px;margin-top: 14px;">-->
-   <!--<ion-slides pager style="margin-left: 10px;margin-top: -3%;height: 100px;">
+<!--<ion-slides pager style="margin-left: 10px;margin-top: -3%;height: 100px;">
     <ion-slide >-->
-    
-       <!--<div style="float: left;width: 20%;padding-left: 15px;">
+
+<!--<div style="float: left;width: 20%;padding-left: 15px;">
            <button (click)="profile()"  ion-fab style="width: 40px;height: 40px;background-color: #337ab7;color: white;
            border-radius: 10rem;"><ion-icon name="person" style="font-size: 1.5rem;" ></ion-icon></button>
            <span style="font-size: 0.9rem;margin-left: -5px;">Profile</span>
@@ -470,11 +535,11 @@
         <button (click)="sRequest()" ion-fab style="width: 40px;height: 40px;background-color: #337ab7;color: white;
         border-radius: 10rem;" ><ion-icon name="document-text-outline" style="font-size: 1.5rem;"></ion-icon></button>
         <span style="font-size: 0.9rem;margin-left: -21px;">S.Request</span>-->
-        <!--<button (click)="sRequest()" ion-fab style="width: 40px;height: 40px;background-color: #337ab7;color: white;
+<!--<button (click)="sRequest()" ion-fab style="width: 40px;height: 40px;background-color: #337ab7;color: white;
         border-radius: 10rem;" ><ion-icon name="document-text-outline" style="font-size: 1.5rem;"></ion-icon></button>
         <span style="font-size: 1.1rem;margin-left: -17px;">S-Req.</span>-->
-       
-      <!--</div>
+
+<!--</div>
 
   
       <div style="float: left;width: 20%;">
@@ -488,7 +553,7 @@
            border-radius: 10rem;" ><ion-icon name="copy" style="font-size: 1.5rem;"></ion-icon></button>
            <span style="font-size: 0.9rem;margin-left: -10px;">Notices</span>
       </div>-->
-      <!--<div style="float: left;width: 20%;margin-left: 12px;">
+<!--<div style="float: left;width: 20%;margin-left: 12px;">
         <button (click)="sRequest()" ion-fab style="width: 40px;height: 40px;background-color: #337ab7;color: white;
         border-radius: 10rem;" ><ion-icon name="document-text-outline" style="font-size: 1.5rem;"></ion-icon></button>
         <span style="font-size: 1.1rem;margin-left: -10px;">S-Req.</span>
@@ -498,13 +563,13 @@
         border-radius: 10rem;" ><ion-icon name="search" style="font-size: 1.5rem;"></ion-icon></button>
         <span style="font-size: 1.1rem;margin-left: -10px;">S-Pro.</span>
       </div>-->
-       <!--<div style="float: left;width: 20%;" >
+<!--<div style="float: left;width: 20%;" >
            <button ion-fab style="width: 40px;height: 40px;" ><ion-icon name="folder-open" style="font-size: 2.7rem;"></ion-icon></button>
            <span style="font-size: 1.3rem;margin-left: -32px;">Directory</span>
       </div>-->
-    
-     <!--</div>-->
-    <!--</ion-slide>
+
+<!--</div>-->
+<!--</ion-slide>
     <ion-slide>
       <div style="float: left;width: 20%;margin-left: 12px;">
         <button (click)="sRequest()" ion-fab style="width: 40px;height: 40px;background-color: #337ab7;color: white;

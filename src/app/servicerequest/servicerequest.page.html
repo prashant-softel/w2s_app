@@ -2,21 +2,21 @@
   <ion-toolbar>
     <ion-title>Service Request</ion-title>
     <ion-buttons slot="start">
-			<ion-back-button defaultHref="dashboard" icon="chevron-back-outline" text="Back"></ion-back-button>
-		  </ion-buttons>
+      <ion-back-button defaultHref="dashboard" icon="chevron-back-outline" text="Back"></ion-back-button>
+    </ion-buttons>
     <ion-buttons slot="end" style="width:30%">
       <ion-button><img style="width:70%" src="/assets/images/logo.png"></ion-button>
     </ion-buttons>
   </ion-toolbar>
   <ion-toolbar no-border *ngIf="NewRole != 'Contractor'">
-    <ion-segment [(ngModel)]="tab" >
-      <ion-segment-button value="me" style="min-width: 100px;">Assigned to me</ion-segment-button>
+    <ion-segment [(ngModel)]="tab">
+      <ion-segment-button value="me" style="min-width: 100px;">ASGN to me</ion-segment-button>
       <ion-segment-button value="active" style="min-width: 100px;">Open</ion-segment-button>
       <ion-segment-button value="expired" style="min-width: 100px;">Closed</ion-segment-button>
     </ion-segment>
- </ion-toolbar>
- <ion-toolbar no-border *ngIf="NewRole == 'Contractor'">
-    <ion-segment [(ngModel)]="tab" >
+  </ion-toolbar>
+  <ion-toolbar no-border *ngIf="NewRole == 'Contractor'">
+    <ion-segment [(ngModel)]="tab">
       <ion-segment-button value="active">Open</ion-segment-button>
       <ion-segment-button value="expired">Closed</ion-segment-button>
     </ion-segment>
@@ -24,9 +24,9 @@
 </ion-header>
 
 <ion-content padding>
-  <div [ngSwitch]="tab" >
+  <div [ngSwitch]="tab">
     <ion-list no-lines *ngSwitchCase="'me'">
-      <ion-card *ngFor="let p of particulars_assign" >
+      <ion-card *ngFor="let p of particulars_assign">
         <ion-card-content style="color: #0d0d0d;">
           <ion-card-title style="font-size: x-large;"><strong>{{p.summery}}</strong></ion-card-title>
           <ion-row>
@@ -45,8 +45,8 @@
             <ion-col size="4"><strong>Unit No</strong></ion-col>
             <ion-col class="text-right">{{p.unit_no}}</ion-col>
           </ion-row>
-          <p class="text-right" >
-            <button ion-item class="link-btn" (click)="viewSR(p)"> View Details</button>
+          <p class="text-right">
+            <a (click)="viewSR(p)"> View Details</a>
             <!--<a class="item" href="#">
               View Details
             </a>-->
@@ -57,7 +57,7 @@
     </ion-list>
     <ion-list no-lines *ngSwitchCase="'active'">
       <ion-card *ngFor="let p of particulars_active">
-        <ion-card-content  style="color: #0d0d0d;">
+        <ion-card-content style="color: #0d0d0d;">
           <ion-card-title style="font-size: x-large;"><strong>{{p.summery}}</strong></ion-card-title>
           <ion-row>
             <ion-col size="4"><strong>Request No</strong></ion-col>
@@ -77,7 +77,7 @@
             <ion-col class="text-right">{{p.unit_no}}</ion-col>
           </ion-row>
           <p class="text-right">
-            <button ion-item class="link-btn" (click)="viewSR(p)"> View Details</button>
+            <a (click)="viewSR(p)"> View Details</a>
             <!--<a class="item" href="#">
               View Details
             </a>-->
@@ -86,10 +86,10 @@
       </ion-card>
       <p *ngIf=!hasActiveSRL text-center style="color: red;text-align: center;"> No New Service Requests To Display</p>
     </ion-list>
-      
+
     <ion-list no-lines *ngSwitchCase="'expired'">
       <ion-card *ngFor="let p of particulars_expired">
-        <ion-card-content  style="color: #0d0d0d;">
+        <ion-card-content style="color: #0d0d0d;">
           <ion-card-title style="font-size: x-large;"><strong>{{p.summery}}</strong></ion-card-title>
           <ion-row>
             <ion-col size="4"><strong>Request No</strong></ion-col>
@@ -108,23 +108,30 @@
             <ion-col class="text-right">{{p.unit_no}}</ion-col>
           </ion-row>
           <p class="text-right">
-            <button ion-item class="link-btn" (click)="viewSR(p)"> View Details</button>
+            <a (click)="viewSR(p)"> View Details</a>
             <!--<a class="item" href="#">
               View Details
             </a>-->
           </p>
         </ion-card-content>
       </ion-card>
-      <p *ngIf=!hasExpiredSRL text-center style="color: red; text-align: center;">No Closed/Resolved Service Request to display</p>
+      <p *ngIf=!hasExpiredSRL text-center style="color: red; text-align: center;">No Closed/Resolved Service Request to
+        display</p>
     </ion-list>
   </div>
   <p id="msg" text-center style="color: red;text-align: center;"></p>
-	  <!--<ion-fab right bottom  *ngIf="NewRole !='Contractor'">
+
+  <ion-fab slot="fixed" vertical="bottom" horizontal="end" *ngIf="NewRole !='Contractor'">
+    <ion-fab-button (click)="addSR()" style="background-color: #f6f6f6;">
+      <ion-icon name="add" style="color:#fff;font-size:30px;"></ion-icon>
+    </ion-fab-button>
+  </ion-fab>
+  <!--<ion-fab right bottom  *ngIf="NewRole !='Contractor'">
       <button ion-fab (click)="addSR()" style="background-color: #f6f6f6;">
         <ion-icon name="create" style="color:#5cb85c;font-size:30px;"></ion-icon>
       </button>
     </ion-fab>-->
-    <!--<ion-fab slot="fixed" vertical="bottom" horizontal="end" *ngIf="NewRole !='Contractor'">
+  <!--<ion-fab slot="fixed" vertical="bottom" horizontal="end" *ngIf="NewRole !='Contractor'">
       <ion-fab-button (click)="addSR()" style="background-color: #f6f6f6;" end>
         <ion-icon  name="create" style="color:#5cb85c;font-size:30px;background: white;"></ion-icon>
       </ion-fab-button>

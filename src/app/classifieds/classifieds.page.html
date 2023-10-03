@@ -1,13 +1,109 @@
-<ion-header [translucent]="true">
+<ion-header translucent="true">
   <ion-toolbar>
-    <ion-title>classifieds</ion-title>
+    <ion-title>Classifieds</ion-title>
+    <ion-buttons slot="start">
+			<ion-back-button defaultHref="dashboard" icon="chevron-back-outline" text="Back"></ion-back-button>
+		  </ion-buttons>
+    <ion-buttons slot="end" style="width:30%">
+      <ion-button><img style="width:70%" src="/assets/images/logo.png"></ion-button>
+    </ion-buttons>
   </ion-toolbar>
-</ion-header>
-
-<ion-content [fullscreen]="true">
-  <ion-header collapse="condense">
-    <ion-toolbar>
-      <ion-title size="large">classifieds</ion-title>
-    </ion-toolbar>
+  <ion-toolbar>
+  <ion-segment [(ngModel)]="tab" >
+    <ion-segment-button value= "active" (click)="fetchData()">
+      Active
+    </ion-segment-button>
+    <ion-segment-button value= "pending" (click)="fetchPending()">
+      Pending
+    </ion-segment-button>
+    </ion-segment>
+    <!--<ion-segment [(ngModel)]="tab" *ngIf = "selected == 0" >
+    <ion-segment-button value= "AllClassifeds" (click)="fetchData()">
+    </ion-segment-button>
+  </ion-segment>-->
+  </ion-toolbar>
   </ion-header>
+
+
+<ion-content >
+	<div  [ngSwitch]="tab">
+		<ion-list *ngSwitchCase = "'AllClassifeds'">
+			<ion-searchbar (ionInput)="getItems($event)" ></ion-searchbar>
+		  <ion-grid no-padding >
+			  <ion-row no-padding >	
+				  <ion-col size="6" *ngFor="let p of temp_classifieds_array"  no-padding style="display:-webkit-flex;-webkit-flex-direction:row">
+					  <ion-card (click)="selectItems(p)" no-padding text-wrap >
+						  <div class="text-center"  style="color: yellow;color: yellow;background-color: #5cb85c;word-wrap:break-word;">
+							  <h3 class="text-center"  style="font-size:1em;color: yellow;">{{p.ad_title}}</h3>
+							  <p class="text-center" style="overflow :hidden;color: white;text-overflow :ellipsis;">
+							    {{p.post_date}}
+							  </p>
+							</div>
+							<img src="{{p.img_array1}}" style="width: 100%; max-height: 50vh;">	
+						  <ion-row>
+							  <ion-col class="text-right" style="color: red">
+								  Exp : {{p.exp_date}}
+							  </ion-col>
+						  </ion-row>
+					  </ion-card>
+				  </ion-col>
+			  </ion-row>
+		  </ion-grid>
+	  </ion-list>
+  </div>
+	<div [ngSwitch]="tab" >
+	  <ion-list no-lines *ngSwitchCase = "'active'" >
+		  <ion-searchbar (ionInput)="getItems($event)" ></ion-searchbar>
+		  <ion-grid no-padding >
+	      <ion-row no-padding >
+				  <ion-col size="6" *ngFor="let p of temp_classifieds_array" no-padding style="display:-webkit-flex;-webkit-flex-direction:row">
+					  <ion-card (click)="selectItems(p)" no-padding text-wrap >
+						  <div class="text-center"  style="color: yellow;color: yellow;background-color: #5cb85c;word-wrap:break-word;">
+							  <h3 class="text-center"  style="font-size:1em;color: yellow;">{{p.ad_title}}</h3>
+							  <p class="text-center" style="overflow :hidden;color: white;text-overflow :ellipsis;">
+							    {{p.post_date}}
+							  </p>
+							</div>
+							<img src="{{p.img_array1}}" style="width: 100%; max-height: 50vh;">	
+						  <ion-row>
+							  <ion-col class="text-right" style="color: red">
+								  Exp : {{p.exp_date}}
+							  </ion-col>
+						  </ion-row>
+					  </ion-card>
+				  </ion-col>
+			  </ion-row>
+		  </ion-grid>
+	  </ion-list>
+    <ion-list no-lines *ngSwitchCase = "'pending'" >
+		  <ion-grid no-padding >
+		    <ion-row no-padding >
+				  <ion-col size="6" *ngFor="let p of temp_pending_classifieds_array" no-padding style="display:-webkit-flex;-webkit-flex-direction:row">
+					  <ion-card (click)="selectItems(p)" no-padding text-wrap >
+						  <div class="text-center"  style="color: yellow;color: yellow;background-color: #5cb85c;word-wrap:break-word;">
+							  <h3 class="text-center"  style="font-size:1em;color: yellow;">{{p.ad_title}}</h3>
+							  <p class="text-center" style="overflow :hidden;color: white;text-overflow :ellipsis;">
+							      {{p.post_date}}
+							  </p>
+							</div>
+							<img src="{{p.img_array1}}" style="width: 100%; max-height: 50vh;">	
+						  <ion-row>
+							  <ion-col class="text-right" style="color: red">
+								  Exp : {{p.exp_date}}
+							  </ion-col>
+						  </ion-row>
+					  </ion-card>
+				</ion-col>
+			</ion-row>
+		</ion-grid>
+	</ion-list>
+</div>
+	<!--<ion-fab right bottom  *ngIf="this.role!= 'Tenant'">
+    <ion-buttons end>
+      <button ion-fab (click)="addClassified()" style="background-color: #f6f6f6;">
+        <ion-icon name="create" style="color:#5cb85c;font-size:30px;"></ion-icon>
+      </button>
+    </ion-buttons>
+  	</ion-fab>
+  -->
 </ion-content>

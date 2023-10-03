@@ -20,17 +20,17 @@
       Event Charges: Rs.{{event_charges}} /-
       <ion-row>
         <ion-col text-left col-6>
-          <a *ngIf=hasLink class="item" href="#" (click)="openLink()">
+          <a *ngIf=hasLink class="item" (click)="openLink()">
               <br />Event Link<br />
           </a>
         </ion-col>
-        <!--<ion-col text-right col-6 style="text-align: center;">
-          <a *ngIf=hasAttachment class="item" href="#" (click)="openWithSystemBrowser()">
+        <ion-col text-right col-6 style="text-align: center;">
+          <a *ngIf=hasAttachment class="item"  (click)="openWithSystemBrowser()">
               <br />Attachment<br />
           </a>
-        </ion-col>-->
+        </ion-col>
       </ion-row>
-      <br/>
+      
       <p id="event_details"></p>
     </ion-card-content>
   </ion-card>

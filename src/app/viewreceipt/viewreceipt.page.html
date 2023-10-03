@@ -2,7 +2,7 @@
   <ion-toolbar>
     <ion-title>Receipt Details</ion-title>
     <ion-buttons slot="start">
-			<ion-back-button defaultHref="dashboard" icon="chevron-back-outline" text="Back"></ion-back-button>
+			<ion-back-button defaultHref="dues" icon="chevron-back-outline" text="Back"></ion-back-button>
 		  </ion-buttons>
     <ion-buttons slot="end" style="width:30%">
       <ion-button><img style="width:70%" src="/assets/images/logo.png"></ion-button>
@@ -55,8 +55,8 @@
 	      		<ion-col text-right>{{p.PayerChequeBranch}}</ion-col>
 	      	</ion-row>
           	<ion-row >
-	      		<ion-col><strong>Comments : </strong></ion-col>
-	      		<p style="padding-left: 5px;padding-right: 5px; margin-top: -5px;">{{p.Comments}}</p>
+	      		<ion-col size="6"><strong>Comments : </strong></ion-col>
+	      		<p style="padding-left: 5px;padding-right: 5px; margin-top: 5px;">{{p.Comments}}</p>
 	      	</ion-row>
 	      	<ion-row>
 	      		
