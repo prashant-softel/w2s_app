@@ -20,9 +20,9 @@ export class GlobalVars {
   MAP_UNIT_BLOCK = 0;
   MAP_BLOCK_DESC = "";
   WAR_VERSION = "";
-  APP_VERSION = "2.0.20230803";
+  APP_VERSION = "2.0.20231001";
   //APP_VERSION = "1.0.20180117";
-  LATEST_APP_VERSION = "2.1.20230803";
+  LATEST_APP_VERSION = "2.1.20231001";
   APP_DOWNLOAD_LINK = "";
   /* Profile Flages    Admin  and Admin Member*/
   APPROVALS_LEASE = 0;
