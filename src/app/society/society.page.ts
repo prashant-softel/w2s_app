@@ -44,8 +44,8 @@ export class SocietyPage implements OnInit {
 	ngOnInit() {
 
 		//this.route.queryParams.subscribe(params => {
-			//let userName = params["userName"];
-			//alert(userName);
+		//let userName = params["userName"];
+		//alert(userName);
 
 		//});
 
@@ -73,7 +73,7 @@ export class SocietyPage implements OnInit {
 				this.loaderView.dismissLoader();
 				if (this.maps.length == 1) {
 
-					this.globalVars.setMapDetails(mapIDArray[0]['map'], mapIDArray[0]['society'], mapIDArray[0]['role'], mapIDArray[0]['tkey'], mapIDArray[0]['societyid'], mapIDArray[0]['unit_id'], mapIDArray[0]['unit_no'], mapIDArray[0]['isblock'], mapIDArray[0]['block_reason']);
+					this.globalVars.setMapDetails(mapIDArray[0]['map'], mapIDArray[0]['society'], mapIDArray[0]['role'], mapIDArray[0]['tkey'], mapIDArray[0]['societyid'] ?? mapIDArray[0]['society_id'], mapIDArray[0]['unit_id'], mapIDArray[0]['unit_no'], mapIDArray[0]['isblock'], mapIDArray[0]['block_reason']);
 					//console.log(this.globalVars.setMapDetails);
 					this.navCtrl.navigateRoot(this.DashboardPage);
 				}
@@ -81,14 +81,14 @@ export class SocietyPage implements OnInit {
 		);
 	}
 	societySelected(m) {
-		this.globalVars.setMapDetails(m.map, m.society, m.role, m.tkey, m.societyid, m.unit_id, m.uni_no, m.isblock, m.block_reason);
+		this.globalVars.setMapDetails(m.map, m.society, m.role, m.tkey, m.societyid ?? m.society_id, m.unit_id, m.uni_no, m.isblock, m.block_reason);
 		//	this.globalVars.setAppMenu('Member');
 		this.navCtrl.navigateRoot(this.DashboardPage);
 
 	}
 
 	isMember(role) {
-		if(role == "Member" || role == "Admin Member" || role == "Super Admin" || role == "Admin" || role == "Contractor" || role == "Tenant" || role == "Manager"){
+		if (role == "Member" || role == "Admin Member" || role == "Super Admin" || role == "Admin" || role == "Contractor" || role == "Tenant" || role == "Manager") {
 			return true;
 		}
 		else {
@@ -97,9 +97,9 @@ export class SocietyPage implements OnInit {
 	}
 
 	logout() {
-		
-			localStorage.clear();
-			this.globalVars.clearStorage();
-			this.navCtrl.navigateRoot(this.LoginPage);
+
+		localStorage.clear();
+		this.globalVars.clearStorage();
+		this.navCtrl.navigateRoot(this.LoginPage);
 	}
 }

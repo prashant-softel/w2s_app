@@ -22,7 +22,6 @@
     "@angular/platform-browser-dynamic": "^16.0.0",
     "@angular/router": "^16.0.0",
     "@ionic-native/camera": "^5.36.0",
-    "@ionic-native/fcm": "^5.36.0",
     "@ionic-native/file": "^5.36.0",
     "@ionic-native/file-path": "^5.36.0",
     "@ionic-native/file-transfer": "^5.36.0",
@@ -57,7 +56,6 @@
     "@typescript-eslint/parser": "5.3.0",
     "cordova-plugin-camera": "^6.0.0",
     "cordova-plugin-device": "2.0.2",
-    "cordova-plugin-fcm-with-dependecy-updated": "^7.8.0",
     "cordova-plugin-file": "^7.0.0",
     "cordova-plugin-file-transfer": "^1.7.1",
     "cordova-plugin-filepath": "^1.6.0",
@@ -95,8 +93,7 @@
         "ANDROIDX_WEBKIT_VERSION": "1.4.0"
       },
       "cordova-plugin-file-transfer": {},
-      "cordova-plugin-filepath": {},
-      "cordova-plugin-fcm-with-dependecy-updated": {}
+      "cordova-plugin-filepath": {}
     },
     "platforms": [
       "android"

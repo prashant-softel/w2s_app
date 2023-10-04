@@ -102,8 +102,8 @@ export class LoginPage implements OnInit {
    
        this.bHasNotification = true;
    */
-
-    if (this.router.getCurrentNavigation()?.extras?.state['notification_details'] != null) {
+    const backStateData = this.router.getCurrentNavigation()?.extras?.state;
+    if (backStateData != null && backStateData['notification_details'] != null) {
       this.bHasNotification = true;
       this.notificationDetails = this.router.getCurrentNavigation()?.extras?.state['notification_details'];
       alert(this.notificationDetails);
@@ -278,6 +278,7 @@ export class LoginPage implements OnInit {
 
     this.globalVars.getUserDetails().then(
       value => {
+        console.log({ "getUserDetails": value });
         if (value != null && value.hasOwnProperty('USER_TOKEN') && value.hasOwnProperty('USER_NAME')) {
           this.globalVars.setUserDetails(value.USER_TOKEN, value.USER_NAME);
 
@@ -285,8 +286,8 @@ export class LoginPage implements OnInit {
             value => {
               this.loaderView.dismissLoader();
 
-              // if (value != null && value.hasOwnProperty('MAP_ID') && value.hasOwnProperty('MAP_SOCIETY_NAME') && value.hasOwnProperty('MAP_USER_ROLE') && value.hasOwnProperty('MAP_SOCIETY_ID')) {
-              if (value != null && value.hasOwnProperty('MAP_ID') && value.hasOwnProperty('MAP_SOCIETY_NAME') && value.hasOwnProperty('MAP_USER_ROLE')) {
+              if (value != null && value.hasOwnProperty('MAP_ID') && value.hasOwnProperty('MAP_SOCIETY_NAME') && value.hasOwnProperty('MAP_USER_ROLE') && value.hasOwnProperty('MAP_SOCIETY_ID')) {
+                // if (value != null && value.hasOwnProperty('MAP_ID') && value.hasOwnProperty('MAP_SOCIETY_NAME') && value.hasOwnProperty('MAP_USER_ROLE')) {
                 this.globalVars.setMapDetails(value.MAP_ID, value.MAP_SOCIETY_NAME, value.MAP_USER_ROLE, value.MAP_TKEY, value.MAP_SOCIETY_ID, value.MAP_UNIT_ID, value.MAP_UNIT_NO, value.UNIT_BLOCK, value.BLOCK_DESC);
                 this.navCtrl.navigateRoot('dashboard');
               }

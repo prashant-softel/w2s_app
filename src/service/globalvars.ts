@@ -20,9 +20,9 @@ export class GlobalVars {
   MAP_UNIT_BLOCK = 0;
   MAP_BLOCK_DESC = "";
   WAR_VERSION = "";
-  APP_VERSION = "2.0.20231001";
+  APP_VERSION = "2.0.20231004";
   //APP_VERSION = "1.0.20180117";
-  LATEST_APP_VERSION = "2.1.20231001";
+  LATEST_APP_VERSION = "2.1.20231004";
   APP_DOWNLOAD_LINK = "";
   /* Profile Flages    Admin  and Admin Member*/
   APPROVALS_LEASE = 0;
@@ -110,7 +110,7 @@ export class GlobalVars {
   }
 
   setMapDetails(mapID, mapSocietyName, mapUserRole, mapTkey, mapSociety_id, mapUnit_id, mapUnit_no, mapUnit_Block, mapBlock_desc) {
-    var obj = { "MAP_ID": mapID, "MAP_SOCIETY_NAME": mapSocietyName, "MAP_USER_ROLE": mapUserRole, "MAP_TKEY": mapTkey, "MAP_SOCIETY_ID": mapSociety_id, mapUnit_id: "MAP_UNIT_ID", mapUnit_no: "MAP_UNIT_NO", mapUnit_Block: "MAP_UNIT_BLOCK", mapBlock_desc: "MAP_BLOCK_DESC" };
+    var obj = { "MAP_ID": mapID, "MAP_SOCIETY_NAME": mapSocietyName, "MAP_USER_ROLE": mapUserRole, "MAP_TKEY": mapTkey, "MAP_SOCIETY_ID": mapSociety_id, "MAP_UNIT_ID": mapUnit_id, "MAP_UNIT_NO": mapUnit_no, "MAP_UNIT_BLOCK": mapUnit_Block, "MAP_BLOCK_DESC": mapBlock_desc };
     this.storage.set('mapDetails', obj);
 
     this.MAP_ID = mapID;

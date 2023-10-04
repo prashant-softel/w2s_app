@@ -142,7 +142,26 @@ export class DashboardPage implements OnInit {
 
   }
 
-  ngOnInit() {
+  resetGlobalData() {
+    console.log({ "dhfghjdsg": "hjdgf" });
+    this.globalVars.getUserDetails().then(
+      value => {
+        if (value != null && value.hasOwnProperty('USER_TOKEN') && value.hasOwnProperty('USER_NAME')) {
+          this.globalVars.setUserDetails(value.USER_TOKEN, value.USER_NAME);
+          console.log({ "Token": "hjdgf" });
+        }
+      }
+    );
+    this.globalVars.getMapDetails().then(
+      value => {
+        this.globalVars.setMapDetails(value.MAP_ID, value.MAP_SOCIETY_NAME, value.MAP_USER_ROLE, value.MAP_TKEY, value.MAP_SOCIETY_ID, value.mapUnit_id, value.mapUnit_no, value.mapUnit_Block, value.MAP_BLOCK_DESC);
+
+      }
+    );
+  }
+
+  async ngOnInit() {
+    await this.resetGlobalData();
     this.loaderView.showLoader('Loading ...');
     this.event_details_array = [];
     this.notice_details_array = [];
@@ -183,6 +202,7 @@ export class DashboardPage implements OnInit {
     //this.role = this.globalVars.MAP_USER_ROLE;
     this.roleWise = this.role;
     console.log(this.role);
+    console.log("api call");
     this.connectServer.getData("Dashboard", null).then(
       resolve => {
         this.loaderView.dismissLoader();
