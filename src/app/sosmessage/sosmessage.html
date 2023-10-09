@@ -1,0 +1,79 @@
+<ion-header translucent="true">
+
+
+<ion-toolbar>
+  <ion-buttons slot="start">
+    <ion-back-button defaultHref="dashboard" icon="chevron-back-outline" text="Back"></ion-back-button>
+    </ion-buttons>
+  <ion-title style="text-align: center;">SOS Alert</ion-title>
+  <ion-buttons slot="end" >
+    <ion-button><img style="width:70%" src="/assets/images/icon_s.png"></ion-button>
+  </ion-buttons>
+</ion-toolbar>
+</ion-header>
+<ion-content padding>
+  <ion-list>
+    <ion-row>
+     <ion-col><p>&nbsp;</p>
+     </ion-col>
+    </ion-row>
+    <ion-row>
+    <ion-col col-3></ion-col>
+    <ion-col col-6 text-center><img src="" style="width: 60%"></ion-col>
+    <ion-col col-3></ion-col>
+    </ion-row>
+    <ion-row>
+      <ion-col col-12 text-center style="text-align: center; margin-top: 0;"><strong>Raise SOS Alert</strong></ion-col>
+    </ion-row>
+    <ion-row>
+      <ion-col col-12 text-center style="text-align: center;">Use SOS only in case of Emergency</ion-col>
+    </ion-row>
+    </ion-list>
+
+
+    <div cards>
+
+      <div class="grid-full">
+        <ion-row>
+          <ion-col>
+            <ion-card (click)="medical()">
+              <ion-list style="text-align: center;">
+                  <h1 orange style="color:red"><ion-icon name="medkit"></ion-icon></h1>
+              <p><strong>Medical Emergency</strong></p>
+          </ion-list>
+            </ion-card>
+          </ion-col>
+  
+          <ion-col>
+            <ion-card (click)="fire()">
+                  <ion-list style="text-align: center;">
+              <h1  style="color:red"> <ion-icon name="flame"></ion-icon></h1>
+              <p><strong>Fire / Gas Leak Emergency</strong></p>
+          </ion-list>
+            </ion-card>
+          </ion-col>
+  
+          <ion-col>
+            <ion-card (click)="lift()">
+                  <ion-list style="text-align: center;">
+              <h1 green style="color:red"> <ion-icon name="sad"></ion-icon></h1>
+              <p><strong>Lift Emergency</strong></p>
+          </ion-list>
+            </ion-card>
+          </ion-col>
+  
+          <ion-col>
+            <ion-card (click)="other()">
+                  <ion-list style="text-align: center;">
+              <h1  style="color:red"><ion-icon name="notifications"></ion-icon></h1>
+              <p><strong>Theft / Others</strong></p>
+          </ion-list>
+            </ion-card>
+         
+          </ion-col>
+        
+        </ion-row>
+      </div>
+  
+    </div>
+  </ion-content>

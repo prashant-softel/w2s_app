@@ -1,0 +1,92 @@
+<ion-header translucent="true">
+
+
+  <ion-toolbar>
+    <ion-buttons slot="start">
+      <ion-back-button defaultHref="dashboard" icon="chevron-back-outline" text="Back"></ion-back-button>
+    </ion-buttons>
+    <ion-title style="text-align: center; ">Expected Visitors</ion-title>
+    <ion-buttons slot="end">
+      <ion-button><img style="width:70%" src="/assets/images/icon_s.png"></ion-button>
+    </ion-buttons>
+  </ion-toolbar>
+</ion-header>
+<ion-content padding>
+  <ion-card>
+    <ion-card-content>
+      <ion-row>
+        <ion-col col-10 text-left>
+          <ion-list>
+            <ion-label style="font-weight: bold;" floating>Contact No </ion-label>
+            <ion-input type="text" style="width: 100%; max-width: 90%;" value=""
+              [(ngModel)]="ExpVisitor.ContactNo"></ion-input>
+          </ion-list>
+        </ion-col>
+        <!-- <ion-col col-2 text-right>
+          <ion-icon name="contact" style="font-size: 3.7rem;margin-top: 25px;" (click)="getContact()"></ion-icon>
+        </ion-col> -->
+      </ion-row>
+
+      <ion-list>
+        <ion-label floating style="font-weight: bold;">First Name </ion-label>
+        <ion-input type="text" style="width: 100%; max-width: 90%; font-weight: bold;" value=""
+          [(ngModel)]="ExpVisitor.fName"></ion-input>
+      </ion-list>
+      <ion-list>
+        <ion-label floating style="font-weight: bold;">Last Name </ion-label>
+        <ion-input type="text" style="width: 100%; max-width: 90%; font-weight: bold;" value=""
+          [(ngModel)]="ExpVisitor.lName"></ion-input>
+      </ion-list>
+      <ion-list>
+
+        <ion-label lines="full" style="font-weight: bold;">Expected Date</ion-label>
+        <ion-input id="date" class="ion-text-start" style=" font-size: 15px;" displayFormat="DD-MM-YYYY"  [(ngModel)]="ExpVisitor.Expdate"></ion-input>
+        <ion-popover trigger="date" size="cover">
+          <ng-template>
+            <ion-datetime style="background-color: #ffffff;" presentation="date" [(ngModel)]="ExpVisitor.Expdate"
+              min="{{todayDate}}" max="2050" displayFormat="DD-MM-YYYY"></ion-datetime>
+          </ng-template>
+        </ion-popover>
+      </ion-list>
+      <ion-list>
+        <ion-label lines="full" style=" font-weight: bold;"> Expected Time</ion-label>
+        <ion-input id="time" class="ion-text-start" style=" font-size: 15px;" displayFormat="h:mm A" [(ngModel)]="ExpVisitor.ExpTime" ></ion-input>
+        <ion-popover trigger="time" size="cover">
+          <ng-template>
+            <ion-datetime style="background-color: #ffffff;" presentation="time" [(ngModel)]="ExpVisitor.ExpTime"
+              displayFormat="h:mm A"></ion-datetime>
+          </ng-template>
+        </ion-popover>
+      </ion-list>
+      <ion-list>
+         <ion-label position="floating" floating style="font-size: 15px; font-weight: bold; margin-top: 10px;">Select Purpose
+            </ion-label>
+          <ion-select style="font-size: 15px;" [(ngModel)]="ExpVisitor.ExpPurpose_id">
+              <ion-select-option text-wrap *ngFor="let p of Purpose_list" value="{{p.purpose_id}}"> {{p.purpose_name}}</ion-select-option>
+            </ion-select>
+          </ion-list>
+      <ion-list>
+        <ion-label floating style="font-weight: bold;">Comments </ion-label>
+        <ion-textarea [(ngModel)]="ExpVisitor.vNote" ></ion-textarea>
+      </ion-list>
+      <ion-row>
+        <ion-col col-3>
+        </ion-col>
+        <ion-col col-6 text-center>
+          <button ion-button style="height: 35px;
+          background-color: #337ab7;
+          color: #fff;
+          width: 100px;
+          font-weight: bold;
+          margin-top: 20px;
+          /* margin-left: 30px; */
+          " block (click)="submit()">Submit</button>
+        </ion-col>
+        <ion-col col-3>
+        </ion-col>
+      </ion-row>
+
+    </ion-card-content>
+  </ion-card>
+
+</ion-content>

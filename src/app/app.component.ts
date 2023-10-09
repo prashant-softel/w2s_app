@@ -10,7 +10,7 @@ import { GlobalVars } from 'src/service/globalvars';
 import { LoaderView } from 'src/service/loaderview';
 import { StorageService } from 'src/service/StorageService';
 import { Router, NavigationExtras } from '@angular/router';
-import { FCM } from 'plugins/cordova-plugin-fcm-with-dependecy-updated/ionic/ngx';
+// import { FCM } from 'plugins/cordova-plugin-fcm-with-dependecy-updated/ionic/ngx';
 // import { FCM } from '@cordova-plugin-fcm-with-dependecy-updated/ionic/ngx';
 //import { PdfViewerModule } from 'ng2-pdf-viewer';
 //import { LoginPage } from '../pages/login/login';
@@ -26,7 +26,7 @@ import { FCM } from 'plugins/cordova-plugin-fcm-with-dependecy-updated/ionic/ngx
     LoaderView,
     NavParams,
     StorageService,
-    FCM
+    // FCM
 
   ],
 
@@ -52,7 +52,7 @@ export class AppComponent {
   pagesMember: Array<{ title: string, component: any }>;
   constructor(
     public platform: Platform,
-    public fcm: FCM,
+    // public fcm: FCM,
     public alertCtrl: AlertController,
 
 
@@ -65,7 +65,7 @@ export class AppComponent {
       { title: 'Dashboard', component: this.DashboardPage },
       { title: 'Helpline Number', component: this.HelplinePage },
       { title: 'Classifieds', component: this.ClassifiedsPage },
-      //{ title: 'Settings', component:this.SettingsPage },
+      { title: 'Settings', component:this.SettingsPage },
       //{title : 'VisitorInPage',component: VisitorInPage},
       { title: 'Link Another Society/Flat', component: this.LinkflatPage },
       { title: 'About Us', component: this.AboutUsPage }
@@ -86,7 +86,9 @@ export class AppComponent {
     this.globalVars.clearStorage();
     this.navCtrl.navigateRoot(this.LoginPage);
   }
-
+  setting(){
+    this.navCtrl.navigateRoot(this.SettingsPage);
+  }
   selectSociety() {
     this.menu.close();
     this.navCtrl.navigateRoot(this.SocietyPage);
@@ -121,7 +123,7 @@ export class AppComponent {
        this.globalVars.DEVICE_OS_VERSION = this.device.version;
        this.globalVars.DEVICE_MANUFACTURER = this.device.manufacturer;
        this.globalVars.DEVICE_SERIAL = this.device.serial;*/
-      this.initFCMPushNotification();
+      // this.initFCMPushNotification();
       // this.statusBar.styleDefault();
       // this.splashScreen.hide();
 
@@ -129,86 +131,86 @@ export class AppComponent {
 
 
   }
-  async initFCMPushNotification() {
-    // alert("initCall");
-    // this.nativeAudio.preloadSimple('visitorNotify', 'asset/visiterIn.mp3'1, 1, 0)
+  //  async initFCMPushNotification() {
+  //   // alert("initCall");
+  //   // this.nativeAudio.preloadSimple('visitorNotify', 'asset/visiterIn.mp3'1, 1, 0)
 
 
-    if (!this.platform.is('cordova')) {
+  //   if (!this.platform.is('cordova')) {
 
-      console.warn("Push notifications not initialized. Cordova is not available - Run in physical device");
-      return;
+  //     console.warn("Push notifications not initialized. Cordova is not available - Run in physical device");
+  //     return;
 
-    }
+  //   }
 
-    try {
-      //  this.nativeAudio.preloadComplex('visitorNotify', 'visitorIn.mp3', 1, 1, 0).then(() => {
-      //this.nativeAudio.play('visitorNotify', () => console.log('uniqueId1 is done playing'));
-      // }, (e) => alert('on error' +e) ).catch((err) => alert(err));
+  //   try {
+  //     //  this.nativeAudio.preloadComplex('visitorNotify', 'visitorIn.mp3', 1, 1, 0).then(() => {
+  //     //this.nativeAudio.play('visitorNotify', () => console.log('uniqueId1 is done playing'));
+  //     // }, (e) => alert('on error' +e) ).catch((err) => alert(err));
 
-      this.fcm.getToken().then(token => {
+  //     this.fcm.getToken().then(token => {
 
-        this.globalVars.DEVICE_ID = token;
-      });
+  //       this.globalVars.DEVICE_ID = token;
+  //     });
 
-      this.fcm.onTokenRefresh().subscribe(token => {
+  //     this.fcm.onTokenRefresh().subscribe(token => {
 
-        this.globalVars.DEVICE_ID = token;
-        this.fcm.getToken();
+  //       this.globalVars.DEVICE_ID = token;
+  //       this.fcm.getToken();
 
-      });
+  //     });
 
-      this.fcm.onNotification().subscribe(async data => {
+  //     this.fcm.onNotification().subscribe(async data => {
 
-        //this.nativeAudio.preloadComplex('visitorNotify', 'visitorIn.mp3', 1, 1, 0).then(() => {
-        //this.nativeAudio.play('visitorNotify', () => console.log('uniqueId1 is done playing'));
-        //}, (e) => alert('on error' +e) ).catch((err) => alert(err));
-        if (data.wasTapped) {
+  //       //this.nativeAudio.preloadComplex('visitorNotify', 'visitorIn.mp3', 1, 1, 0).then(() => {
+  //       //this.nativeAudio.play('visitorNotify', () => console.log('uniqueId1 is done playing'));
+  //       //}, (e) => alert('on error' +e) ).catch((err) => alert(err));
+  //       if (data.wasTapped) {
 
-          this.navCtrl.navigateForward(this.LoginPage, { state: { notification_details: data } });
+  //         this.navCtrl.navigateForward(this.LoginPage, { state: { notification_details: data } });
 
-        }
-        else {
-          // if application open, show popup
-          let confirmAlert = await this.alertCtrl.create({
-            header: data['title'],
-            message: `${data?.['message']}`,
-            buttons: [{
-              text: 'Ignore',
-              role: 'cancel'
-            }, {
-              text: 'View',
-              handler: () => {
-                //TODO: Your logic here
-                //var notificationDetails = JSON.parse(data.additionalData.details);
+  //       }
+  //       else {
+  //         // if application open, show popup
+  //         let confirmAlert = await this.alertCtrl.create({
+  //           header: data['title'],
+  //           message: `${data?.['message']}`,
+  //           buttons: [{
+  //             text: 'Ignore',
+  //             role: 'cancel'
+  //           }, {
+  //             text: 'View',
+  //             handler: () => {
+  //               //TODO: Your logic here
+  //               //var notificationDetails = JSON.parse(data.additionalData.details);
 
-                this.navCtrl.navigateForward(this.LoginPage, { state: { notification_details: data } });
-                //S this.nav.setRoot(LoginPage, {notification_details: data});
-              }
-            }]
-          });
-          await confirmAlert.present();
+  //               this.navCtrl.navigateForward(this.LoginPage, { state: { notification_details: data } });
+  //               //S this.nav.setRoot(LoginPage, {notification_details: data});
+  //             }
+  //           }]
+  //         });
+  //         await confirmAlert.present();
 
-        }
-      });
-    }
-    catch (err) {
-      let confirmAlert6 = await this.alertCtrl.create({
-        header: "Error",
-        message: err.message,
-        buttons: [{
-          text: 'Ignore',
-          role: 'cancel'
-        }, {
-          text: 'View',
-          handler: () => {
-            //TODO: Your logic here
-          }
-        }]
-      });
+  //       }
+  //     });
+  //   }
+  //   catch (err) {
+  //     let confirmAlert6 = await this.alertCtrl.create({
+  //       header: "Error",
+  //       message: err.message,
+  //       buttons: [{
+  //         text: 'Ignore',
+  //         role: 'cancel'
+  //       }, {
+  //         text: 'View',
+  //         handler: () => {
+  //           //TODO: Your logic here
+  //         }
+  //       }]
+  //     });
 
-      await confirmAlert6.present();
-    }
+  //     await confirmAlert6.present();
+  //   }
 
-  }
+  // }
 }

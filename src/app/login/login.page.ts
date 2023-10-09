@@ -11,6 +11,7 @@ import { ViewimposefinePage } from '../viewimposefine/viewimposefine.page';
 import { TakepollPage } from '../takepoll/takepoll.page';
 import { ClassifiedsdetailsPage } from '../classifiedsdetails/classifiedsdetails.page';
 import { ConnectServer } from 'src/service/connectserver';
+// import { VisitorInPage } from '../visitor-in/visitor-in.page';
 import { VisitorInPage } from '../visitor-in/visitor-in.page';
 import { ViewreceiptPage } from '../viewreceipt/viewreceipt.page';
 import { NavigationExtras, Router } from '@angular/router';
@@ -103,11 +104,11 @@ export class LoginPage implements OnInit {
        this.bHasNotification = true;
    */
 
-    if (this.router.getCurrentNavigation()?.extras?.state['notification_details'] != null) {
+   /* if (this.router.getCurrentNavigation()?.extras?.state['notification_details'] != null) {
       this.bHasNotification = true;
       this.notificationDetails = this.router.getCurrentNavigation()?.extras?.state['notification_details'];
       alert(this.notificationDetails);
-    }
+    }*/
     if (this.params.get("activation_details") != null) {
       this.showLogin = false;
       this.userData = this.params.get("activation_details");

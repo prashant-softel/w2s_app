@@ -1,6 +1,7 @@
 import { Injectable } from '@angular/core';
 
 import { StorageService } from './StorageService';
+import { DashboardPage } from 'src/app/dashboard/dashboard.page';
 
 @Injectable()
 export class GlobalVars {
@@ -8,7 +9,7 @@ export class GlobalVars {
   HAS_LOGGED_IN = 'hasLoggedIn';
   USER_TOKEN = "";
   USER_NAME = "";
-
+  Visitor_Approval_Status = "";
   MAP_ID = 0;
   MAP_SOCIETY_NAME = "";
   MAP_USER_ROLE = "";
@@ -47,6 +48,7 @@ export class GlobalVars {
   MEMBER_UNIT_ID = 0;
 
   APP_MENU = [];
+ 
 
   constructor(public storage: StorageService) {
 
@@ -145,6 +147,20 @@ export class GlobalVars {
     //alert(this.APPROVALS_LEASE);
     // alert(this.APPROVALS_CLASSIFIED);
   }
+  setVisitor_Approval_Status(Visitor_Approval_Status)
+   {
+      //var obj = {"MEMBER_DUES_AMOUNT" :dues_amount };
+     // this.storage.set('Visitor_Approval_Status', obj);
+     this.Visitor_Approval_Status=Visitor_Approval_Status;
+     //alert(this.MEMBER_DUES_AMOUNT);
+   }
+   setMemberDuesAmount(dues_amount)
+   {
+      //var obj = {"MEMBER_DUES_AMOUNT" :dues_amount };
+     // this.storage.set('duesAmount', obj);
+     this.MEMBER_DUES_AMOUNT=dues_amount;
+     //alert(this.MEMBER_DUES_AMOUNT);
+   }
   getProfileDetails(): Promise<any> {
     return new Promise((resolve, reject) => {
       resolve(JSON.parse(this.storage.get('profileDetails')));

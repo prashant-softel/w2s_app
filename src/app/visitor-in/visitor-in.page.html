@@ -1,13 +1,298 @@
-<ion-header [translucent]="true">
+<!-- <ion-header [translucent]="true">
   <ion-toolbar>
     <ion-title>visitor-in</ion-title>
   </ion-toolbar>
+</ion-header> -->
+
+<ion-header [translucent]="true">
+
+  
+    <ion-toolbar>
+      <ion-buttons slot="start">
+        <ion-back-button defaultHref="myvisitors" icon="chevron-back-outline" text="Back"></ion-back-button>
+        </ion-buttons>
+      <ion-title>Incoming Visitors</ion-title>
+      <ion-buttons slot="end" style="width:30%">
+      <ion-button><img style="width:50%" src="/assets/images/logo.png"></ion-button>
+     </ion-buttons>
+    </ion-toolbar>
+
 </ion-header>
 
-<ion-content [fullscreen]="true">
+<!-- <ion-content [fullscreen]="true">
   <ion-header collapse="condense">
     <ion-toolbar>
       <ion-title size="large">visitor-in</ion-title>
     </ion-toolbar>
   </ion-header>
+</ion-content> -->
+<ion-content padding [fullscreen]="true">
+
+
+  <ion-list no-lines>
+    <ion-card>
+      <ion-card-content no-padding text-wrap>
+        <ion-row>
+
+          <ion-col col-4 text-left *ngIf="img !=''">
+            <img src="{{img_src}}{{img}}" style="max-height : 50vh;width: 85%;"
+              onerror="this.src='/assets/images/no-image.jpg';">
+          </ion-col>
+          <ion-col col-4 text-left *ngIf="img ==''">
+            <img src="/assets/images/no-image.jpg" style="width: 85%;height: auto; ">
+          </ion-col>
+          <ion-col text-left col-3><strong style="float: left;margin-top: 10px;">Name </strong></ion-col>
+          <ion-col text-right style="white-space: normal !important; width: 50%">
+            <strong style="float: right;margin-top: 10px;">{{FullName}}</strong>
+          </ion-col>
+        </ion-row>
+        <ion-row>
+          <ion-col col-3 text-right>
+          </ion-col>
+          <ion-col col-3 text-left style="margin-top: -15%;margin-left:8%">
+            <strong>Contact No</strong>
+          </ion-col>
+          <ion-col text-wrap text-right style="margin-top: -15%;">
+            <strong><a href="tel:{{Contact}}" class="button button-positive">{{Contact}}</a></strong>
+          </ion-col>
+
+        </ion-row>
+
+        <ion-row>
+          <ion-col col-4>
+            <strong>Purpose :</strong>
+          </ion-col>
+          <ion-col text-right>
+            <strong>{{Purpose}}</strong>
+          </ion-col>
+        </ion-row>
+        <!-- <ion-row>
+          <ion-col col-5>
+            <strong>Status :</strong>
+          </ion-col>
+          <ion-col text-right *ngIf="ApprovalFlag == '1'">
+            <strong>Approved</strong>
+          </ion-col>
+          <ion-col text-right *ngIf="ApprovalFlag == '2'">
+            <strong>Denied</strong>
+          </ion-col>
+          <ion-col text-right *ngIf="ApprovalFlag == '3'">
+            <strong>Without Approval</strong>
+          </ion-col>
+        </ion-row> -->
+        <ion-row *ngIf="company != ''">
+          <ion-col col-5>
+            <strong>Company Name :</strong>
+          </ion-col>
+          <ion-col text-right>
+            <strong>{{company}}</strong>
+          </ion-col>
+        </ion-row>
+        <ion-row *ngIf="VehicleNo != ''">
+          <ion-col col-4>
+            <strong>Vehicle No :</strong>
+          </ion-col>
+          <ion-col text-right>
+            <strong>{{VehicleNo}}</strong>
+          </ion-col>
+        </ion-row>
+        <ion-row *ngIf="Note != ''">
+          <ion-col col-4>
+            <strong>Note :</strong>
+          </ion-col>
+          <ion-col text-right>
+            <strong>{{Note}}</strong>
+          </ion-col>
+        </ion-row>
+        <ion-row *ngIf="approvalstatus != ''">
+          <ion-col col-6>
+            <strong>Approval Status :</strong>
+          </ion-col>
+          <ion-col text-right>
+            <strong>{{approvalstatus}}</strong>
+          </ion-col>
+        </ion-row>
+        <ion-row *ngIf="approvalmsg != ''">
+          <ion-col col-7>
+            <strong>With Approval Message :</strong>
+          </ion-col>
+          <ion-col text-right>
+            <strong>{{approvalmsg}}</strong>
+          </ion-col>
+        </ion-row>
+
+        <ion-row *ngIf="checkoutdesc == '1' && counterforitem == '1'">
+          <ion-col col-7>
+            <strong>Check Out Description :</strong>
+          </ion-col>
+          <ion-col text-right>
+            <a href="#" (click)="selectItems()"><strong>{{checkoutnote}}</strong></a>
+          </ion-col>
+        </ion-row>
+
+        <!-- <ion-row>
+          <ion-col col-4>
+            <strong>In Date :</strong>
+          </ion-col>
+          <ion-col text-right>
+            <strong>{{EnrtyDate}}</strong>
+          </ion-col>
+        </ion-row>
+        <ion-row>
+          <ion-col col-4>
+            <strong>In Time :</strong>
+          </ion-col>
+          <ion-col text-right>
+            <strong>{{EnrtyTime}}</strong>
+          </ion-col>
+        </ion-row>
+        <ion-row>
+          <ion-col col-4>
+            <strong>In Gate :</strong>
+          </ion-col>
+          <ion-col text-right>
+            <strong>{{inGate}}</strong>
+          </ion-col>
+        </ion-row>
+        <ion-row *ngIf="OutDate != '00-00-00'">
+          <ion-col col-4>
+            <strong>Out Date :</strong>
+          </ion-col>
+          <ion-col text-right>
+            <strong>{{OutDate}}</strong>
+          </ion-col>
+        </ion-row>
+
+        <ion-row>
+          <ion-col col-4>
+            <strong>Out Time :</strong>
+          </ion-col>
+          <ion-col text-right *ngIf="OutTime != '00:00'">
+            <strong>{{OutTime}}</strong>
+          </ion-col>
+          <ion-col text-right *ngIf="OutTime == '00:00'">
+            <strong style="color: red;">Still inside</strong>
+          </ion-col>
+        </ion-row>
+
+
+
+        <ion-row *ngIf="OutGate != '0'">
+          <ion-col col-4>
+            <strong>Out Gate :</strong>
+          </ion-col>
+          <ion-col text-right>
+            <strong>{{OutGate}}</strong>
+          </ion-col>
+        </ion-row> -->
+
+
+
+      </ion-card-content>
+    </ion-card>
+    <ion-card *ngIf="enumvalue !== 1 && visitor_approval_value === 0">
+      <ion-card-content no-padding text-wrap>
+        <ion-col col-6>
+          <ion-list radio-group *ngIf="ApproveMsg" [(ngModel)]="approvalvalue">
+            &nbsp;&nbsp;&nbsp;Approve With Note :
+            <ion-list *ngFor="let t of ApproveMsg" style="width: fit-content">
+              <ion-radio item-left value="{{ t }}"></ion-radio>
+              <ion-label style="color: black">{{ t }}</ion-label>
+            </ion-list>
+          </ion-list>
+          &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;OR
+          <ion-list>
+            <ion-input type="text" value="" placeholder="Enter Your Custom Note.."
+              [(ngModel)]="approvalvaluetxt"></ion-input>
+          </ion-list>
+        </ion-col>
+
+      </ion-card-content>
+    </ion-card>
+    <ion-row *ngIf="enumvalue !== 1 && visitor_approval_value === 0">
+      <ion-col text-center col-6>
+        <button ion-button color="primary" block (click)="Insert(1)" style="background-color: green">Approve</button>
+      </ion-col>
+      <ion-col col-6>
+        <button ion-button color="primary" block (click)="Insert(2)" style="background-color: red">Deny</button>
+      </ion-col>
+    </ion-row>
+
+    <!-- <ion-row *ngIf="inserted == '1'">
+      <ion-col col-3>
+      </ion-col>
+      <ion-col col-6 text-center>
+        <button ion-button color="primary" block (click)="MovetoDashBoard()">Go to DashBoard</button>
+      </ion-col>
+      <ion-col col-3>
+      </ion-col>
+    </ion-row>
+    <ion-row>
+      <ion-col col-2>
+      </ion-col>
+      <ion-col col-8 text-center>
+        <button ion-button color="primary" block (click)="GoBack()" [disabled]="disabled">Goto Dashboard</button>
+      </ion-col>
+      <ion-col col-2>
+      </ion-col>
+    </ion-row> -->
+  </ion-list>
+  <hr>
+  <ion-list>
+    <hr>
+    <ion-row>
+      <ion-col *ngIf="counterforitem == '0'" text-left>
+        <a  (click)="CheckOutDesc()" style="margin-left: 10px; float: left; font-size: 15px;">Add CheckOut Description</a>
+      </ion-col>
+      <ion-col text-right>
+        <a  (click)="ViewReport()" style=" margin-right: 10px; float: right; font-size: 15px;">View Past Visit</a>
+      </ion-col>
+    </ion-row>
+  </ion-list>
+
+  <ion-grid style="margin-top: -2px;" *ngIf="checkoutdesc == '1' && counterforitem =='0'"> 
+    <ion-list>
+      <ion-label floating style="margin-left: 20px;">Enter Check Out Description *</ion-label>
+      <ion-input type="text" style="margin-left: 20px; margin-top: 0; width: 100%; max-width: 90%;" value="Enter Checkout Description"  [(ngModel)]="checkoutnote"></ion-input>
+   </ion-list>
+    <ion-list>
+      <ion-card>
+        <img src="{{pathForImage(profileImage)}}" [hidden]="profileImage === null" style="max-height : 50vh"
+        (click) = "selectItems()">
+      </ion-card>
+      <h3 [hidden]="profileImage !== null"></h3>
+      <button ion-button round icon-left style="font-size: large" (click)="presentActionSheet()">
+        <ion-buttons text-center>
+          <ion-icon name="camera" style="margin-left: 20px; " ></ion-icon><span style="margin-left: 5px;">Attach Image</span>
+        </ion-buttons>
+      </button>
+    </ion-list>
+
+    <ion-list>
+      <button ion-button color="primary" block (click)="incert()" style="height: 35px; background-color: #337ab7;color:#fff; width:150px; font-weight: bold; margin-left: 100px; margin-top: 20px;">Add</button>
+    </ion-list>
+  </ion-grid>
+
+  <ion-grid style="margin-top: -2px;" *ngIf="callreport == '1'">
+    <ion-list style="background-color :#488aff ; color: white">
+      <ion-row text-center text-wrap style="background-color :#488aff ; color: white; line-height: 50px;">
+        <ion-col><strong>Date</strong></ion-col>
+        <ion-col><strong>In </strong></ion-col>
+        <ion-col><strong>Out </strong></ion-col>
+        <ion-col><strong>Status</strong></ion-col>
+      </ion-row>
+    </ion-list>
+    <ion-list *ngFor="let v of ReportArray">
+      <ion-row text-center text-wrap style="line-height: 25px; border-bottom:1px solid grey;color:#488aff;">
+        <ion-col>{{v.InDate}}</ion-col>
+        <ion-col>{{v.InTime}}</ion-col>
+        <ion-col *ngIf="v.OutTime === '00:00'" style="color : red">Still Inside</ion-col>
+        <ion-col *ngIf="v.OutTime !== '00:00'">{{v.OutTime}}</ion-col>
+        <!-- <ion-col>{{status[v.Entry_flag]}}</ion-col> -->
+        <ion-col>{{v.Entry_flag}}</ion-col>
+
+
+      </ion-row>
+    </ion-list>
+  </ion-grid>
 </ion-content>

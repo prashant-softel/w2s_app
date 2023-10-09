@@ -35,6 +35,10 @@
               <ion-item *ngFor="let p of pagesMember"  (click)="openPage(p)" lines="none">
                 {{p.title}}
                 </ion-item>
+                <!-- <ion-item lines="none" menuClose ion-item (click)="setting()">
+                  Settings
+              </ion-item> -->
+
                 <ion-item lines="none" menuClose ion-item (click)="logout()">
                   Logout
               </ion-item>

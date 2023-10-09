@@ -1,0 +1,343 @@
+<ion-header translucent="true">
+
+
+  <ion-toolbar>
+    <ion-buttons slot="start">
+      <ion-back-button defaultHref="sosmessage" icon="chevron-back-outline" text="Back"></ion-back-button>
+    </ion-buttons>
+    <ion-title style="text-align: center;"> View SOS Alert</ion-title>
+    <ion-buttons slot="end">
+      <ion-button><img style="width:70%" src="/assets/images/icon_s.png"></ion-button>
+    </ion-buttons>
+  </ion-toolbar>
+</ion-header>
+<ion-content padding>
+  <!-- Medical Emergency  -->
+
+  <ion-list *ngIf="sosFlag=='1'">
+    <ion-card>
+      <ion-card-content>
+        <ion-list>
+          <ion-row>
+            <ion-col col-4></ion-col>
+            <ion-col col-4 text-center>
+              <ion-card style="width: 70px;border-radius: 50%; ">
+                <ion-list style="text-align: center;height: 65px; ">
+                  <ion-icon name="medkit"
+                    style="margin-top: 20%;font-size: 2.0em;color: red; text-align: center;"></ion-icon>
+                </ion-list>
+              </ion-card>
+
+            </ion-col>
+            <ion-col col-4></ion-col>
+          </ion-row>
+          <ion-row style="margin-top: -10px;">
+            <ion-col col-12 style="text-align: center;"><strong>Medical Emergency</strong></ion-col>
+          </ion-row>
+          <ion-row>
+            <ion-col col-12 text-center style="text-align: center;"><strong>Use SOS only in case of
+                Emergency</strong></ion-col>
+          </ion-row>
+        </ion-list>
+        <ion-card>
+          <ion-card-content>
+            <ion-row>
+              <ion-col col-12 text-left><ion-icon name="person"></ion-icon>&nbsp;&nbsp;&nbsp; Society Security</ion-col>
+            </ion-row>
+            <ion-row>
+              <!--<ion-col col-12 text-left><ion-icon name="people"></ion-icon>&nbsp;&nbsp;&nbsp;Committee Members</ion-col>-->
+            </ion-row>
+            <hr>
+            <ion-row *ngIf=" timercall=='1'">
+              <ion-col text-center style="text-align: center;"><STRONG
+                  style="font-size: 40px; text-align: center;">{{maxTime}}</STRONG></ion-col>
+            </ion-row>
+            <ion-row>
+              <ion-col text-center *ngIf="LoaderIcon=='1' && timercall=='0'"
+                style="text-align: center;"><ion-spinner></ion-spinner></ion-col>
+            </ion-row>
+
+            <ion-row><ion-col></ion-col></ion-row>
+
+            <ion-row>
+              <ion-col text-center style="text-align: center;" style="text-align: center;"
+                *ngIf="LoaderIcon=='1'">Fetching responses...</ion-col>
+            </ion-row>
+            <p *ngIf="LoaderIcon=='0'">Help is on the way from. </p>
+            <hr *ngIf="LoaderIcon=='0'">
+            <ion-row *ngIf="LoaderIcon=='0'">
+              <ion-col text-left><strong>Acknowledged by</strong></ion-col>
+            </ion-row>
+
+            <ion-list *ngFor="let p of Respons_Array">
+              <ion-row>
+                <ion-col text-left *ngIf="LoaderIcon=='0'">
+                  <strong>{{p.sos_acked_by}}</strong>
+                </ion-col>
+              </ion-row>
+              <ion-row style="margin-top: -5px;">
+                <ion-col text-left *ngIf="ack_Role!=''" col-6><strong>(&nbsp;{{p.ack_Role}}&nbsp;)</strong></ion-col>
+                <ion-col text-right>
+                  <strong *ngIf="p.gate_no != '0'">Gate No - {{p.gate_no}}</strong></ion-col>
+              </ion-row>
+            </ion-list>
+
+            <ion-list style="text-align: center; margin-top: 10px;" *ngIf="timercall=='1'"><button ion-button
+                color="danger" block (click)="CancleRequest()">CANCLE</button></ion-list>
+
+            <ion-list style="text-align: center; margin-top: 10px;"
+              *ngIf="ResolvedStatus=='0' && sendIssue=='0' && connectDB=='1' && timercall=='0'"><button ion-button
+                color="danger" block (click)="SendMedical()" [disabled]="disabled1">SEND
+                ISSUE</button></ion-list>
+
+            <ion-list style="text-align: center; margin-top: 10px;" *ngIf="sendIssue=='1' && connectDB=='1'"><button
+                ion-button color="primary" block (click)="ResolvedByMe()"
+                [disabled]="disabled">CLOSE</button></ion-list>
+          </ion-card-content>
+        </ion-card>
+      </ion-card-content>
+    </ion-card>
+  </ion-list>
+  <!-- Fire And Gas Section   -->
+  <ion-list *ngIf="sosFlag=='2'">
+    <ion-card>
+      <ion-card-content>
+        <ion-list>
+          <ion-row>
+            <ion-col col-4></ion-col>
+            <ion-col col-4 text-center>
+              <ion-card style="width: 70px;border-radius: 50%;">
+                <ion-list style="text-align: center;height: 65px; ">
+                  <ion-icon name="flame" style="margin-top: 20%;font-size: 2.0em;color: red;"></ion-icon>
+                </ion-list>
+              </ion-card>
+
+            </ion-col>
+            <ion-col col-4></ion-col>
+          </ion-row>
+          <ion-row style="margin-top: -10px;">
+            <ion-col col-12 style="text-align: center;"><strong>Fire / Gas Leak Emergency</strong></ion-col>
+          </ion-row>
+          <ion-row>
+            <ion-col col-12 text-center style="text-align: center;"><strong>Use SOS only in case of
+                Emergency</strong></ion-col>
+          </ion-row>
+        </ion-list>
+        <ion-card>
+          <ion-card-content>
+            <ion-row>
+              <ion-col col-12 text-left><ion-icon name="person"></ion-icon>&nbsp;&nbsp;&nbsp; Society Security</ion-col>
+            </ion-row>
+            <ion-row>
+              <!--<ion-col col-12 text-left><ion-icon name="people"></ion-icon>&nbsp;&nbsp;&nbsp;Committee Members</ion-col>-->
+            </ion-row>
+            <hr>
+            <ion-row *ngIf=" timercall=='1'">
+              <ion-col text-center style="text-align: center;"><STRONG
+                  style="font-size: 40px; text-align: center;">{{maxTime}}</STRONG></ion-col>
+            </ion-row>
+            <ion-row>
+              <ion-col text-center style="text-align: center;"
+                *ngIf="LoaderIcon=='1' && timercall=='0'"><ion-spinner></ion-spinner></ion-col>
+            </ion-row>
+
+            <ion-row><ion-col></ion-col></ion-row>
+            <ion-row>
+              <ion-col text-center style="text-align: center;" *ngIf="LoaderIcon=='1'">Fetching response...</ion-col>
+            </ion-row>
+
+            <p *ngIf="LoaderIcon=='0'">Help is on the way from. </p>
+            <hr *ngIf="LoaderIcon=='0'">
+            <ion-row *ngIf="LoaderIcon=='0'">
+              <ion-col text-left><strong>Acknowledged by</strong></ion-col>
+            </ion-row>
+            <ion-list *ngFor="let p of Respons_Array">
+              <ion-row>
+                <ion-col text-left *ngIf="LoaderIcon=='0'">
+                  <strong>{{p.sos_acked_by}}</strong>
+                </ion-col>
+              </ion-row>
+              <ion-row style="margin-top: -5px;">
+                <ion-col text-left *ngIf="ack_Role!=''" col-6><strong>(&nbsp;{{p.ack_Role}}&nbsp;)</strong></ion-col>
+                <ion-col text-right>
+                  <strong *ngIf="p.gate_no!= 0">Gate No - {{p.gate_no}}</strong></ion-col>
+              </ion-row>
+            </ion-list>
+            <ion-list style="text-align: center; margin-top: 10px;" *ngIf="timercall=='1'"><button ion-button
+                color="danger" block (click)="CancleRequest()">CANCLE</button></ion-list>
+
+            <ion-list style="text-align: center; margin-top: 10px;"
+              *ngIf="ResolvedStatus=='0' && sendIssue=='0' && connectDB=='1' && timercall=='0'"><button ion-button
+                color="danger" block (click)="SendFire()" [disabled]="disabled1">SEND
+                ISSUE</button></ion-list>
+
+
+            <ion-list style="text-align: center; margin-top: 10px;" *ngIf="sendIssue=='1' && connectDB=='1'"><button
+                ion-button color="primary" block (click)="ResolvedByMe()"
+                [disabled]="disabled">CLOSE</button></ion-list>
+          </ion-card-content>
+        </ion-card>
+      </ion-card-content>
+    </ion-card>
+  </ion-list>
+  <!--Lift Emergency section  -->
+
+  <ion-list *ngIf="sosFlag=='3'">
+    <ion-card>
+      <ion-card-content>
+        <ion-list>
+          <ion-row>
+            <ion-col col-4></ion-col>
+            <ion-col col-4 text-center>
+              <ion-card style="width: 70px;border-radius: 50%;">
+                <ion-list style="text-align: center;height: 65px; ">
+                  <ion-icon name="sad" style="margin-top: 20%;font-size: 2.0em;color: red;"></ion-icon>
+                </ion-list>
+              </ion-card>
+
+            </ion-col>
+            <ion-col col-4></ion-col>
+          </ion-row>
+          <ion-row style="margin-top: -10px;">
+            <ion-col col-12 text-center style="text-align: center;"><strong>Lift Emergency</strong></ion-col>
+          </ion-row>
+          <ion-row>
+            <ion-col col-12 text-center style="text-align: center;"><strong>Use SOS only in case of
+                Emergency</strong></ion-col>
+          </ion-row>
+        </ion-list>
+        <ion-card>
+          <ion-card-content>
+            <ion-row>
+              <ion-col col-12 text-left><ion-icon name="person"></ion-icon>&nbsp;&nbsp;&nbsp; Society Security</ion-col>
+            </ion-row>
+            <ion-row>
+            </ion-row>
+            <hr>
+            <ion-row *ngIf=" timercall=='1'">
+              <ion-col text-center style="text-align: center;"><STRONG
+                  style="font-size: 40px;">{{maxTime}}</STRONG></ion-col>
+            </ion-row>
+            <ion-row>
+              <ion-col text-center style="text-align: center;"
+                *ngIf="LoaderIcon=='1' && timercall=='0'"><ion-spinner></ion-spinner></ion-col>
+            </ion-row>
+
+            <ion-row><ion-col></ion-col></ion-row>
+            <ion-row>
+              <ion-col text-center style="text-align: center;" *ngIf="LoaderIcon=='1'">Fetching response...</ion-col>
+            </ion-row>
+            <p *ngIf="LoaderIcon=='0'">Help is on the way from. </p>
+            <hr *ngIf="LoaderIcon=='0'">
+            <ion-row *ngIf="LoaderIcon=='0'">
+              <ion-col text-left><strong>Acknowledged by</strong></ion-col>
+
+            </ion-row>
+            <ion-list *ngFor="let p of Respons_Array">
+              <ion-row>
+                <ion-col text-left *ngIf="LoaderIcon=='0'">
+                  <strong>{{p.sos_acked_by}}</strong>
+                </ion-col>
+              </ion-row>
+              <ion-row style="margin-top: -5px;">
+                <ion-col text-left *ngIf="ack_Role!=''" col-6><strong>(&nbsp;{{p.ack_Role}}&nbsp;)</strong></ion-col>
+                <ion-col text-right>
+                  <strong *ngIf="p.gate_no!= 0">Gate No - {{p.gate_no}}</strong></ion-col>
+              </ion-row>
+            </ion-list>
+            <ion-list *ngIf="timercall=='1'" style="text-align: center; margin-top: 10px;"><button ion-button
+                color="danger" block (click)="CancleRequest()">CANCLE</button></ion-list>
+
+            <ion-list style="text-align: center; margin-top: 10px;"
+              *ngIf="ResolvedStatus=='0' && sendIssue=='0' && connectDB=='1' && timercall=='0'"><button ion-button
+                color="danger" block (click)="SendLift()" [disabled]="disabled1">SEND
+                ISSUE</button></ion-list>
+            <ion-list *ngIf="sendIssue=='1' && connectDB=='1'" style="text-align: center; margin-top: 10px;"><button
+                ion-button color="primary" block (click)="ResolvedByMe()" style="text-align: center;"
+                [disabled]="disabled">CLOSE</button></ion-list>
+          </ion-card-content>
+        </ion-card>
+      </ion-card-content>
+    </ion-card>
+  </ion-list>
+  <!-- Theft / Others  section -->
+  <ion-list *ngIf="sosFlag=='4'">
+    <ion-card>
+      <ion-card-content>
+        <ion-list>
+          <ion-row>
+            <ion-col col-4></ion-col>
+            <ion-col col-4 text-center>
+              <ion-card style="width: 70px;border-radius: 50%;">
+                <ion-list style="text-align: center;height: 65px; ">
+                  <ion-icon name="notifications" style="margin-top: 20%;font-size: 2.0em;color: red;"></ion-icon>
+                </ion-list>
+              </ion-card>
+
+            </ion-col>
+            <ion-col col-4></ion-col>
+          </ion-row>
+          <ion-row style="margin-top: -10px;">
+            <ion-col col-12 text-center style="text-align: center;"><strong>Theft / Others</strong></ion-col>
+          </ion-row>
+          <ion-row>
+            <ion-col col-12 text-center style="text-align: center;"><strong>Use SOS only in case of Emergency</strong></ion-col>
+          </ion-row>
+        </ion-list>
+        <ion-card>
+          <ion-card-content>
+            <ion-row>
+              <ion-col col-12 text-left><ion-icon name="person"></ion-icon>&nbsp;&nbsp;&nbsp; Society Security</ion-col>
+            </ion-row>
+            <ion-row>
+            </ion-row>
+            <hr>
+            <ion-row *ngIf=" timercall=='1'">
+              <ion-col text-center style="text-align: center;"><STRONG style="font-size: 40px;">{{maxTime}}</STRONG></ion-col>
+            </ion-row>
+            <ion-row>
+              <ion-col text-center style="text-align: center;" *ngIf="LoaderIcon=='1' && timercall=='0'"><ion-spinner></ion-spinner></ion-col>
+            </ion-row>
+
+
+            <ion-row><ion-col></ion-col></ion-row>
+            <ion-row>
+              <ion-col text-center style="text-align: center;" *ngIf="LoaderIcon=='1'">Fetching response...</ion-col>
+            </ion-row>
+            <p *ngIf="LoaderIcon=='0'">Help is on the way from. </p>
+            <hr *ngIf="LoaderIcon=='0'">
+            <ion-row *ngIf="LoaderIcon=='0'">
+              <ion-col text-left><strong>Acknowledged by </strong></ion-col>
+
+            </ion-row>
+            <ion-list *ngFor="let p of Respons_Array">
+              <ion-row>
+                <ion-col text-left *ngIf="LoaderIcon=='0'">
+                  <strong >{{p.sos_acked_by}}</strong>
+                </ion-col>
+              </ion-row>
+              <ion-row style="margin-top: -5px;">
+                <ion-col text-left *ngIf="ack_Role!=''" col-6><strong>(&nbsp;{{p.ack_Role}}&nbsp;)</strong></ion-col>
+                <ion-col text-right>
+                  <strong *ngIf="p.gate_no!= 0">Gate No - {{p.gate_no}}</strong></ion-col>
+              </ion-row>
+            </ion-list>
+            <ion-list style="text-align: center; margin-top: 10px;" *ngIf="timercall=='1'"><button ion-button color="danger" block
+                (click)="CancleRequest()">CANCLE</button></ion-list>
+
+            <ion-list style="text-align: center; margin-top: 10px;" *ngIf="ResolvedStatus=='0' && sendIssue=='0' && connectDB=='1'&& timercall=='0'"><button
+                ion-button color="danger" block (click)="SendOther()" [disabled]="disabled1">SEND
+                ISSUE</button></ion-list>
+            <!-- <ion-item  *ngIf="ButtonByStatus=='1'"><button ion-button style="background-color: #f0ad4e;color:#fff;" block (click)="ResolvedByMe()" [disabled]="disabled">ISSUE RESOLVED</button></ion-item>-->
+            <ion-list style="text-align: center; margin-top: 10px;" *ngIf="sendIssue=='1' && connectDB=='1'"><button ion-button color="primary" block
+                (click)="ResolvedByMe()" [disabled]="disabled">CLOSE</button></ion-list>
+          </ion-card-content>
+        </ion-card>
+      </ion-card-content>
+    </ion-card>
+  </ion-list>
+  <ion-list *ngIf="connectDB=='0'">
+    <Strong style="color: red;font-size: 15px;"> This feature is available with Security Manager Service.</Strong>
+
+  </ion-list>
+</ion-content>
