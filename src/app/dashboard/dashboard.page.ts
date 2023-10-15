@@ -6,6 +6,11 @@ import { GlobalVars } from 'src/service/globalvars';
 import { LoaderView } from 'src/service/loaderview';
 import { ConnectServer } from 'src/service/connectserver';
 import { NavigationExtras } from '@angular/router';
+// import { SosmassagePage } from '../sosmassage/sosmassage';
+import { SosMessage } from '../sosmessage/sosmessage';
+import { MyvisitorsPage } from '../myvisitors/myvisitors.page';
+
+
 
 
 enum statusEnum { "Raised" = 1, "Waiting", "In progress", "Completed", "Cancelled" }
@@ -25,10 +30,13 @@ export class DashboardPage implements OnInit {
   tab: string = "society";
   SocietyPage: any = 'society';
   DuesPage: any = 'dues';
+  // SosMessage: any;
+  // MyvisitorsPage: any;
   FeaturesPage: any = 'features';
   EventsPage: any = 'events';
   NoticesPage: any = 'notices';
-  TaskPage: any = 'task'
+  TaskPage: any = 'task';
+  
   ServiceRequestPage: any = 'servicerequest';
   PaymentPage: any = 'payment';
   PhotoAlbumPage: any = 'photoalbum';
@@ -42,8 +50,9 @@ export class DashboardPage implements OnInit {
   TenantsPage: any = 'tenants';
   AddressproofRequest: any = 'address-proof-request';
   ViewregistrationPage: any = 'viewregistration';
-  MyvisitorsPage: any = 'myvisitors';
   ServicesPage: any = 'services';
+  MyvisitorsPage: any = 'myvisitors';
+  SosMessage: any = 'sosmessage';
   data: any;
   //selection:any;
   bill_amount: any;
@@ -733,8 +742,8 @@ export class DashboardPage implements OnInit {
               details: p,
             }
           };
-          this.navCtrl.navigateRoot(this.ServicesPage, navigationExtras);
-          //this.navCtrl.navigateRoot(this.MyvisitorsPage); 
+          // this.navCtrl.navigateRoot(this.ServicesPage, navigationExtras);
+          this.navCtrl.navigateRoot(this.MyvisitorsPage, navigationExtras); 
         }
         else {
           //this.presentAlert(); 
@@ -753,7 +762,9 @@ export class DashboardPage implements OnInit {
           details: p,
         }
       };
-      this.navCtrl.navigateRoot(this.ServicesPage, navigationExtras);
+      // this.navCtrl.navigateRoot(this.ServicesPage, navigationExtras);
+      this.navCtrl.navigateRoot(this.MyvisitorsPage, navigationExtras); 
+
     }
   }
   viewTask() {
@@ -892,6 +903,25 @@ export class DashboardPage implements OnInit {
     // alert("comming Soon!");
     //this.navCtrl.push(AlbumApprovalPage);
   }
+  SOSPage()
+   {
+
+      if(this.AccessUI == "0")
+     {
+      console.log('SOSPage function called');
+      console.log('SosMessage:', this.SosMessage);
+
+        this.navCtrl.navigateRoot(this.SosMessage);
+        // this.navCtrl.navigateRoot('./sosmessage');
+        
+
+     }
+      else
+      {
+        // this.presentAlert(); 
+      }
+     
+   }
   doRefresh(event) {
     console.log('Begin async operation');
 

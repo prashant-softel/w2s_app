@@ -147,12 +147,24 @@ export const routes: Routes = [
     loadComponent: () => import('./servicerequest/servicerequest.page').then(m => m.ServicerequestPage)
   },
   {
+    path: 'sosmessage',
+    loadComponent: () => import ('./sosmessage/sosmessage').then(m => m.SosMessage)
+  },
+  {
     path: 'servicerequestimageview',
     loadComponent: () => import('./servicerequestimageview/servicerequestimageview.page').then(m => m.ServicerequestimageviewPage)
   },
   {
+    path: 'viewsos',
+    loadComponent: () => import ('./viewsos/viewsos').then(m => m.ViewsosPage)
+  },
+  {
     path: 'settings',
     loadComponent: () => import('./settings/settings.page').then(m => m.SettingsPage)
+  },
+  {
+    path: 'expectedvisitor',
+    loadComponent: () => import('./expectedvisitor/expectedvisitor').then(m => m.ExpectedvisitorPage)
   },
   {
     path: 'society',

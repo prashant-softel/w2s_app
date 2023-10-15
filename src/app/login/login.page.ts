@@ -11,6 +11,7 @@ import { ViewimposefinePage } from '../viewimposefine/viewimposefine.page';
 import { TakepollPage } from '../takepoll/takepoll.page';
 import { ClassifiedsdetailsPage } from '../classifiedsdetails/classifiedsdetails.page';
 import { ConnectServer } from 'src/service/connectserver';
+// import { VisitorInPage } from '../visitor-in/visitor-in.page';
 import { VisitorInPage } from '../visitor-in/visitor-in.page';
 import { ViewreceiptPage } from '../viewreceipt/viewreceipt.page';
 import { NavigationExtras, Router } from '@angular/router';

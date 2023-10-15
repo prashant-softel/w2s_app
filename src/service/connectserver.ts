@@ -9,7 +9,8 @@ headers.append('Content-Type', 'application/x-www-form-urlencoded; charset=UTF-8
   headers.append('content-type','application/json');
 @Injectable()
 export class ConnectServer {
-  serverURL='http://way2society.com:8080/W2S/';
+  // serverURL='http://way2society.com:8080/W2S/';
+  serverURL='http://localhost:3706/Unichem_web/';
   //serverURL='https://way2society.com:8443/W2S/';
   API_URL='';
   constructor(public http: HttpClient, private globalVars:GlobalVars ) { }
@@ -66,9 +67,9 @@ export class ConnectServer {
         objData = [];
       }
 
-      // objData['token'] = "wvSn5ujhqo2IgEmOgxIb2ZAGGHR-HbsaeKZZKxciGQItalHa_9fwwsmXiI__fmk_SUplr2GKJz--P_VvX1k5skPK-O-Pqb22JgcWcC2Ac9kT4rWv1N92JcDgbzph-38q";
-      // objData['tkey'] = "MOcChDngKV1DS2tQCFa0CCK5lyZeENyYQMXWvZBALili6YRqLC0lwMUIYw7zqoLsSS-DiPOfTwFKcCGZta8ePFch2IEozdos302wIISBTOjhnIX-EyHbQitV4keF95bHG54Q0npZc2Nk-09J8x5mpQ";
-      // objData['map'] = "3719";
+      //  objData['token'] = "wvSn5ujhqo2IgEmOgxIb2ZAGGHR-HbsaeKZZKxciGQKI9_C3V40SOX52-2mjVxBfVC2QXhQ5St6S3CI0a3Vxks1ufdVEVu3vQX8oMcWP3YsmdtCCPWgcTB8i60jj_M4e";
+      //  objData['tkey'] = "uQm4W95yfSIue7LTJWPf77-96QUgGcr1jFzlZ9eGx4FFrTNFFZDp888Vz_KxsWYEJAFdO0xZjdpFi80KKbIs6mUCUbrqH2LX3TTGqV1rtzSMNuPamGjpwEnk-0GC6qRigwJ2zebEUXWtJC0ejTbJPg";
+      //  objData['map'] = "3737";
       
       objData['token'] = this.globalVars.USER_TOKEN;
       objData['tkey'] = this.globalVars.MAP_TKEY;

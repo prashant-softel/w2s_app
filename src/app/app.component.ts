@@ -65,7 +65,7 @@ export class AppComponent {
       { title: 'Dashboard', component: this.DashboardPage },
       { title: 'Helpline Number', component: this.HelplinePage },
       { title: 'Classifieds', component: this.ClassifiedsPage },
-      //{ title: 'Settings', component:this.SettingsPage },
+      { title: 'Settings', component: this.SettingsPage },
       //{title : 'VisitorInPage',component: VisitorInPage},
       { title: 'Link Another Society/Flat', component: this.LinkflatPage },
       { title: 'About Us', component: this.AboutUsPage }
@@ -86,7 +86,9 @@ export class AppComponent {
     this.globalVars.clearStorage();
     this.navCtrl.navigateRoot(this.LoginPage);
   }
-
+  setting() {
+    this.navCtrl.navigateRoot(this.SettingsPage);
+  }
   selectSociety() {
     this.menu.close();
     this.navCtrl.navigateRoot(this.SocietyPage);
@@ -129,7 +131,7 @@ export class AppComponent {
 
 
   }
-  // async initFCMPushNotification() {
+  //  async initFCMPushNotification() {
   //   // alert("initCall");
   //   // this.nativeAudio.preloadSimple('visitorNotify', 'asset/visiterIn.mp3'1, 1, 0)
 

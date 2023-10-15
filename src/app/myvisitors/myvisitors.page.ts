@@ -7,6 +7,11 @@ import { LoaderView } from 'src/service/loaderview';
 import { ConnectServer } from 'src/service/connectserver';
 import { NavigationExtras } from '@angular/router';
 import * as moment from 'moment';
+// import { VisitorInPage } from '../visitor-in/visitor-in.page';
+import { VisitorInPage } from '../visitor-in/visitor-in.page';
+import { Router } from '@angular/router';
+import { SSL_OP_NO_QUERY_MTU } from 'constants';
+import { ExpectedvisitorPage } from '../expectedvisitor/expectedvisitor';
 
 @Component({
   selector: 'app-myvisitors',
@@ -16,16 +21,20 @@ import * as moment from 'moment';
   imports: [IonicModule, CommonModule, FormsModule]
 })
 export class MyvisitorsPage implements OnInit {
+  VisitorInPage='visitor-in';
+  ExpectedvisitorPage = 'expectedvisitor';
   tab: string = "current";
   Visitor_Inside_Array : Array<any>;
   Visitor_Past_Array : Array<any>;
   Expected_Visitor_Array : Array<any>;
+  
   InsideVisitor:any;
   img_src :any;
   VisitorFeature :any;
   Past_visitor_temp_array :Array<any>;
   constructor(private navCtrl: NavController,
     private globalVars: GlobalVars,
+    private router: Router,
     private connectServer: ConnectServer,
     private platform: Platform,
     private loaderView: LoaderView,
@@ -66,6 +75,8 @@ export class MyvisitorsPage implements OnInit {
             var VisitorInsideList = resolve['response']['visitorinside'];
             for(var i = 0;i < VisitorInsideList.length; i++)
             {
+              
+              this.Visitor_Inside_Array.push(VisitorInsideList[i]);
               this.Visitor_Inside_Array[i]=VisitorInsideList[i];
               this.Visitor_Inside_Array[i]["VisitorName"]=this.Visitor_Inside_Array[i]['Visitor'][0]['FullName'];
               this.Visitor_Inside_Array[i]["VisitorImage"]=this.Visitor_Inside_Array[i]['Visitor'][0]['img'];
@@ -167,12 +178,22 @@ export class MyvisitorsPage implements OnInit {
   {
     viewdata['enumvalue'] = 0;
   }
+
+  let navigationExtras: NavigationExtras = {
+    queryParams: 
+    {
+      details :viewdata,
+    }
+  };
+  this.navCtrl.navigateRoot(this.VisitorInPage,navigationExtras);
   //console.log(viewdata);
-	//this.navCtrl.push(VisitorInPage,{details : viewdata});
+//	// this.navCtrl.push(VisitorInPage,{details : viewdata});
+   // this.router.navigate(['visitor-in'], {queryParams : {details : viewdata}});
 }
 addExpectedVisitor()
 {
-	//this.navCtrl.push(ExpectedvisitorPage);
+	this.navCtrl.navigateRoot(this.ExpectedvisitorPage);
+  
 }
  getItems(ev: any)
 {
