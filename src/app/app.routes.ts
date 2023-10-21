@@ -148,7 +148,7 @@ export const routes: Routes = [
   },
   {
     path: 'sosmessage',
-    loadComponent: () => import ('./sosmessage/sosmessage').then(m => m.SosMessage)
+    loadComponent: () => import('./sosmessage/sosmessage').then(m => m.SosMessage)
   },
   {
     path: 'servicerequestimageview',
@@ -156,7 +156,7 @@ export const routes: Routes = [
   },
   {
     path: 'viewsos',
-    loadComponent: () => import ('./viewsos/viewsos').then(m => m.ViewsosPage)
+    loadComponent: () => import('./viewsos/viewsos').then(m => m.ViewsosPage)
   },
   {
     path: 'settings',
@@ -244,23 +244,23 @@ export const routes: Routes = [
   },
   {
     path: 'cnote',
-    loadComponent: () => import('./cnote/cnote.page').then( m => m.CnotePage)
+    loadComponent: () => import('./cnote/cnote.page').then(m => m.CnotePage)
   },
   {
     path: 'linkflat',
-    loadComponent: () => import('./linkflat/linkflat.page').then( m => m.LinkflatPage)
+    loadComponent: () => import('./linkflat/linkflat.page').then(m => m.LinkflatPage)
   },
   {
     path: 'addservicerequest',
-    loadComponent: () => import('./addservicerequest/addservicerequest.page').then( m => m.AddservicerequestPage)
+    loadComponent: () => import('./addservicerequest/addservicerequest.page').then(m => m.AddservicerequestPage)
   },
   {
     path: 'services',
-    loadComponent: () => import('./services/services.page').then( m => m.ServicesPage)
+    loadComponent: () => import('./services/services.page').then(m => m.ServicesPage)
   },
   {
     path: 'myvisitors',
-    loadComponent: () => import('./myvisitors/myvisitors.page').then( m => m.MyvisitorsPage)
+    loadComponent: () => import('./myvisitors/myvisitors.page').then(m => m.MyvisitorsPage)
   },
   {
     path: 'addtask',
@@ -275,3 +275,16 @@ export const routes: Routes = [
     loadComponent: () => import('./addprovider/addprovider.page').then(m => m.AddProviderPage)
   },
 ];
+// import { Routes } from '@angular/router';
+
+// export const routes: Routes = [
+//   {
+//     path: 'home',
+//     loadComponent: () => import('./home/home.page').then((m) => m.HomePage),
+//   },
+//   {
+//     path: '',
+//     redirectTo: 'home',
+//     pathMatch: 'full',
+//   },
+// ];

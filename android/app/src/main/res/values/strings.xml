@@ -1,0 +1,7 @@
+<?xml version='1.0' encoding='utf-8'?>
+<resources>
+    <string name="app_name">Way2Society</string>
+    <string name="title_activity_main">Way2Society</string>
+    <string name="package_name">com.ionicframework.way2society869487</string>
+    <string name="custom_url_scheme">com.ionicframework.way2society869487</string>
+</resources>

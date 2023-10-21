@@ -2,10 +2,10 @@ import { Component, HostListener, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { IonicModule, NavController, NavParams, Platform } from '@ionic/angular';
-import { GlobalVars } from 'src/service/globalvars';
-import { LoaderView } from 'src/service/loaderview';
-import { ConnectServer } from 'src/service/connectserver';
 import { NavigationExtras } from '@angular/router';
+import { ConnectServer } from 'src/service/connectserver';
+import { LoaderView } from 'src/service/loaderview';
+import { GlobalVars } from 'src/service/globalvars';
 
 @Component({
 	selector: 'app-directory',

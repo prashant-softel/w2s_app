@@ -4,12 +4,16 @@ import { Component, ViewChild } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { IonicModule, NavController, NavParams, MenuController, Platform, AlertController } from '@ionic/angular';
 import { ConnectServer } from 'src/service/connectserver';
-import { IonicStorageModule } from '@ionic/storage-angular';
+// import { IonicStorageModule } from '@ionic/storage-angular';
 
 import { GlobalVars } from 'src/service/globalvars';
+// import { LoaderView } from 'src/service/loaderview';
+// import { StorageService } from 'src/service/StorageService';
+import { Router, NavigationExtras } from '@angular/router';
 import { LoaderView } from 'src/service/loaderview';
 import { StorageService } from 'src/service/StorageService';
-import { Router, NavigationExtras } from '@angular/router';
+import { FcmService } from 'src/service/fcm.service';
+// import { GlobalVars } from 'src/service/globalvars';
 // import { FCM } from 'plugins/cordova-plugin-fcm-with-dependecy-updated/ionic/ngx';
 // import { FCM } from '@cordova-plugin-fcm-with-dependecy-updated/ionic/ngx';
 //import { PdfViewerModule } from 'ng2-pdf-viewer';
@@ -25,8 +29,7 @@ import { Router, NavigationExtras } from '@angular/router';
     , GlobalVars,
     LoaderView,
     NavParams,
-    StorageService,
-    // FCM
+    StorageService
 
   ],
 
@@ -35,10 +38,13 @@ import { Router, NavigationExtras } from '@angular/router';
     HttpClientModule,
     CommonModule,
     FormsModule,
-    IonicStorageModule
+    // IonicStorageModule
   ],
 })
 export class AppComponent {
+
+
+
 
   LoginPage: any = 'login';
   DashboardPage: any = 'dashboard';
@@ -54,12 +60,12 @@ export class AppComponent {
     public platform: Platform,
     // public fcm: FCM,
     public alertCtrl: AlertController,
-
-
+    public fcm: FcmService,
     public globalVars: GlobalVars,
     private navCtrl: NavController,
     public menu: MenuController) {
     // this.initializeApp();
+
 
     this.pagesMember = [
       { title: 'Dashboard', component: this.DashboardPage },
@@ -69,11 +75,15 @@ export class AppComponent {
       //{title : 'VisitorInPage',component: VisitorInPage},
       { title: 'Link Another Society/Flat', component: this.LinkflatPage },
       { title: 'About Us', component: this.AboutUsPage }
-
-
-
-
     ];
+    console.log("dsmghvdhjsgfhj1");
+
+    this.platform.ready().then(() => {
+      console.log("dsmghvdhjsgfhj");
+      this.fcm.initPush();
+    }).catch(e => {
+      console.log({ "initili error": e });
+    });
   }
 
   Dashboard() {
@@ -214,3 +224,28 @@ export class AppComponent {
 
   // }
 }
+
+
+// import { Component } from '@angular/core';
+// import { IonicModule, Platform } from '@ionic/angular';
+// import { FcmService } from '../services/fcm/fcm.service';
+
+// @Component({
+//   selector: 'app-root',
+//   templateUrl: 'app.component.html',
+//   styleUrls: ['app.component.scss'],
+//   standalone: true,
+//   imports: [IonicModule],
+// })
+// export class AppComponent {
+//   constructor(private plateform: Platform,
+//     private fcm: FcmService
+//   ) {
+//     this.plateform.ready().then(() => {
+//       this.fcm.initPush();
+//     }).catch(e => {
+//       console.log({ "initili error": e });
+//     });
+
+//   }
+// }

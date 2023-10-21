@@ -7,7 +7,7 @@ import { LoaderView } from 'src/service/loaderview';
 import { ConnectServer } from 'src/service/connectserver';
 import { NavigationExtras, Router } from '@angular/router';
 import { ActivatedRoute } from '@angular/router';
-import { PhotoViewer } from "@ionic-native/photo-viewer/ngx";
+// import { PhotoViewer } from "@ionic-native/photo-viewer/ngx";
 
 const slideOpts = {
   initialSlide: 2
@@ -22,7 +22,9 @@ const slideOpts = {
     CUSTOM_ELEMENTS_SCHEMA
   ],
   imports: [IonicModule, CommonModule, FormsModule],
-  providers: [PhotoViewer]
+  providers: [
+    // PhotoViewer
+  ]
 })
 export class ViewimagePage implements OnInit {
   image: string;
@@ -41,7 +43,8 @@ export class ViewimagePage implements OnInit {
     private params: NavParams,
     private route: ActivatedRoute,
     private router: Router,
-    public photoViewer: PhotoViewer) {
+    //needtobe public photoViewer: PhotoViewer
+  ) {
     this.imagearray = [];
     this.imagearray1 = [];
 
@@ -94,7 +97,7 @@ export class ViewimagePage implements OnInit {
   }
   public viewImage() {
     var url = this.url + "/" + this.folder + "/" + this.image;
-    this.photoViewer.show(url, this.image);
+    // this.photoViewer.show(url, this.image);
   }
 
 }

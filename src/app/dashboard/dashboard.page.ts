@@ -36,7 +36,7 @@ export class DashboardPage implements OnInit {
   EventsPage: any = 'events';
   NoticesPage: any = 'notices';
   TaskPage: any = 'task';
-  
+
   ServiceRequestPage: any = 'servicerequest';
   PaymentPage: any = 'payment';
   PhotoAlbumPage: any = 'photoalbum';
@@ -155,6 +155,7 @@ export class DashboardPage implements OnInit {
     console.log({ "dhfghjdsg": "hjdgf" });
     this.globalVars.getUserDetails().then(
       value => {
+        console.log({ "getUserDetails": value });
         if (value != null && value.hasOwnProperty('USER_TOKEN') && value.hasOwnProperty('USER_NAME')) {
           this.globalVars.setUserDetails(value.USER_TOKEN, value.USER_NAME);
           console.log({ "Token": "hjdgf" });
@@ -215,7 +216,7 @@ export class DashboardPage implements OnInit {
     this.connectServer.getData("Dashboard", null).then(
       resolve => {
         this.loaderView.dismissLoader();
-
+        console.log({ "resolve['success'] ": resolve['success'] });
         if (resolve['success'] == 1) {
 
 
@@ -743,7 +744,7 @@ export class DashboardPage implements OnInit {
             }
           };
           // this.navCtrl.navigateRoot(this.ServicesPage, navigationExtras);
-          this.navCtrl.navigateRoot(this.MyvisitorsPage, navigationExtras); 
+          this.navCtrl.navigateRoot(this.MyvisitorsPage, navigationExtras);
         }
         else {
           //this.presentAlert(); 
@@ -763,7 +764,7 @@ export class DashboardPage implements OnInit {
         }
       };
       // this.navCtrl.navigateRoot(this.ServicesPage, navigationExtras);
-      this.navCtrl.navigateRoot(this.MyvisitorsPage, navigationExtras); 
+      this.navCtrl.navigateRoot(this.MyvisitorsPage, navigationExtras);
 
     }
   }
@@ -903,25 +904,22 @@ export class DashboardPage implements OnInit {
     // alert("comming Soon!");
     //this.navCtrl.push(AlbumApprovalPage);
   }
-  SOSPage()
-   {
+  SOSPage() {
 
-      if(this.AccessUI == "0")
-     {
+    if (this.AccessUI == "0") {
       console.log('SOSPage function called');
       console.log('SosMessage:', this.SosMessage);
 
-        this.navCtrl.navigateRoot(this.SosMessage);
-        // this.navCtrl.navigateRoot('./sosmessage');
-        
+      this.navCtrl.navigateRoot(this.SosMessage);
+      // this.navCtrl.navigateRoot('./sosmessage');
 
-     }
-      else
-      {
-        // this.presentAlert(); 
-      }
-     
-   }
+
+    }
+    else {
+      // this.presentAlert(); 
+    }
+
+  }
   doRefresh(event) {
     console.log('Begin async operation');
 

@@ -1,0 +1,69 @@
+{
+  "project_info": {
+    "project_number": "835316998680",
+    "firebase_url": "https://ionicfirebase-f2557.firebaseio.com",
+    "project_id": "ionicfirebase-f2557",
+    "storage_bucket": "ionicfirebase-f2557.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:835316998680:android:3a7782ff7775c25b1fd96d",
+        "android_client_info": {
+          "package_name": "com.ionicframework.way2society869487"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "835316998680-q70cd81ohrno658prks0sdmhvi7107np.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAXFX4CyM9vvCzf_fgQDY27In85a5VRB-E"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "835316998680-q70cd81ohrno658prks0sdmhvi7107np.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:835316998680:android:95ba65da0959cc5f",
+        "android_client_info": {
+          "package_name": "io.ionic.starterms123"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "835316998680-q70cd81ohrno658prks0sdmhvi7107np.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAXFX4CyM9vvCzf_fgQDY27In85a5VRB-E"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "835316998680-q70cd81ohrno658prks0sdmhvi7107np.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

@@ -3,38 +3,59 @@ import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { IonicModule } from '@ionic/angular';
 import { Router } from '@angular/router';
+import { finalize } from 'rxjs/operators';
 // import { GlobalVars } from '../../providers/globalvars';
-import { GlobalVars } from 'src/service/globalvars';
+// import { GlobalVars } from 'src/service/globalvars';
 // import { ConnectServer } from '../../providers/connectserver';
-import { ConnectServer } from 'src/service/connectserver';
+// import { ConnectServer } from 'src/service/connectserver';
 // import { LoaderView } from '../../providers/loaderview';
-import { LoaderView } from 'src/service/loaderview';
+// import { LoaderView } from 'src/service/loaderview';
 // import { DashboardPage } from '../dashboard/dashboard';
 import { DashboardPage } from '../dashboard/dashboard.page';
 // import { MyvisitorsPage } from '../myvisitors/myvisitors';
 import { MyvisitorsPage } from '../myvisitors/myvisitors.page';
 // import { NavController, NavParams, ActionSheetController, ToastController, Platform, LoadingController ,Loading } from 'ionic-angular';
 import { NavController, NavParams, ActionSheetController, ToastController, Platform, LoadingController } from '@ionic/angular';
-import { File } from '@ionic-native/file/ngx';
-import { FileTransfer, FileTransferObject } from '@ionic-native/file-transfer/ngx';
-import { FilePath } from '@ionic-native/file-path/ngx';
-import { Camera } from '@ionic-native/camera/ngx';
+// import { File } from '@ionic-native/file/ngx';
+// import { FileTransfer, FileTransferObject } from '@ionic-native/file-transfer/ngx';
+// import { FilePath } from '@ionic-native/file-path/ngx';
+// import { Camera } from '@ionic-native/camera/ngx';
+import { Camera, CameraResultType, CameraSource, Photo } from '@capacitor/camera';
 // import { itemviewpage } from '../itemview/itemview';
 import { ViewimagePage } from '../viewimage/viewimage.page';
 import { IonCardContent } from '@ionic/angular';
 import { ActivatedRoute } from '@angular/router';
+import { LoaderView } from 'src/service/loaderview';
+import { GlobalVars } from 'src/service/globalvars';
+import { ConnectServer } from 'src/service/connectserver';
+import { Directory, Filesystem } from '@capacitor/filesystem';
+import { HttpClient, HttpClientModule } from '@angular/common/http';
 declare var cordova: any;
 
 enum statusEnum { "Approved" = 1, "Denied", "Without Approval" };
 enum priorityEnum { "Critical" = 1, "High", "Medium", "Low" }
+
+const IMAGE_DIR = 'stored-images';
+
+interface LocalFile {
+  name: string;
+  path: string;
+  data: string;
+}
+
 
 @Component({
   selector: 'app-visitor-in',
   templateUrl: './visitor-in.page.html',
   styleUrls: ['./visitor-in.page.scss'],
   standalone: true,
-  imports: [IonicModule, CommonModule, FormsModule],
-  providers: [Camera, FileTransfer, File, FilePath]
+  imports: [IonicModule, CommonModule, FormsModule, HttpClientModule],
+  providers: [
+    // Camera,
+    // FileTransfer,
+    // File
+    // , FilePath
+  ]
 })
 export class VisitorInPage implements OnInit {
   image_id: any;
@@ -53,11 +74,11 @@ export class VisitorInPage implements OnInit {
   inserted: any;
   approvalvaluetxt: any;
   checkoutnote: any;
-  ApproveMsg : Array<any>;
-  ApprovalData : Array<any>;
-  VisitorDetails : Array<any>;
-  fetchVisitorList : Array<any>;
-  displayData : Array<any>;
+  ApproveMsg: Array<any>;
+  ApprovalData: Array<any>;
+  VisitorDetails: Array<any>;
+  fetchVisitorList: Array<any>;
+  displayData: Array<any>;
   FullName: any;
   Contact: any;
   Purpose: any;
@@ -84,13 +105,15 @@ export class VisitorInPage implements OnInit {
   EnableButton: any;
   visitor_approval_value: any;
 
+  images: LocalFile[] = [];
+
   constructor(
     private navCtrl: NavController,
-    private camera: Camera,
-    private transfer: FileTransfer,
-    private file: File,
+    // private camera: Camera,
+    // private transfer: FileTransfer,
+    // private file: File,
     private router: Router,
-    private filePath: FilePath,
+    // private filePath: FilePath,
     public actionSheetCtrl: ActionSheetController,
     public toastCtrl: ToastController,
     public platform: Platform,
@@ -99,7 +122,8 @@ export class VisitorInPage implements OnInit {
     public navParams: NavParams,
     private globalVars: GlobalVars,
     private connectServer: ConnectServer,
-    private route: ActivatedRoute
+    private route: ActivatedRoute,
+    private http: HttpClient,
   ) {
     this.visitor_approval_value = "0";
     this.image_id = "";
@@ -171,9 +195,9 @@ export class VisitorInPage implements OnInit {
     this.VehicleNo = this.displayData['vehicle'];
     this.Note = this.displayData['visitor_note'];
     this.status = this.displayData['status']
-    
-    
-     console.log(this.displayData);
+
+
+    console.log(this.displayData);
     this.visitor_approval_value = this.globalVars.Visitor_Approval_Status;
     console.log('ionViewDidLoad VisitorInPage');
     var mySound = new Audio();
@@ -307,7 +331,7 @@ export class VisitorInPage implements OnInit {
           this.OutGate = this.displayData['Exit_Gate'];
           this.company = this.displayData['company'];
           this.ApprovalFlag = this.displayData['FlagStatus'];
-          console.log('visitor-detail',this.VisitorDetails);
+          console.log('visitor-detail', this.VisitorDetails);
           var VList = VisitorDetailsList['displayData'][0];
           this.fetchVisitorList = VList;
           this.FullName = this.fetchVisitorList['FullName'];
@@ -393,7 +417,7 @@ export class VisitorInPage implements OnInit {
           this.inserted = "1";
           // this.navCtrl.setRoot(MyvisitorsPage);
           this.navCtrl.navigateRoot(this.MyvisitorsPage);
-          this.enumvalue=1;
+          this.enumvalue = 1;
           this.fetchIncommingandOutgiongVIsitor();
         }
       }
@@ -424,75 +448,233 @@ export class VisitorInPage implements OnInit {
       header: 'Select Image Source',
       buttons: [{
         text: 'Load from Library', handler: () => {
-          this.takePicture(this.camera.PictureSourceType.PHOTOLIBRARY);
+          this.takePicture(CameraSource.Photos);
         }
       },
       {
         text: 'Use Camera',
-        handler: () => { this.takePicture(this.camera.PictureSourceType.CAMERA); }
+        handler: () => {
+          this.takePicture(CameraSource.Photos);
+        }
       },
       {
         text: 'Cancel',
         role: 'cancel'
       }]
     });
-     actionSheet.present();
+    actionSheet.present();
   }
-  public takePicture(sourceType) {// Create options for the Camera Dialog
-    var options = {
-      quality: 100,
-      sourceType: sourceType,
-      saveToPhotoAlbum: false,
-      correctOrientation: true
+  async takePicture(sourceType) {
+    const image = await Camera.getPhoto({
+      quality: 90,
+      allowEditing: false,
+      resultType: CameraResultType.Uri,
+      source: sourceType // Camera, Photos or Prompt!
+    });
+
+    if (image) {
+      this.saveImage(image)
+    }
+  }
+  async saveImage(photo: Photo) {
+    const base64Data = await this.readAsBase64(photo);
+
+    const fileName = new Date().getTime() + '.jpeg';
+    const savedFile = await Filesystem.writeFile({
+      path: `${IMAGE_DIR}/${fileName}`,
+      data: base64Data,
+      directory: Directory.Data
+    });
+
+    // Reload the file list
+    // Improve by only loading for the new image and unshifting array!
+    this.loadFiles();
+  }
+  async loadFiles() {
+    this.images = [];
+
+    const loading = await this.loadingCtrl.create({
+      message: 'Loading data...'
+    });
+    await loading.present();
+
+    Filesystem.readdir({
+      path: IMAGE_DIR,
+      directory: Directory.Data
+    })
+      .then(
+        (result) => {
+          this.loadFileData(result.files.map((x) => x.name));
+        },
+        async (err) => {
+          // Folder does not yet exists!
+          await Filesystem.mkdir({
+            path: IMAGE_DIR,
+            directory: Directory.Data
+          });
+        }
+      )
+      .then((_) => {
+        loading.dismiss();
+      });
+  }
+  async loadFileData(fileNames: string[]) {
+    for (let f of fileNames) {
+      const filePath = `${IMAGE_DIR}/${f}`;
+
+      const readFile = await Filesystem.readFile({
+        path: filePath,
+        directory: Directory.Data
+      });
+
+      this.images.push({
+        name: f,
+        path: filePath,
+        data: `data:image/jpeg;base64,${readFile.data}`
+      });
+    }
+  }
+  async startUpload() {
+    var file: LocalFile = this.images[0];
+    const response = await fetch(file.data);
+    const blob = await response.blob();
+    const formData = new FormData();
+    formData.append('file', blob, file.name);
+    this.uploadData(formData);
+  }
+
+  // Upload the formData to our API
+  async uploadData(formData: FormData) {
+    const loading = await this.loadingCtrl.create({
+      message: 'Uploading image...',
+    });
+    await loading.present();
+
+    // Use your own API!
+    // const url = 'http://localhost:8888/images/upload.php';
+    var url = "https://way2society.com/upload_image.php";
+
+
+    this.http.post(url, formData)
+      .pipe(
+        finalize(() => {
+          loading.dismiss();
+        })
+      )
+      .subscribe(res => {
+        if (res['success']) {
+          alert("Image added succcessfully");
+          var p = [];
+          p['tab'] = '0';
+          p['dash'] = "society";
+          this.presentToast('Image successful uploaded.');
+          this.navCtrl.navigateForward("myvisitors");
+        } else {
+          this.presentToast('Error while uploading file.');
+          var p = [];
+          p['tab'] = '0';
+          p['dash'] = "society";
+          this.navCtrl.navigateForward("myvisitors");
+        }
+      });
+  }
+
+  // async deleteImage(file: LocalFile) {
+  //   await Filesystem.deleteFile({
+  //     directory: Directory.Data,
+  //     path: file.path
+  //   });
+  //   this.loadFiles();
+  //   this.presentToast('File removed.');
+  // }
+
+  // https://ionicframework.com/docs/angular/your-first-app/3-saving-photos
+  private async readAsBase64(photo: Photo) {
+    if (this.platform.is('hybrid')) {
+      const file = await Filesystem.readFile({
+        path: photo.path
+      });
+
+      return file.data;
+    }
+    else {
+      // Fetch the photo, read as a blob, then convert to base64 format
+      const response = await fetch(photo.webPath);
+      const blob = await response.blob();
+
+      return await this.convertBlobToBase64(blob) as string;
+    }
+  }
+
+  // Helper function
+  convertBlobToBase64 = (blob: Blob) => new Promise((resolve, reject) => {
+    const reader = new FileReader;
+    reader.onerror = reject;
+    reader.onload = () => {
+      resolve(reader.result);
     };
-    // Get the data of an image
-    this.camera.getPicture(options).then(
-      (imagePath) => {
-        console.log({"imagepath": imagePath});
-        this.myImagePath = imagePath;
-        // Special handling for Android library
-        if (this.platform.is('android') && sourceType === this.camera.PictureSourceType.PHOTOLIBRARY) {
-          this.filePath.resolveNativePath(imagePath).then(
-            filePath => {
-              let correctPath = filePath.substr(0, filePath.lastIndexOf('/') + 1);
-              let currentName = imagePath.substring(imagePath.lastIndexOf('/') + 1, imagePath.lastIndexOf('?'));
-              this.copyFileToLocalDir(correctPath, currentName, this.createFileName());
-            }
-          );
-        }
-        else {
-          var currentName = imagePath.substr(imagePath.lastIndexOf('/') + 1);
-          var correctPath = imagePath.substr(0, imagePath.lastIndexOf('/') + 1);
-          this.copyFileToLocalDir(correctPath, currentName, this.createFileName());
-        }
-      },
-      (err) => {
-        this.presentToast('Error while selecting image.');
-      }
-    );
-  }
+    reader.readAsDataURL(blob);
+  });
+
+
+
+  // public takePicture(sourceType) {// Create options for the Camera Dialog
+  //   //tobeun
+  //   var options = {
+  //     quality: 100,
+  //     sourceType: sourceType,
+  //     saveToPhotoAlbum: false,
+  //     correctOrientation: true
+  //   };
+  //   // Get the data of an image
+  //   this.camera.getPicture(options).then(
+  //     (imagePath) => {
+  //       console.log({ "imagepath": imagePath });
+  //       this.myImagePath = imagePath;
+  //       // Special handling for Android library
+  //       if (this.platform.is('android') && sourceType === this.camera.PictureSourceType.PHOTOLIBRARY) {
+  //         this.filePath.resolveNativePath(imagePath).then(
+  //           filePath => {
+  //             let correctPath = filePath.substr(0, filePath.lastIndexOf('/') + 1);
+  //             let currentName = imagePath.substring(imagePath.lastIndexOf('/') + 1, imagePath.lastIndexOf('?'));
+  //             this.copyFileToLocalDir(correctPath, currentName, this.createFileName());
+  //           }
+  //         );
+  //       }
+  //       else {
+  //         var currentName = imagePath.substr(imagePath.lastIndexOf('/') + 1);
+  //         var correctPath = imagePath.substr(0, imagePath.lastIndexOf('/') + 1);
+  //         this.copyFileToLocalDir(correctPath, currentName, this.createFileName());
+  //       }
+  //     },
+  //     (err) => {
+  //       this.presentToast('Error while selecting image.');
+  //     }
+  //   );
+  // }
 
   // Create a new name for the image
-  private createFileName() {
-    var d = new Date(),
-      n = d.getTime(),
-      newFileName = n + ".jpg";
-    return newFileName;
-  }
+  // private createFileName() {
+  //   var d = new Date(),
+  //     n = d.getTime(),
+  //     newFileName = n + ".jpg";
+  //   return newFileName;
+  // }
 
   // Copy the image to a local folder
-  private copyFileToLocalDir(namePath, currentName, newFileName) {
-    this.file.copyFile(namePath, currentName, cordova.file.dataDirectory, newFileName).then(
-      success => {
-        this.profileImage = newFileName;
-        },
-        
-    
-      error => {
-        this.presentToast('Error while storing file.');
-      }
-    );
-  }
+  // private copyFileToLocalDir(namePath, currentName, newFileName) {
+  //   //tobeun
+  //   this.file.copyFile(namePath, currentName, cordova.file.dataDirectory, newFileName).then(
+  //     success => {
+  //       this.profileImage = newFileName;
+  //     },
+
+
+  //     error => {
+  //       this.presentToast('Error while storing file.');
+  //     }
+  //   );
+  // }
 
   private async presentToast(text) {
     let toast = await this.toastCtrl.create({
@@ -500,7 +682,7 @@ export class VisitorInPage implements OnInit {
       duration: 3000,
       position: 'top'
     });
-     toast.present();
+    toast.present();
   }
   // Always get the accurate path to your apps folder
   public pathForImage(img) {
@@ -531,57 +713,93 @@ export class VisitorInPage implements OnInit {
 
     }
   }
+  // public uploadImage() {
+  //   //tobeun
+  //   // Destination URL
+  //   //var url = "http://192.169.1.117/beta_aws_2/ads";
+  //   // var url = "http://13.232.206.120/upload_image.php";
+  //   var url = "https://way2society.com/upload_image.php";
+  //   //  alert(url);
+  //   // File for Upload
+  //   var targetPath = this.pathForImage(this.profileImage);
+  //   alert(targetPath);
+  //   // File name only
+  //   var filename = this.profileImage;
+  //   //alert(filename);
+  //   var options = {
+  //     fileKey: "file",
+  //     fileName: filename,
+  //     chunkedMode: false,
+  //     mimeType: "multipart/form-data",
+  //     params: { 'fileName': filename, 'entry_id': this.image_id, 'feature': 6, 'token': this.globalVars.USER_TOKEN, 'tkey': this.globalVars.MAP_TKEY }
+  //   };
 
+  //   const fileTransfer: FileTransferObject = this.transfer.create();
 
-  public uploadImage() {
-    // Destination URL
-    //var url = "http://192.169.1.117/beta_aws_2/ads";
-    // var url = "http://13.232.206.120/upload_image.php";
-    var url = "https://way2society.com/upload_image.php";
-    //  alert(url);
-    // File for Upload
-    var targetPath = this.pathForImage(this.profileImage);
-    alert(targetPath);
-    // File name only
-    var filename = this.profileImage;
-    //alert(filename);
-    var options = {
-      fileKey: "file",
-      fileName: filename,
-      chunkedMode: false,
-      mimeType: "multipart/form-data",
-      params: { 'fileName': filename, 'entry_id': this.image_id, 'feature': 6, 'token': this.globalVars.USER_TOKEN, 'tkey': this.globalVars.MAP_TKEY }
-    };
+  //   fileTransfer.upload(targetPath, encodeURI(url), options).then
+  //     (data => {
+  //       //this.loading.dismissAll()
+  //       this.presentToast('Image successful uploaded.');
+  //       alert("Image added succcessfully");
+  //       var p = [];
+  //       p['tab'] = '0';
+  //       p['dash'] = "society";
+  //       this.navCtrl.navigateForward("myvisitors");
+  //     },
+  //       err => {
+  //         //this.loading.dismissAll()
+  //         this.presentToast('Error while uploading file.');
+  //         var p = [];
+  //         p['tab'] = '0';
+  //         p['dash'] = "society";
+  //         this.navCtrl.navigateForward("myvisitors");
+  //       }
+  //     );
+  // }
 
-    const fileTransfer: FileTransferObject = this.transfer.create();
-    // this.loading = this.loadingCtrl.create({content: 'Please wait... \nUploading profile image will take some time.',});
-    //this.loading.present();
+  // public uploadImageOld() {
+  //   //tobeun
+  //   // Destination URL
+  //   //var url = "http://192.169.1.117/beta_aws_2/ads";
+  //   // var url = "http://13.232.206.120/upload_image.php";
+  //   var url = "https://way2society.com/upload_image.php";
+  //   //  alert(url);
+  //   // File for Upload
+  //   var targetPath = this.pathForImage(this.profileImage);
+  //   alert(targetPath);
+  //   // File name only
+  //   var filename = this.profileImage;
+  //   //alert(filename);
+  //   var options = {
+  //     fileKey: "file",
+  //     fileName: filename,
+  //     chunkedMode: false,
+  //     mimeType: "multipart/form-data",
+  //     params: { 'fileName': filename, 'entry_id': this.image_id, 'feature': 6, 'token': this.globalVars.USER_TOKEN, 'tkey': this.globalVars.MAP_TKEY }
+  //   };
 
-    //alert(targetPath);
+  //   const fileTransfer: FileTransferObject = this.transfer.create();
 
-    //this.presentToast(targetPath);
-
-    // Use the FileTransfer to upload the image
-    fileTransfer.upload(targetPath, encodeURI(url), options).then
-      (data => {
-        //this.loading.dismissAll()
-        this.presentToast('Image successful uploaded.');
-        alert("Image added succcessfully");
-        var p = [];
-        p['tab'] = '0';
-        p['dash'] = "society";
-        this.navCtrl.navigateForward("myvisitors");
-      },
-        err => {
-          //this.loading.dismissAll()
-          this.presentToast('Error while uploading file.');
-          var p = [];
-          p['tab'] = '0';
-          p['dash'] = "society";
-          this.navCtrl.navigateForward("myvisitors");
-        }
-      );
-  }
+  //   fileTransfer.upload(targetPath, encodeURI(url), options).then
+  //     (data => {
+  //       //this.loading.dismissAll()
+  //       this.presentToast('Image successful uploaded.');
+  //       alert("Image added succcessfully");
+  //       var p = [];
+  //       p['tab'] = '0';
+  //       p['dash'] = "society";
+  //       this.navCtrl.navigateForward("myvisitors");
+  //     },
+  //       err => {
+  //         //this.loading.dismissAll()
+  //         this.presentToast('Error while uploading file.');
+  //         var p = [];
+  //         p['tab'] = '0';
+  //         p['dash'] = "society";
+  //         this.navCtrl.navigateForward("myvisitors");
+  //       }
+  //     );
+  // }
 
 
 
@@ -614,7 +832,8 @@ export class VisitorInPage implements OnInit {
           this.dbname = resolve['dbname'];
           this.counterforitem = "1";
           console.log(this.image_id + ' ' + this.dbname);
-          this.uploadImage();
+          // this.uploadImage();
+          this.startUpload();
         }
       }
     );

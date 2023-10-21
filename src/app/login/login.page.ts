@@ -94,7 +94,7 @@ export class LoginPage implements OnInit {
   }
 
   ionViewDidLoad() {
-
+    console.log("ionViewDidLoad call");
     ////For Testing notification
     /* this.notificationDetails['map_id'] = 3719;
         this.notificationDetails['page_ref'] = "5";
