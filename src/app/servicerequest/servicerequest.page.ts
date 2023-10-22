@@ -173,6 +173,7 @@ export class ServicerequestPage implements OnInit {
     //this.navCtrl.push(ViewServiceRequestPage, {details : p});
   }
   addSR() {
+    // console.log({ "chxjvkfhd": "this.addSR" });
     this.navCtrl.navigateRoot(this.AddservicerequestPage);
   }
 }

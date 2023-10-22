@@ -29,8 +29,8 @@ import { FcmService } from 'src/service/fcm.service';
     , GlobalVars,
     LoaderView,
     NavParams,
-    StorageService
-
+    StorageService,
+    FcmService
   ],
 
   imports: [

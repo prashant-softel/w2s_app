@@ -12,8 +12,21 @@ import { ConnectServer } from 'src/service/connectserver';
 import { NavigationExtras } from '@angular/router';
 import { ActivatedRoute } from '@angular/router';
 import { ServicerequestPage } from '../servicerequest/servicerequest.page';
+import { Camera, CameraResultType, CameraSource, Photo } from '@capacitor/camera';
+import { Filesystem, Directory } from '@capacitor/filesystem';
+import { finalize } from 'rxjs';
+import { HttpClient } from '@angular/common/http';
+
 
 declare var cordova: any;
+const IMAGE_DIR = 'stored-images';
+
+interface LocalFile {
+  name: string;
+  path: string;
+  data: string;
+}
+
 @Component({
   selector: 'app-addservicerequest',
   templateUrl: './addservicerequest.page.html',
@@ -22,19 +35,20 @@ declare var cordova: any;
   imports: [IonicModule, CommonModule, FormsModule],
   providers: [
     // Camera, FileTransfer, 
-    File
+    // File
     // , FilePath
   ]
 })
 export class AddservicerequestPage implements OnInit {
   ServiceRequestPage: any = 'servicerequest';
+
   userData: { title: any, details: any, priority: any, category: any, sr_id: any; unit_id: any };
   cat_list: Array<any>;
   message: string;
   options: any;
   base64Image: any;
-  lastImage: string = null;
-  myImagePath: string = null;
+  // lastImage: string = null;
+  // myImagePath: string = null;
   loading: any;//Loading;
   servicerequest_id: any;
   Block_unit = 0;
@@ -45,21 +59,27 @@ export class AddservicerequestPage implements OnInit {
   renovationRequestId = 0;
   tenantRequestId = 0;
   AddressProofId = 0;
+  images: LocalFile[] = [];
+  selectedImageName;
+
+
 
   constructor(private navCtrl: NavController,
     private globalVars: GlobalVars,
     private connectServer: ConnectServer,
-    private platform: Platform,
+    private plt: Platform,
     private loaderView: LoaderView,
     private params: NavParams,
     private route: ActivatedRoute,
     // private camera: Camera,
     // private transfer: FileTransfer,
-    private file: File,
+    // private file: File,
     // private filePath: FilePath,
     private actionSheetCtrl: ActionSheetController,
     private toastCtrl: ToastController,
-    private loadingCtrl: LoadingController
+    private loadingCtrl: LoadingController,
+    private http: HttpClient,
+
 
   ) {
     this.userData = { title: "", details: "", priority: "1-Low", category: 1, sr_id: "", unit_id: 0 };
@@ -77,6 +97,7 @@ export class AddservicerequestPage implements OnInit {
   }
 
   ngOnInit() {
+    this.loadFiles();
     if (this.globalVars.MAP_UNIT_BLOCK == undefined) {
       this.Block_unit = 0
     }
@@ -127,7 +148,7 @@ export class AddservicerequestPage implements OnInit {
   }
 
   create() {
-
+    console.log({ "this.rolewise": this.rolewise, "userData.unit_id": this.userData.unit_id, "this.globalVars.MAP_UNIT_ID": this.globalVars.MAP_UNIT_ID });
     if (this.rolewise == "Member") {
       this.userData.unit_id = this.globalVars.MAP_UNIT_ID;
     }
@@ -135,8 +156,13 @@ export class AddservicerequestPage implements OnInit {
       alert("Please select unit no.");
     }
     else {
+      if (!this.userData.unit_id) {
+        alert('Somting went wrong for proper working of app please login again!');
+        return;
+      }
       this.loaderView.showLoader('Please Wait ...');
       this.userData['set'] = "sr";
+
       console.log("this.userData.unit_id : " + this.userData.unit_id);
       /*if(this.userData.category == this.globalVars.RENOVATION_REQUEST_ID || this.userData.category == this.globalVars.ADDRESS_PROOF_REQUEST_ID || this.userData.category == this.globalVars.TENANT_REQUEST_ID)
       {
@@ -170,7 +196,7 @@ export class AddservicerequestPage implements OnInit {
           if (resolve['success'] == 1) {
             this.message = resolve['response']['message'];
             this.servicerequest_id = resolve['response']['new_sr_id'];
-            if (true || this.lastImage === null) {
+            if (this.images.length < 1) {
               var p = [];
               if (this.globalVars.MAP_USER_ROLE == "Member") {
                 p['dash'] = "society";
@@ -212,11 +238,14 @@ export class AddservicerequestPage implements OnInit {
       buttons: [{
         text: 'Load from Library', handler: () => {
           //tobeun     this.takePicture(this.camera.PictureSourceType.PHOTOLIBRARY);
+          this.selectImage(CameraSource.Photos);
         }
       },
       {
         text: 'Use Camera',
         handler: () => {
+          this.selectImage(CameraSource.Camera);
+
           //tobeun  this.takePicture(this.camera.PictureSourceType.CAMERA);
         }
       },
@@ -227,6 +256,55 @@ export class AddservicerequestPage implements OnInit {
     });
     actionSheet.present();
   }
+
+  async selectImage(cameraSource: CameraSource) {
+    const image = await Camera.getPhoto({
+      quality: 90,
+      allowEditing: false,
+      resultType: CameraResultType.Uri,
+      source: cameraSource // Camera, Photos or Prompt!
+    });
+
+    if (image) {
+      this.saveImage(image)
+      // const base64Data = await this.readAsBase64(image);
+
+      // const fileName = new Date().getTime() + '.jpeg';
+
+      // this.images = [];
+      // this.images.push({
+      //   name: fileName,
+      //   path: image.path, //filePath,
+      //   data: `${base64Data}` //`data:image/jpeg;base64,${readFile.data}`
+      // });
+
+
+    }
+  }
+  private async readAsBase64(photo: Photo) {
+    if (this.plt.is('hybrid')) {
+      const file = await Filesystem.readFile({
+        path: photo.path
+      });
+
+      return file.data;
+    }
+    else {
+      const response = await fetch(photo.webPath);
+      const blob = await response.blob();
+      return await this.convertBlobToBase64(blob) as string;
+    }
+  }
+
+  convertBlobToBase64 = (blob: Blob) => new Promise((resolve, reject) => {
+    const reader = new FileReader;
+    reader.onerror = reject;
+    reader.onload = () => {
+      resolve(reader.result);
+    };
+    reader.readAsDataURL(blob);
+  });
+
 
   public takePicture(sourceType) {// Create options for the Camera Dialog
     //tobeun
@@ -292,45 +370,117 @@ export class AddservicerequestPage implements OnInit {
     });
     toast.present();
   }
+  async saveImage(photo: Photo) {
+    const base64Data = await this.readAsBase64(photo);
+
+    const fileName = new Date().getTime() + '.jpeg';
+    this.selectedImageName = fileName;
+    const savedFile = await Filesystem.writeFile({
+      path: `${IMAGE_DIR}/${fileName}`,
+      data: base64Data,
+      directory: Directory.Data
+    });
+
+    // Reload the file list
+    // Improve by only loading for the new image and unshifting array!
+    this.loadFiles();
+
+  }
+  async loadFiles() {
+    this.images = [];
+
+    const loading = await this.loadingCtrl.create({
+      message: 'Loading data...'
+    });
+    await loading.present();
+
+    Filesystem.readdir({
+      path: IMAGE_DIR,
+      directory: Directory.Data
+    })
+      .then(
+        (result) => {
+          this.loadFileData(result.files.map((x) => x.name));
+        },
+        async (err) => {
+          // Folder does not yet exists!
+          await Filesystem.mkdir({
+            path: IMAGE_DIR,
+            directory: Directory.Data
+          });
+        }
+      )
+      .then((_) => {
+        loading.dismiss();
+      });
+  }
+  async loadFileData(fileNames: string[]) {
+    for (let f of fileNames) {
+      const filePath = `${IMAGE_DIR}/${f}`;
+
+      const readFile = await Filesystem.readFile({
+        path: filePath,
+        directory: Directory.Data
+      });
+      if (this.selectedImageName == f) {
+        this.images.push({
+          name: f,
+          path: filePath,
+          data: `data:image/jpeg;base64,${readFile.data}`
+        });
+      }
+    }
+  }
+  // public pathForImage(img) {
+  //   console.log({ "selected img": img });
+  //   if (img === null) {
+  //     return '';
+  //   }
+  //   else {
+  //     let win: any = window;
+  //     // console.log({ "pathForImage3": win.Ionic.WebView.convertFileSrc(this.myImagePath) });
+  //     return win.Ionic.WebView.convertFileSrc(this.myImagePath);
+  //   }
+  // }
 
   // Always get the accurate path to your apps folder
-  public pathForImage(img) {
-    console.log({ "selected img": img });
-    if (img === null) {
-      return '';
-    }
-    else {
-      let win: any = window;
-      console.log({ "pathForImage3": win.Ionic.WebView.convertFileSrc(this.myImagePath) });
-      return win.Ionic.WebView.convertFileSrc(this.myImagePath);
-      //let win: any = window;
-      // return win.Ionic.WebView.convertFileSrc(img)
-      //return this.file.dataDirectory + img;
-      // console.log({"hg": win.Ionic.WebView.convertFileSrc("file:///data/user/0/io.ionic.starter/cache/" + img)});
-      // console.log({ "hgshjsj": win.Ionic.WebView.convertFileSrc(img) });
-      // return win.Ionic.WebView.convertFileSrc(img);
-    }
-  }
-  public pathForImageUpload(img) {
-    //tobeun
-    // console.log({ "selected img": img });
-    // if (img === null) {
-    //   return '';
-    // }
-    // else {
-    //   let win: any = window;
-    //   console.log({ "imgUpload": this.file.dataDirectory + img });
-    //   return this.file.dataDirectory + img;
+  // public pathForImage(img) {
+  //   console.log({ "selected img": img });
+  //   if (img === null) {
+  //     return '';
+  //   }
+  //   else {
+  //     let win: any = window;
+  //     console.log({ "pathForImage3": win.Ionic.WebView.convertFileSrc(this.myImagePath) });
+  //     return win.Ionic.WebView.convertFileSrc(this.myImagePath);
+  //     //let win: any = window;
+  //     // return win.Ionic.WebView.convertFileSrc(img)
+  //     //return this.file.dataDirectory + img;
+  //     // console.log({"hg": win.Ionic.WebView.convertFileSrc("file:///data/user/0/io.ionic.starter/cache/" + img)});
+  //     // console.log({ "hgshjsj": win.Ionic.WebView.convertFileSrc(img) });
+  //     // return win.Ionic.WebView.convertFileSrc(img);
+  //   }
+  // }
+  // public pathForImageUpload(img) {
+  //   //tobeun
+  //   // console.log({ "selected img": img });
+  //   // if (img === null) {
+  //   //   return '';
+  //   // }
+  //   // else {
+  //   //   let win: any = window;
+  //   //   console.log({ "imgUpload": this.file.dataDirectory + img });
+  //   //   return this.file.dataDirectory + img;
 
-    //   // return win.Ionic.WebView.convertFileSrc(this.myImagePath);
-    //   //let win: any = window;
-    //   // return win.Ionic.WebView.convertFileSrc(img)
-    //   //return this.file.dataDirectory + img;
-    //   // console.log({"hg": win.Ionic.WebView.convertFileSrc("file:///data/user/0/io.ionic.starter/cache/" + img)});
-    //   // console.log({ "hgshjsj": win.Ionic.WebView.convertFileSrc(img) });
-    //   // return win.Ionic.WebView.convertFileSrc(img);
-    // }
-  }
+  //   //   // return win.Ionic.WebView.convertFileSrc(this.myImagePath);
+  //   //   //let win: any = window;
+  //   //   // return win.Ionic.WebView.convertFileSrc(img)
+  //   //   //return this.file.dataDirectory + img;
+  //   //   // console.log({"hg": win.Ionic.WebView.convertFileSrc("file:///data/user/0/io.ionic.starter/cache/" + img)});
+  //   //   // console.log({ "hgshjsj": win.Ionic.WebView.convertFileSrc(img) });
+  //   //   // return win.Ionic.WebView.convertFileSrc(img);
+  //   // }
+  // }
   /* public pathForImage1(img) {
      if (img === null) {
        return '';
@@ -347,53 +497,88 @@ export class AddservicerequestPage implements OnInit {
      }
    }*/
 
-  public uploadImage() {
-    //tobeun
-    // // Destination URL
-    // //var url = "http://localhost/beta_aws_3";
-    // var url = "https://way2society.com/upload_image_from_mobile_new.php";
+  // public uploadImageOld() {
 
-    // // File for Upload
-    // var targetPath = this.pathForImageUpload(this.lastImage);
+  //   // Destination URL
+  //   //var url = "http://localhost/beta_aws_3";
+  //   var url = "https://way2society.com/upload_image_from_mobile_new.php";
 
-    // // File name only
-    // var filename = this.lastImage;
-    // var options = {
-    //   fileKey: "file",
-    //   fileName: filename,
-    //   chunkedMode: false,
-    //   mimeType: "multipart/form-data",
-    //   params: { 'fileName': filename, 'service_request_id': this.servicerequest_id, 'feature': 2, 'token': this.globalVars.USER_TOKEN, 'tkey': this.globalVars.MAP_TKEY }
-    // };
+  //   // File for Upload
+  //   var targetPath = this.pathForImageUpload(this.lastImage);
 
-    // const fileTransfer: FileTransferObject = this.transfer.create();
-    // // this.loading = this.loadingCtrl.create({ content: 'Uploading...', });
-    // // this.loading.present();
+  //   // File name only
+  //   var filename = this.lastImage;
+  //   var options = {
+  //     fileKey: "file",
+  //     fileName: filename,
+  //     chunkedMode: false,
+  //     mimeType: "multipart/form-data",
+  //     params: { 'fileName': filename, 'service_request_id': this.servicerequest_id, 'feature': 2, 'token': this.globalVars.USER_TOKEN, 'tkey': this.globalVars.MAP_TKEY }
+  //   };
 
-    // //alert(targetPath);
+  //   const fileTransfer: FileTransferObject = this.transfer.create();
+  //   // this.loading = this.loadingCtrl.create({ content: 'Uploading...', });
+  //   // this.loading.present();
 
-    // //this.presentToast(targetPath);
+  //   //alert(targetPath);
 
-    // // Use the FileTransfer to upload the image
-    // fileTransfer.upload(targetPath, encodeURI(url), options).then
-    //   (data => {
-    //     // this.loading.dismissAll()
-    //     this.presentToast('Image successful uploaded.');
-    //     this.navCtrl.navigateForward("ServicerequestPage");
-    //     //need to handle next page state data
-    //     //this.navCtrl.navigateForward("viewimposefine", { state: p });
+  //   //this.presentToast(targetPath);
 
-
-    //   },
-    //     err => {
-    //       // this.loading.dismissAll()
-    //       console.log({ "error": err });
-    //       this.presentToast('Error while uploading file.');
+  //   // Use the FileTransfer to upload the image
+  //   fileTransfer.upload(targetPath, encodeURI(url), options).then
+  //     (data => {
+  //       // this.loading.dismissAll()
+  //       this.presentToast('Image successful uploaded.');
+  //       this.navCtrl.navigateForward("ServicerequestPage");
+  //       //need to handle next page state data
+  //       //this.navCtrl.navigateForward("viewimposefine", { state: p });
 
 
-    //       //need to handle next page state data
-    //       this.navCtrl.navigateForward("ServicerequestPage");
-    //     }
-    //   );
+  //     },
+  //       err => {
+  //         // this.loading.dismissAll()
+  //         console.log({ "error": err });
+  //         this.presentToast('Error while uploading file.');
+
+
+  //         //need to handle next page state data
+  //         this.navCtrl.navigateForward("ServicerequestPage");
+  //       }
+  //     );
+  // }
+
+  async uploadImage() {
+    const file = this.images[0];
+    const response = await fetch(file.data);
+    const blob = await response.blob();
+    const formData = new FormData();
+    formData.append('file', blob, file.name);
+    formData.append('filename', file.name);
+    const loading = await this.loadingCtrl.create({
+      message: 'Uploading image...',
+    });
+    await loading.present();
+    var url = "https://way2society.com/upload_image_from_mobile.php";
+    this.http.post(url, formData,
+      {
+        params: {
+          'fileName': file.name, 'service_request_id': this.servicerequest_id, 'feature': 2, 'token': this.globalVars.USER_TOKEN, 'tkey': this.globalVars.MAP_TKEY
+        }
+      })
+      .pipe(
+        finalize(() => {
+          loading.dismiss();
+        })
+      )
+      .subscribe(res => {
+        this.presentToast('Image successful uploaded.');
+        this.navCtrl.navigateForward(this.ServiceRequestPage);
+      },
+        err => {
+          // this.presentToast('Error while uploading file.');
+          this.presentToast('Image successful uploaded.');
+          this.navCtrl.navigateForward(this.ServiceRequestPage);
+        }
+      );
   }
 }

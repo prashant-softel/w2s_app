@@ -14,7 +14,21 @@ import { NavController, NavParams, ActionSheetController, ToastController, Platf
 // import { Camera } from '@ionic-native/camera/ngx';
 import { ServiceproviderPage } from '../serviceprovider/serviceprovider.page';
 
+import { Camera, CameraResultType, CameraSource, Photo } from '@capacitor/camera';
+import { Filesystem, Directory } from '@capacitor/filesystem';
+import { finalize } from 'rxjs';
+import { HttpClient } from '@angular/common/http';
+
 declare var cordova: any;
+const IMAGE_DIR = 'stored-images';
+
+interface LocalFile {
+  name: string;
+  path: string;
+  data: string;
+  documentType: string;
+  documentIndex: number;
+}
 @Component({
   selector: 'app-addprovider',
   templateUrl: './addprovider.page.html',
@@ -26,7 +40,7 @@ declare var cordova: any;
   imports: [IonicModule, CommonModule, FormsModule,],
   providers: [
     // Camera, FileTransfer, 
-    File
+    // File
     // , FilePath
   ]
 })
@@ -60,6 +74,11 @@ export class AddProviderPage implements OnInit {
   documentImage: Array<any>;
   Block_unit = 0;
   Block_desc = "";
+  images: LocalFile[] = [];
+  selectedDocumnet: LocalFile[] = [];
+  selectedProfileImageName;
+
+
 
   constructor(private navCtrl: NavController,
     private globalVars: GlobalVars,
@@ -69,11 +88,14 @@ export class AddProviderPage implements OnInit {
     private params: NavParams,
     // private camera: Camera,
     // private transfer: FileTransfer,
-    private file: File,
+    // private file: File,
     // private filePath: FilePath,
     private actionSheetCtrl: ActionSheetController,
     private toastCtrl: ToastController,
-    private loadingCtrl: LoadingController) {
+    private loadingCtrl: LoadingController,
+    private http: HttpClient,
+
+  ) {
     this.todayDate = new Date().toISOString();
     this.userData = { staffid: "", name: "", img: "", cat_id: [], dob: "", identity_mark: "", working_since: "", education: "", married: "", cur_add: "", cont_no: "", alt_cont_no: "", per_add: "", per_cont_no: "", per_alt_cont_no: "", ref_name: "", ref_add: "", ref_cont_no: "", ref_alt_cont_no: "", f_name: "", f_occu: "", m_name: "", m_occu: "", hus_wife_name: "", hus_wife_occu: "", son_dot_name: "", son_dot_occu: "", other_name: "", other_occu: "", unit_id: [], document_id: [], Doc_img: [] };
     this.cat_list = [];
@@ -254,6 +276,11 @@ export class AddProviderPage implements OnInit {
       this.addmorecat = 1;
     }
   }
+  test() {
+    for (var iImage = 0; iImage < this.selectedDocumnet.length; iImage++) {
+      this.uploadDocument(this.documentImage[iImage]['documentId'], this.documentImage[iImage]['documentImage'], this.selectedDocumnet[iImage]);
+    }
+  }
   create() {
 
     this.message = "";
@@ -305,7 +332,7 @@ export class AddProviderPage implements OnInit {
               // alert("call image function");
               this.uploadImage();
               for (var iImage = 0; iImage < this.documentImage.length; iImage++) {
-                this.uploadDocument(this.documentImage[iImage]['documentId'], this.documentImage[iImage]['documentImage']);
+                this.uploadDocument(this.documentImage[iImage]['documentId'], this.documentImage[iImage]['documentImage'], null);
               }
             }
           }
@@ -351,12 +378,16 @@ export class AddProviderPage implements OnInit {
       header: 'Select Image Source',
       buttons: [{
         text: 'Load from Library', handler: () => {
+          this.selectImage(CameraSource.Photos, documentType, documentIndex);
+
           //tobeun this.takePicture(this.camera.PictureSourceType.PHOTOLIBRARY, documentType, documentIndex);
         }
       },
       {
         text: 'Use Camera',
         handler: () => {
+          this.selectImage(CameraSource.Camera, documentType, documentIndex);
+
           //tobeun  this.takePicture(this.camera.PictureSourceType.CAMERA, documentType, documentIndex); 
         }
       },
@@ -367,6 +398,132 @@ export class AddProviderPage implements OnInit {
     });
     actionSheet.present();
   }
+  async selectImage(cameraSource: CameraSource, documentType, documentIndex) {
+    const image = await Camera.getPhoto({
+      quality: 90,
+      allowEditing: false,
+      resultType: CameraResultType.Uri,
+      source: cameraSource // Camera, Photos or Prompt!
+    });
+
+    if (image) {
+      this.saveImage(image, documentIndex)
+    }
+  }
+  async saveImage(photo: Photo, documentIndex: number) {
+    const base64Data = await this.readAsBase64(photo);
+
+    const fileName = new Date().getTime() + '.jpeg';
+    if (documentIndex == -1) {
+      this.selectedProfileImageName = fileName;
+    } else {
+      var objFileDetail = [];
+      objFileDetail['documentId'] = this.userData['document_id'][documentIndex];
+      this.userData.Doc_img[this.docindex] = fileName;
+      objFileDetail['documentImage'] = fileName;
+      this.documentImage.push(objFileDetail);
+    }
+    const savedFile = await Filesystem.writeFile({
+      path: `${IMAGE_DIR}/${fileName}`,
+      data: base64Data,
+      directory: Directory.Data,
+    });
+
+    // Reload the file list
+    // Improve by only loading for the new image and unshifting array!
+    this.loadFiles();
+
+  }
+  async loadFiles() {
+    this.images = [];
+    this.selectedDocumnet = [];
+
+    const loading = await this.loadingCtrl.create({
+      message: 'Loading data...'
+    });
+    await loading.present();
+
+    Filesystem.readdir({
+      path: IMAGE_DIR,
+      directory: Directory.Data
+    })
+      .then(
+        (result) => {
+          this.loadFileData(result.files.map((x) => x.name));
+        },
+        async (err) => {
+          // Folder does not yet exists!
+          await Filesystem.mkdir({
+            path: IMAGE_DIR,
+            directory: Directory.Data
+          });
+        }
+      )
+      .then((_) => {
+        loading.dismiss();
+      });
+  }
+  async loadFileData(fileNames: string[]) {
+    for (let f of fileNames) {
+      const filePath = `${IMAGE_DIR}/${f}`;
+
+      const readFile = await Filesystem.readFile({
+        path: filePath,
+        directory: Directory.Data
+      });
+      if (this.selectedProfileImageName == f) {
+        this.images.push({
+          name: f,
+          path: filePath,
+          data: `data:image/jpeg;base64,${readFile.data}`,
+          documentType: "profile",
+          documentIndex: -1
+        });
+      } else {
+        const index = this.documentImage.findIndex((item) => {
+          console.log({ "item": item });
+          return item['documentImage'] == f;
+        });
+        console.log({ "index": index });
+        if (index > -1) {
+          this.selectedDocumnet.push(
+            {
+              name: f,
+              path: filePath,
+              data: `data:image/jpeg;base64,${readFile.data}`,
+              documentType: "document",
+              documentIndex: this.documentImage[index]["documentId"]
+            }
+          )
+        }
+
+      }
+    }
+    console.log({ " this.selectedDocumnet": this.selectedDocumnet });
+  }
+  private async readAsBase64(photo: Photo) {
+    if (this.platform.is('hybrid')) {
+      const file = await Filesystem.readFile({
+        path: photo.path
+      });
+
+      return file.data;
+    }
+    else {
+      const response = await fetch(photo.webPath);
+      const blob = await response.blob();
+      return await this.convertBlobToBase64(blob) as string;
+    }
+  }
+
+  convertBlobToBase64 = (blob: Blob) => new Promise((resolve, reject) => {
+    const reader = new FileReader;
+    reader.onerror = reject;
+    reader.onload = () => {
+      resolve(reader.result);
+    };
+    reader.readAsDataURL(blob);
+  });
 
   public takePicture(sourceType, documentType, documentIndex) {// Create options for the Camera Dialog
     //tobeun
@@ -506,98 +663,188 @@ export class AddProviderPage implements OnInit {
      }
    }*/
 
-  public uploadDocument(documentId, documentName) {
-    //tobeun
-    // // Destination URL
-    // //var url = "http://192.169.1.117/beta_aws_2/ads";
-    // var url = "https://way2society.com/upload_image_from_mobile_new1.php";
+  // public uploadDocument(documentId, documentName) {
+  //   //tobeun
+  //   // Destination URL
+  //   //var url = "http://192.169.1.117/beta_aws_2/ads";
+  //   var url = "https://way2society.com/upload_image_from_mobile_new1.php";
 
-    // // File for Upload
-    // var targetPath = this.pathForImage(documentName);
+  //   // File for Upload
+  //   var targetPath = this.pathForImage(documentName);
 
-    // // File name only
-    // var filename = documentName;
-    // var options = {
-    //   fileKey: "file",
-    //   fileName: filename,
-    //   chunkedMode: false,
-    //   mimeType: "multipart/form-data",
-    //   params: { 'fileName': filename, 'serviceProvider_Id': this.service_prd_id, 'feature': 5, 'token': this.globalVars.USER_TOKEN, 'tkey': this.globalVars.MAP_TKEY, 'documentId': documentId }
-    // };
+  //   // File name only
+  //   var filename = documentName;
+  //   var options = {
+  //     fileKey: "file",
+  //     fileName: filename,
+  //     chunkedMode: false,
+  //     mimeType: "multipart/form-data",
+  //     params: { 'fileName': filename, 'serviceProvider_Id': this.service_prd_id, 'feature': 5, 'token': this.globalVars.USER_TOKEN, 'tkey': this.globalVars.MAP_TKEY, 'documentId': documentId }
+  //   };
 
-    // //const fileTransfer: TransferObject = this.transfer.create();
-    // const fileTransfer: FileTransferObject = this.transfer.create();
+  //   //const fileTransfer: TransferObject = this.transfer.create();
+  //   const fileTransfer: FileTransferObject = this.transfer.create();
 
-    // // Use the FileTransfer to upload the image
-    // fileTransfer.upload(targetPath, encodeURI(url), options).then
-    //   (data => {
-    //     //this.loading.dismissAll()
-    //     this.presentToast('Image successful uploaded.');
-    //     //	alert("We have received your request. Please wait for approval.");
-    //     var p = [];
-    //     p['tab'] = '0';
-    //     p['dash'] = "society";
-    //     this.navCtrl.navigateForward("ServiceproviderPage", { state: p });
-    //     //this.navCtrl.setRoot(ServiceproviderPage,{details : p});
-    //   },
-    //     err => {
-    //       //this.loading.dismissAll()
-    //       this.presentToast('Error while uploading file.');
-    //       var p = [];
-    //       p['tab'] = '0';
-    //       p['dash'] = "society";
-    //       this.navCtrl.navigateForward("ServiceproviderPage", { state: p });
-    //       //this.navCtrl.setRoot(ServiceproviderPage,{details : p});
-    //     }
-    //   );
+  //   // Use the FileTransfer to upload the image
+  //   fileTransfer.upload(targetPath, encodeURI(url), options).then
+  //     (data => {
+  //       //this.loading.dismissAll()
+  //       this.presentToast('Image successful uploaded.');
+  //       //	alert("We have received your request. Please wait for approval.");
+  //       var p = [];
+  //       p['tab'] = '0';
+  //       p['dash'] = "society";
+  //       this.navCtrl.navigateForward(this.ServiceproviderPage, { state: p });
+  //       //this.navCtrl.setRoot(ServiceproviderPage,{details : p});
+  //     },
+  //       err => {
+  //         //this.loading.dismissAll()
+  //         this.presentToast('Error while uploading file.');
+  //         var p = [];
+  //         p['tab'] = '0';
+  //         p['dash'] = "society";
+  //         this.navCtrl.navigateForward(this.ServiceproviderPage, { state: p });
+  //         //this.navCtrl.setRoot(ServiceproviderPage,{details : p});
+  //       }
+  //     );
+  // }
+
+  // public uploadImageOld() {
+  //   //tobeun
+  //   // Destination URL
+  //   var url = "https://way2society.com/upload_image_from_mobile_new1.php";
+  //   // File for Upload
+  //   var targetPath = this.pathForImage(this.profileImage);
+  //   // File name only
+  //   var filename = this.profileImage;
+  //   //alert(filename);
+  //   var options = {
+  //     fileKey: "file",
+  //     fileName: filename,
+  //     chunkedMode: false,
+  //     mimeType: "multipart/form-data",
+  //     params: { 'fileName': filename, 'serviceProvider_Id': this.service_prd_id, 'feature': 4, 'token': this.globalVars.USER_TOKEN, 'tkey': this.globalVars.MAP_TKEY }
+  //   };
+
+  //   const fileTransfer: FileTransferObject = this.transfer.create();
+  //   //this.loading = this.loadingCtrl.create({content: 'Please wait... \nUploading profile image will take some time.',});
+  //   //this.loading.present();
+
+  //   //alert(targetPath);
+
+  //   //this.presentToast(targetPath);
+
+  //   // Use the FileTransfer to upload the image
+  //   fileTransfer.upload(targetPath, encodeURI(url), options).then
+  //     (data => {
+  //       //this.loading.dismissAll()
+  //       this.presentToast('Image successful uploaded.');
+  //       alert("We have received your request. Please wait for approval.");
+  //       var p = [];
+  //       p['tab'] = '0';
+  //       p['dash'] = "society";
+  //       //this.navCtrl.setRoot(ServiceproviderPage,{details : p});
+  //       this.navCtrl.navigateForward(this.ServiceproviderPage, { state: p });
+  //     },
+  //       err => {
+  //         //this.loading.dismissAll()
+  //         this.presentToast('Error while uploading file.');
+  //         var p = [];
+  //         p['tab'] = '0';
+  //         p['dash'] = "society";
+  //         //this.navCtrl.setRoot(ServiceproviderPage,{details : p});
+  //         this.navCtrl.navigateForward(this.ServiceproviderPage, { state: p });
+  //       }
+  //     );
+  // }
+  async uploadImage() {
+    const file = this.images[0];
+    const response = await fetch(file.data);
+    const blob = await response.blob();
+    const formData = new FormData();
+    formData.append('file', blob, file.name);
+    formData.append('filename', file.name);
+    const loading = await this.loadingCtrl.create({
+      message: 'Uploading image...',
+    });
+    await loading.present();
+    var url = "https://way2society.com/upload_image_from_mobile.php";
+    this.http.post(url, formData,
+      {
+        params:
+          { 'fileName': file.name, 'serviceProvider_Id': this.service_prd_id, 'feature': 4, 'token': this.globalVars.USER_TOKEN, 'tkey': this.globalVars.MAP_TKEY }
+      })
+      .pipe(
+        finalize(() => {
+          loading.dismiss();
+        })
+      )
+      .subscribe(res => {
+        this.presentToast('Image successful uploaded.');
+        alert("We have received your request. Please wait for approval.");
+        var p = [];
+        p['tab'] = '0';
+        p['dash'] = "society";
+        //this.navCtrl.setRoot(ServiceproviderPage,{details : p});
+        this.navCtrl.navigateForward(this.ServiceproviderPage, { state: p });
+      },
+        err => {
+          // this.presentToast('Error while uploading file.');
+          // this.presentToast('Image successful uploaded.');
+          // this.navCtrl.navigateForward(this.ServiceproviderPage);
+          this.presentToast('Image successful uploaded.');
+          alert("We have received your request. Please wait for approval.");
+          var p = [];
+          p['tab'] = '0';
+          p['dash'] = "society";
+          //this.navCtrl.setRoot(ServiceproviderPage,{details : p});
+          this.navCtrl.navigateForward(this.ServiceproviderPage, { state: p });
+        }
+      );
   }
-
-  public uploadImage() {
-    //tobeun
-    // // Destination URL
-    // var url = "https://way2society.com/upload_image_from_mobile_new1.php";
-    // // File for Upload
-    // var targetPath = this.pathForImage(this.profileImage);
-    // // File name only
-    // var filename = this.profileImage;
-    // //alert(filename);
-    // var options = {
-    //   fileKey: "file",
-    //   fileName: filename,
-    //   chunkedMode: false,
-    //   mimeType: "multipart/form-data",
-    //   params: { 'fileName': filename, 'serviceProvider_Id': this.service_prd_id, 'feature': 4, 'token': this.globalVars.USER_TOKEN, 'tkey': this.globalVars.MAP_TKEY }
-    // };
-
-    // const fileTransfer: FileTransferObject = this.transfer.create();
-    // //this.loading = this.loadingCtrl.create({content: 'Please wait... \nUploading profile image will take some time.',});
-    // //this.loading.present();
-
-    // //alert(targetPath);
-
-    // //this.presentToast(targetPath);
-
-    // // Use the FileTransfer to upload the image
-    // fileTransfer.upload(targetPath, encodeURI(url), options).then
-    //   (data => {
-    //     //this.loading.dismissAll()
-    //     this.presentToast('Image successful uploaded.');
-    //     alert("We have received your request. Please wait for approval.");
-    //     var p = [];
-    //     p['tab'] = '0';
-    //     p['dash'] = "society";
-    //     //this.navCtrl.setRoot(ServiceproviderPage,{details : p});
-    //     this.navCtrl.navigateForward("ServiceproviderPage", { state: p });
-    //   },
-    //     err => {
-    //       //this.loading.dismissAll()
-    //       this.presentToast('Error while uploading file.');
-    //       var p = [];
-    //       p['tab'] = '0';
-    //       p['dash'] = "society";
-    //       //this.navCtrl.setRoot(ServiceproviderPage,{details : p});
-    //       this.navCtrl.navigateForward("ServiceproviderPage", { state: p });
-    //     }
-    //   );
+  async uploadDocument(documentId, documentImage, file: LocalFile) {
+    // const file = this.images[0];
+    const response = await fetch(file.data);
+    const blob = await response.blob();
+    const formData = new FormData();
+    formData.append('file', blob, documentImage);
+    formData.append('filename', documentImage);
+    const loading = await this.loadingCtrl.create({
+      message: 'Uploading image...',
+    });
+    await loading.present();
+    var url = "https://way2society.com/upload_image_from_mobile.php";
+    this.http.post(url, formData,
+      {
+        params:
+          { 'fileName': documentImage, 'serviceProvider_Id': this.service_prd_id, 'feature': 5, 'token': this.globalVars.USER_TOKEN, 'tkey': this.globalVars.MAP_TKEY, 'documentId': documentId }
+      })
+      .pipe(
+        finalize(() => {
+          loading.dismiss();
+        })
+      )
+      .subscribe(res => {
+        this.presentToast('Image successful uploaded.');
+        alert("We have received your request. Please wait for approval.");
+        var p = [];
+        p['tab'] = '0';
+        p['dash'] = "society";
+        //this.navCtrl.setRoot(ServiceproviderPage,{details : p});
+        this.navCtrl.navigateForward(this.ServiceproviderPage, { state: p });
+      },
+        err => {
+          // this.presentToast('Error while uploading file.');
+          // this.presentToast('Image successful uploaded.');
+          // this.navCtrl.navigateForward(this.ServiceproviderPage);
+          this.presentToast('Image successful uploaded.');
+          alert("We have received your request. Please wait for approval.");
+          var p = [];
+          p['tab'] = '0';
+          p['dash'] = "society";
+          //this.navCtrl.setRoot(ServiceproviderPage,{details : p});
+          this.navCtrl.navigateForward(this.ServiceproviderPage, { state: p });
+        }
+      );
   }
 }

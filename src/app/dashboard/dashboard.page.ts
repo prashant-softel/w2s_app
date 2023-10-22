@@ -27,6 +27,8 @@ enum priorityEnum { "Critical" = 1, "High", "Medium", "Low" }
 })
 export class DashboardPage implements OnInit {
 
+  LoginPage: any = 'login';
+
   tab: string = "society";
   SocietyPage: any = 'society';
   DuesPage: any = 'dues';
@@ -441,6 +443,14 @@ export class DashboardPage implements OnInit {
             //this.globalVars.setVisitor_Approval_Status(visitor_approval_status);
           }
 
+
+        } else if (resolve['success'] == 0 && resolve['response']['message'] == "Invalid Token") {
+          console.log("invalid tooken");
+          // alert("Session timeout please login again!");
+
+          // localStorage.clear();
+          // this.globalVars.clearStorage(); 
+          // this.navCtrl.navigateRoot(this.LoginPage);
 
         }
 
