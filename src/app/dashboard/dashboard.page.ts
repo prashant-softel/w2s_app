@@ -166,7 +166,7 @@ export class DashboardPage implements OnInit {
     );
     this.globalVars.getMapDetails().then(
       value => {
-        this.globalVars.setMapDetails(value.MAP_ID, value.MAP_SOCIETY_NAME, value.MAP_USER_ROLE, value.MAP_TKEY, value.MAP_SOCIETY_ID, value.mapUnit_id, value.mapUnit_no, value.mapUnit_Block, value.MAP_BLOCK_DESC);
+        this.globalVars.setMapDetails(value.MAP_ID, value.MAP_SOCIETY_NAME, value.MAP_USER_ROLE, value.MAP_TKEY, value.MAP_SOCIETY_ID, value.mapUnit_id ?? value.MAP_UNIT_ID, value.mapUnit_no ?? value.MAP_UNIT_NO, value.mapUnit_Block ?? value.MAP_UNIT_BLOCK, value.MAP_BLOCK_DESC);
 
       }
     );

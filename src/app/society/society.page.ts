@@ -81,7 +81,7 @@ export class SocietyPage implements OnInit {
 		);
 	}
 	societySelected(m) {
-		this.globalVars.setMapDetails(m.map, m.society, m.role, m.tkey, m.societyid ?? m.society_id, m.unit_id, m.uni_no, m.isblock, m.block_reason);
+		this.globalVars.setMapDetails(m.map, m.society, m.role, m.tkey, m.societyid ?? m.society_id, m.unit_id, m.unit_no, m.isblock, m.block_reason);
 		//	this.globalVars.setAppMenu('Member');
 		this.navCtrl.navigateRoot(this.DashboardPage);
 
