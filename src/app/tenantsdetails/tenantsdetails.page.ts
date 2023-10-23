@@ -81,10 +81,13 @@ export class TenantsdetailsPage implements OnInit {
     console.log(JSON.stringify(this.tenant) +" & admin : "+this.admin);
   }
 
-  confirmApprove(p) {
-    let alert = this.alertCtrl.create({
+   async confirmApprove(p) {
+    console.log("confirm");
+    const alert = await this.alertCtrl.create({
       //title: "Approve this Tenant?',
-      message: '',
+      
+      header: 'Approve this tenant?',
+      message: 'Do you want to Approve this tenant',
       buttons: [
         {
           text: 'Cancel',
@@ -97,11 +100,13 @@ export class TenantsdetailsPage implements OnInit {
           text: 'Approve',
           handler: () => {
            this.ApproveIt(p);
+          
+          // alert("approved");
           }
         }
       ]
     });
-    //alert.present();
+    await alert.present();
   }
 
   confirmRemove(p) {

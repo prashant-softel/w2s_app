@@ -64,7 +64,7 @@ export class TenantsPage implements OnInit {
       this.selected = 1; //show pending tab
     }
     this.fetchTenants();
-    
+    console.log(this.fetchTenants());
   }
   fetchTenants(){
     this.loaderView.showLoader('Loading');

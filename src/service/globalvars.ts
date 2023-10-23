@@ -1,4 +1,5 @@
-import { Injectable } from '@angular/core';
+import { Injectable, InjectionToken } from '@angular/core';
+// export const LOADER_TIMEOUT = new InjectionToken<number>('loaderTimeout');
 
 import { StorageService } from './StorageService';
 import { DashboardPage } from 'src/app/dashboard/dashboard.page';
@@ -6,6 +7,7 @@ import { DashboardPage } from 'src/app/dashboard/dashboard.page';
 @Injectable()
 export class GlobalVars {
 
+  LOADER_TIMEOUT = 5000;
   HAS_LOGGED_IN = 'hasLoggedIn';
   USER_TOKEN = "";
   USER_NAME = "";
@@ -41,6 +43,7 @@ export class GlobalVars {
   MEMBER_DUES_AMOUNT = 0;
   LoginID = 0;
   HOST_NAME = "https://way2society.com/"; //Server
+  // HOST_NAME = 'http://localhost/Sep-23';
   MAP_LOGIN_ID = 0;
   RENOVATION_REQUEST_ID = 0;
   TENANT_REQUEST_ID = 0;

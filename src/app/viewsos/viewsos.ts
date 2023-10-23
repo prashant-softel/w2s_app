@@ -41,6 +41,7 @@ connectDB:any;
 sendIssue:any;
 maxTime: any=5;
 timer:any;
+sendMedicalInterval:any;
 hidevalue:boolean;
 timercall : any;
   ResponseData: Array <any>;
@@ -210,6 +211,58 @@ SendMedical()
        }
 
     }, 1000);
+  // clearInterval(this.sendMedicalInterval);
+
+  // // Set up a new interval to call SendMedical every 1000 milliseconds (1 second)
+  // this.sendMedicalInterval = setInterval(() => {
+  //   if (this.maxTime <= 0) {
+  //     clearInterval(this.sendMedicalInterval); // Stop the interval when maxTime reaches 0
+  //   } else {
+  //     this.timercall = "1";
+  //     this.hidevalue = false;
+  //     console.log("Medical");
+
+  //     // API request logic here
+  //     this.loaderView.showLoader('Loading ...');
+  //     var objData = [];
+  //       objData['fetch'] ="1";
+  //           objData['AlertType']="Medical Emergency";
+  //              objData['sosType']="1";
+  //            objData['Alertstatus']="0";
+  //            objData['UnitNo']=this.UnitData;
+  //            objData['OwnerName']=this.OwnerName;
+  //          objData['OwneContact']=this.MemberContact;
+  //           objData['FloorNo']=this.FloorNo;
+  //             objData['Wing']=this.WingData;
+     
+
+  //     this.connectServer.getData("SOSAlert", objData).then(
+  //       resolve => {
+  //         this.loaderView.dismissLoader();
+  //         console.log('Response: ' + JSON.stringify(resolve));
+
+  //         if (resolve['success'] === 1) {
+  //           this.AlertCreationId =  resolve['response']['MedicalAlert'];
+
+  //           // Set up another interval to check for ResponseValue
+  //           const responseInterval = setInterval(() => {
+  //             if (this.ResponseValue === 0) {
+  //               this.LoaderIcon = "1";
+  //               this.sendIssue = "1";
+  //               this.GetResponse(this.AlertCreationId);
+  //             } else {
+  //               this.LoaderIcon = "0";
+  //               clearInterval(responseInterval); // Stop the response check interval
+  //             }
+  //           }, 5000);
+
+  //         } else {
+  //           // Handle the case when the API request fails
+  //         }
+  //       }
+  //     );
+  //   }
+  // }, 1000);
 }
 
 

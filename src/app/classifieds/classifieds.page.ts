@@ -7,6 +7,7 @@ import { LoaderView } from 'src/service/loaderview';
 import { ConnectServer } from 'src/service/connectserver';
 import { NavigationExtras } from '@angular/router';
 import { ActivatedRoute } from '@angular/router';
+import { AddclassifiedPage } from '../addclassified/addclassified';
 
 @Component({
   selector: 'app-classifieds',
@@ -17,6 +18,7 @@ import { ActivatedRoute } from '@angular/router';
 })
 export class ClassifiedsPage implements OnInit {
   ClassifiedsdetailsPage:any='classifiedsdetails';
+  AddclassifiedPage: any = 'addclassified';
   tab:string;
   img:string;
   message : string = "ADD remove classified";
@@ -190,6 +192,6 @@ export class ClassifiedsPage implements OnInit {
 	  }
 	  addClassified()	
 	  {
-		  //this.navCtrl.push(AddclassifiedPage);
+		  this.navCtrl.navigateRoot(this.AddclassifiedPage);
 	  }
 }

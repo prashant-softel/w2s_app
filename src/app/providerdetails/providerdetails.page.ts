@@ -1,7 +1,7 @@
 import { Component, OnInit, CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
-import { IonicModule, NavController, NavParams, Platform, } from '@ionic/angular';
+import { AlertController, IonicModule, NavController, NavParams, Platform, } from '@ionic/angular';
 import { GlobalVars } from 'src/service/globalvars';
 import { LoaderView } from 'src/service/loaderview';
 import { ConnectServer } from 'src/service/connectserver';
@@ -19,6 +19,8 @@ import { NavigationExtras, Router } from '@angular/router';
 })
 export class ProviderdetailsPage implements OnInit {
   tab: string = "personal";
+  UpdateproviderPage: any = 'updateprovider';
+  ServiceproviderPage: any = 'serviceprovider';
   image_id: any;
   dbname: any;
   imagestring: any;
@@ -88,6 +90,7 @@ export class ProviderdetailsPage implements OnInit {
     private loaderView: LoaderView,
     private params: NavParams,
     private router: Router,
+    private alertCtrl: AlertController
 
   ) {
 
@@ -236,7 +239,10 @@ export class ProviderdetailsPage implements OnInit {
       }
     );
   }
-
+  getMoreInfo(){
+ 
+    this.moreInfo='1';
+  }
   /*  ---------------------------  Remove Provider In Assign unit --------------------- */
 
   Remove() {
@@ -327,6 +333,40 @@ export class ProviderdetailsPage implements OnInit {
       this.Listing = '0';
     }
   }
+  cancle()
+{
+ this.moreInfo='0';
+}
+AddMoreInfo() {
+  var objData = [];
+  objData['providerid'] = this.displayData['service_prd_reg_id'];
+  objData['comment'] = this.userData['comment'];
+  this.connectServer.getData("ServiceProvider/addMoreInfo", objData).then(
+    resolve => {
+      //this.loaderView.dismissLoader();
+      console.log('Response : ' + resolve);
+      if (resolve['success'] == 1) {
+        alert("Comments added successfully ");
+        var p = [];
+        p['tab'] = '1';
+        p['dash'] = "admin";
+        p['flag'] = '2';
+        let navigationExtras: NavigationExtras = {
+          queryParams: 
+          {
+            details :p,
+          }
+        };
+        this.navCtrl.navigateRoot(this.ServiceproviderPage,navigationExtras);
+        // this.navCtrl.navigateRoot(this.ServiceproviderPage, { details: p });
+      }
+      else {
+        // this.message = resolve['response']['message'];
+      }
+    }
+  );
+
+}
 
   /* ------------------   Provider Balck Listed ----------------- */
   Block(p) {
@@ -338,7 +378,15 @@ export class ProviderdetailsPage implements OnInit {
 
     this.providerData['dash'] = "society";
     this.providerData['call'] = "1";
-    //this.navCtrl.push(UpdateproviderPage, {details: this.providerData});
+    let navigationExtras: NavigationExtras = {
+      queryParams:
+      {
+        details: this.providerData,
+
+      }
+    };
+    this.navCtrl.navigateRoot(this.UpdateproviderPage, navigationExtras);
+    // this.navCtrl.navigateRoot(this.UpdateproviderPage, {details: this.providerData});
   }
 
   /* ------------------   Add Provider Review ----------------- */
@@ -381,38 +429,37 @@ export class ProviderdetailsPage implements OnInit {
     let target = "_system";
     ///this.theInAppBrowser.create(url,target,this.options);
   }
-
-  /* ------------------  Provider Approval  ----------------- */
-  /*
-    confirmApprove() 
-    {
-      let alert = this.alertCtrl.create({
-      title: 'Approve Provider?',
-      message: '',
-      buttons: [
-            {
-              text: 'Cancel',
-              role: 'cancel',
-              handler: () => {
-              console.log('Cancel clicked');
-            }
-          },
-            {
-              text: 'Approve',
-              handler: () => {
-               this.AproveIt();
-            }
-          }
-        ]
-     });
-      alert.present();
-    }*/
-  /* ------------------  Provider Remove  ----------------- */
-  /*confirmRemove() 
+  async confirmApprove() 
   {
-    let alert = this.alertCtrl.create({
-    title: 'Remove Provider?',
+    let alert =await this.alertCtrl.create({
+    header: 'Approve Provider?',
     message: '',
+    buttons: [
+          {
+            text: 'Cancel',
+            role: 'cancel',
+            handler: () => {
+            console.log('Cancel clicked');
+          }
+        },
+          {
+            text: 'Approve',
+            handler: () => {
+             this.AproveIt();
+          }
+        }
+      ]
+   });
+    await alert.present();
+  }
+
+  
+  /* ------------------  Provider Remove  ----------------- */
+ async confirmRemove() 
+  {
+    let alert = await this.alertCtrl.create({
+    header: 'Remove Provider?',
+    message: 'Do you really want to remove Provider',
     buttons: [
           {
             text: 'Cancel',
@@ -429,8 +476,8 @@ export class ProviderdetailsPage implements OnInit {
         }
       ]
     });
-    alert.present();
-  }*/
+   await alert.present();
+  }
 
   /* ------------------  Provider Approve  ----------------- */
   AproveIt() {
@@ -446,6 +493,13 @@ export class ProviderdetailsPage implements OnInit {
           p['tab'] = '1';
           p['dash'] = "admin";
           p['flag'] = '2';
+          let navigationExtras: NavigationExtras = {
+            queryParams: 
+            {
+              details :p,
+            }
+          };
+          this.navCtrl.navigateRoot(this.ServiceproviderPage,navigationExtras);
           // this.navCtrl.setRoot(ServiceproviderPage, {details :p});
         }
         else {
@@ -469,7 +523,14 @@ export class ProviderdetailsPage implements OnInit {
           p['tab'] = '1';
           p['dash'] = "admin";
           p['flag'] = '2';
-          //this.navCtrl.setRoot(ServiceproviderPage, {details :p});
+          let navigationExtras: NavigationExtras = {
+            queryParams: 
+            {
+              details :p,
+            }
+          };
+          this.navCtrl.navigateRoot(this.ServiceproviderPage,navigationExtras);
+          // this.navCtrl.navigateRoot(this.ServiceproviderPage, {details :p});
         }
         else {
           // this.message = resolve['response']['message'];

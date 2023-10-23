@@ -57,41 +57,42 @@
         <p style="padding-left: 5px;padding-right: 5px;" id="additional_text"> </p>
         <br/>
         <br />
-        <!--<ion-list  *ngIf = "admin == 1 && tenant.active == 0 || tenant.active == 2" >
+        <ion-list  *ngIf = "admin == 1 && tenant.active == 0 || tenant.active == 2" >
           <ion-row *ngIf = "info != '1' && profile_flag != 0">
-            <ion-col class="text-center" size="6">
-              <button ion-button block (click)="confirmApprove(tenant.tenant_id)" style="background-color:mediumseagreen">Approve</button>
-            </ion-col>
-            <ion-col class="text-center" size="6" >
-              <button ion-button block (click)="getInfo()" style="background-color:#0099ff"  text-wrap>Get more Info.</button>
-            </ion-col>
-          </ion-row>
-          <ion-row *ngIf="profile_flag == 0 ">
-            <ion-col class="text-center">
-              <strong>You do not have access to approve tenants. Please contact super admin to get privilege.</strong>
-            </ion-col>
-          </ion-row>
-        </ion-list>-->
+         <ion-col text-center col-6>
+           <button ion-button block (click)="confirmApprove(tenant.tenant_id)" style="background-color:mediumseagreen;color: #ffffff; width: 100px;height: 30px; float: left;">Approve</button>
+          </ion-col>
+          <ion-col text-center col-6 >
+            <button ion-button block (click)="getInfo()" style="background-color:#0099ff;color: #ffffff; width: 120px;height: 30px; float: right;"  text-wrap>Get more Info.</button>
+          
+          </ion-col>
+        </ion-row>
+        <ion-row *ngIf="profile_flag == 0 ">
+          <ion-col>
+            <strong>You do not have access to approve tenants. Please contact super admin to get privilege.</strong>
+          </ion-col>
+        </ion-row>
+      </ion-list>
       </ion-card-content>
     </ion-card>
   </ion-list>
-  <!--<ion-list  *ngIf = "info == '1'">
+  <ion-list  *ngIf = "info == '1'">
     <ion-card>
       <ion-card-content>
-        <ion-item>
-          <ion-label floating>Comment</ion-label>
-          <ion-input type="text" value="" [(ngModel)]="userInfo.comment"></ion-input>
-        </ion-item>
-        <ion-row>
-          <ion-col class="text-center" size="6" >
-            <button ion-button block (click)="getMoreInfo(tenant.tenant_id)" color="primary"  text-wrap>Submit</button>
-          </ion-col>
-          <ion-col class="text-center" size="6" >
-            <button ion-button block (click)="cancle()" color="danger"  text-wrap>Cancle</button>
-          </ion-col>
-        </ion-row>
+          <ion-list>
+        <ion-label floating style="font-weight: bold;">Comment</ion-label>
+        <ion-input type="text" value="" [(ngModel)]="userInfo.comment"></ion-input>
+      </ion-list>
+      <ion-row>
+      <ion-col text-center col-6 >
+          <button ion-button block (click)="getMoreInfo(tenant.tenant_id)" color="primary" style="float: left; color:mediumseagreen ;"  text-wrap>Submit</button>
+      </ion-col>
+       <ion-col text-center col-6 >
+          <button ion-button block (click)="cancle()" color="danger" style="float: right; color: red;"  text-wrap>Cancle</button>
+      </ion-col>
+    </ion-row>
       </ion-card-content>
     </ion-card>
-  </ion-list>-->
+  </ion-list>
 </ion-content>
   

@@ -40,7 +40,7 @@
       <ion-list>
 
         <ion-label lines="full" style="font-weight: bold;">Expected Date</ion-label>
-        <ion-input id="date" class="ion-text-start" style=" font-size: 15px;" displayFormat="DD-MM-YYYY"  [(ngModel)]="ExpVisitor.Expdate"></ion-input>
+        <ion-input  type="date" class="ion-text-start" style=" font-size: 15px;" displayFormat="DD-MM-YYYY"  [(ngModel)]="ExpVisitor.Expdate"></ion-input>
         <ion-popover trigger="date" size="cover">
           <ng-template>
             <ion-datetime style="background-color: #ffffff;" presentation="date" [(ngModel)]="ExpVisitor.Expdate"
@@ -50,7 +50,7 @@
       </ion-list>
       <ion-list>
         <ion-label lines="full" style=" font-weight: bold;"> Expected Time</ion-label>
-        <ion-input id="time" class="ion-text-start" style=" font-size: 15px;" displayFormat="h:mm A" [(ngModel)]="ExpVisitor.ExpTime" ></ion-input>
+        <ion-input type="time" class="ion-text-start" style=" font-size: 15px;" displayFormat="h:mm A" [(ngModel)]="ExpVisitor.ExpTime" ></ion-input>
         <ion-popover trigger="time" size="cover">
           <ng-template>
             <ion-datetime style="background-color: #ffffff;" presentation="time" [(ngModel)]="ExpVisitor.ExpTime"

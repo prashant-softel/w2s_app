@@ -19,10 +19,15 @@
     </ion-col>
   </ion-row>
   
-  <!--<ion-fab right bottom>
+  <!-- <ion-fab right bottom>
     <button ion-fab (click)="getImage()" style="background-color: #f6f6f6;">
       <ion-icon name="add" style="color:#5cb85c;font-size:30px;"></ion-icon>
     </button>
-  </ion-fab>-->
+  </ion-fab> -->
+  <ion-fab slot="fixed" vertical="bottom" horizontal="end" >
+    <ion-fab-button  color="success" (click)="getImage()" style="background-color: #f6f6f6;">
+      <ion-icon name="add" style="color:#fff;font-size:30px;"></ion-icon>
+    </ion-fab-button>
+  </ion-fab>
 
 </ion-content>
