@@ -2,17 +2,18 @@ import { Component, OnInit, CUSTOM_ELEMENTS_SCHEMA, HostListener } from '@angula
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { NavController, NavParams, ActionSheetController, ToastController, Platform, LoadingController, IonicModule } from '@ionic/angular';
-import { File } from '@ionic-native/file/ngx';
-import { FileTransfer, FileTransferObject } from '@ionic-native/file-transfer/ngx';
-import { FilePath } from '@ionic-native/file-path/ngx';
-import { Camera } from '@ionic-native/camera/ngx';
+// import { File } from '@ionic-native/file/ngx';
+// import { FileTransfer, FileTransferObject } from '@ionic-native/file-transfer/ngx';
+// import { FilePath } from '@ionic-native/file-path/ngx';
+// import { Camera } from '@ionic-native/camera/ngx';
 import { GlobalVars } from 'src/service/globalvars';
 import { LoaderView } from 'src/service/loaderview';
 import { ConnectServer } from 'src/service/connectserver';
 import { NavigationExtras } from '@angular/router';
 import { ActivatedRoute } from '@angular/router';
-import { HTTP } from '@ionic-native/http/ngx';
-import { HttpClient, HttpHeaders } from '@angular/common/http';
+// import { HTTP } from '@ionic-native/http/ngx';
+// import { HttpClient, HttpHeaders } from '@angular/common/http';
+import { HttpClient } from '@angular/common/http';
 
 
 declare var cordova: any;
@@ -27,7 +28,9 @@ enum priorityEnum { "Critical" = 1, "High", "Medium", "Low" }
     CUSTOM_ELEMENTS_SCHEMA
   ],
   imports: [IonicModule, CommonModule, FormsModule,],
-  providers: [Camera, FileTransfer, File, FilePath, HTTP]
+  providers: [
+    // Camera, FileTransfer, File, FilePath, HTTP
+  ]
 })
 
 export class AddAddressProof implements OnInit {
@@ -44,13 +47,13 @@ export class AddAddressProof implements OnInit {
     private connectServer: ConnectServer,
     private platform: Platform,
     private loaderView: LoaderView,
-    private http: HTTP,
+    // private http: HTTP,
     private navParams: NavParams,
     private params: NavParams,
     private route: ActivatedRoute,
-
+    private http: HttpClient,
     private loadingCtrl: LoadingController) {
-    this.http = http;
+    // this.http = http;
     //this.getMemberDetails();
     this.worklist_array = [];
     this.memberList = [];
@@ -91,11 +94,11 @@ export class AddAddressProof implements OnInit {
     //   'Content-Type': 'application/json', // Adjust the content type as needed
     //   // Add any other headers you require
     // };
-    const httpOptions = {
-      headers: new HttpHeaders({
-        'Content-Type': 'application/json'
-      })
-    }
+    // const httpOptions = {
+    //   headers: new HttpHeaders({
+    //     'Content-Type': 'application/json'
+    //   })
+    // }
     // var myData = JSON.stringify({
     //   method: "getMemberDetails", societyId: this.globalVars.MAP_SOCIETY_ID, unitId: this.userData.unitId, role: this.globalVars.MAP_USER_ROLE
     // });
@@ -106,8 +109,12 @@ export class AddAddressProof implements OnInit {
       role: this.globalVars.MAP_USER_ROLE
     }
     var myDataJson = JSON.stringify(myData);
-    this.http.post(link, myDataJson, httpOptions)
-      .then(data => {
+    this.http.post(link, myDataJson, {
+      headers: {
+        'Content-Type': 'application/json'
+      }
+    })
+      .subscribe(data => {
         this.data.response = data["_body"];
         var parsedData = JSON.parse(this.data.response);
         console.log(parsedData);
@@ -135,13 +142,17 @@ export class AddAddressProof implements OnInit {
       role: this.globalVars.MAP_USER_ROLE
     }
     var myDataJson = JSON.stringify(myData);
-    const httpOptions = {
-      headers: new HttpHeaders({
+    // const httpOptions = {
+    //   headers: new HttpHeaders({
+    //     'Content-Type': 'application/json'
+    //   })
+    // }
+    this.http.post(link, myDataJson, {
+      headers: {
         'Content-Type': 'application/json'
-      })
-    }
-    this.http.post(link, myDataJson,httpOptions )
-      .then(data => {
+      }
+    })
+      .subscribe(data => {
         this.data.response = data["_body"];
         var parsedData = JSON.parse(this.data.response);
         console.log(parsedData);
@@ -174,13 +185,17 @@ export class AddAddressProof implements OnInit {
         role: this.globalVars.MAP_USER_ROLE
       }
       var myDataJson = JSON.stringify(myData);
-      const httpOptions = {
-        headers: new HttpHeaders({
+      // const httpOptions = {
+      //   headers: new HttpHeaders({
+      //     'Content-Type': 'application/json'
+      //   })
+      // }
+      this.http.post(link, myDataJson, {
+        headers: {
           'Content-Type': 'application/json'
-        })
-      }     
-       this.http.post(link, myDataJson,httpOptions)
-        .then(data => {
+        }
+      })
+        .subscribe(data => {
           this.data.response = data["_body"]; //https://stackoverflow.com/questions/39574305/property-body-does-not-exist-on-type-response
           var passportData = JSON.parse(this.data.response);
           var resultStatus = passportData['success'];

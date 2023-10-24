@@ -1,34 +1,34 @@
 <ion-header translucent="true">
-  <ion-toolbar>
-    <ion-title>Images</ion-title>
-    <ion-buttons slot="start">
-      <ion-back-button defaultHref="photoalbum" icon="chevron-back-outline" text="Back"></ion-back-button>
-    </ion-buttons>
-    <ion-buttons slot="end" style="width:30%">
-      <ion-button><img style="width:70%" src="/assets/images/logo.png"></ion-button>
-    </ion-buttons>
-  </ion-toolbar>
+    <ion-toolbar>
+        <ion-title>Images</ion-title>
+        <ion-buttons slot="start">
+            <ion-back-button defaultHref="photoalbum" icon="chevron-back-outline" text="Back"></ion-back-button>
+        </ion-buttons>
+        <ion-buttons slot="end" style="width:30%">
+            <ion-button><img style="width:70%" src="/assets/images/logo.png"></ion-button>
+        </ion-buttons>
+    </ion-toolbar>
 </ion-header>
 
 
 <ion-content padding>
 
-  <ion-row>
-    <ion-col size="6" *ngFor="let p of img_array">
-      <img src="{{img_src+'/'+p.folder+'/'+p['url']}}" style="max-height: 80vh;  max-width:100%;"
-        (click)="viewImage(p)">
-    </ion-col>
-  </ion-row>
+    <ion-row>
+        <ion-col size="6" *ngFor="let p of img_array">
+            <img src="{{img_src+'/'+p.folder+'/'+p['url']}}" style="max-height: 80vh;  max-width:100%;"
+                (click)="viewImage(p)">
+        </ion-col>
+    </ion-row>
 
-  <!-- <ion-fab right bottom>
-    <button ion-fab (click)="getImage()" style="background-color: #f6f6f6;">
-      <ion-icon name="add" style="color:#5cb85c;font-size:30px;"></ion-icon>
-    </button>
-  </ion-fab> -->
-  <ion-fab slot="fixed" vertical="bottom" horizontal="end">
-    <ion-fab-button color="success" (click)="getImage()" style="background-color: #f6f6f6;">
-      <ion-icon name="add" style="color:#fff;font-size:30px;"></ion-icon>
-    </ion-fab-button>
-  </ion-fab>
+    <!-- <ion-fab right bottom>
+      <button ion-fab (click)="getImage()" style="background-color: #f6f6f6;">
+        <ion-icon name="add" style="color:#5cb85c;font-size:30px;"></ion-icon>
+      </button>
+    </ion-fab> -->
+    <ion-fab slot="fixed" vertical="bottom" horizontal="end">
+        <ion-fab-button color="success" (click)="getImage()" style="background-color: #f6f6f6;">
+            <ion-icon name="add" style="color:#fff;font-size:30px;"></ion-icon>
+        </ion-fab-button>
+    </ion-fab>
 
 </ion-content>

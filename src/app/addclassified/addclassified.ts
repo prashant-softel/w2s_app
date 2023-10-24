@@ -7,14 +7,27 @@ import { LoaderView } from 'src/service/loaderview';
 import { ConnectServer } from 'src/service/connectserver';
 import { NavigationExtras } from '@angular/router';
 import { ActivatedRoute } from '@angular/router';
-import { Camera } from '@ionic-native/camera/ngx';
-import { File } from '@ionic-native/file/ngx';
-import { FilePath } from '@ionic-native/file-path/ngx';
-import { FileTransfer, FileTransferObject } from '@ionic-native/file-transfer/ngx';
+// import { Camera } from '@ionic-native/camera/ngx';
+// import { File } from '@ionic-native/file/ngx';
+// import { FilePath } from '@ionic-native/file-path/ngx';
+// import { FileTransfer, FileTransferObject } from '@ionic-native/file-transfer/ngx';
+
+import { Camera, CameraResultType, CameraSource, Photo } from '@capacitor/camera';
+import { Filesystem, Directory } from '@capacitor/filesystem';
+import { finalize } from 'rxjs';
+import { HttpClient } from '@angular/common/http';
 
 declare var cordova: any;
+const IMAGE_DIR = 'stored-images';
+
 enum statusEnum { "Raised" = 1, "Waiting", "In progress", "Completed", "Cancelled" }
 enum priorityEnum { "Critical" = 1, "High", "Medium", "Low" }
+
+interface LocalFile {
+  name: string;
+  path: string;
+  data: string;
+}
 @Component({
   selector: 'app-addclassified',
   templateUrl: './addclassified.html',
@@ -24,7 +37,9 @@ enum priorityEnum { "Critical" = 1, "High", "Medium", "Low" }
     CUSTOM_ELEMENTS_SCHEMA
   ],
   imports: [IonicModule, CommonModule, FormsModule],
-  providers: [Camera, FileTransfer, File, FilePath]
+  providers: [
+    // Camera, FileTransfer, File, FilePath
+  ]
 
 })
 export class AddclassifiedPage implements OnInit {
@@ -36,11 +51,14 @@ export class AddclassifiedPage implements OnInit {
   options: any;
   myImagePath: string = null;
   base64Image: any;
-  lastImage: string = null;
+  // lastImage: string = null;
   // loading: Loading;
   classified_id: any;
   Block_unit = 0;
   Block_desc = "";
+  selectedImageName;
+  images: LocalFile[] = [];
+
 
   constructor(private navCtrl: NavController,
     private globalVars: GlobalVars,
@@ -49,10 +67,11 @@ export class AddclassifiedPage implements OnInit {
     private loaderView: LoaderView,
     private params: NavParams,
     private route: ActivatedRoute,
-    private camera: Camera,
-    private transfer: FileTransfer,
-    private file: File,
-    private filePath: FilePath,
+    // private camera: Camera,
+    // private transfer: FileTransfer,
+    // private file: File,
+    // private filePath: FilePath,
+    private http: HttpClient,
     public actionSheetCtrl: ActionSheetController,
     public toastCtrl: ToastController,
 
@@ -114,7 +133,7 @@ export class AddclassifiedPage implements OnInit {
           this.message = resolve['response']['message'];
           this.classified_id = resolve['response']['new_c_id'];
 
-          if (this.lastImage === null) {
+          if (this.images.length < 1) {
             alert("We have received your request. Please wait for approval.");
             this.navCtrl.navigateRoot(this.ClassifiedsPage);
           }
@@ -135,16 +154,22 @@ export class AddclassifiedPage implements OnInit {
     this.navCtrl.navigateRoot(this.ClassifiedsimageviewPage, this.userData['img']);
   }
   public async presentActionSheet() {
-    let actionSheet =await  this.actionSheetCtrl.create({
+    let actionSheet = await this.actionSheetCtrl.create({
       header: 'Select Image Source',
       buttons: [{
         text: 'Load from Library', handler: () => {
-          this.takePicture(this.camera.PictureSourceType.PHOTOLIBRARY);
+          // this.takePicture(this.camera.PictureSourceType.PHOTOLIBRARY);
+          this.selectImage(CameraSource.Photos);
+
         }
       },
       {
         text: 'Use Camera',
-        handler: () => { this.takePicture(this.camera.PictureSourceType.CAMERA); }
+        handler: () => {
+          // this.takePicture(this.camera.PictureSourceType.CAMERA); 
+          this.selectImage(CameraSource.Camera);
+
+        }
       },
       {
         text: 'Cancel',
@@ -153,37 +178,84 @@ export class AddclassifiedPage implements OnInit {
     });
     actionSheet.present();
   }
-  public takePicture(sourceType) {// Create options for the Camera Dialog
-    var options = {
-      quality: 100,
-      sourceType: sourceType,
-      saveToPhotoAlbum: false,
-      correctOrientation: true
+  async selectImage(cameraSource: CameraSource) {
+    const image = await Camera.getPhoto({
+      quality: 90,
+      allowEditing: false,
+      resultType: CameraResultType.Uri,
+      source: cameraSource // Camera, Photos or Prompt!
+    });
+
+    if (image) {
+      this.saveImage(image)
+      // const base64Data = await this.readAsBase64(image);
+
+      // const fileName = new Date().getTime() + '.jpeg';
+
+      // this.images = [];
+      // this.images.push({
+      //   name: fileName,
+      //   path: image.path, //filePath,
+      //   data: `${base64Data}` //`data:image/jpeg;base64,${readFile.data}`
+      // });
+
+
+    }
+  }
+  private async readAsBase64(photo: Photo) {
+    if (this.platform.is('hybrid')) {
+      const file = await Filesystem.readFile({
+        path: photo.path
+      });
+
+      return file.data;
+    }
+    else {
+      const response = await fetch(photo.webPath);
+      const blob = await response.blob();
+      return await this.convertBlobToBase64(blob) as string;
+    }
+  }
+
+  convertBlobToBase64 = (blob: Blob) => new Promise((resolve, reject) => {
+    const reader = new FileReader;
+    reader.onerror = reject;
+    reader.onload = () => {
+      resolve(reader.result);
     };
-    // Get the data of an image
-    this.camera.getPicture(options).then(
-      (imagePath) => {
-        this.myImagePath = imagePath;
-        // Special handling for Android library
-        if (this.platform.is('android') && sourceType === this.camera.PictureSourceType.PHOTOLIBRARY) {
-          this.filePath.resolveNativePath(imagePath).then(
-            filePath => {
-              let correctPath = filePath.substr(0, filePath.lastIndexOf('/') + 1);
-              let currentName = imagePath.substring(imagePath.lastIndexOf('/') + 1, imagePath.lastIndexOf('?'));
-              this.copyFileToLocalDir(correctPath, currentName, this.createFileName());
-            }
-          );
-        }
-        else {
-          var currentName = imagePath.substr(imagePath.lastIndexOf('/') + 1);
-          var correctPath = imagePath.substr(0, imagePath.lastIndexOf('/') + 1);
-          this.copyFileToLocalDir(correctPath, currentName, this.createFileName());
-        }
-      },
-      (err) => {
-        this.presentToast('Error while selecting image.');
-      }
-    );
+    reader.readAsDataURL(blob);
+  });
+  public takePicture(sourceType) {// Create options for the Camera Dialog
+    // var options = {
+    //   quality: 100,
+    //   sourceType: sourceType,
+    //   saveToPhotoAlbum: false,
+    //   correctOrientation: true
+    // };
+    // // Get the data of an image
+    // this.camera.getPicture(options).then(
+    //   (imagePath) => {
+    //     this.myImagePath = imagePath;
+    //     // Special handling for Android library
+    //     if (this.platform.is('android') && sourceType === this.camera.PictureSourceType.PHOTOLIBRARY) {
+    //       this.filePath.resolveNativePath(imagePath).then(
+    //         filePath => {
+    //           let correctPath = filePath.substr(0, filePath.lastIndexOf('/') + 1);
+    //           let currentName = imagePath.substring(imagePath.lastIndexOf('/') + 1, imagePath.lastIndexOf('?'));
+    //           this.copyFileToLocalDir(correctPath, currentName, this.createFileName());
+    //         }
+    //       );
+    //     }
+    //     else {
+    //       var currentName = imagePath.substr(imagePath.lastIndexOf('/') + 1);
+    //       var correctPath = imagePath.substr(0, imagePath.lastIndexOf('/') + 1);
+    //       this.copyFileToLocalDir(correctPath, currentName, this.createFileName());
+    //     }
+    //   },
+    //   (err) => {
+    //     this.presentToast('Error while selecting image.');
+    //   }
+    // );
   }
 
   // Create a new name for the image
@@ -196,14 +268,14 @@ export class AddclassifiedPage implements OnInit {
 
   // Copy the image to a local folder
   private copyFileToLocalDir(namePath, currentName, newFileName) {
-    this.file.copyFile(namePath, currentName, cordova.file.dataDirectory, newFileName).then(
-      success => {
-        this.lastImage = newFileName;
-      },
-      error => {
-        this.presentToast('Error while storing file.');
-      }
-    );
+    // this.file.copyFile(namePath, currentName, cordova.file.dataDirectory, newFileName).then(
+    //   success => {
+    //     this.lastImage = newFileName;
+    //   },
+    //   error => {
+    //     this.presentToast('Error while storing file.');
+    //   }
+    // );
   }
 
   private async presentToast(text) {
@@ -216,70 +288,162 @@ export class AddclassifiedPage implements OnInit {
   }
 
   // Always get the accurate path to your apps folder
-  public pathForImage(img) {
-    if (img === null) {
-      return '';
-    }
-    else {
-      let win: any = window;
-      console.log({ "pathForImage3": win.Ionic.WebView.convertFileSrc(this.myImagePath) });
-      return win.Ionic.WebView.convertFileSrc(this.myImagePath);
-      // return cordova.file.dataDirectory + img;
-      //return "file:///data/user/0/io.ionic.starter/cache/"+img
+  // public pathForImage(img) {
+  //   if (img === null) {
+  //     return '';
+  //   }
+  //   else {
+  //     let win: any = window;
+  //     console.log({ "pathForImage3": win.Ionic.WebView.convertFileSrc(this.myImagePath) });
+  //     return win.Ionic.WebView.convertFileSrc(this.myImagePath);
+  //     // return cordova.file.dataDirectory + img;
+  //     //return "file:///data/user/0/io.ionic.starter/cache/"+img
+  //   }
+  // }
+  // public pathForImage1(img) {
+  //   if (img === null) {
+  //     return '';
+  //   }
+  //   else {
+  //     let win: any = window;
+
+  //     console.log({ "hg": win.Ionic.WebView.convertFileSrc("file:///data/user/0/io.ionic.starter/cache/" + img) });
+
+  //     return "file:///data/user/0/io.ionic.starter/cache/" + img;
+
+  //   }
+  // }
+  async saveImage(photo: Photo) {
+    const base64Data = await this.readAsBase64(photo);
+
+    const fileName = new Date().getTime() + '.jpeg';
+    this.selectedImageName = fileName;
+    const savedFile = await Filesystem.writeFile({
+      path: `${IMAGE_DIR}/${fileName}`,
+      data: base64Data,
+      directory: Directory.Data
+    });
+
+    // Reload the file list
+    // Improve by only loading for the new image and unshifting array!
+    this.loadFiles();
+
+  }
+  async loadFiles() {
+    this.images = [];
+
+    const loading = await this.loadingCtrl.create({
+      message: 'Loading data...'
+    });
+    await loading.present();
+
+    Filesystem.readdir({
+      path: IMAGE_DIR,
+      directory: Directory.Data
+    })
+      .then(
+        (result) => {
+          this.loadFileData(result.files.map((x) => x.name));
+        },
+        async (err) => {
+          // Folder does not yet exists!
+          await Filesystem.mkdir({
+            path: IMAGE_DIR,
+            directory: Directory.Data
+          });
+        }
+      )
+      .then((_) => {
+        loading.dismiss();
+      });
+  }
+  async loadFileData(fileNames: string[]) {
+    for (let f of fileNames) {
+      const filePath = `${IMAGE_DIR}/${f}`;
+
+      const readFile = await Filesystem.readFile({
+        path: filePath,
+        directory: Directory.Data
+      });
+      if (this.selectedImageName == f) {
+        this.images.push({
+          name: f,
+          path: filePath,
+          data: `data:image/jpeg;base64,${readFile.data}`
+        });
+      }
     }
   }
-  public pathForImage1(img) {
-    if (img === null) {
-      return '';
-    }
-    else {
-      let win: any = window;
+  // public uploadImageOld() {
+  //   // Destination URL
+  //   //var url = "http://localhost/beta_aws_2/ads";
+  //   var url = "https://way2society.com/upload_image_from_mobile_new.php";
 
-      console.log({ "hg": win.Ionic.WebView.convertFileSrc("file:///data/user/0/io.ionic.starter/cache/" + img) });
+  //   // File for Upload
+  //   var targetPath = this.pathForImage(this.lastImage);
 
-      return "file:///data/user/0/io.ionic.starter/cache/" + img;
+  //   // File name only
+  //   var filename = this.lastImage;
+  //   var options = {
+  //     fileKey: "file",
+  //     fileName: filename,
+  //     chunkedMode: false,
+  //     mimeType: "multipart/form-data",
+  //     params: { 'fileName': filename, 'classified_id': this.classified_id, 'feature': 1, 'token': this.globalVars.USER_TOKEN, 'tkey': this.globalVars.MAP_TKEY }
+  //   };
 
-    }
-  }
+  //   const fileTransfer: FileTransferObject = this.transfer.create();
+  //   // this.loading = this.loadingCtrl.create({'Uploading...' });
+  //   // this.loading.present();
 
-  public uploadImage() {
-    // Destination URL
-    //var url = "http://localhost/beta_aws_2/ads";
-    var url = "https://way2society.com/upload_image_from_mobile_new.php";
+  //   //alert(targetPath);
 
-    // File for Upload
-    var targetPath = this.pathForImage(this.lastImage);
+  //   //this.presentToast(targetPath);
 
-    // File name only
-    var filename = this.lastImage;
-    var options = {
-      fileKey: "file",
-      fileName: filename,
-      chunkedMode: false,
-      mimeType: "multipart/form-data",
-      params: { 'fileName': filename, 'classified_id': this.classified_id, 'feature': 1, 'token': this.globalVars.USER_TOKEN, 'tkey': this.globalVars.MAP_TKEY }
-    };
-
-    const fileTransfer: FileTransferObject = this.transfer.create();
-    // this.loading = this.loadingCtrl.create({'Uploading...' });
-    // this.loading.present();
-
-    //alert(targetPath);
-
-    //this.presentToast(targetPath);
-
-    // Use the FileTransfer to upload the image
-    fileTransfer.upload(targetPath, encodeURI(url), options).then
-      (data => {
-        // this.loading.dismissAll()
+  //   // Use the FileTransfer to upload the image
+  //   fileTransfer.upload(targetPath, encodeURI(url), options).then
+  //     (data => {
+  //       // this.loading.dismissAll()
+  //       this.presentToast('Image successful uploaded.');
+  //       alert("We have received your request. Please wait for approval.");
+  //       this.navCtrl.navigateRoot(this.ClassifiedsPage);
+  //     },
+  //       err => {
+  //         // this.loading.dismissAll();
+  //         this.presentToast('Error while uploading file.');
+  //         this.navCtrl.navigateRoot(this.ClassifiedsPage);
+  //       }
+  //     );
+  // }
+  async uploadImage() {
+    const file = this.images[0];
+    const response = await fetch(file.data);
+    const blob = await response.blob();
+    const formData = new FormData();
+    formData.append('file', blob, file.name);
+    formData.append('filename', file.name);
+    const loading = await this.loadingCtrl.create({
+      message: 'Uploading image...',
+    });
+    await loading.present();
+    var url = "https://way2society.com/upload_image_from_mobile.php";
+    this.http.post(url, formData,
+      {
+        params: { 'fileName': file.name, 'classified_id': this.classified_id, 'feature': 1, 'token': this.globalVars.USER_TOKEN, 'tkey': this.globalVars.MAP_TKEY },
+      })
+      .pipe(
+        finalize(() => {
+          loading.dismiss();
+        })
+      )
+      .subscribe(res => {
         this.presentToast('Image successful uploaded.');
-        alert("We have received your request. Please wait for approval.");
-        this.navCtrl.navigateRoot(this.ClassifiedsPage);
+        this.navCtrl.navigateForward(this.ClassifiedsPage);
       },
         err => {
-          // this.loading.dismissAll();
-          this.presentToast('Error while uploading file.');
-          this.navCtrl.navigateRoot(this.ClassifiedsPage);
+          // this.presentToast('Error while uploading file.');
+          this.presentToast('Image successful uploaded.');
+          this.navCtrl.navigateForward(this.ClassifiedsPage);
         }
       );
   }

@@ -38,36 +38,41 @@
 		<p text-center style="color:#FF0000;"><strong>{{message}}</strong></p>
 		<ion-list>
 			<ion-label floating style="font-weight: bold; margin-left: 20px;">Add Title *</ion-label>
-			<ion-input type="text" style="width: 100%; max-width: 90%;  margin-left: 20px;" value="" [(ngModel)]="userData.ad_title"></ion-input>
+			<ion-input type="text" style="width: 100%; max-width: 90%;  margin-left: 20px;" value=""
+				[(ngModel)]="userData.ad_title"></ion-input>
 		</ion-list>
 
 		<ion-list>
 			<ion-label floating style="font-weight: bold; margin-left: 20px;">Phone *</ion-label>
-			<ion-input type="text" style="width: 100%; max-width: 90%;  margin-left: 20px;" value="" [(ngModel)]="userData.phone"></ion-input>
+			<ion-input type="text" style="width: 100%; max-width: 90%;  margin-left: 20px;" value=""
+				[(ngModel)]="userData.phone"></ion-input>
 		</ion-list>
 
 		<ion-list>
 			<ion-label floating style="font-weight: bold; margin-left: 20px;">Expiry date</ion-label>
 			<!-- <ion-datetime displayFormat="DD/MMM/YYYY" min="2016" max="2032"
 				[(ngModel)]="userData.exp_date"></ion-datetime> -->
-				<ion-input id="date" class="ion-text-start" style=" font-size: 15px; margin-left: 20px;" displayFormat="DD/MMM/YYYY" [(ngModel)]="userData.exp_date" ></ion-input>
-				<ion-popover trigger="date" size="cover">
-				  <ng-template>
-					<ion-datetime style="background-color: #ffffff;" presentation="date"
-					min="2016" max="2032" displayFormat="DD/MMM/YYYY" [(ngModel)]="userData.exp_date"></ion-datetime>
-				  </ng-template>
-				</ion-popover>
-				
+			<ion-input id="date" class="ion-text-start" style=" font-size: 15px; margin-left: 20px;"
+				displayFormat="DD/MMM/YYYY" [(ngModel)]="userData.exp_date"></ion-input>
+			<ion-popover trigger="date" size="cover">
+				<ng-template>
+					<ion-datetime style="background-color: #ffffff;" presentation="date" min="2016" max="2032"
+						displayFormat="DD/MMM/YYYY" [(ngModel)]="userData.exp_date"></ion-datetime>
+				</ng-template>
+			</ion-popover>
+
 		</ion-list>
 
 		<ion-list>
 			<ion-label floating style="font-weight: bold; margin-left: 20px;">Location *</ion-label>
-			<ion-input type="text" style="width: 100%; max-width: 90%;  margin-left: 20px;" value="" [(ngModel)]="userData.location"></ion-input>
+			<ion-input type="text" style="width: 100%; max-width: 90%;  margin-left: 20px;" value=""
+				[(ngModel)]="userData.location"></ion-input>
 		</ion-list>
 
 		<ion-list>
 			<ion-label floating style="font-weight: bold; margin-left: 20px;">Email *</ion-label>
-			<ion-input type="text" style="width: 100%; max-width: 90%;  margin-left: 20px;" value="" [(ngModel)]="userData.email"></ion-input>
+			<ion-input type="text" style="width: 100%; max-width: 90%;  margin-left: 20px;" value=""
+				[(ngModel)]="userData.email"></ion-input>
 		</ion-list>
 
 		<ion-list>
@@ -78,18 +83,24 @@
 		<ion-list>
 			<ion-label floating style="font-weight: bold; margin-left: 20px;">Category *</ion-label>
 			<ion-select [(ngModel)]="userData.cat_id" style="margin-left: 20px;">
-				<ion-select-option text-wrap *ngFor="let d of cat_list" value="{{d.cat_id}}">{{d.name}}</ion-select-option>
+				<ion-select-option text-wrap *ngFor="let d of cat_list"
+					value="{{d.cat_id}}">{{d.name}}</ion-select-option>
 			</ion-select>
 		</ion-list>
 
 		<ion-list>
-			<ion-card>
+			<!-- <ion-card>
 				<img src="{{pathForImage(lastImage)}}" [hidden]="lastImage === null" style="max-height : 50vh"
 					(click)="selectItems()">
 			</ion-card>
-			<h3 [hidden]="lastImage !== null"></h3>
+			<h3 [hidden]="lastImage !== null"></h3> -->
+			<ion-card>
+				<img [src]=" images[0]?.data" [hidden]="images.length<1" style="max-height : 50vh"
+					(click)="selectItems()">
+			</ion-card>
+			<h3 [hidden]="images.length>0"></h3>
 
-			<button ion-button round icon-left style=" font-weight: bold;"(click)="presentActionSheet()">
+			<button ion-button round icon-left style=" font-weight: bold;" (click)="presentActionSheet()">
 				<ion-buttons text-center>
 
 
@@ -102,7 +113,9 @@
 			<ion-row>
 				<ion-col col-2></ion-col>
 				<ion-col col-8>
-					<button ion-button color="primary" style="color: #ffffff;background-color :#488aff; height: 30px; width: 150px;" block (click)="create()">Create Classified</button>
+					<button ion-button color="primary"
+						style="color: #ffffff;background-color :#488aff; height: 30px; width: 150px;" block
+						(click)="create()">Create Classified</button>
 				</ion-col>
 				<ion-col col-2>
 				</ion-col>
