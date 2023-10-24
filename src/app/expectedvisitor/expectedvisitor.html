@@ -40,7 +40,8 @@
       <ion-list>
 
         <ion-label lines="full" style="font-weight: bold;">Expected Date</ion-label>
-        <ion-input id="date" class="ion-text-start" style=" font-size: 15px;" displayFormat="DD-MM-YYYY"  [(ngModel)]="ExpVisitor.Expdate"></ion-input>
+        <ion-input type="date" class="ion-text-start" style=" font-size: 15px;" displayFormat="DD-MM-YYYY"
+          [(ngModel)]="ExpVisitor.Expdate"></ion-input>
         <ion-popover trigger="date" size="cover">
           <ng-template>
             <ion-datetime style="background-color: #ffffff;" presentation="date" [(ngModel)]="ExpVisitor.Expdate"
@@ -50,7 +51,8 @@
       </ion-list>
       <ion-list>
         <ion-label lines="full" style=" font-weight: bold;"> Expected Time</ion-label>
-        <ion-input id="time" class="ion-text-start" style=" font-size: 15px;" displayFormat="h:mm A" [(ngModel)]="ExpVisitor.ExpTime" ></ion-input>
+        <ion-input type="time" class="ion-text-start" style=" font-size: 15px;" displayFormat="h:mm A"
+          [(ngModel)]="ExpVisitor.ExpTime"></ion-input>
         <ion-popover trigger="time" size="cover">
           <ng-template>
             <ion-datetime style="background-color: #ffffff;" presentation="time" [(ngModel)]="ExpVisitor.ExpTime"
@@ -59,15 +61,17 @@
         </ion-popover>
       </ion-list>
       <ion-list>
-         <ion-label position="floating" floating style="font-size: 15px; font-weight: bold; margin-top: 10px;">Select Purpose
-            </ion-label>
-          <ion-select style="font-size: 15px;" [(ngModel)]="ExpVisitor.ExpPurpose_id">
-              <ion-select-option text-wrap *ngFor="let p of Purpose_list" value="{{p.purpose_id}}"> {{p.purpose_name}}</ion-select-option>
-            </ion-select>
-          </ion-list>
+        <ion-label position="floating" floating style="font-size: 15px; font-weight: bold; margin-top: 10px;">Select
+          Purpose
+        </ion-label>
+        <ion-select style="font-size: 15px;" [(ngModel)]="ExpVisitor.ExpPurpose_id">
+          <ion-select-option text-wrap *ngFor="let p of Purpose_list" value="{{p.purpose_id}}">
+            {{p.purpose_name}}</ion-select-option>
+        </ion-select>
+      </ion-list>
       <ion-list>
         <ion-label floating style="font-weight: bold;">Comments </ion-label>
-        <ion-textarea [(ngModel)]="ExpVisitor.vNote" ></ion-textarea>
+        <ion-textarea [(ngModel)]="ExpVisitor.vNote"></ion-textarea>
       </ion-list>
       <ion-row>
         <ion-col col-3>

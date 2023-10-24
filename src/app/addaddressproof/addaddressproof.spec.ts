@@ -1,12 +1,11 @@
 import { ComponentFixture, TestBed, async } from '@angular/core/testing';
-import { ImageviewPage } from './imageview.page';
-
-describe('ImageviewPage', () => {
-  let component: ImageviewPage;
-  let fixture: ComponentFixture<ImageviewPage>;
+import { AddAddressProof } from './addaddressproof';
+describe('AddTaskPage', () => {
+  let component: AddAddressProof;
+  let fixture: ComponentFixture<AddAddressProof>;
 
   beforeEach(async(() => {
-    fixture = TestBed.createComponent(ImageviewPage);
+    fixture = TestBed.createComponent(AddAddressProof);
     component = fixture.componentInstance;
     fixture.detectChanges();
   }));

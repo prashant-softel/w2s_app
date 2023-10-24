@@ -22,7 +22,7 @@ export class ServiceproviderPage implements OnInit {
   particulars: any;
   particulars_all: any;
   particulars_my: any;
-  particulars_pending: any;
+  particulars_pending: Array<any>;
   tab: string = "";
   hasAllProvider: any;
   hasMyProvider: any;
@@ -196,6 +196,7 @@ export class ServiceproviderPage implements OnInit {
       this.flag = 1;
     }
   }
+
   selectItems(p) {
     p['pending'] = this.tab;
     // let navigationExtras: NavigationExtras = {

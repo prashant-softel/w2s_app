@@ -155,6 +155,15 @@ export const routes: Routes = [
     loadComponent: () => import('./servicerequestimageview/servicerequestimageview.page').then(m => m.ServicerequestimageviewPage)
   },
   {
+    path: 'addclassified',
+    loadComponent: () => import('./addclassified/addclassified').then(m => m.AddclassifiedPage)
+  },
+  {
+    path: 'addaddressproof',
+    loadComponent: () => import('./addaddressproof/addaddressproof').then(m => m.AddAddressProof)
+  },
+
+  {
     path: 'viewsos',
     loadComponent: () => import('./viewsos/viewsos').then(m => m.ViewsosPage)
   },

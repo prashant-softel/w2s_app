@@ -2,12 +2,11 @@ import { Component, HostListener, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { IonicModule, NavController, NavParams, Platform, AlertController } from '@ionic/angular';
-
+import { GlobalVars } from 'src/service/globalvars';
+import { LoaderView } from 'src/service/loaderview';
+import { ConnectServer } from 'src/service/connectserver';
 import { NavigationExtras } from '@angular/router';
 import { ActivatedRoute } from '@angular/router';
-import { GlobalVars } from 'src/service/globalvars';
-import { ConnectServer } from 'src/service/connectserver';
-import { LoaderView } from 'src/service/loaderview';
 
 enum statusEnum { "Pending" = 0, "Active", "Need Information", "Rejected" }
 @Component({
@@ -79,10 +78,13 @@ export class TenantsdetailsPage implements OnInit {
     console.log(JSON.stringify(this.tenant) + " & admin : " + this.admin);
   }
 
-  confirmApprove(p) {
-    let alert = this.alertCtrl.create({
+  async confirmApprove(p) {
+    console.log("confirm");
+    const alert = await this.alertCtrl.create({
       //title: "Approve this Tenant?',
-      message: '',
+
+      header: 'Approve this tenant?',
+      message: 'Do you want to Approve this tenant',
       buttons: [
         {
           text: 'Cancel',
@@ -95,11 +97,13 @@ export class TenantsdetailsPage implements OnInit {
           text: 'Approve',
           handler: () => {
             this.ApproveIt(p);
+
+            // alert("approved");
           }
         }
       ]
     });
-    //alert.present();
+    await alert.present();
   }
 
   confirmRemove(p) {

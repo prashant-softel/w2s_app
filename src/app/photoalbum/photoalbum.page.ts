@@ -15,11 +15,11 @@ import { ImageviewPage } from "../imageview/imageview.page";
   templateUrl: './photoalbum.page.html',
   styleUrls: ['./photoalbum.page.scss'],
   standalone: true,
- 
+
   imports: [IonicModule, CommonModule, FormsModule]
 })
 export class PhotoalbumPage implements OnInit {
-  ImageviewPage :any ='imageview';
+  ImageviewPage: any = 'imageview';
   coverImgs: Array<any>;
   photoalbum_array: Array<any>;
   temp_photoalbum_array: Array<any>;
@@ -54,7 +54,7 @@ export class PhotoalbumPage implements OnInit {
     this.namesOfFolder = [];
     this.imageId = [];
     this.folder = "";
-   }
+  }
 
   @HostListener('document:ionBackButton', ['$event'])
   overrideHardwareBackAction(event: any) {
@@ -67,19 +67,16 @@ export class PhotoalbumPage implements OnInit {
   ngOnInit() {
     this.fetchData();
   }
-  fetchData() 
-  {
+  fetchData() {
     this.loaderView.showLoader('Loading ...');
     var obj = [];
     obj["fetch"] = "Allphotoalbum";
     this.connectServer.getData("Photoalbum", obj).then(
-      resolve => { 
+      resolve => {
         this.loaderView.dismissLoader();
-        if(resolve['success'] == 1)
-        {
+        if (resolve['success'] == 1) {
           var AlbumData = resolve['response']['PhotoAlbumDetails'];
-          for(var iCnt = 0; iCnt < Object.keys(AlbumData).length;iCnt++)
-          {
+          for (var iCnt = 0; iCnt < Object.keys(AlbumData).length; iCnt++) {
             this.folder_array.push(AlbumData[iCnt]);
           }
         }
@@ -95,12 +92,20 @@ export class PhotoalbumPage implements OnInit {
         details: p,
       }
     };
-    this.navCtrl.navigateForward(this.ImageviewPage, { state: { details: p } });
+    this.navCtrl.navigateRoot(this.ImageviewPage, navigationExtras);
+    /*let navigationExtras: NavigationExtras = {
+      queryParams:
+      {
+        details: p,
+      }
+    };
+    console.log("pass",details);
+    this.navCtrl.navigateForward(this.ImageviewPage, { state: { details: p } });*/
     //alert("album ID "+p);
-   // this.navCtrl.navigateForward("imageview", { state: p });
+    // this.navCtrl.navigateForward("imageview", { state: p });
     // this.navCtrl.push(ImageviewPage, { details: p});
-   }
- 
+  }
+
   getImagesUrls(selectedFolder) {
     var urls = [];
     for (let i = 0; i < this.photos.length; i++) {
@@ -108,23 +113,23 @@ export class PhotoalbumPage implements OnInit {
         urls.push(this.photos[i]["url"]);
       }
     }
-  return urls;
-}
- 
-getImagesIDs(selectedFolder) {
-  var ids = [];
-  for (let i = 0; i < this.photos.length; i++) {
-    if (this.photos[i]["folder"] == selectedFolder) {
-      ids.push(this.photos[i]["id"]);
-    }
+    return urls;
   }
-  return ids;
-}
- 
-getCoverImage(selectedFolder) {
-  console.log(this.photos);
-  for (let i = 0; i < this.photos.length; i++) {
-    if(this.photos[i]["folder"] == selectedFolder && this.photos[i]["cover"] == "1") {
+
+  getImagesIDs(selectedFolder) {
+    var ids = [];
+    for (let i = 0; i < this.photos.length; i++) {
+      if (this.photos[i]["folder"] == selectedFolder) {
+        ids.push(this.photos[i]["id"]);
+      }
+    }
+    return ids;
+  }
+
+  getCoverImage(selectedFolder) {
+    console.log(this.photos);
+    for (let i = 0; i < this.photos.length; i++) {
+      if (this.photos[i]["folder"] == selectedFolder && this.photos[i]["cover"] == "1") {
         this.coverImgs.push({
           folder: selectedFolder,
           url: this.photos[i]["url"],
@@ -133,14 +138,14 @@ getCoverImage(selectedFolder) {
       }
     }
   }
- 
+
   getFolderNameFromFolder(selectedFolder) {
     var name = "";
     for (let i = 0; i < this.photoalbum_array.length; i++) {
-       if (this.photoalbum_array[i]["folder"] == selectedFolder) {
-         name = this.photoalbum_array[i]["name"];
-       }
-     }
-     return name;
-   }
+      if (this.photoalbum_array[i]["folder"] == selectedFolder) {
+        name = this.photoalbum_array[i]["name"];
+      }
+    }
+    return name;
+  }
 }

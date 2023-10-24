@@ -1,13 +1,57 @@
 <ion-header [translucent]="true">
   <ion-toolbar>
-    <ion-title>updateprovider</ion-title>
+    <ion-title>Edit provider</ion-title>
+    <ion-buttons slot="start">
+      <ion-back-button defaultHref="serviceprovider" icon="chevron-back-outline" text="Back"></ion-back-button>
+    </ion-buttons>
+    <ion-buttons slot="end" style="width:30%">
+      <ion-button><img style="width:70%" src="/assets/images/logo.png"></ion-button>
+    </ion-buttons>
   </ion-toolbar>
 </ion-header>
 
-<ion-content [fullscreen]="true">
-  <ion-header collapse="condense">
-    <ion-toolbar>
-      <ion-title size="large">updateprovider</ion-title>
-    </ion-toolbar>
-  </ion-header>
+<ion-content padding>
+  <ion-list no-lines *ngIf="callForm == '1'">
+    <!-- <p text-center style="color:#FF0000;"><strong>{{message}}</strong></p> -->
+    <ion-list>
+      <ion-label floating>Full Name *</ion-label>
+      <ion-input type="text" value="" [(ngModel)]="updateData.provider_name" (keyup)="keyUpChecker($event)"></ion-input>
+    </ion-list>
+
+    <ion-list>
+      <!-- <ion-label>Category : {{CategoryName}}</ion-label> -->
+    </ion-list>
+    <ion-list>
+      <ion-label floating>Date Of Birth *</ion-label>
+      <ion-datetime displayFormat="DD-MM-YYYY" [(ngModel)]="updateData.DateOfBirth"></ion-datetime>
+    </ion-list>
+    <ion-list>
+      <ion-label floating>Identification Marks *</ion-label>
+      <ion-input type="text" value="" [(ngModel)]="updateData.IdentyMark"></ion-input>
+    </ion-list>
+    <ion-list>
+      <ion-label floating>Working in Society Since *</ion-label>
+      <ion-datetime displayFormat="DD-MM-YYYY" min="2008" [(ngModel)]="updateData.WorkingSince"></ion-datetime>
+    </ion-list>
+    <!-- <ion-list>
+			<ion-label floating>Married</ion-label>
+			<ion-select [(ngModel)]="updateData.MarritalStatus">
+				<ion-select-option text-wrap value="yes">Yes</ion-select-option>
+				<ion-select-option text-wrap value="no">No</ion-select-option>
+			</ion-select>
+		</ion-list> -->
+    <!-- <ion-list>
+			<ion-label floating>Contact No *</ion-label>
+			<ion-input type="tel" value="" [(ngModel)]="updateData.MobileNo"></ion-input>
+		</ion-list> -->
+    <!-- <ion-list>
+			<ion-label floating>Alternate Contact No </ion-label>
+			<ion-input type="tel" value="" [(ngModel)]="updateData.AltMobileNo"></ion-input>
+		</ion-list> -->
+
+    <!-- <ion-list>
+			<button ion-button color="primary" block (click)="updatPresonal()">Update</button>
+			<p style="color:#FF0000;">{{message}}</p>
+		</ion-list> -->
+  </ion-list>
 </ion-content>

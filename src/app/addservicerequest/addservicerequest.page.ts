@@ -41,6 +41,8 @@ interface LocalFile {
 })
 export class AddservicerequestPage implements OnInit {
   ServiceRequestPage: any = 'servicerequest';
+  AddtenantPage: any = 'addtenant';
+  AddAddressProof: any = 'addaddressproof';
 
   userData: { title: any, details: any, priority: any, category: any, sr_id: any; unit_id: any };
   cat_list: Array<any>;
@@ -164,67 +166,74 @@ export class AddservicerequestPage implements OnInit {
       this.userData['set'] = "sr";
 
       console.log("this.userData.unit_id : " + this.userData.unit_id);
-      /*if(this.userData.category == this.globalVars.RENOVATION_REQUEST_ID || this.userData.category == this.globalVars.ADDRESS_PROOF_REQUEST_ID || this.userData.category == this.globalVars.TENANT_REQUEST_ID)
-      {
-        var p=[];
+      if (this.userData.category == this.globalVars.RENOVATION_REQUEST_ID || this.userData.category == this.globalVars.ADDRESS_PROOF_REQUEST_ID || this.userData.category == this.globalVars.TENANT_REQUEST_ID) {
+        console.log(this.userData.category);
+        console.log(this.globalVars.ADDRESS_PROOF_REQUEST_ID);
+        var p = [];
         p['title'] = this.userData.title;
         p['category'] = this.userData.category;
         p['priority'] = this.userData.priority;
         p['loginId'] = this.globalVars.MAP_LOGIN_ID;
         p['unitId'] = this.userData.unit_id;
-        console.log("details : ",p);
-        if(this.userData.category == this.globalVars.RENOVATION_REQUEST_ID)
-        {
-          //this.navCtrl.setRoot(AddRenovationRequest,{details : p});
-        }
-        else if(this.userData.category == this.globalVars.ADDRESS_PROOF_REQUEST_ID)   
-        {
+        console.log("details : ", p);
+        if (this.userData.category == this.globalVars.ADDRESS_PROOF_REQUEST_ID) {
+          let navigationExtras: NavigationExtras = {
+            queryParams:
+            {
+              details: p,
+            }
+          };
+          this.navCtrl.navigateRoot(this.AddAddressProof, navigationExtras);
           //this.navCtrl.setRoot(AddAddressProof,{details : p});
         }
-        else
-        {
-          //this.navCtrl.setRoot(AddtenantPage,{details : p});
+        else {
+          let navigationExtras: NavigationExtras = {
+            queryParams:
+            {
+              details: p,
+            }
+          };
+          this.navCtrl.navigateRoot(this.AddtenantPage, navigationExtras);
           this.loaderView.dismissLoader();
-        }     
+        }
       }//End
-      else
-      { */
-      this.connectServer.getData("ServiceRequest", this.userData).then(
-        resolve => {
-          this.loaderView.dismissLoader();
-          console.log('Response : ' + resolve);
-          if (resolve['success'] == 1) {
-            this.message = resolve['response']['message'];
-            this.servicerequest_id = resolve['response']['new_sr_id'];
-            if (this.images.length < 1) {
-              var p = [];
-              if (this.globalVars.MAP_USER_ROLE == "Member") {
-                p['dash'] = "society";
-                console.log(p);
+      else {
+        this.connectServer.getData("ServiceRequest", this.userData).then(
+          resolve => {
+            this.loaderView.dismissLoader();
+            console.log('Response : ' + resolve);
+            if (resolve['success'] == 1) {
+              this.message = resolve['response']['message'];
+              this.servicerequest_id = resolve['response']['new_sr_id'];
+              if (this.images.length < 1) {
+                var p = [];
+                if (this.globalVars.MAP_USER_ROLE == "Member") {
+                  p['dash'] = "society";
+                  console.log(p);
+                }
+                else {
+                  p['dash'] = "admin";
+                }
+                let navigationExtras: NavigationExtras = {
+                  queryParams:
+                  {
+                    details: p,
+                  }
+                };
+
+                // this.navCtrl.navigateForward(this.ServiceRequestPage, { state: { details: p } });
+                this.navCtrl.navigateRoot(this.ServiceRequestPage, navigationExtras);
               }
               else {
-                p['dash'] = "admin";
+                this.uploadImage();
               }
-              let navigationExtras: NavigationExtras = {
-                queryParams:
-                {
-                  details: p,
-                }
-              };
-
-              // this.navCtrl.navigateForward(this.ServiceRequestPage, { state: { details: p } });
-              this.navCtrl.navigateRoot(this.ServiceRequestPage, navigationExtras);
             }
             else {
-              this.uploadImage();
+              this.message = resolve['response']['message'];
             }
           }
-          else {
-            this.message = resolve['response']['message'];
-          }
-        }
-      );
-      //}
+        );
+      }
     }
   }
 
