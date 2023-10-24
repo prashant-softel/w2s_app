@@ -1,4 +1,5 @@
 import { Routes } from '@angular/router';
+import { AddAddressProof } from './addaddressproof/addaddressproof';
 //
 export const routes: Routes = [
   {
@@ -153,6 +154,14 @@ export const routes: Routes = [
   {
     path: 'servicerequestimageview',
     loadComponent: () => import('./servicerequestimageview/servicerequestimageview.page').then(m => m.ServicerequestimageviewPage)
+  },
+  {
+    path: 'addclassified',
+    loadComponent: () => import('./addclassified/addclassified').then(m => m.AddclassifiedPage)
+  },
+  {
+    path: 'addaddressproof',
+    loadComponent: () => import('./addaddressproof/addaddressproof').then(m => m.AddAddressProof)
   },
   {
     path: 'viewsos',

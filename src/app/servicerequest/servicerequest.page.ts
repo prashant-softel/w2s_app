@@ -62,11 +62,19 @@ export class ServicerequestPage implements OnInit {
    }
 
   ngOnInit() {
+    let details:any;
+    this.route.queryParams.subscribe(params => {
+      details = params["details"];
+        
+      });
+	  this.displayData =details;//this.navParams.get("details");
+	  console.log("dta display",this.displayData);
     this.fetchData('list');
 	  this.fetchData('assigned');
     this.MyUnit=this.globalVars.MAP_UNIT_ID;
  		this.NewRole = this.globalVars.MAP_USER_ROLE; // == "Contractor"
- 		//this.getCategoryId()
+ 		this.getCategoryId();
+    console.log("catogoryid",this.getCategoryId())
 
   }
   @HostListener('document:ionBackButton', ['$event'])
@@ -81,16 +89,22 @@ export class ServicerequestPage implements OnInit {
 	{
 	 	var data = [];
     var link = this.globalVars.HOST_NAME+'api.php';
-    var myData = JSON.stringify({method:"getRequestId",societyId:this.globalVars.MAP_SOCIETY_ID,unitId:this.globalVars.MAP_UNIT_ID,role:this.globalVars.MAP_USER_ROLE,loginId:this.globalVars.MAP_LOGIN_ID});
+    var myData = {
+    method:"getRequestId",
+    societyId:this.globalVars.MAP_SOCIETY_ID,
+    unitId:this.globalVars.MAP_UNIT_ID,
+    role:this.globalVars.MAP_USER_ROLE,
+    loginId:this.globalVars.MAP_LOGIN_ID};
     this.http.post(link, myData)
       .subscribe(data => 
       {
           this.data.response = data["_body"]; 
           var parsedData = JSON.parse(this.data.response);
-          console.log(parsedData);
+          console.log("parsed data",parsedData);
           var details = parsedData['response']['details'];
           console.log(details);
           this.globalVars.ADDRESS_PROOF_REQUEST_ID = details['AddressProofId'];
+          console.log( "address id",this.globalVars.ADDRESS_PROOF_REQUEST_ID);
           this.globalVars.TENANT_REQUEST_ID = details['TenantRequestId'];
           this.globalVars.RENOVATION_REQUEST_ID = details['RenovationRequestId'];
           
@@ -101,13 +115,13 @@ export class ServicerequestPage implements OnInit {
 
   fetchData(type)
 	{
-    let details:any;
-    this.route.queryParams.subscribe(params => {
-      details = params["details"];
+    // let details:any;
+    // this.route.queryParams.subscribe(params => {
+    //   details = params["details"];
         
-      });
-	  this.displayData =details;//this.navParams.get("details");
-	  console.log(this.displayData);
+    //   });
+	  // this.displayData =details;//this.navParams.get("details");
+	  // console.log(this.displayData);
 	  var objData = [];
     if(type == 'list') {
 	      if(this.globalVars.MAP_USER_ROLE == "Member" || this.displayData['dash']=="society")

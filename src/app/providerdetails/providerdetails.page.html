@@ -2,14 +2,14 @@
   <ion-toolbar>
     <ion-title>Service Provider</ion-title>
     <ion-buttons slot="start">
-		<ion-back-button defaultHref="serviceprovider" icon="chevron-back-outline" text="Back"></ion-back-button>
-	</ion-buttons>
+      <ion-back-button defaultHref="serviceprovider" icon="chevron-back-outline" text="Back"></ion-back-button>
+    </ion-buttons>
     <ion-buttons slot="end" style="width:30%">
       <ion-button><img style="width:70%" src="/assets/images/logo.png"></ion-button>
     </ion-buttons>
   </ion-toolbar>
   <ion-toolbar no-border *ngIf="roleWise=='AdminMember' || roleWise=='Admin' || roleWise=='SuperAdmin' ">
-    <ion-segment [(ngModel)]="tab">
+    <ion-segment [(ngModel)]="tab" style="display: flex; justify-content: space-between;">
       <ion-segment-button value="personal">
         <ion-icon name='person'></ion-icon>
       </ion-segment-button>
@@ -22,7 +22,7 @@
       <ion-segment-button value="report">
         <ion-icon name='clipboard'></ion-icon>
       </ion-segment-button>
-       <ion-segment-button value="note">
+      <ion-segment-button value="note">
         <ion-icon name='attach'></ion-icon>
       </ion-segment-button>
     </ion-segment>
@@ -37,8 +37,8 @@
       </ion-segment-button>
     </ion-segment>
   </ion-toolbar>
- <ion-toolbar no-border *ngIf="assigned==1 && roleWise=='Member'">
-    <ion-segment [(ngModel)]="tab">
+  <ion-toolbar no-border *ngIf="assigned==1 && roleWise=='Member'">
+    <ion-segment [(ngModel)]="tab" style="display: flex; justify-content: space-between;">
       <ion-segment-button value="personal">
         <ion-icon name='person'></ion-icon>
       </ion-segment-button>
@@ -60,52 +60,56 @@
 
 <ion-content padding>
   <div [ngSwitch]="tab">
-  <!-- ************** ********************CheckOut Note tab ************************* -->
-  <ion-list no-lines *ngSwitchCase="'note'">
-    <ion-card *ngIf ="providerData['SecurityDBStatus'] =='NotConnected'">
-      <ion-card-header text-center>
-        <strong style="font-size: 18px; color: red; text-align: center;">Warning</strong>
-      </ion-card-header>
-      <ion-card-content>
-        <p style="text-align: center;color: black;">This page gives the attendance report of the service provider/domestic help. This feature is available with the subscription of security manager app.</p>
-        <p style="text-align: center;color: black;">To enable this feature please contact your society office or secretory</p>
-      </ion-card-content>
-    </ion-card>
-    <ion-item *ngIf = "providerData['security_status'] == '0' && providerData['SecurityDBStatus'] !='NotConnected'">
-      <!--<p>{{presentConfirm()}}</p>-->
-    </ion-item>
-    <ion-card *ngIf = "providerData['security_status'] != '0' &&  providerData['SecurityDBStatus'] !='NotConnected'">
-      <ion-card-content>
-        <p style="text-align: center;color: black;">If you wish to give some stuff to your service provider you can add your description and attach an image file so that it would be convenient for security guard while checking out the person in more secured way.</p>
-        <ion-item>
-          <ion-label floating>Enter Check Out Description *</ion-label>
-            <ion-input type="text" value=""  [(ngModel)]="checkoutnote" ></ion-input>
-        </ion-item>
-        <ion-item>
-          <ion-card>
-           <!-- <img src="{{pathForImage(profileImage)}}" [hidden]="profileImage === null" style="max-height : 50vh">-->
-          </ion-card>
-          <h3 [hidden]="profileImage !== null"></h3>
-          <!--<button ion-button round icon-left (click)="presentActionSheet('profile', -1)">
+    <!-- ************** ********************CheckOut Note tab ************************* -->
+    <ion-list no-lines *ngSwitchCase="'note'">
+      <ion-card *ngIf="providerData['SecurityDBStatus'] =='NotConnected'">
+        <ion-card-header text-center>
+          <strong style="font-size: 18px; color: red; text-align: center;">Warning</strong>
+        </ion-card-header>
+        <ion-card-content>
+          <p style="text-align: center;color: black;">This page gives the attendance report of the service
+            provider/domestic help. This feature is available with the subscription of security manager app.</p>
+          <p style="text-align: center;color: black;">To enable this feature please contact your society office or
+            secretory</p>
+        </ion-card-content>
+      </ion-card>
+      <ion-list *ngIf="providerData['security_status'] == '0' && providerData['SecurityDBStatus'] !='NotConnected'">
+        <!--<p>{{presentConfirm()}}</p>-->
+      </ion-list>
+      <ion-card *ngIf="providerData['security_status'] != '0' &&  providerData['SecurityDBStatus'] !='NotConnected'">
+        <ion-card-content>
+          <p style="text-align: center;color: black;">If you wish to give some stuff to your service provider you can
+            add your description and attach an image file so that it would be convenient for security guard while
+            checking out the person in more secured way.</p>
+          <ion-list>
+            <ion-label floating>Enter Check Out Description *</ion-label>
+            <ion-input type="text" value="" [(ngModel)]="checkoutnote"></ion-input>
+          </ion-list>
+          <ion-list>
+            <ion-card>
+              <!-- <img src="{{pathForImage(profileImage)}}" [hidden]="profileImage === null" style="max-height : 50vh">-->
+            </ion-card>
+            <h3 [hidden]="profileImage !== null"></h3>
+            <!--<button ion-button round icon-left (click)="presentActionSheet('profile', -1)">
             <ion-buttons  text-center>
               <ion-icon name="camera"></ion-icon>Attach Image
             </ion-buttons>
           </button>-->
-        </ion-item>
-        <ion-item>
-         <!--<button ion-button color="primary" block (click)="InsertItemDescription()" style="height: 35px;">Add</button>--> 
-        </ion-item>
-      </ion-card-content>
-    </ion-card>
-    <ion-grid *ngIf = "providerData['SecurityDBStatus'] !='NotConnected'">
-      <ion-list style = "background-color :#488aff ; color: white" >
-        <ion-row text-center text-wrap style = "background-color :#488aff ; color: white; line-height: 40px;">
-          <ion-col col-4 ><strong>Date</strong></ion-col>
-          <ion-col><strong>Flat/Unit No</strong></ion-col>
-          <ion-col><strong>Checkout Note</strong></ion-col>
-        </ion-row>
-      </ion-list>
-      <!--<ion-item *ngIf = "errorlended == ''">
+          </ion-list>
+          <ion-list>
+            <!--<button ion-button color="primary" block (click)="InsertItemDescription()" style="height: 35px;">Add</button>-->
+          </ion-list>
+        </ion-card-content>
+      </ion-card>
+      <ion-grid *ngIf="providerData['SecurityDBStatus'] !='NotConnected'">
+        <ion-list style="background-color :#488aff ; color: white">
+          <ion-row text-center text-wrap style="background-color :#488aff ; color: white; line-height: 40px;">
+            <ion-col col-4><strong>Date</strong></ion-col>
+            <ion-col><strong>Flat/Unit No</strong></ion-col>
+            <ion-col><strong>Checkout Note</strong></ion-col>
+          </ion-row>
+        </ion-list>
+        <!--<ion-list *ngIf = "errorlended == ''">
         <ion-list *ngFor="let v of staffitemlended" >
           <ion-row text-center text-wrap style="line-height: 25px; border-bottom:1px solid grey;color: grey;" >
             <ion-col col-4 > {{v.timestamp}} </ion-col>
@@ -114,478 +118,548 @@
             <ion-col> <a href="#" >{{v.item_desc}}</a></ion-col>
           </ion-row>
         </ion-list>
-      </ion-item>-->
-      <ion-item text-center *ngIf = "errorlended != ''" >
-        <strong><h2>{{errorlended}}</h2></strong>
-      </ion-item>
-    </ion-grid>
-  </ion-list>
-  <!-- ************************************   Profile Tab ************************ -->  
-  <ion-list no-lines *ngSwitchCase="'personal'">
-    <ion-item text-center style="background-color: #f5bc3dd9;color: #ffffff;" >
-      <strong><h5>Status</h5></strong>
-    </ion-item>
-    <ion-card  >
-      <ion-card-content>
-        <ion-row>
-          <ion-col size="4" class="text-left"><strong>Status :</strong></ion-col>
-          <ion-col class="text-right">Need More Information</ion-col>
-        </ion-row>
-        <ion-row>
-          <ion-col class="text-left"><strong>Description :</strong></ion-col>
-        </ion-row>
-        <p style="padding-left: 5px;padding-right: 5px;">{{providerData['Block_desc']}}</p>
-        <ion-row>
-          <ion-col>
-            <strong>Please enter required information and resubmit for approval. </strong>
-          </ion-col>
-        </ion-row>
-      </ion-card-content>
-    </ion-card>
-    <ion-item class="text-center bill" >
-      <strong><h5>Profile</h5></strong>
-    </ion-item>
-    <ion-card>
-      <ion-card-content>
-        <ion-item>
+      </ion-list>-->
+        <ion-list text-center *ngIf="errorlended != ''">
+          <strong>
+            <h2>{{errorlended}}</h2>
+          </strong>
+        </ion-list>
+      </ion-grid>
+    </ion-list>
+    <!-- ************************************   Profile Tab ************************ -->
+    <ion-list no-lines *ngSwitchCase="'personal'">
+      <ion-list text-center style="background-color: #f5bc3dd9;color: #ffffff; text-align: center;">
+        <strong>
+          <h5>Status</h5>
+        </strong>
+      </ion-list>
+      <ion-card>
+        <ion-card-content>
           <ion-row>
-            <!--<ion-col size="4" class="text-left" *ngIf="providerData.photo !=''">-->
+            <ion-col size="4" class="text-left"><strong>Status :</strong></ion-col>
+            <ion-col class="text-right">Need More Information</ion-col>
+          </ion-row>
+          <ion-row>
+            <ion-col class="text-left"><strong>Description :</strong></ion-col>
+          </ion-row>
+          <p style="padding-left: 5px;padding-right: 5px;">{{providerData['Block_desc']}}</p>
+          <ion-row>
+            <ion-col>
+              <strong>Please enter required information and resubmit for approval. </strong>
+            </ion-col>
+          </ion-row>
+        </ion-card-content>
+      </ion-card>
+      <ion-list class="text-center bill">
+        <strong>
+          <h5>Profile</h5>
+        </strong>
+      </ion-list>
+      <ion-card>
+        <ion-card-content>
+          <ion-list>
+            <ion-row>
+              <!--<ion-col size="4" class="text-left" *ngIf="providerData.photo !=''">-->
               <ion-col size="4" class="text-left">
-              <img src="{{providerData['Main']}}" style="max-height : 50vh" (click)="viewImage()" onerror="this.src='images/no-image.jpg';">
-            </ion-col>
-            <!--<ion-col size="4" class="text-left"  *ngIf="providerData.photo ==''">-->
-              <ion-col size="4" class="text-left">
-              <img src="/assets/images/no-image.jpg" style="width: 100%;height: auto; ">
-            </ion-col>
-            <ion-col class="text-left" size="3"><strong style="float: left;margin-top: 10px;">Name </strong></ion-col>
-            <ion-col class="text-right" size="5" style="white-space: normal !important; width: 50%">
-              <strong style="float: right;margin-top: 10px;">{{providerData['full_name']}}</strong>
-            </ion-col>
-          </ion-row>
-          <ion-row style="margin-top: 1%" >
-            <ion-col size="4" class="text-left" style="margin-top: -3%;"></ion-col>
-            <ion-col class="text-left" size="2"><strong style="float: left;margin-top: -10px;">Age </strong></ion-col>
-            <ion-col class="text-right" size="6"><strong style="float: right;margin-top: -10px;">{{providerData['Age']}}</strong></ion-col>
-          </ion-row>
-          <ion-row style="margin-top: 5%">
-            <ion-col class="text-left"><strong>Category </strong></ion-col>
-            <ion-col class="text-right">{{providerData['cat']}}</ion-col>
-          </ion-row>
-          <ion-row>
-            <ion-col class="text-left"><strong>Contact </strong></ion-col>
-            <ion-col class="text-right"><a href="tel:{{providerData['cur_con_1']}}" class="button button-positive">{{providerData['cur_con_1']}}</a></ion-col>
-          </ion-row>
-          <ion-row *ngIf="providerData['cur_con_2'] !=''">
-            <ion-col class="text-left"><strong>Contact-2 </strong></ion-col>
-            <ion-col class="text-right"><a href="tel:{{providerData['cur_con_2']}}" class="button button-positive">{{providerData['cur_con_2']}}</a></ion-col>
-          </ion-row>
-          <ion-row>
-            <ion-col class="text-left"><strong>Working Since</strong></ion-col>
-            <ion-col class="text-right">{{providerData['workingDate']}}</ion-col>
-          </ion-row>
-          <ion-row  *ngIf="providerData['marry'] !=''">
-            <ion-col class="text-left" ><strong>Married</strong></ion-col>
-            <ion-col class="text-right">{{providerData['marry']}}</ion-col>
-          </ion-row>
-          <br>
-          <ion-row  *ngIf="providerData['active'] == 0 || roleWise=='AdminMember'">
-            <ion-col class="text-right" >
-              <br/>
-              <a href="#" (click)="Edit_persional()">Edit Profile Details</a>
-            </ion-col>
-          </ion-row>
-        </ion-item>
-      </ion-card-content>
-    </ion-card>
-    <ion-card>
-      <ion-card-content>
-        <ion-item>
-          <ion-row  *ngIf="providerData['UnitID'] !='0'">
-            <ion-col class="text-left"><strong>Working in Units: </strong></ion-col>
-            <ion-row  *ngFor="let u of UnitReport_array">
-              <ion-col class="text-left" style="font-size: 13px;white-space: initial; font-weight: bold;" >{{u.UnitNo}}</ion-col>
+                <img src="{{providerData['Main']}}" style="max-height : 50vh" (click)="viewImage()"
+                  onerror="this.src='/assets/images/no-image.jpg';">
+              </ion-col>
+              <!--<ion-col size="4" class="text-left"  *ngIf="providerData.photo ==''">-->
+              <!-- <ion-col size="4" class="text-left">
+                <img src="/assets/images/no-image.jpg" style="width: 100%;height:100%; ">
+              </ion-col> -->
+
             </ion-row>
-          </ion-row>
-          <ion-row  *ngIf="providerData['active'] == 1 && assigned == 0 && roleWise !='Admin'">
-            <ion-col class="text-right" >
-              <br/>
-              <!--<a href="#" (click)="Assignme()">Assign to me</a>-->
-              <button ion-button color="primary" block (click)="Assignme()">Add to {{providerData['UnitNo']}}</button>
-            </ion-col>
-          </ion-row>
-          <ion-row  *ngIf="providerData['active'] == 1 && assigned == 1 && roleWise !='Admin'">
-            <ion-col class="text-right" >
-              <br/>
-              <!--<a href="#" (click)="DeleteMe()">Detele for Me</a>-->
-              <button ion-button color="danger" block (click)="Remove()">Remove from {{providerData['UnitNo']}} </button>
-            </ion-col>
-          </ion-row>
-          <ion-row *ngIf="providerData['IsBlock']==0 && roleWise!='Member' && profile_flag != 0 ">
-            <ion-col>
-     	        <!--<button ion-button color="danger" block (click)="Block(p)">Blacklist Provider</button>-->
-            </ion-col>
-          </ion-row>
-        </ion-item>
-      </ion-card-content>
-    </ion-card>
-    <!--<ion-list *ngIf = "displayData.pending == 2" >-->
+            <ion-row style="">
+              <!-- <ion-col size="3" class="text-left"></ion-col> -->
+
+              <ion-col class="text-left" size="3"><strong style="float: left; margin-left: 30px;">Name: </strong></ion-col>
+              <!-- <ion-col class="text-right" size="5" style="white-space: normal !important; width: 50%">
+                <strong class="text-right" style="margin-left: 30px;">{{providerData['full_name']}}</strong>
+              </ion-col> -->
+              <ion-col class="text-right" style="margin-right: 30px;">{{providerData['full_name']}}</ion-col>
+            </ion-row>
+            <ion-row>
+              <!-- <ion-col size="2" class="text-left" style=""></ion-col> -->
+              <ion-col class="text-left"><strong style="float: left;margin-top: -10px; margin-left: 30px;">Age :</strong></ion-col>
+              <!-- <ion-col class="text-right" size="6"><strong
+                  class="text-right">{{providerData['Age']}}</strong></ion-col> -->
+              <ion-col class="text-right" style="margin-right: 50px;">{{providerData['Age']}}</ion-col>
+
+            </ion-row>
+
+            <ion-row style="">
+              <ion-col class="text-left" style="margin-left: 30px;"><strong>Category : </strong></ion-col>
+              <ion-col class="text-right" style="margin-right: 30px;">{{providerData['cat']}}</ion-col>
+            </ion-row>
+            <ion-row>
+              <ion-col class="text-left" style="margin-left: 30px;"><strong>Contact:</strong></ion-col>
+              <ion-col class="text-right" style="margin-right: 30px;"><a href="tel:{{providerData['cur_con_1']}}"
+                  class="button button-positive">{{providerData['cur_con_1']}}</a></ion-col>
+            </ion-row>
+            <ion-row *ngIf="providerData['cur_con_2'] !=''">
+              <ion-col class="text-left" style="margin-left: 30px;"><strong>Contact-2 :</strong></ion-col>
+              <ion-col class="text-right" style="margin-right: 30px;"><a href="tel:{{providerData['cur_con_2']}}"
+                  class="button button-positive">{{providerData['cur_con_2']}}</a></ion-col>
+            </ion-row>
+            <ion-row>
+              <ion-col class="text-left" style="margin-left: 30px;"><strong>Working Since :</strong></ion-col>
+              <ion-col class="text-right" style="margin-right: 30px;">{{providerData['workingDate']}}</ion-col>
+            </ion-row>
+            <ion-row *ngIf="providerData['marry'] !=''">
+              <ion-col class="text-left" style="margin-left: 30px;"><strong>Married :</strong></ion-col>
+              <ion-col class="text-right" style="margin-right: 60px;">{{providerData['marry']}}</ion-col>
+            </ion-row>
+            <br>
+            <ion-row *ngIf="providerData['active'] == 0 || roleWise=='AdminMember'">
+              <ion-col class="text-right">
+                <br />
+                <a (click)="Edit_persional()" style="margin-right: 30px;">Edit Profile Details</a>
+              </ion-col>
+            </ion-row>
+          </ion-list>
+        </ion-card-content>
+      </ion-card>
+      <ion-card>
+        <ion-card-content>
+          <ion-list>
+            <ion-row *ngIf="providerData['UnitID'] !='0'">
+              <ion-col class="text-left"><strong>Working in Units: </strong></ion-col>
+              <ion-row *ngFor="let u of UnitReport_array">
+                <ion-col class="text-left"
+                  style="font-size: 13px;white-space: initial; font-weight: bold;">{{u.UnitNo}}</ion-col>
+              </ion-row>
+            </ion-row>
+            <ion-row *ngIf="providerData['active'] == 1 && assigned == 0 && roleWise !='Admin'">
+              <ion-col class="text-right">
+                <br />
+                <!--<a href="#" (click)="Assignme()">Assign to me</a>-->
+                <button ion-button color="primary" block (click)="Assignme()">Add to {{providerData['UnitNo']}}</button>
+              </ion-col>
+            </ion-row>
+            <ion-row *ngIf="providerData['active'] == 1 && assigned == 1 && roleWise !='Admin'">
+              <ion-col class="text-right">
+                <br />
+                <!--<a href="#" (click)="DeleteMe()">Detele for Me</a>-->
+                <button ion-button color="danger" block (click)="Remove()">Remove from {{providerData['UnitNo']}}
+                </button>
+              </ion-col>
+            </ion-row>
+            <ion-row *ngIf="providerData['IsBlock']==0 && roleWise!='Member' && profile_flag != 0 ">
+              <ion-col>
+                <!--<button ion-button color="danger" block (click)="Block(p)">Blacklist Provider</button>-->
+              </ion-col>
+            </ion-row>
+          </ion-list>
+        </ion-card-content>
+      </ion-card>
+      <!--<ion-list *ngIf = "displayData.pending == 2" >-->
       <ion-list>
-      <ion-row *ngIf = "moreInfo != '1'">
-        <ion-col class="text-left" size="6" *ngIf="profile_flag != 0 ">
-          <!--<button ion-button block (click)="confirmApprove()" style="background-color:#3cb371">Approve</button>-->
-          <!-- <a href="#" (click)="AproveIt(p.service_prd_reg_id)">Click here to Approved</a>-->
-        </ion-col>
-        <ion-col class="text-right" size="6" *ngIf="profile_flag != 0 ">
-          <!--<button ion-button color="danger" block (click)="confirmRemove()">Remove</button>-->
-          <!-- <a href="#" (click)="AproveIt(p.service_prd_reg_id)">Click here to Approved</a>-->
-        </ion-col>
-      </ion-row>
-      <ion-row *ngIf = "moreInfo != '1'">
-        <ion-col class="text-center"  text-wrap size="12" *ngIf="profile_flag != 0 ">
-         <!-- <button ion-button block (click)="getMoreInfo()" style="background-color:#0099ff">Get more Information</button>-->
-          <!-- <a href="#" (click)="AproveIt(p.service_prd_reg_id)">Click here to Approved</a>-->
-        </ion-col>
-      </ion-row>
-      <ion-row *ngIf="profile_flag == 0 ">
-        <ion-col>
-          <strong>You do not have access to approve or blacklist service provider. Please contact super admin to get privilege.</strong>
-        </ion-col>
-      </ion-row>
-    </ion-list>  
-  </ion-list>
-  <!--   ***********************  Address Tab *********************** -->
-  <ion-list no-lines *ngSwitchCase="'address'">
-    <ion-item class="text-center bill" >
-      <strong><h5>Contact Details</h5></strong>
-    </ion-item>
-    <ion-card>
-      <ion-card-content>
-        <ion-item>
-          <ion-row>
-            <ion-col class="text-left"><strong>Current Address :</strong></ion-col>
-          </ion-row>
-          <ion-row >
-            <ion-col style="white-space: normal !important;">{{providerData['cur_resd_add']}}</ion-col>
-          </ion-row>
-          <ion-row *ngIf="providerData['native_add'] !=''">
-            <ion-col class="text-left"><strong>Permanent Address :</strong></ion-col>
-          </ion-row>
-          <ion-row  *ngIf="providerData['native_add'] !=''"> 
-            <ion-col class="text-left" style="white-space: normal !important;">{{providerData['native_add']}}</ion-col>
-          </ion-row>
-          <ion-row>
-            <ion-col class="text-left"><strong>Contact :</strong></ion-col>
-            <ion-col class="text-right"><a href="tel:{{providerData['cur_con_1']}}" class="button button-positive">{{providerData['cur_con_1']}}</a></ion-col>
-          </ion-row>
-          <ion-row *ngIf="providerData['cur_con_2'] !=''">
-            <ion-col class="text-left"><strong>Contact-2 : </strong></ion-col>
-            <ion-col class="text-right"><a href="tel:{{providerData['cur_con_2']}}" class="button button-positive">{{providerData['cur_con_2']}}</a></ion-col>
-          </ion-row>
-          <ion-row  *ngIf="providerData['active'] == 0 || roleWise=='AdminMember'">
-            <ion-col class="text-right" >
-              <br/>
-              <a href="#" (click)="Edit_Contact()">Edit Contact Details</a>
-              <!-- <button ion-button color="primary" block (click)="Edit_persional()">Edit Profile Details</button>-->
-            </ion-col>
-          </ion-row>
-        </ion-item>
-      </ion-card-content>
-    </ion-card>
-    <ion-item  class="bill text-center" >
-      <strong><h5>Reference Details</h5></strong>
-    </ion-item>
-    <ion-card>
-      <ion-card-content>
-        <ion-item>
-          <ion-row  *ngIf="providerData['ref_name'] !=''">
-            <ion-col class="text-left"><strong>Name :</strong></ion-col>
-            <ion-col class="text-right">{{providerData['ref_name']}}</ion-col>
-          </ion-row>
-          <ion-row  *ngIf="providerData['ref_add'] !=''">
-            <ion-col class="text-left"><strong>Address :</strong></ion-col>
-          </ion-row>
-          <ion-row  *ngIf="providerData['ref_add'] !=''">
-            <ion-col class="text-left" style="white-space: normal !important;">{{providerData['ref_add']}}</ion-col>
-          </ion-row>
-          <ion-row *ngIf="providerData['ref_con_1'] !=''">
-            <ion-col class="text-left"><strong>Contact</strong></ion-col>
-            <ion-col class="text-right"><a href="tel:{{providerData['ref_con_1']}}" class="button button-positive">   {{providerData['ref_con_1']}}</a></ion-col>
-          </ion-row>
-          <ion-row *ngIf="providerData['ref_con_2'] !=''">
-            <ion-col class="text-left"><strong>Contact-2</strong></ion-col>
-            <ion-col class="text-right"><a href="tel:{{providerData['ref_con_2']}}" class="button button-positive">{{providerData['ref_con_2']}}</a></ion-col>
-          </ion-row>
-          <ion-row  *ngIf="providerData['active'] == 0 || roleWise=='AdminMember'">
-            <ion-col class="text-right" >
-              <br/>
-              <a href="#" (click)="Edit_Reference()">Edit Reference Details</a>
-              <!-- <button ion-button color="primary" block (click)="Edit_persional()">Edit Profile Details</button>-->
-            </ion-col>
-          </ion-row>
-        </ion-item>
-      </ion-card-content>
-    </ion-card>
-    <ion-item  class="bill text-center">
-      <strong><h5>Family Details</h5></strong>
-    </ion-item>
-    <ion-card>
-      <ion-card-content>
-        <ion-item>
-          <ion-row *ngIf="providerData['father_name'] !=''">
-            <ion-col class="text-left"><strong>Father Name</strong></ion-col>
-          </ion-row>
-          <ion-row  *ngIf="providerData['father_name'] !=''">
-            <ion-col class="text-left" style="white-space: initial;">{{providerData['father_name']}}</ion-col>
-          </ion-row>
-          <ion-row *ngIf="providerData['father_occ'] !=''">
-            <ion-col class="text-left"><strong>Father contact no/Address</strong></ion-col>
-          </ion-row>
-          <ion-row  *ngIf="providerData['father_occ'] !=''">
-            <ion-col class="text-left" style="white-space: initial;">{{providerData['father_occ']}}</ion-col>
-          </ion-row>
-          <ion-row *ngIf="providerData['mother_name'] !=''">
-            <ion-col class="text-left"><strong>Mother Name</strong></ion-col>
-          </ion-row>
-          <ion-row *ngIf="providerData['mother_name'] !=''">
-            <ion-col class="text-left" style="white-space: initial;">{{providerData['mother_name']}}</ion-col>
-          </ion-row>
-          <ion-row  *ngIf="providerData['mother_occ'] !=''">
-            <ion-col class="text-left"><strong>Mother contact no/Address</strong></ion-col>
-          </ion-row>
-          <ion-row *ngIf="providerData['mother_occ'] !=''">
-            <ion-col class="text-left" style="white-space: initial;">{{providerData['mother_occ']}}</ion-col>
-          </ion-row>
-          <ion-row *ngIf="providerData['hus_wife_name'] !=''">
-            <ion-col class="text-left"><strong>Husband / Wife</strong></ion-col>
-          </ion-row>
-          <ion-row *ngIf="providerData['hus_wife_name'] !=''">
-            <ion-col class="text-left" style="white-space: initial;">{{providerData['hus_wife_name']}}</ion-col>
-          </ion-row>
-          <ion-row *ngIf="providerData['hus_wife_occ'] !=''">
-            <ion-col class="text-left"><strong>Husband/Wife contact no/Address </strong></ion-col>
-          </ion-row>
-          <ion-row *ngIf="providerData['hus_wife_occ'] !=''">
-            <ion-col class="text-left" style="white-space: initial;">{{providerData['hus_wife_occ']}}</ion-col>
-          </ion-row>
-          <ion-row *ngIf="providerData['son_dou_name'] !=''">
-            <ion-col class="text-left"><strong>Son / Daughter</strong></ion-col>
-          </ion-row>
-          <ion-row *ngIf="providerData['son_dou_name'] !=''">
-            <ion-col class="text-left" style="white-space: initial;">{{providerData['son_dou_name']}}</ion-col>
-          </ion-row>
-          <ion-row *ngIf="providerData['son_dou_occ'] !=''">
-            <ion-col class="text-left"><strong>Son/Daughter contact no/Address</strong></ion-col>
-          </ion-row>
-          <ion-row *ngIf="providerData['son_dou_occ'] !=''">
-            <ion-col class="text-left" style="white-space: initial;">{{providerData['son_dou_occ']}}</ion-col>
-          </ion-row>
-        </ion-item>
-        <ion-row  *ngIf="providerData['active'] == 0 || roleWise=='AdminMember'">
-          <ion-col class="text-right" >
-            <br/>
-            <a href="#" (click)="Edit_Family()">Edit Family Details</a>
-            <!-- <button ion-button color="primary" block (click)="Edit_persional()">Edit Profile Details</button>-->
+        <ion-row *ngIf="moreInfo != '1'">
+          <ion-col class="text-left" size="6" *ngIf="profile_flag != 0 ">
+            <!--<button ion-button block (click)="confirmApprove()" style="background-color:#3cb371">Approve</button>-->
+            <!-- <a href="#" (click)="AproveIt(p.service_prd_reg_id)">Click here to Approved</a>-->
+          </ion-col>
+          <ion-col class="text-right" size="6" *ngIf="profile_flag != 0 ">
+            <!--<button ion-button color="danger" block (click)="confirmRemove()">Remove</button>-->
+            <!-- <a href="#" (click)="AproveIt(p.service_prd_reg_id)">Click here to Approved</a>-->
           </ion-col>
         </ion-row>
-      </ion-card-content>
-    </ion-card>
-    <ion-item class="text-center bill">
-      <strong><h5>Document Details</h5></strong>
-    </ion-item>
-    <ion-card>
-      <ion-card-content>
-        <ion-item >
-          <ion-row *ngFor="let d of Document_array" >
-            <ion-col size="6" class="text-left"><strong>Documents :</strong></ion-col>
-            <ion-col size="6" class="text-right" ><a href="#" (click)="openWithSystemBrowser(d.attached_doc)">{{d.DocumentType}}</a></ion-col>
-          </ion-row>
-          <ion-row  *ngIf="providerData['active'] == 0 || roleWise=='AdminMember'">
-            <ion-col class="text-right" >
-              <br/>
-              <a href="#" (click)="Edit_Document()">Add More Document</a>
+        <ion-row *ngIf="moreInfo != '1'">
+          <ion-col class="text-center" text-wrap size="12" *ngIf="profile_flag != 0 ">
+            <!-- <button ion-button block (click)="getMoreInfo()" style="background-color:#0099ff">Get more Information</button>-->
+            <!-- <a href="#" (click)="AproveIt(p.service_prd_reg_id)">Click here to Approved</a>-->
+          </ion-col>
+        </ion-row>
+        <ion-row *ngIf="profile_flag == 0 ">
+          <ion-col>
+            <strong>You do not have access to approve or blacklist service provider. Please contact super admin to get
+              privilege.</strong>
+          </ion-col>
+        </ion-row>
+      </ion-list>
+    </ion-list>
+    <!--   ***********************  Address Tab *********************** -->
+    <ion-list no-lines *ngSwitchCase="'address'">
+      <ion-list class="text-center bill">
+        <strong>
+          <h5>Contact Details</h5>
+        </strong>
+      </ion-list>
+      <ion-card>
+        <ion-card-content>
+          <ion-list>
+            <ion-row>
+              <ion-col class="text-left"><strong>Current Address :</strong></ion-col>
+            </ion-row>
+            <ion-row>
+              <ion-col style="white-space: normal !important;">{{providerData['cur_resd_add']}}</ion-col>
+            </ion-row>
+            <ion-row *ngIf="providerData['native_add'] !=''">
+              <ion-col class="text-left"><strong>Permanent Address :</strong></ion-col>
+            </ion-row>
+            <ion-row *ngIf="providerData['native_add'] !=''">
+              <ion-col class="text-left"
+                style="white-space: normal !important;">{{providerData['native_add']}}</ion-col>
+            </ion-row>
+            <ion-row>
+              <ion-col class="text-left"><strong>Contact :</strong></ion-col>
+              <ion-col class="text-right"><a href="tel:{{providerData['cur_con_1']}}"
+                  class="button button-positive">{{providerData['cur_con_1']}}</a></ion-col>
+            </ion-row>
+            <ion-row *ngIf="providerData['cur_con_2'] !=''">
+              <ion-col class="text-left"><strong>Contact-2 : </strong></ion-col>
+              <ion-col class="text-right"><a href="tel:{{providerData['cur_con_2']}}"
+                  class="button button-positive">{{providerData['cur_con_2']}}</a></ion-col>
+            </ion-row>
+            <ion-row *ngIf="providerData['active'] == 0 || roleWise=='AdminMember'">
+              <ion-col class="text-right">
+                <br />
+                <a href="#" (click)="Edit_Contact()">Edit Contact Details</a>
+                <!-- <button ion-button color="primary" block (click)="Edit_persional()">Edit Profile Details</button>-->
+              </ion-col>
+            </ion-row>
+          </ion-list>
+        </ion-card-content>
+      </ion-card>
+      <ion-list class="bill text-center">
+        <strong>
+          <h5>Reference Details</h5>
+        </strong>
+      </ion-list>
+      <ion-card>
+        <ion-card-content>
+          <ion-list>
+            <ion-row *ngIf="providerData['ref_name'] !=''">
+              <ion-col class="text-left"><strong>Name :</strong></ion-col>
+              <ion-col class="text-right">{{providerData['ref_name']}}</ion-col>
+            </ion-row>
+            <ion-row *ngIf="providerData['ref_add'] !=''">
+              <ion-col class="text-left"><strong>Address :</strong></ion-col>
+            </ion-row>
+            <ion-row *ngIf="providerData['ref_add'] !=''">
+              <ion-col class="text-left" style="white-space: normal !important;">{{providerData['ref_add']}}</ion-col>
+            </ion-row>
+            <ion-row *ngIf="providerData['ref_con_1'] !=''">
+              <ion-col class="text-left"><strong>Contact</strong></ion-col>
+              <ion-col class="text-right"><a href="tel:{{providerData['ref_con_1']}}" class="button button-positive">
+                  {{providerData['ref_con_1']}}</a></ion-col>
+            </ion-row>
+            <ion-row *ngIf="providerData['ref_con_2'] !=''">
+              <ion-col class="text-left"><strong>Contact-2</strong></ion-col>
+              <ion-col class="text-right"><a href="tel:{{providerData['ref_con_2']}}"
+                  class="button button-positive">{{providerData['ref_con_2']}}</a></ion-col>
+            </ion-row>
+            <ion-row *ngIf="providerData['active'] == 0 || roleWise=='AdminMember'">
+              <ion-col class="text-right">
+                <br />
+                <a href="#" (click)="Edit_Reference()">Edit Reference Details</a>
+                <!-- <button ion-button color="primary" block (click)="Edit_persional()">Edit Profile Details</button>-->
+              </ion-col>
+            </ion-row>
+          </ion-list>
+        </ion-card-content>
+      </ion-card>
+      <ion-list class="bill text-center">
+        <strong>
+          <h5>Family Details</h5>
+        </strong>
+      </ion-list>
+      <ion-card>
+        <ion-card-content>
+          <ion-list>
+            <ion-row *ngIf="providerData['father_name'] !=''">
+              <ion-col class="text-left"><strong>Father Name</strong></ion-col>
+            </ion-row>
+            <ion-row *ngIf="providerData['father_name'] !=''">
+              <ion-col class="text-left" style="white-space: initial;">{{providerData['father_name']}}</ion-col>
+            </ion-row>
+            <ion-row *ngIf="providerData['father_occ'] !=''">
+              <ion-col class="text-left"><strong>Father contact no/Address</strong></ion-col>
+            </ion-row>
+            <ion-row *ngIf="providerData['father_occ'] !=''">
+              <ion-col class="text-left" style="white-space: initial;">{{providerData['father_occ']}}</ion-col>
+            </ion-row>
+            <ion-row *ngIf="providerData['mother_name'] !=''">
+              <ion-col class="text-left"><strong>Mother Name</strong></ion-col>
+            </ion-row>
+            <ion-row *ngIf="providerData['mother_name'] !=''">
+              <ion-col class="text-left" style="white-space: initial;">{{providerData['mother_name']}}</ion-col>
+            </ion-row>
+            <ion-row *ngIf="providerData['mother_occ'] !=''">
+              <ion-col class="text-left"><strong>Mother contact no/Address</strong></ion-col>
+            </ion-row>
+            <ion-row *ngIf="providerData['mother_occ'] !=''">
+              <ion-col class="text-left" style="white-space: initial;">{{providerData['mother_occ']}}</ion-col>
+            </ion-row>
+            <ion-row *ngIf="providerData['hus_wife_name'] !=''">
+              <ion-col class="text-left"><strong>Husband / Wife</strong></ion-col>
+            </ion-row>
+            <ion-row *ngIf="providerData['hus_wife_name'] !=''">
+              <ion-col class="text-left" style="white-space: initial;">{{providerData['hus_wife_name']}}</ion-col>
+            </ion-row>
+            <ion-row *ngIf="providerData['hus_wife_occ'] !=''">
+              <ion-col class="text-left"><strong>Husband/Wife contact no/Address </strong></ion-col>
+            </ion-row>
+            <ion-row *ngIf="providerData['hus_wife_occ'] !=''">
+              <ion-col class="text-left" style="white-space: initial;">{{providerData['hus_wife_occ']}}</ion-col>
+            </ion-row>
+            <ion-row *ngIf="providerData['son_dou_name'] !=''">
+              <ion-col class="text-left"><strong>Son / Daughter</strong></ion-col>
+            </ion-row>
+            <ion-row *ngIf="providerData['son_dou_name'] !=''">
+              <ion-col class="text-left" style="white-space: initial;">{{providerData['son_dou_name']}}</ion-col>
+            </ion-row>
+            <ion-row *ngIf="providerData['son_dou_occ'] !=''">
+              <ion-col class="text-left"><strong>Son/Daughter contact no/Address</strong></ion-col>
+            </ion-row>
+            <ion-row *ngIf="providerData['son_dou_occ'] !=''">
+              <ion-col class="text-left" style="white-space: initial;">{{providerData['son_dou_occ']}}</ion-col>
+            </ion-row>
+          </ion-list>
+          <ion-row *ngIf="providerData['active'] == 0 || roleWise=='AdminMember'">
+            <ion-col class="text-right">
+              <br />
+              <a href="#" (click)="Edit_Family()">Edit Family Details</a>
+              <!-- <button ion-button color="primary" block (click)="Edit_persional()">Edit Profile Details</button>-->
             </ion-col>
           </ion-row>
-        </ion-item>
-      </ion-card-content>
-    </ion-card>
-    <!--<ion-list *ngIf = "displayData.pending == 2" >-->
+        </ion-card-content>
+      </ion-card>
+      <ion-list class="text-center bill">
+        <strong>
+          <h5>Document Details</h5>
+        </strong>
+      </ion-list>
+      <ion-card>
+        <ion-card-content>
+          <ion-list>
+            <ion-row *ngFor="let d of Document_array">
+              <ion-col size="6" class="text-left"><strong>Documents :</strong></ion-col>
+              <ion-col size="6" class="text-right"><a href="#"
+                  (click)="openWithSystemBrowser(d.attached_doc)">{{d.DocumentType}}</a></ion-col>
+            </ion-row>
+            <ion-row *ngIf="providerData['active'] == 0 || roleWise=='AdminMember'">
+              <ion-col class="text-right">
+                <br />
+                <a href="#" (click)="Edit_Document()">Add More Document</a>
+              </ion-col>
+            </ion-row>
+          </ion-list>
+        </ion-card-content>
+      </ion-card>
+      <!--<ion-list *ngIf = "displayData.pending == 2" >-->
       <ion-list>
-      <ion-row *ngIf = "moreInfo != '1'">
-        <ion-col class="text-left" size="6" *ngIf="profile_flag != 0 ">
-          <!--<button ion-button block (click)="confirmApprove()" style="background-color:#3cb371">Approve</button>-->
-          <!-- <a href="#" (click)="AproveIt(p.service_prd_reg_id)">Click here to Approved</a>-->
-        </ion-col>
-        <ion-col class="text-right" size="6" *ngIf="profile_flag != 0 ">
-         <!--<button ion-button color="danger" block (click)="confirmRemove()">Remove</button>-->
-          <!-- <a href="#" (click)="AproveIt(p.service_prd_reg_id)">Click here to Approved</a>-->
-        </ion-col>
-      </ion-row>
-      <ion-row *ngIf = "moreInfo != '1'">
-        <ion-col text-center  text-wrap size="12" *ngIf="profile_flag != 0 ">
-          <!--<button ion-button block (click)="getMoreInfo()" style="background-color:#0099ff">Get more Information</button>-->
-          <!-- <a href="#" (click)="AproveIt(p.service_prd_reg_id)">Click here to Approved</a>-->
-        </ion-col>
-      </ion-row>
-      <ion-row *ngIf="profile_flag == 0 ">
-        <ion-col>
-          <strong>You do not have access to approve or blacklist service provider. Please contact super admin to get privilege.</strong>
-        </ion-col>
-      </ion-row>
+        <ion-row *ngIf="moreInfo != '1'">
+          <ion-col class="text-left" size="6" *ngIf="profile_flag != 0 ">
+            <button ion-button block (click)="confirmApprove()" style="background-color:mediumseagreen; width: 100px; height: 30px ; color: #ffffff; float: left; margin-left: 10px;">Approve</button>
+
+            <!--<button ion-button block (click)="confirmApprove()" style="background-color:#3cb371">Approve</button>-->
+            <!-- <a href="#" (click)="AproveIt(p.service_prd_reg_id)">Click here to Approved</a>-->
+          </ion-col>
+          <ion-col class="text-right" size="6" *ngIf="profile_flag != 0 ">    
+            <button ion-button color="danger" block (click)="confirmRemove()" style="background-color: red;margin-right: 10px; color: #ffffff; width: 100px; height: 30px; float: right;">Remove</button>
+
+            <!--<button ion-button color="danger" block (click)="confirmRemove()">Remove</button>-->
+            <!-- <a href="#" (click)="AproveIt(p.service_prd_reg_id)">Click here to Approved</a>-->
+          </ion-col>
+        </ion-row>
+        <ion-row *ngIf="moreInfo != '1'">
+          <ion-col text-center text-wrap size="12" *ngIf="profile_flag != 0 ">
+            <button ion-button block (click)="getMoreInfo()" style="background-color:#0099ff; margin-left: 100px; color: #ffffff; width: 150px; margin-top: 10px; height: 30px; ">Get more Information</button>
+
+            <!--<button ion-button block (click)="getMoreInfo()" style="background-color:#0099ff">Get more Information</button>-->
+            <!-- <a href="#" (click)="AproveIt(p.service_prd_reg_id)">Click here to Approved</a>-->
+          </ion-col>
+        </ion-row>
+        <ion-row *ngIf="profile_flag == 0 ">
+          <ion-col>
+            <strong>You do not have access to approve or blacklist service provider. Please contact super admin to get
+              privilege.</strong>
+          </ion-col>
+        </ion-row>
+      </ion-list>
     </ion-list>
-  </ion-list>
-  <!-- ************** ******************** Reviw tab ************************* -->
-  <ion-list no-lines *ngSwitchCase="'star'">
-    <ion-card  *ngIf="Rate != 0">
-      <ion-card-content>
-        <ion-item >
-          <ion-row>
-            <ion-col size="3" style="margin-top: 6px;"><STRONG>Rating :  </STRONG></ion-col >
-            <ion-col size="3" class="text-left"><span style="margin-top: 8px;float: left;margin-left: 5px;"> <STRONG>{{Rate}}&nbsp; </STRONG></span>
-              <ion-icon name="star" style="color:gold;font-size: 30px;"></ion-icon>
-            </ion-col>
-            <ion-col size="6" class="text-right" *ngIf="Rate == 0" style="margin-top: 6px;">Be the first to rate</ion-col>
-            <ion-col size="6" class="text-right" *ngIf="Rate == 1 || Rate > 1 && Rate < 2"  style="margin-top: 6px;color:#ff6161;"><strong>Poor</strong></ion-col>
-            <ion-col size="6" class="text-right" *ngIf="Rate == 2 || Rate > 2  && Rate < 3"  style="margin-top: 6px; color:#ff9f00;"><strong>Average</strong></ion-col>
-            <ion-col size="6" class="text-right" *ngIf="Rate == 3 || Rate > 3  && Rate < 4"  style="margin-top: 6px; color:#388e3c;"><strong>Good</strong></ion-col>
-            <ion-col size="6" class="text-right" *ngIf="Rate == 4 || Rate > 4 && Rate < 5"  style="margin-top: 6px; color:#388e3c;"><strong>Very Good</strong></ion-col>
-            <ion-col size="6" class="text-right" *ngIf="Rate == 5" style="margin-top: 6px;color:#388e3c;"><strong>Excellent</strong></ion-col>
-          </ion-row>
-        </ion-item>
-      </ion-card-content>
-    </ion-card>
-    <ion-card>
-      <ion-card-content>
-        <ion-item  *ngFor="let p of review_array">
-          <ion-row >
-            <ion-col class="text-left" style="font-size: 14px;font-weight: bold;">{{p.Name}}</ion-col>
-          </ion-row>
-          <ion-row  *ngIf="p.Rating != 0">
-            <ion-col size="8" class="text-left" style="font-size: 12px;">
-              <STRONG>Rating: {{p.Rating}}</STRONG>
-            </ion-col>
-            <ion-col size="4" class="text-left">
-              <ion-icon name="star" style="color:gold;font-size: 15px;" *ngIf="p.Rating > 0"></ion-icon>
-              <ion-icon name="star" style="color:gold;font-size: 15px;" *ngIf="p.Rating > 1"></ion-icon>
-              <ion-icon name="star" style="color:gold;font-size: 15px;" *ngIf="p.Rating > 2"></ion-icon>
-              <ion-icon name="star" style="color:gold;font-size: 15px;" *ngIf="p.Rating > 3"></ion-icon>
-              <ion-icon name="star" style="color:gold;font-size: 15px;" *ngIf="p.Rating > 4"></ion-icon>
-            </ion-col>
-          </ion-row>
-          <ion-row>
-            <ion-col  class="text-center" *ngIf="Rate == 0" style="margin-top: 8px;"><strong>Be the first to rate</strong></ion-col>
-          </ion-row>
-          <p style="white-space: initial;">{{p.Comments}}</p>
-        </ion-item>
-        <ion-item>
-          <ion-row>
-            <ion-col>
-              <button ion-button color="primary" block (click)="Review()">Submit Review </button>
-            </ion-col>
-          </ion-row>
-        </ion-item>
-      </ion-card-content>
-    </ion-card>
-  </ion-list>
-  <!-- ************************ Report Tab *********************** -->
-  <ion-list no-lines *ngSwitchCase="'report'">
-    <ion-list *ngIf="notifysearch=='0' && providerData['SecurityDBStatus'] !='NotConnected'">
-      <ion-row>
-        <ion-col size="5" class="text-left">
-          <ion-item>
-            <ion-label floating>Start Date</ion-label>
-            <ion-datetime displayFormat="DD-MMM-YYYY" min="2017"  [(ngModel)]="userData.startDate" ></ion-datetime>
-          </ion-item>  
-        </ion-col>
-        <ion-col size="2">
-          <strong style="float: left;margin-top: 55px;margin-left: -6px;">To</strong>
-        </ion-col>
-        <ion-col size="5">
-          <ion-item>
-            <ion-label floating>End Date</ion-label>
-            <ion-datetime displayFormat="DD-MMM-YYYY" min="2017"  [(ngModel)]="userData.endDate" ></ion-datetime>
-          </ion-item>
-        </ion-col>
-      </ion-row>
-      <ion-row>
-        <ion-col size="3"></ion-col>
-        <ion-col size="6" calss="text-center">
-          <button ion-button class="center" block icon-start (click)="search()">Fetch Report</button>
-        </ion-col>
-        <ion-col size="3"></ion-col>
-      </ion-row>
+    <!-- ************** ******************** Reviw tab ************************* -->
+    <ion-list no-lines *ngSwitchCase="'star'">
+      <ion-card *ngIf="Rate != 0">
+        <ion-card-content>
+          <ion-list>
+            <ion-row>
+              <ion-col size="3" style="margin-top: 6px;"><STRONG>Rating : </STRONG></ion-col>
+              <ion-col size="3" class="text-left"><span style="margin-top: 8px;float: left;margin-left: 5px;">
+                  <STRONG>{{Rate}}&nbsp; </STRONG></span>
+                <ion-icon name="star" style="color:gold;font-size: 30px;"></ion-icon>
+              </ion-col>
+              <ion-col size="6" class="text-right" *ngIf="Rate == 0" style="margin-top: 6px;">Be the first to
+                rate</ion-col>
+              <ion-col size="6" class="text-right" *ngIf="Rate == 1 || Rate > 1 && Rate < 2"
+                style="margin-top: 6px;color:#ff6161;"><strong>Poor</strong></ion-col>
+              <ion-col size="6" class="text-right" *ngIf="Rate == 2 || Rate > 2  && Rate < 3"
+                style="margin-top: 6px; color:#ff9f00;"><strong>Average</strong></ion-col>
+              <ion-col size="6" class="text-right" *ngIf="Rate == 3 || Rate > 3  && Rate < 4"
+                style="margin-top: 6px; color:#388e3c;"><strong>Good</strong></ion-col>
+              <ion-col size="6" class="text-right" *ngIf="Rate == 4 || Rate > 4 && Rate < 5"
+                style="margin-top: 6px; color:#388e3c;"><strong>Very Good</strong></ion-col>
+              <ion-col size="6" class="text-right" *ngIf="Rate == 5"
+                style="margin-top: 6px;color:#388e3c;"><strong>Excellent</strong></ion-col>
+            </ion-row>
+          </ion-list>
+        </ion-card-content>
+      </ion-card>
+      <ion-card>
+        <ion-card-content>
+          <ion-list *ngFor="let p of review_array">
+            <ion-row>
+              <ion-col class="text-left" style="font-size: 14px;font-weight: bold;">{{p.Name}}</ion-col>
+            </ion-row>
+            <ion-row *ngIf="p.Rating != 0">
+              <ion-col size="8" class="text-left" style="font-size: 12px;">
+                <STRONG>Rating: {{p.Rating}}</STRONG>
+              </ion-col>
+              <ion-col size="4" class="text-left">
+                <ion-icon name="star" style="color:gold;font-size: 15px;" *ngIf="p.Rating > 0"></ion-icon>
+                <ion-icon name="star" style="color:gold;font-size: 15px;" *ngIf="p.Rating > 1"></ion-icon>
+                <ion-icon name="star" style="color:gold;font-size: 15px;" *ngIf="p.Rating > 2"></ion-icon>
+                <ion-icon name="star" style="color:gold;font-size: 15px;" *ngIf="p.Rating > 3"></ion-icon>
+                <ion-icon name="star" style="color:gold;font-size: 15px;" *ngIf="p.Rating > 4"></ion-icon>
+              </ion-col>
+            </ion-row>
+            <ion-row>
+              <ion-col class="text-center" *ngIf="Rate == 0" style="margin-top: 8px;"><strong>Be the first to
+                  rate</strong></ion-col>
+            </ion-row>
+            <p style="white-space: initial;">{{p.Comments}}</p>
+          </ion-list>
+          <ion-list>
+            <ion-row>
+              <ion-col>
+                <button ion-button color="primary" block (click)="Review()">Submit Review </button>
+              </ion-col>
+            </ion-row>
+          </ion-list>
+        </ion-card-content>
+      </ion-card>
     </ion-list>
-    <ion-row *ngIf="notifysearch == '1' && providerData['SecurityDBStatus'] !='NotConnected'" >
-      <ion-col class="text-right" (click)="searchagain()">
-         <a class="item" href="#">Modify search</a>
-      </ion-col>
-    </ion-row>
-    <ion-item *ngIf="notifysearch == '1' ">
-      <ion-toggle [(ngModel)]="toggleStatus" pulsado checked="false" (ionChange)="Change_Toggle();"></ion-toggle>
-      <ion-label>List View</ion-label>
-      <ion-icon name='list-box' item-start></ion-icon>
-    </ion-item>
-    <ion-item class="text-center" *ngIf="notifysearch == '1'">
-      <strong><h5>Report of {{providerData['full_name']}}</h5></strong>
-    </ion-item>
-    <ion-list *ngIf="Listing !='1' && RefreshCalender == '1' && notifysearch == '1'">
-      <!--<ion-calendar [(ngModel)]="dateMulti"
+    <!-- ************************ Report Tab *********************** -->
+    <ion-list no-lines *ngSwitchCase="'report'">
+      <ion-list *ngIf="notifysearch=='0' && providerData['SecurityDBStatus'] !='NotConnected'">
+        <ion-row>
+          <ion-col size="5" class="text-left">
+            <ion-list style="float: left;">
+              <ion-label floating style="font-weight: bold;">Start Date</ion-label>
+              <!-- <ion-datetime displayFormat="DD-MMM-YYYY" min="2017" [(ngModel)]="userData.startDate"></ion-datetime> -->
+              <ion-input id="date" class="ion-text-start" slot="start" style=" font-size: 15px; margin-left: 5px;"
+                displayFormat="DD/MMM/YYYY" min="2017" [(ngModel)]="userData.startDate"></ion-input>
+              <ion-popover trigger="date" size="cover">
+                <ng-template>
+                  <ion-datetime style="background-color: #ffffff;" presentation="date" displayFormat="DD/MMM/YYYY"
+                    min="2017" [(ngModel)]="userData.startDate"></ion-datetime>
+                </ng-template>
+              </ion-popover>
+            </ion-list>
+          </ion-col>
+          <ion-col size="2">
+            <strong style="float: left;margin-top: 55px;margin-left: -6px;">To</strong>
+          </ion-col>
+          <ion-col size="5">
+            <ion-list>
+              <ion-label floating style=" font-weight: bold;">End Date</ion-label>
+              <!-- <ion-datetime displayFormat="DD-MMM-YYYY" min="2017" [(ngModel)]="userData.endDate"></ion-datetime> -->
+              <ion-input id="date" class="ion-text-end" slot="end" style=" font-size: 15px; margin-left: 5px;"
+                displayFormat="DD-MMM-YYYY" min="2017" [(ngModel)]="userData.endDate"></ion-input>
+              <ion-popover trigger="date" size="cover" class="ion-text-end">
+                <ng-template>
+                  <ion-datetime style="background-color: #ffffff;" presentation="date" displayFormat="DD-MMM-YYYY"
+                    min="2017" [(ngModel)]="userData.endDate"></ion-datetime>
+                </ng-template>
+              </ion-popover>
+            </ion-list>
+          </ion-col>
+        </ion-row>
+        <ion-row>
+          <ion-col size="3"></ion-col>
+          <ion-col size="6" calss="text-center">
+            <button ion-button class="center" block icon-start (click)="search()">Fetch Report</button>
+          </ion-col>
+          <ion-col size="3"></ion-col>
+        </ion-row>
+      </ion-list>
+      <ion-row *ngIf="notifysearch == '1' && providerData['SecurityDBStatus'] !='NotConnected'">
+        <ion-col class="text-right" (click)="searchagain()">
+          <a class="item" href="#">Modify search</a>
+        </ion-col>
+      </ion-row>
+      <ion-list *ngIf="notifysearch == '1' ">
+        <ion-toggle [(ngModel)]="toggleStatus" pulsado checked="false" (ionChange)="Change_Toggle();"></ion-toggle>
+        <ion-label>List View</ion-label>
+        <ion-icon name='list-box' item-start></ion-icon>
+      </ion-list>
+      <ion-list class="text-center" *ngIf="notifysearch == '1'">
+        <strong>
+          <h5>Report of {{providerData['full_name']}}</h5>
+        </strong>
+      </ion-list>
+      <ion-list *ngIf="Listing !='1' && RefreshCalender == '1' && notifysearch == '1'">
+        <!--<ion-calendar [(ngModel)]="dateMulti"
                   [options]="optionsMulti"
                   [type]="typeMulti"
                   [format]="'YYYY-MM-DD'">
       </ion-calendar>-->
-    </ion-list>
-    <ion-grid *ngIf="Listing =='1' && notifysearch == '1'">
-      <ion-list style = "background-color :#488aff ; color: white" >
-        <ion-row class="text-center" text-wrap style = "background-color :#488aff ; color: white; line-height: 40px;">
-          <ion-col size="4" ><strong>Date</strong></ion-col>
-          <ion-col><strong>Status</strong></ion-col>
-          <ion-col ><strong>In</strong></ion-col>
-          <ion-col ><strong>Out</strong></ion-col>
-          <ion-col> <strong>Hours</strong></ion-col>
-        </ion-row>
       </ion-list>
-      <ion-list *ngFor="let v of ReportDetails" >
-        <ion-row class="text-center" text-wrap style="line-height: 25px; border-bottom:1px solid grey;color:#488aff;" >
-          <ion-col size="4" > {{v.DateList }} </ion-col>
-          <ion-col *ngIf="v.Attendance =='P'"><strong style="color: green;"> P </strong></ion-col>
-          <ion-col *ngIf="v.Attendance =='A'"><strong style="color: red;"> A </strong></ion-col>
-          <ion-col>{{v.InTime}}</ion-col>
-          <ion-col *ngIf="v.OutTime =='00:00'">Still Inside</ion-col>
-          <ion-col *ngIf="v.OutTime !='00:00'">{{v.OutTime}} +{{v.DateCount}} days</ion-col>
-          <ion-col>{{v.TotalHours}}</ion-col>
-        </ion-row>
+      <ion-grid *ngIf="Listing =='1' && notifysearch == '1'">
+        <ion-list style="background-color :#488aff ; color: white">
+          <ion-row class="text-center" text-wrap style="background-color :#488aff ; color: white; line-height: 40px;">
+            <ion-col size="4"><strong>Date</strong></ion-col>
+            <ion-col><strong>Status</strong></ion-col>
+            <ion-col><strong>In</strong></ion-col>
+            <ion-col><strong>Out</strong></ion-col>
+            <ion-col> <strong>Hours</strong></ion-col>
+          </ion-row>
+        </ion-list>
+        <ion-list *ngFor="let v of ReportDetails">
+          <ion-row class="text-center" text-wrap style="line-height: 25px; border-bottom:1px solid grey;color:#488aff;">
+            <ion-col size="4"> {{v.DateList }} </ion-col>
+            <ion-col *ngIf="v.Attendance =='P'"><strong style="color: mediumseagreen;"> P </strong></ion-col>
+            <ion-col *ngIf="v.Attendance =='A'"><strong style="color: red;"> A </strong></ion-col>
+            <ion-col>{{v.InTime}}</ion-col>
+            <ion-col *ngIf="v.OutTime =='00:00'">Still Inside</ion-col>
+            <ion-col *ngIf="v.OutTime !='00:00'">{{v.OutTime}} +{{v.DateCount}} days</ion-col>
+            <ion-col>{{v.TotalHours}}</ion-col>
+          </ion-row>
+        </ion-list>
+      </ion-grid>
+      <!-- extra list -->
+      <ion-list *ngIf="providerData['SecurityDBStatus'] =='NotConnected'">
+        <ion-card>
+          <ion-card-header text-center>
+            <strong style="font-size: 18px; color: red;">Warning</strong>
+          </ion-card-header>
+          <ion-card-content>
+            <p>This page gives the attendance report of the service provider/domestic help. This feature is available
+              with the subscription of security manager app.</p>
+            <p>To enable this feature please contact your society office or secretory</p>
+          </ion-card-content>
+        </ion-card>
       </ion-list>
-    </ion-grid>
-  <!-- extra list -->
-    <ion-list *ngIf ="providerData['SecurityDBStatus'] =='NotConnected'">
-      <ion-card>
-        <ion-card-header text-center>
-          <strong style="font-size: 18px; color: red;">Warning</strong>
-        </ion-card-header>
-        <ion-card-content>
-          <p>This page gives the attendance report of the service provider/domestic help. This feature is available with the subscription of security manager app.</p>
-          <p>To enable this feature please contact your society office or secretory</p>
-        </ion-card-content>
-      </ion-card>
     </ion-list>
+  </div>
+  <ion-list *ngIf="moreInfo == '1'">
+    <ion-card>
+      <ion-card-content>
+        <ion-list>
+          <ion-label floating>Comment</ion-label>
+          <ion-input type="text" value="" [(ngModel)]="userData.comment"></ion-input>
+        </ion-list>
+        <ion-row>
+          <ion-col class="text-center" size="6">
+            <button ion-button block (click)="AddMoreInfo()" color="primary" style="float: left; color:mediumseagreen ;"  text-wrap>Submit</button>
+          </ion-col>
+          <ion-col class="text-center" size="6">
+            <button ion-button block (click)="cancle()" color="danger" style="float: right; color:red ;"  text-wrap>Cancel</button>
+          </ion-col>
+        </ion-row>
+      </ion-card-content>
+    </ion-card>
   </ion-list>
-</div>
-<ion-list  *ngIf = "moreInfo == '1'">
-  <ion-card>
-    <ion-card-content>
-      <ion-item>
-        <ion-label floating>Comment</ion-label>
-        <ion-input type="text" value="" [(ngModel)]="userData.comment"></ion-input>
-      </ion-item>
-      <ion-row>
-        <ion-col class="text-center" size="6" >
-          <!--<button ion-button block (click)="AddMoreInfo()" color="primary"  text-wrap>Submit</button>-->
-        </ion-col>
-        <ion-col class="text-center" size="6" >
-          <!--<button ion-button block (click)="cancle()" color="danger"  text-wrap>Cancel</button>-->
-        </ion-col>
-      </ion-row>
-    </ion-card-content>
-  </ion-card>
-</ion-list>
 </ion-content>

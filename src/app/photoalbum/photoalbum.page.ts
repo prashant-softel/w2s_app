@@ -90,12 +90,20 @@ export class PhotoalbumPage implements OnInit {
   selectItems(p) {
 
     let navigationExtras: NavigationExtras = {
+      queryParams: 
+      {
+        details :p,
+      }
+    };
+    this.navCtrl.navigateRoot(this.ImageviewPage,navigationExtras);
+    /*let navigationExtras: NavigationExtras = {
       queryParams:
       {
         details: p,
       }
     };
-    this.navCtrl.navigateForward(this.ImageviewPage, { state: { details: p } });
+    console.log("pass",details);
+    this.navCtrl.navigateForward(this.ImageviewPage, { state: { details: p } });*/
     //alert("album ID "+p);
    // this.navCtrl.navigateForward("imageview", { state: p });
     // this.navCtrl.push(ImageviewPage, { details: p});
