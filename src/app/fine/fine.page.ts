@@ -24,7 +24,7 @@ declare var cordova: any;
   imports: [IonicModule, CommonModule, FormsModule],
   providers: [
     // Camera, FileTransfer, 
-    File,
+    // File,
     // FilePath
   ]
 })

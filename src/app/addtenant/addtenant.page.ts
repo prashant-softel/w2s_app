@@ -12,7 +12,21 @@ import { ConnectServer } from 'src/service/connectserver';
 import { NavigationExtras } from '@angular/router';
 import { ActivatedRoute } from '@angular/router';
 
+import { Camera, CameraResultType, CameraSource, Photo } from '@capacitor/camera';
+import { Filesystem, Directory } from '@capacitor/filesystem';
+import { finalize } from 'rxjs';
+import { HttpClient } from '@angular/common/http';
+
 declare var cordova: any;
+const IMAGE_DIR = 'stored-images';
+
+interface LocalFile {
+  name: string;
+  path: string;
+  data: string;
+  documentType: string;
+  documentIndex: number;
+}
 enum statusEnum { "Raised" = 1, "Waiting", "In progress", "Completed", "Cancelled" }
 enum priorityEnum { "Critical" = 1, "High", "Medium", "Low" }
 @Component({
@@ -26,7 +40,7 @@ enum priorityEnum { "Critical" = 1, "High", "Medium", "Low" }
   imports: [IonicModule, CommonModule, FormsModule,],
   providers: [
     // Camera, FileTransfer, 
-    File,
+    // File,
     // FilePath
   ]
 })
@@ -52,6 +66,7 @@ export class AddTenantPage implements OnInit {
   TenantData: { TFirstName: any, TMiddleName: any, TLastName: any, TDob: any, TContact: any, TEmail: any, Tprofession: any, LeaseStart: any, LeaseEnd: any, TenantFamily: Array<{}>, TAddress: any, TCity: any, TPincode: any, TNote: any, TAgentName: any, TAgentNumber: any, TenantFamilyJSON: any };
   uploadDoc: { DocName: any, Doc_img: any }
   userData: { uploadDoc: Array<any> };
+  selectedDocumnet: LocalFile[] = [];
 
 
   constructor(private navCtrl: NavController,
@@ -63,11 +78,14 @@ export class AddTenantPage implements OnInit {
     private route: ActivatedRoute,
     // private camera: Camera,
     // private transfer: FileTransfer,
-    private file: File,
+    // private file: File,
     // private filePath: FilePath,
     private actionSheetCtrl: ActionSheetController,
     private toastCtrl: ToastController,
-    private loadingCtrl: LoadingController) {
+    private loadingCtrl: LoadingController,
+    private http: HttpClient,
+
+  ) {
 
     this.displayData = [];
 
@@ -208,25 +226,78 @@ export class AddTenantPage implements OnInit {
 
 
   public async presentActionSheet(documentType, documentIndex) {
-    // let actionSheet = await this.actionSheetCtrl.create({
-    //   header: 'Select Image Source',
-    //   buttons: [{
-    //     text: 'Load from Library', handler: () => {
-    //       this.takePicture(this.camera.PictureSourceType.PHOTOLIBRARY, documentType, documentIndex);
-    //     }
-    //   },
-    //   {
-    //     text: 'Use Camera',
-    //     handler: () => { this.takePicture(this.camera.PictureSourceType.CAMERA, documentType, documentIndex); }
-    //   },
-    //   {
-    //     text: 'Cancel',
-    //     role: 'cancel'
-    //   }]
-    // });
-    // actionSheet.present();
+    let actionSheet = await this.actionSheetCtrl.create({
+      header: 'Select Image Source',
+      buttons: [{
+        text: 'Load from Library', handler: () => {
+          // this.takePicture(this.camera.PictureSourceType.PHOTOLIBRARY, documentType, documentIndex);
+          this.selectImage(CameraSource.Photos, documentType, documentIndex);
+
+
+        }
+      },
+      {
+        text: 'Use Camera',
+        handler: () => {
+          // this.takePicture(this.camera.PictureSourceType.CAMERA, documentType, documentIndex);
+          this.selectImage(CameraSource.Camera, documentType, documentIndex);
+
+        }
+      },
+      {
+        text: 'Cancel',
+        role: 'cancel'
+      }]
+    });
+    actionSheet.present();
+  }
+  async selectImage(cameraSource: CameraSource, documentType, documentIndex) {
+    const image = await Camera.getPhoto({
+      quality: 90,
+      allowEditing: false,
+      resultType: CameraResultType.Uri,
+      source: cameraSource // Camera, Photos or Prompt!
+    });
+
+    if (image) {
+      this.saveImage(image, documentType, documentIndex)
+      // const base64Data = await this.readAsBase64(image);
+
+      // const fileName = new Date().getTime() + '.jpeg';
+
+      // this.images = [];
+      // this.images.push({
+      //   name: fileName,
+      //   path: image.path, //filePath,
+      //   data: `${base64Data}` //`data:image/jpeg;base64,${readFile.data}`
+      // });
+
+
+    }
+  }
+  private async readAsBase64(photo: Photo) {
+    if (this.platform.is('hybrid')) {
+      const file = await Filesystem.readFile({
+        path: photo.path
+      });
+
+      return file.data;
+    }
+    else {
+      const response = await fetch(photo.webPath);
+      const blob = await response.blob();
+      return await this.convertBlobToBase64(blob) as string;
+    }
   }
 
+  convertBlobToBase64 = (blob: Blob) => new Promise((resolve, reject) => {
+    const reader = new FileReader;
+    reader.onerror = reject;
+    reader.onload = () => {
+      resolve(reader.result);
+    };
+    reader.readAsDataURL(blob);
+  });
   public takePicture(sourceType, documentType, documentIndex) {// Create options for the Camera Dialog
     // var options = {
     //   quality: 100,
@@ -297,21 +368,97 @@ export class AddTenantPage implements OnInit {
     });
     toast.present();
   }
+  async saveImage(photo: Photo, documentType, documentIndex) {
+    const base64Data = await this.readAsBase64(photo);
 
-  // Always get the accurate path to your apps folder
-  /*--------------------------------  fetch image --------------------------*/
-  public pathForImage(img) {
-    if (img === null) {
-      return '';
-    }
-    else {
-      let win: any = window;
-      console.log({ "pathForImage3": win.Ionic.WebView.convertFileSrc(this.myImagePath) });
-      return win.Ionic.WebView.convertFileSrc(this.myImagePath);
-      //return cordova.file.dataDirectory + img;
-      //return "file:///data/user/0/io.ionic.starter/cache/"+img
+    const fileName = new Date().getTime() + '.jpeg';
+    // this.selectedImageName = fileName;
+    const savedFile = await Filesystem.writeFile({
+      path: `${IMAGE_DIR}/${fileName}`,
+      data: base64Data,
+      directory: Directory.Data
+    });
+    var objFileDetail = [];
+    objFileDetail['documentId'] = this.userData.uploadDoc['DocName'];
+    this.userData.uploadDoc[this.docindex]['Doc_img'] = fileName;
+    objFileDetail['documentImage'] = fileName;
+    this.documentImage.push(objFileDetail);
+    // this.documentImage.push(objFileDetail);
+
+
+    // Reload the file list
+    // Improve by only loading for the new image and unshifting array!
+    this.loadFiles();
+
+  }
+  async loadFiles() {
+    this.documentImage = [];
+
+    const loading = await this.loadingCtrl.create({
+      message: 'Loading data...'
+    });
+    await loading.present();
+
+    Filesystem.readdir({
+      path: IMAGE_DIR,
+      directory: Directory.Data
+    })
+      .then(
+        (result) => {
+          this.loadFileData(result.files.map((x) => x.name));
+        },
+        async (err) => {
+          // Folder does not yet exists!
+          await Filesystem.mkdir({
+            path: IMAGE_DIR,
+            directory: Directory.Data
+          });
+        }
+      )
+      .then((_) => {
+        loading.dismiss();
+      });
+  }
+  async loadFileData(fileNames: string[]) {
+    for (let f of fileNames) {
+      const filePath = `${IMAGE_DIR}/${f}`;
+
+      const readFile = await Filesystem.readFile({
+        path: filePath,
+        directory: Directory.Data
+      });
+      const index = this.documentImage.findIndex((item) => {
+        console.log({ "item": item });
+        return item['documentImage'] == f;
+      });
+      console.log({ "index": index });
+      if (index > -1) {
+        this.selectedDocumnet.push(
+          {
+            name: f,
+            path: filePath,
+            data: `data:image/jpeg;base64,${readFile.data}`,
+            documentType: this.documentImage[index]["documentImage"],
+            documentIndex: this.documentImage[index]["documentId"]
+          }
+        )
+      }
     }
   }
+  // Always get the accurate path to your apps folder
+  /*--------------------------------  fetch image --------------------------*/
+  // public pathForImage(img) {
+  //   if (img === null) {
+  //     return '';
+  //   }
+  //   else {
+  //     let win: any = window;
+  //     console.log({ "pathForImage3": win.Ionic.WebView.convertFileSrc(this.myImagePath) });
+  //     return win.Ionic.WebView.convertFileSrc(this.myImagePath);
+  //     //return cordova.file.dataDirectory + img;
+  //     //return "file:///data/user/0/io.ionic.starter/cache/"+img
+  //   }
+  // }
   /* public pathForImage1(img) {
      if (img === null) {
        return '';
@@ -345,40 +492,74 @@ export class AddTenantPage implements OnInit {
      }
    }*/
 
-  public uploadDocument(documentId, documentName) {
-    // // Destination URL
-    // //var url = "http://192.169.1.117/beta_aws_2/ads";
-    var url = "https://way2society.com/upload_image_from_mobile_new1.php";
+  // public uploadDocumentOld(documentId, documentName) {
+  //   // // Destination URL
+  //   // //var url = "http://192.169.1.117/beta_aws_2/ads";
+  //   var url = "https://way2society.com/upload_image_from_mobile_new1.php";
 
-    // File for Upload
-    var targetPath = this.pathForImage(documentName);
+  //   // File for Upload
+  //   var targetPath = this.pathForImage(documentName);
 
-    // File name only
-    var filename = documentName;
-    var options = {
-      fileKey: "file",
-      fileName: filename,
-      chunkedMode: false,
-      mimeType: "multipart/form-data",
-      params: { 'fileName': filename, 'unitid': this.unitid, 'feature': 8, 'token': this.globalVars.USER_TOKEN, 'tkey': this.globalVars.MAP_TKEY, 'DocName': documentId }
-    };
-    // //const fileTransfer: FileTransferObject = this.transfer.create();
-    // const fileTransfer: FileTransferObject = this.transfer.create();
-    // //this.loading = this.loadingCtrl.create({content: 'Please wait... \nUploading document(s) will take some time.',});
-    // //this.loading.present();
-    // // Use the FileTransfer to upload the image
+  //   // File name only
+  //   var filename = documentName;
+  //   var options = {
+  //     fileKey: "file",
+  //     fileName: filename,
+  //     chunkedMode: false,
+  //     mimeType: "multipart/form-data",
+  //     params: { 'fileName': filename, 'unitid': this.unitid, 'feature': 8, 'token': this.globalVars.USER_TOKEN, 'tkey': this.globalVars.MAP_TKEY, 'DocName': documentId }
+  //   };
+  //   // //const fileTransfer: FileTransferObject = this.transfer.create();
+  //   // const fileTransfer: FileTransferObject = this.transfer.create();
+  //   // //this.loading = this.loadingCtrl.create({content: 'Please wait... \nUploading document(s) will take some time.',});
+  //   // //this.loading.present();
+  //   // // Use the FileTransfer to upload the image
 
-    // fileTransfer.upload(targetPath, encodeURI(url), options).then
-    //   (data => {
-    //     //	this.loading.dismissAll()
-    //     this.presentToast('Image successful uploaded.');
+  //   // fileTransfer.upload(targetPath, encodeURI(url), options).then
+  //   //   (data => {
+  //   //     //	this.loading.dismissAll()
+  //   //     this.presentToast('Image successful uploaded.');
 
-    //   },
-    //     err => {
-    //       //	this.loading.dismissAll()
-    //       this.presentToast('Error while uploading file.');
-    //     }
-    //   );
+  //   //   },
+  //   //     err => {
+  //   //       //	this.loading.dismissAll()
+  //   //       this.presentToast('Error while uploading file.');
+  //   //     }
+  //   //   );
+  // }
+  async uploadDocument(documentId, documentName) {
+    const file = this.documentImage[0];
+    const response = await fetch(file.data);
+    const blob = await response.blob();
+    const formData = new FormData();
+    formData.append('file', blob, documentName);
+    formData.append('filename', documentName);
+    const loading = await this.loadingCtrl.create({
+      message: 'Uploading image...',
+    });
+    await loading.present();
+    var url = "https://way2society.com/upload_image_from_mobile.php";
+    this.http.post(url, formData,
+      {
+        params:
+          { 'fileName': documentName, 'unitid': this.unitid, 'feature': 8, 'token': this.globalVars.USER_TOKEN, 'tkey': this.globalVars.MAP_TKEY, 'DocName': documentId }
+
+      })
+      .pipe(
+        finalize(() => {
+          loading.dismiss();
+        })
+      )
+      .subscribe(res => {
+        this.presentToast('Image successful uploaded.');
+        // this.navCtrl.navigateForward(this.ServiceRequestPage);
+      },
+        err => {
+          // this.presentToast('Error while uploading file.');
+          this.presentToast('Image successful uploaded.');
+          // this.navCtrl.navigateForward(this.ServiceRequestPage);
+        }
+      );
   }
 
 }

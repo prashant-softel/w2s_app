@@ -26,7 +26,7 @@ enum priorityEnum { "Critical" = 1, "High", "Medium", "Low" }
   imports: [IonicModule, CommonModule, FormsModule],
   providers: [
     // Camera, FileTransfer, 
-    File,
+    // File,
     // FilePath
   ]
 })
