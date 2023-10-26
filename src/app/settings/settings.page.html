@@ -22,7 +22,7 @@
       <ion-list *ngIf="CallbackStatus== '0' ">
         <ion-row>
           <ion-col text-center>
-            <strong> {{MemberContact}} [ {{MemberName}} ] </strong>
+            <strong *ngIf="MemberContact"> {{MemberContact}} [ {{MemberName}} ] </strong>
           </ion-col>
         </ion-row>
         <ion-row>

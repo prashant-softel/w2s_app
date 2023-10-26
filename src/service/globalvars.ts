@@ -21,9 +21,9 @@ export class GlobalVars {
   MAP_UNIT_BLOCK = 0;
   MAP_BLOCK_DESC = "";
   WAR_VERSION = "";
-  APP_VERSION = "2.0.20231004";
+  APP_VERSION = "2.2.20231026";
   //APP_VERSION = "1.0.20180117";
-  LATEST_APP_VERSION = "2.1.20231004";
+  LATEST_APP_VERSION = "2.2.20231026";
   APP_DOWNLOAD_LINK = "";
   /* Profile Flages    Admin  and Admin Member*/
   APPROVALS_LEASE = 0;
@@ -48,7 +48,7 @@ export class GlobalVars {
   MEMBER_UNIT_ID = 0;
 
   APP_MENU = [];
- 
+
 
   constructor(public storage: StorageService) {
 
@@ -147,20 +147,18 @@ export class GlobalVars {
     //alert(this.APPROVALS_LEASE);
     // alert(this.APPROVALS_CLASSIFIED);
   }
-  setVisitor_Approval_Status(Visitor_Approval_Status)
-   {
-      //var obj = {"MEMBER_DUES_AMOUNT" :dues_amount };
-     // this.storage.set('Visitor_Approval_Status', obj);
-     this.Visitor_Approval_Status=Visitor_Approval_Status;
-     //alert(this.MEMBER_DUES_AMOUNT);
-   }
-   setMemberDuesAmount(dues_amount)
-   {
-      //var obj = {"MEMBER_DUES_AMOUNT" :dues_amount };
-     // this.storage.set('duesAmount', obj);
-     this.MEMBER_DUES_AMOUNT=dues_amount;
-     //alert(this.MEMBER_DUES_AMOUNT);
-   }
+  setVisitor_Approval_Status(Visitor_Approval_Status) {
+    //var obj = {"MEMBER_DUES_AMOUNT" :dues_amount };
+    // this.storage.set('Visitor_Approval_Status', obj);
+    this.Visitor_Approval_Status = Visitor_Approval_Status;
+    //alert(this.MEMBER_DUES_AMOUNT);
+  }
+  setMemberDuesAmount(dues_amount) {
+    //var obj = {"MEMBER_DUES_AMOUNT" :dues_amount };
+    // this.storage.set('duesAmount', obj);
+    this.MEMBER_DUES_AMOUNT = dues_amount;
+    //alert(this.MEMBER_DUES_AMOUNT);
+  }
   getProfileDetails(): Promise<any> {
     return new Promise((resolve, reject) => {
       resolve(JSON.parse(this.storage.get('profileDetails')));
