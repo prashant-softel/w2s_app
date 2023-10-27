@@ -86,6 +86,10 @@
           </ion-col>
         </ion-row>
         <ion-radio-group [value]="selectedDndType" [(ngModel)]="selectedDndType">
+          <ion-item  (click) = "SaveMessage()">
+            <ion-label>None</ion-label>
+            <ion-radio slot="start" value="0"></ion-radio>
+          </ion-item>
           <ion-item (click)="SaveMessage()">
             <ion-label>Leave Package at Security</ion-label>
             <ion-radio  slot="start" value="1"></ion-radio>
@@ -100,6 +104,7 @@
             <ion-label>DND Message for Security</ion-label>
             <ion-radio slot="start" value="3"></ion-radio>
           </ion-item>
+          
       </ion-radio-group>
     </ion-list>
 
