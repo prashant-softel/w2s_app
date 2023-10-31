@@ -86,7 +86,11 @@
             <strong style="font-size: 1.3rem;">DND Message for Security</strong>
           </ion-col>
         </ion-row>
-        <ion-radio-group [(ngModel)]="selectedDndType">
+        <ion-radio-group [value]="selectedDndType" [(ngModel)]="selectedDndType">
+          <ion-item (click)="SaveMessage()">
+            <ion-label>None</ion-label>
+            <ion-radio slot="start" value="0"></ion-radio>
+          </ion-item>
           <ion-item (click)="SaveMessage()">
             <ion-label>Leave Package at Security</ion-label>
             <ion-radio slot="start" value="1"></ion-radio>
