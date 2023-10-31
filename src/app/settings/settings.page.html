@@ -22,7 +22,8 @@
       <ion-list *ngIf="CallbackStatus== '0' ">
         <ion-row>
           <ion-col text-center>
-            <strong *ngIf="MemberContact"> {{MemberContact}} [ {{MemberName}} ] </strong>
+            <strong *ngIf="MemberContact"> {{MemberContact}} </strong><strong *ngIf="MemberName">[ {{MemberName}}
+              ]</strong>
           </ion-col>
         </ion-row>
         <ion-row>
@@ -85,7 +86,7 @@
             <strong style="font-size: 1.3rem;">DND Message for Security</strong>
           </ion-col>
         </ion-row>
-        <ion-radio-group [value]="selectedDndType" [(ngModel)]="selectedDndType">
+        <ion-radio-group [(ngModel)]="selectedDndType">
           <ion-item (click)="SaveMessage()">
             <ion-label>Leave Package at Security</ion-label>
             <ion-radio slot="start" value="1"></ion-radio>

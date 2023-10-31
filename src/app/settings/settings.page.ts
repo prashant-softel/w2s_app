@@ -37,7 +37,7 @@ export class SettingsPage implements OnInit {
   iSocietyID: any;
   iUnitID: any;
   iUnitNo: any;
-  selectedDndType: number = 1;
+  selectedDndType: string = "1";
   dnd_type: any;//this.selectedDndType;
   selectedOption: string;
   radiochecked: number;
@@ -71,7 +71,7 @@ export class SettingsPage implements OnInit {
     this.iUnitID = "";//this.globalVars.MAP_UNIT_ID;
     this.iUnitNo = "";//this.globalVars.MAP_UNIT_NO;
     this.dnd_type = 1;
-    this.selectedDndType = 0;
+    this.selectedDndType = 0 + '';
     this.radiochecked = 0;
   }
   @HostListener('document:ionBackButton', ['$event'])
@@ -282,26 +282,26 @@ export class SettingsPage implements OnInit {
 
         console.log('Response : ' + resolve);
         if (resolve['success'] == 1) {
-          var dnddata = resolve['response']['DND_message'];
+          var dnddata = resolve['response']['DND_message'] ?? [];
           console.log("dnd_data", dnddata);
           //  this.DND_msg_array = [];
           //  this.DND_msg_array.push(message);
 
-          this.selectedDndType = dnddata[0]['dnd_type'];
-          if (this.selectedDndType == 1) {
+          this.selectedDndType = dnddata[0].dnd_type + '';
+          if (this.selectedDndType == '1') {
             this.radiochecked = 1;
           }
-          if (this.selectedDndType == 2) {
+          if (this.selectedDndType == '2') {
             this.radiochecked = 2;
           }
-          if (this.selectedDndType == 3) {
+          if (this.selectedDndType == '3') {
             this.radiochecked = 3;
             this.CallbackDND = '1';
           }
           else {
 
           }
-          this.dnd_msg = dnddata[0]['dnd_msg'];
+          this.dnd_msg = dnddata[0]?.dnd_msg;
           console.log(this.dnd_msg);
           console.log(this.selectedDndType);
           //if(this.dnd_type === 3){
