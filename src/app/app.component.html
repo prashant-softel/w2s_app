@@ -34,16 +34,21 @@
             </ion-row>
           </ion-col>
         </ion-row>
-        <ion-item *ngFor="let p of pagesMember" (click)="openPage(p)" lines="none">
-          {{p.title}}
-        </ion-item>
+        <ion-menu-toggle>
+          <ion-item *ngFor="let p of pagesMember" menuClose (click)="openPage(p)" lines="none">
+            {{p.title}}
+          </ion-item>
+        </ion-menu-toggle>
+
         <!-- <ion-item lines="none" menuClose ion-item (click)="setting()">
                   Settings
               </ion-item> -->
+        <ion-menu-toggle>
+          <ion-item lines="none" menuClose ion-item (click)="logout()">
+            Logout
+          </ion-item>
+        </ion-menu-toggle>
 
-        <ion-item lines="none" menuClose ion-item (click)="logout()">
-          Logout
-        </ion-item>
 
       </ion-list>
     </ion-content>
