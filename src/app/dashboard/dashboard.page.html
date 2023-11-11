@@ -203,8 +203,8 @@
               </ion-col>
             </ion-row>
           </ion-list>
-          
-        <!-- <ion-fab slot="fixed" vertical="bottom" horizontal="end" *ngIf="NewRole !='Contractor'">
+
+          <!-- <ion-fab slot="fixed" vertical="bottom" horizontal="end" *ngIf="NewRole !='Contractor'">
             <ion-fab-button (click)="addSR()" style="background-color: #f6f6f6;">
               <ion-icon name="add" style="color:#fff;font-size:30px;"></ion-icon>
             </ion-fab-button>
@@ -236,7 +236,7 @@
             </ion-row>
           </ion-list>
           <!-- SOS ICONS  -->
-<!-- <ion-fab right bottom  style="margin-right: -15px;">
+          <!-- <ion-fab right bottom  style="margin-right: -15px;">
   <button ion-fab style="background-color: red;font-weight: bold;" (click)="SOSPage();">SOS</button>
 
 </ion-fab> -->
@@ -361,32 +361,34 @@
           <ion-row style="margin-top: 14px;width: 100%;margin-left: 8px;">
             <ion-col size="4">
               <button (click)="viewTenantsInAdmin()" ion-fab style="width: 50px;height: 50px;background-color: #337ab7;color: white;
-          border-radius: 10rem;"><ion-icon name="person-add-outline" style="font-size: 1.5rem;"></ion-icon></button>
+              border-radius: 10rem;"><ion-icon name="person-add-outline"
+                  style="font-size: 1.5rem;"></ion-icon></button>
 
               <!--<button ion-fab style="width: 50px;height: 50px;" (click)="viewTenantsInAdmin()"><ion-icon name="ios-people" style="font-size: 2.7rem;"></ion-icon></button>
-          <span style="font-size: 1.3rem;margin-left: -25px;">Tenants</span>-->
+               <span style="font-size: 1.3rem;margin-left: -25px;">Tenants</span>-->
             </ion-col>
             <ion-col size="4">
               <button (click)="viewPendingProvider(2)" ion-fab style="width: 50px;height: 50px;background-color: #337ab7;color: white;
-          border-radius: 10rem;"><ion-icon name="search" style="font-size: 1.5rem;"></ion-icon></button>
+              border-radius: 10rem;"><ion-icon name="search" style="font-size: 1.5rem;"></ion-icon></button>
 
               <!--<button ion-fab style="width: 50px;height: 50px;" (click)="viewPendingProvider(2)"><ion-icon name="search" style="font-size: 2.7rem;"></ion-icon></button>
-          <span style="font-size: 1.3rem;margin-left: -25px;">S-Provider</span>-->
+              <span style="font-size: 1.3rem;margin-left: -25px;">S-Provider</span>-->
             </ion-col>
             <ion-col size="4">
               <button (click)="viewClassifiedInAdmin()" ion-fab style="width: 50px;height: 50px;background-color: #337ab7;color: white;
-          border-radius: 10rem;"><ion-icon name="pricetags" style="font-size: 1.5rem;"></ion-icon></button>
+               border-radius: 10rem;"><ion-icon name="pricetags" style="font-size: 1.5rem;"></ion-icon></button>
 
               <!--<button ion-fab style="width: 50px;height: 50px;" (click)="viewClassifiedInAdmin()"><ion-icon name="pricetags" style="font-size: 2.7rem;"></ion-icon></button>
-          <span style="font-size: 1.3rem;margin-left: -25px;">Classified</span>-->
+               <span style="font-size: 1.3rem;margin-left: -25px;">Classified</span>-->
             </ion-col>
+
             <!--<ion-col size="3">
-          <button (click)="viewAdminAlbums()"  ion-fab style="width: 50px;height: 50px;background-color: #337ab7;color: white;
-          border-radius: 10rem;"><ion-icon name="images" style="font-size: 1.5rem;" ></ion-icon></button>
-          <span style="font-size: 0.9rem;margin-left: 0px;">Photos</span>-->
+            <button (click)="viewAdminAlbums()"  ion-fab style="width: 50px;height: 50px;background-color: #337ab7;color: white;
+                  border-radius: 10rem;"><ion-icon name="images" style="font-size: 1.5rem;" ></ion-icon></button>
+              <span style="font-size: 0.9rem;margin-left: 0px;">Photos</span>-->
             <!--<button ion-fab style="width: 50px;height: 50px;" (click)="viewAdminAlbums()"><ion-icon name="images" style="font-size: 2.7rem;"></ion-icon></button>
-          <span style="font-size: 1.3rem;margin-left: -25px;">Photos</span>
-        </ion-col>-->
+             <span style="font-size: 1.3rem;margin-left: -25px;">Photos</span>
+              </ion-col>-->
           </ion-row>
           <ion-row>
             <ion-col size="4">
@@ -396,7 +398,20 @@
               <span style="font-size: 0.9rem;margin-left: 1.0rem;">Service-Pro</span>
             </ion-col>
             <ion-col size="4">
-              <span style="font-size: 0.9rem;margin-left: 0.2rem;">Classified</span>
+              <span style="font-size: 0.9rem;margin-left: 1.0rem;">Classified</span>
+            </ion-col>
+
+          </ion-row>
+          <ion-row>
+            <ion-col size="4">
+              <button (click)="viewRenovationRequest()" ion-fab style="width: 50px;height: 50px;background-color: #337ab7;color: white; border-radius: 10rem;">
+                <ion-icon name="document-outline" style="font-size: 1.5rem;"></ion-icon>
+              </button>
+            </ion-col>
+          </ion-row>
+          <ion-row>
+            <ion-col size="4">
+              <span style="font-size: 0.9rem;margin-left: 0.2rem;">Renovation</span>
             </ion-col>
           </ion-row>
 
@@ -428,7 +443,7 @@
                 <strong style="font-size: 15px;">{{s.ServiceName}}</strong>
               </ion-col>
             </ion-row>
-            <ion-item (click)="PageUrl(s.ImplementApp,s.status,s.ServiceName,s.Desc)">
+            <ion-list (click)="PageUrl(s.ImplementApp,s.status,s.ServiceName,s.Desc)">
               <ion-row>
                 <ion-col text-center>
                   <img src="{{img_link}}{{s.ServiceImage}}">
@@ -437,7 +452,7 @@
               <ion-list>
 
               </ion-list>
-            </ion-item>
+            </ion-list>
 
           </ion-card-content>
 
@@ -447,7 +462,7 @@
     </ion-list>
   </div>
   <ion-fab slot="fixed" vertical="bottom" horizontal="end">
-    <ion-fab-button color="danger" (click)="SOSPage()" style="">SOS  
+    <ion-fab-button color="danger" (click)="SOSPage()" style="">SOS
       <!-- <ion-icon name="sos" style="color:#fff;font-size:30px;"></ion-icon> -->
     </ion-fab-button>
   </ion-fab>

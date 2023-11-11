@@ -1,0 +1,150 @@
+<ion-header [translucent]="true">
+
+  
+  <ion-toolbar>
+    <ion-buttons slot="start">
+      <ion-back-button defaultHref="dashboard" icon="chevron-back-outline" text="Back"></ion-back-button>
+      </ion-buttons>
+    <ion-title>Add Renovation Request</ion-title>
+    <ion-buttons slot="end" style="width:30%">
+    <ion-button><img style="width:50%" src="/assets/images/logo.png"></ion-button>
+   </ion-buttons>
+  </ion-toolbar>
+
+</ion-header>
+<ion-content padding>
+  <ion-list no-lines>
+
+    <ion-card>
+      <ion-card-content>
+        <ion-row style="background-color: #337ab7;color:#fff;">
+          <ion-col text-center>
+            <strong style="font-size: 12px;">Add Work Details</strong>
+          </ion-col>
+        </ion-row>
+        <!-- <ion-list>
+          <ion-label>Work Start Date *</ion-label>
+          <ion-datetime displayFormat="DD-MM-YYYY" min="2018" max="2030"
+            [(ngModel)]="userData.workStartDate"></ion-datetime>
+        </ion-list> -->
+        <ion-list>
+
+          <ion-label lines="full" style="font-weight: bold;">Work Start Date *</ion-label>
+          <ion-input  type="date" class="ion-text-start" style=" font-size: 15px;"  displayFormat="DD-MM-YYYY"  [(ngModel)]="userData.workStartDate"></ion-input>
+          <ion-popover trigger="date" size="cover">
+            <ng-template>
+              <ion-datetime style="background-color: #ffffff;" presentation="date" [(ngModel)]="userData.workStartDate"
+              min="2018" max="2030" displayFormat="DD-MM-YYYY"></ion-datetime>
+            </ng-template>
+          </ion-popover>
+        </ion-list>
+        <!-- <ion-list>
+          <ion-label>Work End Date *</ion-label>
+          <ion-datetime displayFormat="DD-MM-YYYY" min="2018" max="2030"
+            [(ngModel)]="userData.workEndDate"></ion-datetime>
+        </ion-list> -->
+        <ion-list>
+
+          <ion-label lines="full" style="font-weight: bold;">Work End Date *</ion-label>
+          <ion-input  type="date" class="ion-text-start" style=" font-size: 15px;"  displayFormat="DD-MM-YYYY"  [(ngModel)]="userData.workEndDate"></ion-input>
+          <ion-popover trigger="date" size="cover">
+            <ng-template>
+              <ion-datetime style="background-color: #ffffff;" presentation="date" [(ngModel)]="userData.workEndDate"
+              min="2018" max="2030" displayFormat="DD-MM-YYYY"></ion-datetime>
+            </ng-template>
+          </ion-popover>
+        </ion-list>
+        <ion-list>
+          <ion-label style="font-weight: bold;">Work Type *</ion-label>
+        </ion-list>
+        <ion-list *ngFor="let n of worklist_array; index as i;">
+          <ion-row>
+            <ion-col col-2 text-left>
+              <ion-checkbox color="dark" id={{i}} checked="false" (ionChange)="CheckWorklist(n.work, i)"></ion-checkbox>
+            </ion-col>
+            <ion-col col-4 *ngIf="n.drawingReq == 'No'" text-left>
+              <ion-list>{{n.work}}</ion-list>
+            </ion-col>
+            <ion-col col-4 *ngIf="n.drawingReq == 'Yes'" text-left>
+              <ion-list><strong>*</strong>{{n.work}}</ion-list>
+            </ion-col>
+          </ion-row>
+          <ion-row>
+            <ion-col text-center>
+              <!--<ion-input type="file" accept="image/*" (change)="changeListener($event)" (click)="getPicture()" ></ion-input>-->
+              <!--<input type="file" (change)="changeListener($event)" name="files[]" id="files">-->
+              <button ion-button round icon-left (click)="presentActionSheet()">
+                <ion-buttons text-center>
+                  <ion-icon name="camera"></ion-icon>Attach Image
+                </ion-buttons>
+              </button>
+
+            </ion-col>
+          </ion-row>
+        </ion-list>
+
+
+        <ion-list>
+          <ion-label floating style="font-weight: bold;">Work Location *</ion-label>
+          <ion-select [(ngModel)]="userData.location">
+            <ion-select-option value="0">Please Select</ion-select-option>
+            <ion-select-option value="1">Inside</ion-select-option>
+            <ion-select-option value="2">Outside</ion-select-option>
+          </ion-select>
+        </ion-list>
+        <ion-list>
+          <ion-label floating style="font-weight: bold;">Work Details </ion-label>
+          <ion-textarea rows="5" [(ngModel)]="userData.workDetails"></ion-textarea>
+        </ion-list>
+      </ion-card-content>
+    </ion-card>
+    <ion-card>
+      <ion-card-content>
+        <ion-row style="background-color: #337ab7;color:#fff;">
+          <ion-col text-center>
+            <strong style="font-size: 12px;" >Add Contractor Details</strong>
+          </ion-col>
+        </ion-row>
+        <ion-list>
+          <ion-label floating style="font-weight: bold;">Contractor Name *</ion-label>
+          <ion-input type="text" value="" [(ngModel)]="userData.contractorName"></ion-input>
+        </ion-list>
+        <ion-list>
+          <ion-label floating style="font-weight: bold;">Contractor Contact No *</ion-label>
+          <ion-input type="tel" value="" [(ngModel)]="userData.contractorContact"></ion-input>
+        </ion-list>
+        <ion-list>
+          <ion-label floating style="font-weight: bold;">Contractor Address</ion-label>
+          <ion-textarea rows="5" [(ngModel)]="userData.contractorAddress"></ion-textarea>
+        </ion-list>
+      </ion-card-content>
+    </ion-card>
+    <ion-card>
+      <ion-card-content>
+        <ion-row style="background-color: #337ab7;color:#fff;">
+          <ion-col text-center>
+            <strong style="font-size: 12px;">Add Labourer Details</strong>
+          </ion-col>
+        </ion-row>
+        <ion-list>
+          <ion-label style="font-weight: bold;" >Maximum Labourer *</ion-label>
+          <ion-input type="text" value={{maxLabourer}} [(ngModel)]="userData.maxLabourer"
+            (ionChange)="setMaximumLabourer()"></ion-input>
+        </ion-list>
+      </ion-card-content>
+    </ion-card>
+    <ion-row>
+      <ion-col col-3></ion-col>
+      <ion-col col-6>
+        <button ion-button color="primary" block (click)="createRenovationRequest()" style="height: 35px;
+        background-color: #337ab7;
+        color: #fff;
+        width: 100px;
+        font-weight: bold;
+        margin-top: 20px;">Submit</button>
+      </ion-col>
+      <ion-col col-3></ion-col>
+    </ion-row>
+  </ion-list>
+</ion-content>
+

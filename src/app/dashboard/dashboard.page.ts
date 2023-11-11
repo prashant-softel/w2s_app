@@ -9,6 +9,7 @@ import { NavigationExtras } from '@angular/router';
 // import { SosmassagePage } from '../sosmassage/sosmassage';
 import { SosMessage } from '../sosmessage/sosmessage';
 import { MyvisitorsPage } from '../myvisitors/myvisitors.page';
+import { RenovationRequestPage } from '../renovation-request/renovation-request';
 
 
 
@@ -36,7 +37,7 @@ export class DashboardPage implements OnInit {
   EventsPage: any = 'events';
   NoticesPage: any = 'notices';
   TaskPage: any = 'task';
-  
+
   ServiceRequestPage: any = 'servicerequest';
   PaymentPage: any = 'payment';
   PhotoAlbumPage: any = 'photoalbum';
@@ -53,6 +54,7 @@ export class DashboardPage implements OnInit {
   ServicesPage: any = 'services';
   MyvisitorsPage: any = 'myvisitors';
   SosMessage: any = 'sosmessage';
+  RenovationRequestPage: any = 'renovation-request';
   data: any;
   //selection:any;
   bill_amount: any;
@@ -723,7 +725,7 @@ export class DashboardPage implements OnInit {
             }
           };
           // this.navCtrl.navigateRoot(this.ServicesPage, navigationExtras);
-          this.navCtrl.navigateRoot(this.MyvisitorsPage, navigationExtras); 
+          this.navCtrl.navigateRoot(this.MyvisitorsPage, navigationExtras);
         }
         else {
           //this.presentAlert(); 
@@ -743,7 +745,7 @@ export class DashboardPage implements OnInit {
         }
       };
       // this.navCtrl.navigateRoot(this.ServicesPage, navigationExtras);
-      this.navCtrl.navigateRoot(this.MyvisitorsPage, navigationExtras); 
+      this.navCtrl.navigateRoot(this.MyvisitorsPage, navigationExtras);
 
     }
   }
@@ -829,9 +831,9 @@ export class DashboardPage implements OnInit {
 
   }
   viewRenovationRequest() {
-    var p = [];
-    p['dash'] = this.tab;
-    console.log(p);
+    // var p = [];
+    // p['dash'] = this.tab;
+    // console.log(p);
     //alert("comming soon !");
     /*if(this.AccessUI == "0")
     {
@@ -840,6 +842,22 @@ export class DashboardPage implements OnInit {
     else{
       this.presentAlert(); 
     }*/
+    var p=[];
+    p['dash']=this.tab;
+    console.log(p);
+    if(this.AccessUI == "0")
+    {
+      let navigationExtras: NavigationExtras = {
+        queryParams:
+        {
+          details: p,
+        }
+      };
+      this.navCtrl.navigateRoot(this.RenovationRequestPage,navigationExtras);
+    }
+    else{
+      // this.presentAlert(); 
+    }
 
   }
   viewAddressProofRequest() {
@@ -883,25 +901,22 @@ export class DashboardPage implements OnInit {
     // alert("comming Soon!");
     //this.navCtrl.push(AlbumApprovalPage);
   }
-  SOSPage()
-   {
+  SOSPage() {
 
-      if(this.AccessUI == "0")
-     {
+    if (this.AccessUI == "0") {
       console.log('SOSPage function called');
       console.log('SosMessage:', this.SosMessage);
 
-        this.navCtrl.navigateRoot(this.SosMessage);
-        // this.navCtrl.navigateRoot('./sosmessage');
-        
+      this.navCtrl.navigateRoot(this.SosMessage);
+      // this.navCtrl.navigateRoot('./sosmessage');
 
-     }
-      else
-      {
-        // this.presentAlert(); 
-      }
-     
-   }
+
+    }
+    else {
+      // this.presentAlert(); 
+    }
+
+  }
   doRefresh(event) {
     console.log('Begin async operation');
 

@@ -1,0 +1,161 @@
+<ion-header translucent="true">
+  <ion-toolbar>
+    <ion-title>Renovation Request</ion-title>
+    <ion-buttons slot="start">
+      <ion-back-button defaultHref="dashboard" icon="chevron-back-outline" text="Back"></ion-back-button>
+    </ion-buttons>
+    <ion-buttons slot="end" style="width:30%">
+      <ion-button><img style="width:70%" src="/assets/images/logo.png"></ion-button>
+    </ion-buttons>
+  </ion-toolbar>
+  <ion-toolbar no-border>
+    <ion-segment [(ngModel)]="tab">
+      <ion-segment-button value="pending" (click)="fetchRenovationRequest()">
+        <strong>Pending</strong>
+      </ion-segment-button>
+      <ion-segment-button value="verified" (click)="fetchRenovationRequest()">
+        <strong>Verified</strong>
+      </ion-segment-button>
+      <ion-segment-button value="approved" (click)="fetchRenovationRequest()">
+        <strong>Approved</strong>
+      </ion-segment-button>
+    </ion-segment>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content padding *ngIf="Block_unit==0">
+  <div [ngSwitch]="tab">
+    <ion-list no-lines *ngSwitchCase="'pending'">
+      <ion-card *ngFor="let p of temp_Renovation_pending_array">
+        <ion-card-content no-padding text-wrap (click)="selectPendingRenovationRequest(p)">
+          <ion-row style="background-color: #337ab7;color:#fff;">
+            <ion-col text-center>
+              <strong>[ {{p.unit_no}} ] - {{p.primary_owner_name}}</strong>
+            </ion-col>
+          </ion-row>
+          <br />
+          <ion-row>
+            <ion-col col-5><strong>Request No :</strong></ion-col>
+            <ion-col text-right>{{p.request_no}}</ion-col>
+          </ion-row>
+          <ion-row>
+            <ion-col col-5><strong>Title :</strong></ion-col>
+            <ion-col text-right>{{p.summery}}</ion-col>
+          </ion-row>
+          <ion-row>
+            <ion-col col-5><strong>Work Start Date :</strong></ion-col>
+            <ion-col text-right>{{p.start_date}}</ion-col>
+          </ion-row>
+          <ion-row>
+            <ion-col col-5><strong>Work End Date :</strong></ion-col>
+            <ion-col text-right>{{p.end_date}}</ion-col>
+          </ion-row>
+          <ion-row>
+            <ion-col col-5><strong>Work Type :</strong></ion-col>
+          </ion-row>
+          <ion-row>
+            <ion-col text-left>{{p.type_of_work}}</ion-col>
+          </ion-row>
+          <ion-row>
+            <ion-col col-6 text-left>
+              <strong>Priority :</strong> {{p.priority}}<br>
+            </ion-col>
+            <ion-col col-6 text-right>
+              <strong>Status :</strong>Raised<br>
+            </ion-col>
+          </ion-row><br />
+        </ion-card-content>
+      </ion-card>
+      <p *ngIf="temp_Renovation_pending_array.length == 0" text-center style="color: red;">No records found</p>
+    </ion-list>
+    <ion-list no-lines *ngSwitchCase="'verified'">
+      <ion-card *ngFor="let p of temp_Renovation_verified_array">
+        <ion-card-content no-padding text-wrap (click)="selectPendingRenovationRequest(p)">
+          <ion-row style="background-color: #337ab7;color:#fff;">
+            <ion-col text-center>
+              <strong>[ {{p.unit_no}} ] - {{p.primary_owner_name}}</strong>
+            </ion-col>
+          </ion-row>
+          <br />
+          <ion-row>
+            <ion-col col-5><strong>Request No :</strong></ion-col>
+            <ion-col text-right>{{p.request_no}}</ion-col>
+          </ion-row>
+          <ion-row>
+            <ion-col col-5><strong>Title :</strong></ion-col>
+            <ion-col text-right>{{p.summery}}</ion-col>
+          </ion-row>
+          <ion-row>
+            <ion-col col-5><strong>Work Start Date :</strong></ion-col>
+            <ion-col text-right>{{p.start_date}}</ion-col>
+          </ion-row>
+          <ion-row>
+            <ion-col col-5><strong>Work End Date :</strong></ion-col>
+            <ion-col text-right>{{p.end_date}}</ion-col>
+          </ion-row>
+          <ion-row>
+            <ion-col col-5><strong>Work Type :</strong></ion-col>
+            <ion-col text-right>{{p.type_of_work}}</ion-col>
+          </ion-row>
+          <ion-row>
+            <ion-col col-5><strong>Priority :</strong></ion-col>
+            <ion-col text-right>{{p.priority}}</ion-col>
+          </ion-row>
+          <ion-row>
+            <ion-col col-5><strong>Status :</strong></ion-col>
+            <ion-col text-right>Verified</ion-col>
+          </ion-row><br />
+        </ion-card-content>
+      </ion-card>
+      <p *ngIf="temp_Renovation_verified_array.length == 0" text-center style="color: red;">No records found</p>
+    </ion-list>
+    <ion-list no-lines *ngSwitchCase="'approved'">
+      <ion-card *ngFor="let p of temp_Renovation_approved_array">
+        <ion-card-content no-padding text-wrap (click)="selectPendingRenovationRequest(p)">
+          <ion-row style="background-color: #337ab7;color:#fff;">
+            <ion-col text-center>
+              <strong>[ {{p.unit_no}} ] - {{p.primary_owner_name}}</strong>
+            </ion-col>
+          </ion-row>
+          <br />
+          <ion-row>
+            <ion-col col-5><strong>Request No :</strong></ion-col>
+            <ion-col text-right>{{p.request_no}}</ion-col>
+          </ion-row>
+          <ion-row>
+            <ion-col col-5><strong>Title :</strong></ion-col>
+            <ion-col text-right>{{p.summery}}</ion-col>
+          </ion-row>
+          <ion-row>
+            <ion-col col-5><strong>Work Start Date :</strong></ion-col>
+            <ion-col text-right>{{p.start_date}}</ion-col>
+          </ion-row>
+          <ion-row>
+            <ion-col col-5><strong>Work End Date :</strong></ion-col>
+            <ion-col text-right>{{p.end_date}}</ion-col>
+          </ion-row>
+          <ion-row>
+            <ion-col col-5><strong>Work Type :</strong></ion-col>
+            <ion-col text-right>{{p.type_of_work}}</ion-col>
+          </ion-row>
+          <ion-row>
+            <ion-col col-6 text-left>
+              <strong>Priority :</strong> {{p.priority}}<br>
+            </ion-col>
+            <ion-col col-6 text-right>
+              <strong>Status :</strong>Approved<br>
+            </ion-col>
+          </ion-row><br />
+        </ion-card-content>
+      </ion-card>
+      <p *ngIf="temp_Renovation_approved_array.length == 0" text-center style="color: red;">No records found</p>
+    </ion-list>
+  </div>
+  
+    <ion-fab slot="fixed" vertical="bottom" horizontal="end">
+      <ion-fab-button (click) = "addRenovationRequest()" style="background-color: #f6f6f6;">
+        <ion-icon name="add" style="color:#fff;font-size:30px;"></ion-icon>
+      </ion-fab-button>
+    </ion-fab>
+  
+</ion-content>

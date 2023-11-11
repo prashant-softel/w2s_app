@@ -140,8 +140,20 @@ export const routes: Routes = [
     loadComponent: () => import('./serviceprovider/serviceprovider.page').then(m => m.ServiceproviderPage)
   },
   {
+   path: "RenavationRequestDetails",
+   loadComponent: () => import('./RenovationRequestDetails/RenovationRequestDetails').then(m => m.RenovationRequestDetailsPage)
+  },
+  {
     path: 'serviceproviederimageview',
     loadComponent: () => import('./serviceproviederimageview/serviceproviederimageview.page').then(m => m.ServiceproviederimageviewPage)
+  },
+  {
+    path: 'renovation-request',
+    loadComponent: () => import ('./renovation-request/renovation-request').then(m => m.RenovationRequestPage)
+  },
+  {
+    path: 'addrenovationrequest',
+    loadComponent: () => import ('./addrenovationrequest/addrenovationrequest').then(m=> m.AddRenovationRequest)
   },
   {
     path: 'servicerequest',

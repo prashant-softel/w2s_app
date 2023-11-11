@@ -1,11 +1,10 @@
 import { CommonModule } from '@angular/common';
 import { HttpClientModule } from '@angular/common/http';
-import { Component, ViewChild } from '@angular/core';
+import { Component, OnInit, ViewChild } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { IonicModule, NavController, NavParams, MenuController, Platform, AlertController } from '@ionic/angular';
 import { ConnectServer } from 'src/service/connectserver';
 import { IonicStorageModule } from '@ionic/storage-angular';
-
 import { GlobalVars } from 'src/service/globalvars';
 import { LoaderView } from 'src/service/loaderview';
 import { StorageService } from 'src/service/StorageService';
@@ -75,6 +74,11 @@ export class AppComponent {
 
     ];
   }
+  // ngOnInit(): void {
+  //   throw new Error('Method not implemented.');
+    
+
+  // }
 
   Dashboard() {
     //this.globalVars.clearStorage();

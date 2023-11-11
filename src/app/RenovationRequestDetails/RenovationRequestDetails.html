@@ -1,0 +1,148 @@
+<ion-header translucent="true">
+  <ion-toolbar>
+    <ion-title>Renovation Details</ion-title>
+    <ion-buttons slot="start">
+      <ion-back-button defaultHref="renovation-request" icon="chevron-back-outline" text="Back"></ion-back-button>
+    </ion-buttons>
+    <ion-buttons slot="end" style="width:30%">
+      <ion-button><img style="width:70%" src="/assets/images/logo.png"></ion-button>
+    </ion-buttons>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content padding>
+   <ion-list no-lines>
+    <ion-card>
+      <ion-card-content>
+        <ion-row>
+          <ion-col col-3><strong >Unit No</strong></ion-col>
+          <ion-col text-right>{{unit_no}}</ion-col>
+        </ion-row>
+         <ion-row>
+          <ion-col><strong >Owner Name</strong></ion-col>
+         </ion-row>
+        <ion-row> 
+          <ion-col text-right>{{primary_owner_name}}</ion-col>
+        </ion-row>
+        <hr>
+         <ion-row  *ngIf="summery!= ''">
+          <ion-col><strong>Title</strong></ion-col>
+        </ion-row> 
+        <ion-row  *ngIf="summery!= ''">
+          <ion-col text-right>{{summery}}</ion-col>
+        </ion-row> 
+        <ion-row>
+          <ion-col col-6><strong>Application Date</strong></ion-col>
+          <ion-col text-right>{{application_date}}</ion-col>
+        </ion-row>
+        <ion-row>
+          <ion-col col-5><strong>Work Start Date</strong></ion-col>
+          <ion-col text-right>{{start_date}}</ion-col>
+        </ion-row>
+        <ion-row>
+          <ion-col col-5><strong>Work End Date</strong></ion-col>
+          <ion-col text-right>{{end_date}}</ion-col>
+        </ion-row>
+        <ion-row>
+          <ion-col col-5><strong>Work Location</strong></ion-col>
+          <ion-col text-right>{{location}}</ion-col>
+        </ion-row>
+        <ion-row>
+          <ion-col col-5><strong>Work Type</strong></ion-col>
+        </ion-row>
+        <ion-row>
+          <ion-col text-right>{{type_of_work}}</ion-col>
+        </ion-row>
+        <hr>
+        <ion-row  *ngIf="work_details!= ''">
+          <ion-col col-4><strong>Work Details</strong></ion-col>
+        </ion-row>
+        <ion-row  *ngIf="work_details!= ''">
+          <ion-col text-right>{{work_details}}</ion-col>
+        </ion-row>
+        <ion-row>
+          <ion-col col-6><strong>Priority</strong></ion-col>
+          <ion-col text-right>{{priority}}</ion-col>
+        </ion-row>
+         <ion-row>
+          <ion-col col-6><strong>Status</strong></ion-col>
+          <ion-col text-right>{{status}}</ion-col>
+        </ion-row>
+        <hr>
+        <ion-row>
+          <ion-col col-6><strong>Contractor Name</strong></ion-col>
+          <ion-col text-right>{{contractor_name}}</ion-col>
+        </ion-row>
+        <ion-row>
+          <ion-col col-6><strong>Contractor No.</strong></ion-col>
+          <ion-col text-right>{{ContractorContactNo}}</ion-col>
+        </ion-row>
+        <ion-row>
+          <ion-col col-6><strong>Contractor Address</strong></ion-col>
+        </ion-row>
+        <hr>
+        <ion-row>
+          <ion-col text-right>{{contractor_address}}</ion-col>
+        </ion-row>
+        <ion-row>
+          <ion-col col-6><strong>Maximum Labourer</strong></ion-col>
+          <ion-col text-right>{{max_labourer}}</ion-col>
+        </ion-row>
+        <ion-row>
+          <ion-col col-6><strong>Labourer Name</strong></ion-col>
+          <ion-col col-4><strong></strong></ion-col>
+        </ion-row>
+        <ion-row *ngFor="let l of labourer_name">
+          <ion-col col-2 *ngIf="l.index != 0"><strong>{{l.index}}</strong></ion-col>
+          <ion-col text-right><strong>{{l.labourerName}}</strong></ion-col>
+        </ion-row>
+        <ion-row *ngIf="verifiedStatus == 'Y'">
+          <ion-col col-6><strong>Verified By</strong></ion-col>
+        </ion-row>
+        <ion-row *ngIf="verifiedStatus == 'Y'">
+          <ion-col text-left>
+            <strong>Name :</strong> {{verifiedByName}}<br>
+          </ion-col>
+        </ion-row>
+        <ion-row *ngIf="verifiedStatus == 'Y'">
+          <ion-col text-left>
+            <strong>Post :</strong> {{verifiedByDesignation}}<br>
+          </ion-col>
+        </ion-row>
+        <ion-row *ngIf="firstLevelApprovalStatus == 'Y'">
+          <ion-col col-6><strong>Approved By</strong></ion-col>
+        </ion-row>
+        <ion-row *ngIf="firstLevelApprovalStatus == 'Y'">
+          <ion-col text-left>
+            <strong>Name :</strong> {{firstApprovedByName}}<br>
+          </ion-col>
+        </ion-row>
+        <ion-row *ngIf="firstLevelApprovalStatus == 'Y'">
+          <ion-col text-left>
+            <strong>Post :</strong> {{firstApprovalByDesignation}}<br>
+          </ion-col>
+        </ion-row>
+        <ion-row *ngIf="secondLevelApprovalStatus == 'Y'">
+          <ion-col text-left>
+            <strong>Name :</strong> {{secondApprovedByName}}<br>
+          </ion-col>
+        </ion-row>
+        <ion-row *ngIf="secondLevelApprovalStatus == 'Y'">
+          <ion-col text-left>
+            <strong>Post :</strong> {{secondApprovalByDesignation}}<br>
+          </ion-col>
+        </ion-row>
+        <!-- <ion-row *ngIf="(verificationAccess) && (verifiedStatus == 'N')"> -->
+          <ion-row  *ngIf="(verifiedStatus == 'N')" style="display: flex; justify-content: space-between; margin-bottom: 20px;">
+          <ion-col col-4><button ion-button block style="background-color:mediumseagreen; height:30px; width:60px;" (click)="updateRequestStatus(RenovationId,'verify')">Verify</button>
+          </ion-col>
+        </ion-row>
+        <!-- <ion-row *ngIf="(approvalAccess) && ((firstLevelApprovalStatus == 'N') || (secondLevelApprovalStatus == 'N'))"> -->
+        <ion-row style="display: flex; justify-content: space-between; margin-bottom: 20px;" *ngIf=" ((firstLevelApprovalStatus == 'N') || (secondLevelApprovalStatus == 'N'))">
+          <ion-col col-4><button ion-button block style="background-color:mediumseagreen; height:30px; width:60px; margin-left: 100px;" (click)="updateRequestStatus(RenovationId,'approve')">Approve</button>
+          </ion-col>
+        </ion-row>
+      </ion-card-content>
+    </ion-card>
+  </ion-list> 
+</ion-content>

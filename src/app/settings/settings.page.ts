@@ -40,7 +40,7 @@ export class SettingsPage implements OnInit {
   selectedDndType: number = 1;
   dnd_type: any;//this.selectedDndType;
   selectedOption: string;
-  radiochecked:number;
+  radiochecked:any;
   roleWise: any;
   ProfilePage: any = 'profile';
   constructor(private navCtrl: NavController,
@@ -71,8 +71,8 @@ export class SettingsPage implements OnInit {
     this.iUnitID = "";//this.globalVars.MAP_UNIT_ID;
     this.iUnitNo = "";//this.globalVars.MAP_UNIT_NO;
     this.dnd_type = 0;
-    this.selectedDndType = 1;
-    this.radiochecked=0;
+    // this.selectedDndType = 0;
+    this.radiochecked='0';
   }
   @HostListener('document:ionBackButton', ['$event'])
   overrideHardwareBackAction(event: any) {
@@ -103,14 +103,13 @@ export class SettingsPage implements OnInit {
     console.log(this.iUnitID);
     console.log(this.iUnitNo);
     this.fetchMemberContact();
-    
+    this.fetchMessage();
+
   }
 
   fetchMemberContact() {
     this.loaderView.showLoader('Loading ...');
     var objData = [];
-    this.fetchMessage();
-
     objData['fetch'] = "memberNo";
     objData['role'] = this.roleWise;
     this.connectServer.getData("Profile", objData).then(
@@ -291,18 +290,18 @@ export class SettingsPage implements OnInit {
             this.selectedDndType = dnddata[0]['dnd_type'];
             if( this.selectedDndType == 1)
             {
-              this.radiochecked=1;
+              this.radiochecked='1';
             }
             if(this.selectedDndType == 0 ){
-              this.radiochecked=0;
+              this.radiochecked='0';
             }
             if( this.selectedDndType == 2)
             {
-              this.radiochecked=2;
+              this.radiochecked='2';
             }
             if( this.selectedDndType == 3)
             {
-              this.radiochecked=3;
+              this.radiochecked='3';
               this.CallbackDND = '1';
             }
             else
@@ -325,4 +324,3 @@ export class SettingsPage implements OnInit {
       })
 }
 } //end 
-

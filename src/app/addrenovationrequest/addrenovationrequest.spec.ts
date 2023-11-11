@@ -1,12 +1,12 @@
 import { ComponentFixture, TestBed, async } from '@angular/core/testing';
-import { DashboardPage } from './dashboard.page';
+import { AddRenovationRequest } from './addrenovationrequest';
 
-describe('DashboardPage', () => {
-  let component: DashboardPage;
-  let fixture: ComponentFixture<DashboardPage>;
+describe('EventsPage', () => {
+  let component: AddRenovationRequest;
+  let fixture: ComponentFixture<AddRenovationRequest>;
 
   beforeEach(async(() => {
-    fixture = TestBed.createComponent(DashboardPage);
+    fixture = TestBed.createComponent(AddRenovationRequest);
     component = fixture.componentInstance;
     fixture.detectChanges();
   }));

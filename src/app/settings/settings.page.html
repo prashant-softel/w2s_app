@@ -60,7 +60,7 @@
       <ion-list *ngIf="CallbackStatus== '0' ">
         <a (click)="change()" style="text-align: center; margin-left: 100px;"><strong>Read more</strong></a>
       </ion-list>
-      <ion-row  *ngIf="CallbackStatus== '1' ">
+      <ion-row *ngIf="CallbackStatus== '1' ">
         <ion-col col-12>
           <strong>Note :</strong>
           <p>This number would be used by security manager app to call you to approve your visitor`s enrty.</p>
@@ -68,7 +68,7 @@
           <p>If your tenant is staying in your flat/unit then please set tenants contact number.</p>
           <a (click)="UpdateContact()"><strong>Update contact</strong></a>
           <ion-list>
-          <a (click)="Readless()" style="text-align: center; margin-left: 100px;"><strong>Read Less</strong></a>
+            <a (click)="Readless()" style="text-align: center; margin-left: 100px;"><strong>Read Less</strong></a>
           </ion-list>
 
         </ion-col>
@@ -76,37 +76,36 @@
     </ion-card-content>
   </ion-card>
   <!-- Message for Security section -->
-  <ion-card>
+  <ion-card *ngIf="roleWise != 'Admin' && roleWise != 'SuperAdmin'">
     <ion-card-content>
-      
-      <ion-list  >
+
+      <ion-list>
         <ion-row>
           <ion-col text-center col-12 style="text-align: center;">
             <strong style="font-size: 1.3rem;">DND Message for Security</strong>
           </ion-col>
         </ion-row>
         <ion-radio-group [value]="selectedDndType" [(ngModel)]="selectedDndType">
-          <ion-item  (click) = "SaveMessage()">
+          <ion-item (click)="SaveMessage()">
             <ion-label>None</ion-label>
             <ion-radio slot="start" value="0"></ion-radio>
           </ion-item>
           <ion-item (click)="SaveMessage()">
             <ion-label>Leave Package at Security</ion-label>
-            <ion-radio  slot="start" value="1"></ion-radio>
+            <ion-radio slot="start" value="1"></ion-radio>
           </ion-item>
-
           <ion-item (click)="SaveMessage()">
             <ion-label>Send Package back</ion-label>
             <ion-radio slot="start" value="2"></ion-radio>
           </ion-item>
 
-          <ion-item  (click) = "changednd()">
+          <ion-item (click)="changednd()">
             <ion-label>DND Message for Security</ion-label>
             <ion-radio slot="start" value="3"></ion-radio>
           </ion-item>
-          
-      </ion-radio-group>
-    </ion-list>
+
+        </ion-radio-group>
+      </ion-list>
 
 
     </ion-card-content>
@@ -114,16 +113,20 @@
   <ion-card>
     <ion-card-content>
       <ion-list *ngIf="CallbackDND== '1'">
-        <ion-label floating style="font-weight: bold; text-align: center; margin-left: 50px;">DND Message for Security</ion-label>
-        <ion-input type="text" style="width: 100%; max-width: 90%;" [value] = "dnddata.dnd_msg" [(ngModel)]="dndData.dnd_msg"></ion-input>
-         <button (click)="SaveMessage()" style=" background-color: mediumseagreen; color: white; width: 70px; height: 20px; margin-top: 10px; margin-left: 50px;">Save</button>
-         <button (click)="hideoptions()"style="background-color: red; color: #fff; margin-left: 20px;  width: 70px; height: 20px; margin-top: 10px;">Cancel</button>
+        <ion-label floating style="font-weight: bold; text-align: center; margin-left: 50px;">DND Message for
+          Security</ion-label>
+        <ion-label style="display: block; margin-top: 10px; margin-left: 50px;">{{dnd_msg}}</ion-label>
+        <ion-input type="text" style="width: 100%; max-width: 90%;" [(ngModel)]="dndData.dnd_msg"></ion-input>
+        <button (click)="SaveMessage()"
+          style=" background-color: mediumseagreen; color: white; width: 70px; height: 20px; margin-top: 10px; margin-left: 50px;">Save</button>
+        <button (click)="hideoptions()"
+          style="background-color: red; color: #fff; margin-left: 20px;  width: 70px; height: 20px; margin-top: 10px;">Cancel</button>
       </ion-list>
     </ion-card-content>
   </ion-card>
   <ion-card *ngIf="roleWise != 'Admin' && roleWise != 'SuperAdmin'">
     <ion-card-content>
-      <ion-row>
+      <ion-row>                                         
         <ion-col col-12 text-center>
           <strong style="font-size: 1.8rem;">(email/sms/mobile)</strong>
         </ion-col>
