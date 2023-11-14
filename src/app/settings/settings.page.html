@@ -86,7 +86,7 @@
             <strong style="font-size: 1.3rem;">DND Message for Security</strong>
           </ion-col>
         </ion-row>
-        <ion-radio-group [value]="selectedDndType" [(ngModel)]="selectedDndType">
+        <ion-radio-group [(ngModel)]="selectedDndType">
           <ion-item (click)="SaveMessage()">
             <ion-label>None</ion-label>
             <ion-radio slot="start" value="0"></ion-radio>
@@ -116,7 +116,7 @@
       <ion-list *ngIf="CallbackDND== '1'">
         <ion-label floating style="font-weight: bold; text-align: center; margin-left: 50px;">DND Message for
           Security</ion-label>
-        <ion-input type="text" style="width: 100%; max-width: 90%;" [value]="dnddata.dnd_msg"
+        <ion-input type="text" style="width: 100%; max-width: 90%;" 
           [(ngModel)]="dndData.dnd_msg"></ion-input>
         <button (click)="SaveMessage()"
           style=" background-color: mediumseagreen; color: white; width: 70px; height: 20px; margin-top: 10px; margin-left: 50px;">Save</button>
