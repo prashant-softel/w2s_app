@@ -37,7 +37,7 @@ export class SettingsPage implements OnInit {
   iSocietyID: any;
   iUnitID: any;
   iUnitNo: any;
-  selectedDndType: string = "1";
+  selectedDndType: string = "0";
   dnd_type: any;//this.selectedDndType;
   selectedOption: string;
   radiochecked: number;
@@ -71,7 +71,7 @@ export class SettingsPage implements OnInit {
     this.iUnitID = "";//this.globalVars.MAP_UNIT_ID;
     this.iUnitNo = "";//this.globalVars.MAP_UNIT_NO;
     this.dnd_type = 0;
-    this.selectedDndType = 1 + '';
+    this.selectedDndType = 0 + '';
     this.radiochecked = 0;
   }
   @HostListener('document:ionBackButton', ['$event'])
@@ -288,11 +288,11 @@ export class SettingsPage implements OnInit {
           //  this.DND_msg_array.push(message);
 
           this.selectedDndType = dnddata[0].dnd_type + '';
-          if (this.selectedDndType == '1') {
-            this.radiochecked = 1;
-          }
           if (this.selectedDndType == "0") {
             this.radiochecked = 0;
+          }
+          if (this.selectedDndType == '1') {
+            this.radiochecked = 1;
           }
           if (this.selectedDndType == '2') {
             this.radiochecked = 2;

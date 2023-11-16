@@ -9,8 +9,8 @@ headers.append('Accept', 'application/json');
 headers.append('content-type', 'application/json');
 @Injectable()
 export class ConnectServer {
-  serverURL = 'http://way2society.com:8080/W2S/';
-  // serverURL='http://localhost:3706/Unichem_web/';
+  serverURL = 'http://way2society.com:8080/W2S1/';
+  // serverURL='http://localhost:8080/Unichem_web/';
   //serverURL='https://way2society.com:8443/W2S/';
   API_URL = '';
   constructor(public http: HttpClient, private globalVars: GlobalVars) { }

@@ -115,7 +115,8 @@
     <ion-card-content>
       <ion-list *ngIf="CallbackDND== '1'">
         <ion-label floating style="font-weight: bold; text-align: center; margin-left: 50px;">DND Message for
-          Security</ion-label>
+          Security
+        </ion-label>
         <ion-input type="text" style="width: 100%; max-width: 90%;" 
           [(ngModel)]="dndData.dnd_msg"></ion-input>
         <button (click)="SaveMessage()"
