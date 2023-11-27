@@ -1,7 +1,0 @@
-{
-  "name": "way2society",
-  "integrations": {
-    "cordova": {}
-  },
-  "type": "angular"
-}
