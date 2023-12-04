@@ -38,6 +38,8 @@ export class LoginPage implements OnInit {
   DashboardPage: any = 'dashboard';
   NewuserPage: any = 'newuser';
   payFlag: boolean;
+  hidePassword: boolean = true;
+
 
   constructor(
     private navCtrl: NavController,
@@ -65,6 +67,10 @@ export class LoginPage implements OnInit {
 
     this.reinitializeData();
     this.ionViewDidLoad()
+  }
+  togglePasswordVisibility() {
+    // event.preventDefault();
+    this.hidePassword = !this.hidePassword;
   }
   launch() {
     let uri = 'https://way2society.com/forgotpassword.php';//`upi://pay?pa=${UPI_ID}&pn=${UPI_NAME}&tid=${tid}&am=${totalPrice}&cu=INR&tn=${UPI_TXN_NOTE}&tr=${orderId}`;

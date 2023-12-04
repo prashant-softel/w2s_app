@@ -11,7 +11,7 @@ headers.append('content-type', 'application/json');
 export class ConnectServer {
   serverURL = 'http://way2society.com:8080/W2S1/';
   // serverURL='http://localhost:8080/Unichem_web/';
-  //serverURL='https://way2society.com:8443/W2S/';
+  // serverURL='https://way2society.com:8443/W2S/';
   API_URL = '';
   constructor(public http: HttpClient, private globalVars: GlobalVars) { }
 

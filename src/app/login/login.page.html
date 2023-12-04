@@ -28,8 +28,15 @@
     <ion-row>
       <ion-col size="12">
         <!--<ion-label floating>Password</ion-label>-->
-        <ion-input label="Password" labelPlacement="floating" type="password" value=""
-          [(ngModel)]="userData.Password"></ion-input>
+        <ion-input label="Password" labelPlacement="floating" type="{{ hidePassword ? 'password' : 'text' }}" value=""
+          [(ngModel)]="userData.Password">
+          <span><ion-icon
+            name="{{ hidePassword ? 'eye-off' : 'eye' }}"
+            style="float:right;margin-top: 30px;" 
+            (click)="togglePasswordVisibility()"
+          ></ion-icon></span>
+        </ion-input>
+          
       </ion-col>
     </ion-row>
 
