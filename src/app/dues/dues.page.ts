@@ -19,7 +19,9 @@ export class DuesPage implements OnInit {
   ViewBillPage: any = 'viewbill';
   ViewreceiptPage: any = 'viewreceipt';
   CnotePage: any = 'cnote';
-  particulars: Array<{ mode: string, date: string, debit: string, credit: string, balance: number, IsOpeningBill: any, period: any, billtype: any, Unit: any, showIn: string, cdnid: any, inv_number: any, inv_id: any }>;
+  particulars: Array<{
+    mode: string, date: string, debit: string, credit: string, balance: number, IsOpeningBill: any, period: any, billtype: any, Unit: any, showIn: string, cdnid: any, inv_number: any, inv_id: any, SocietyCode: any, BillFor: any, UnitID: any
+  }>;
   role: any;
   roleWise: any;
   showIn: any;
@@ -119,7 +121,10 @@ export class DuesPage implements OnInit {
               this.showIn = "4";
             }
             // alert( this.showIn);
-            var objData = { mode: sMode, date: sDate, debit: receiptData[i]['Debit'], credit: receiptData[i]['Credit'], balance: receiptData[i]['Balance'], IsOpeningBill: receiptData[i]['IsOpeningBill'], period: receiptData[i]['PeriodID'], billtype: receiptData[i]['BillType'], Unit: receiptData[i]['UnitID'], showIn: this.showIn, cdnid: cdnid1, inv_number: inv_number, inv_id: inv_id };
+            var objData = {
+              mode: sMode, date: sDate, debit: receiptData[i]['Debit'], credit: receiptData[i]['Credit'], balance: receiptData[i]['Balance'], IsOpeningBill: receiptData[i]['IsOpeningBill'], period: receiptData[i]['PeriodID'], billtype: receiptData[i]['BillType'], Unit: receiptData[i]['UnitID'], showIn: this.showIn, cdnid: cdnid1, inv_number: inv_number, inv_id: inv_id,
+              SocietyCode: receiptData[i]['SocietyCode'], BillFor: receiptData[i]['BillFor'], UnitID: receiptData[i]['UnitID']
+            };
             this.particulars.push(objData);
           }
           console.log('obj', objData);
@@ -141,6 +146,21 @@ export class DuesPage implements OnInit {
   }
 
   viewDetails(particular) {
+    if (particular.mode == "M-Bill") {
+      console.log("particular.BillFor", particular.BillFor);
+      var billforeBufferList = particular.BillFor.split('-');
+      console.log("billforeBuffer:", billforeBufferList);
+      billforeBufferList.pop();
+      var billforeBuffer = billforeBufferList.join('-');
+      // var s: string = "https://way2society.com/maintenance_bills/RHG_TEST/October-December%202022/bill-RHG_TEST-202-October-December%202022-0.pdf";
+      var s: string = `https://way2society.com/maintenance_bills/${particular.SocietyCode}/${billforeBuffer}/bill-${particular.SocietyCode}-${particular.UnitID}-${billforeBuffer}-0.pdf`;
+      console.log({ "viewaDetails": s });
+      if (this.isValidUrl(s)) {
+        window.open(s, '_blank', 'location=no');
+      }
+      return;
+      //check pdf url 
+    }
     if ((particular.mode == "M-Bill" || particular.mode == "S-Bill") && particular.IsOpeningBill == 0) {
       this.showLoading();
       this.loaderView.showLoader('Loading ...');
@@ -213,6 +233,14 @@ export class DuesPage implements OnInit {
       //this.navCtrl.push(CnotePage, {Unit: particular.Unit,BT: particular.billtype,cdnid : particular.cdnid, mode1 : particular.mode,inv_number : particular.inv_number,inv_id : particular.inv_id});
     }
 
+  }
+  isValidUrl(string): boolean {
+    try {
+      new URL(string);
+      return true;
+    } catch (err) {
+      return false;
+    }
   }
   async showLoading() {
     const loading = await this.loadingCtrl.create({
