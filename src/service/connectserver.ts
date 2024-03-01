@@ -1,6 +1,7 @@
 import { Injectable } from '@angular/core';
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpErrorResponse } from '@angular/common/http';
 import { GlobalVars } from './globalvars';
+import { Observable, catchError, map, of, throwError } from 'rxjs';
 //http://way2society.com:8080/W2S/
 //http://way2society.com:8080/W2S_Beta/
 var headers = new Headers();
@@ -144,6 +145,44 @@ export class ConnectServer {
     }
 
     return sQueryString;
+  }
+  checkUrlValidity(url: string) {
+    fetch('https://way2society.com/maintenance_bills/RHG_TEST/October-December%202022/bill-RHG_TEST-202-October-December%202022-0.pdf')
+      .then(response => {
+        if (!response.ok) {
+          throw new Error('Network response was not ok');
+        }
+        return response.blob();
+      })
+      .then(blob => {
+        // At this point, 'blob' contains the PDF file data
+        console.log('Received PDF file data:', blob);
+
+        // You can use this blob data to perform further operations, such as displaying it in an <iframe> or saving it to a file
+      })
+      .catch(error => {
+        console.error('There was a problem with the fetch operation:', error);
+      });
+    return false;
+    // return this.http.get(url + "fdfg", { responseType: 'blob', observe: 'response' })
+    //   .pipe(
+    //     catchError((error: HttpErrorResponse) => {
+    //       console.log({ "errrrror": error });
+
+    //       if (error.error instanceof Blob && error.headers.has('Content-Type')) {
+    //         const contentType = error.headers.get('Content-Type');
+    //         return of(contentType === 'application/pdf');
+    //       }
+    //       return throwError(false);
+    //     })
+    //   );
+    // try {
+
+    //   await this.http.get(url).toPromise();
+    //   return true;
+    // } catch (error) {
+    //   return false;
+    // }
   }
 
 }

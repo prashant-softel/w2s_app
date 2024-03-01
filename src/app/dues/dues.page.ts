@@ -20,7 +20,7 @@ export class DuesPage implements OnInit {
   ViewreceiptPage: any = 'viewreceipt';
   CnotePage: any = 'cnote';
   particulars: Array<{
-    mode: string, date: string, debit: string, credit: string, balance: number, IsOpeningBill: any, period: any, billtype: any, Unit: any, showIn: string, cdnid: any, inv_number: any, inv_id: any, SocietyCode: any, BillFor: any, UnitID: any
+    mode: string, date: string, debit: string, credit: string, balance: number, IsOpeningBill: any, period: any, billtype: any, Unit: any, showIn: string, cdnid: any, inv_number: any, inv_id: any, SocietyCode: any, BillFor: any, BillYear: any, UnitID: any
   }>;
   role: any;
   roleWise: any;
@@ -32,7 +32,8 @@ export class DuesPage implements OnInit {
     private loaderView: LoaderView,
     private params: NavParams,
     private route: ActivatedRoute,
-    private loadingCtrl: LoadingController) {
+    private loadingCtrl: LoadingController,
+  ) {
     this.particulars = [];
     this.role = "";
     this.roleWise = '';
@@ -123,7 +124,7 @@ export class DuesPage implements OnInit {
             // alert( this.showIn);
             var objData = {
               mode: sMode, date: sDate, debit: receiptData[i]['Debit'], credit: receiptData[i]['Credit'], balance: receiptData[i]['Balance'], IsOpeningBill: receiptData[i]['IsOpeningBill'], period: receiptData[i]['PeriodID'], billtype: receiptData[i]['BillType'], Unit: receiptData[i]['UnitID'], showIn: this.showIn, cdnid: cdnid1, inv_number: inv_number, inv_id: inv_id,
-              SocietyCode: receiptData[i]['SocietyCode'], BillFor: receiptData[i]['BillFor'], UnitID: receiptData[i]['UnitID']
+              SocietyCode: receiptData[i]['SocietyCode'], BillFor: receiptData[i]['BillFor'], BillYear: receiptData[i]['BillYear'], UnitID: receiptData[i]['UnitID']
             };
             this.particulars.push(objData);
           }
@@ -146,21 +147,27 @@ export class DuesPage implements OnInit {
   }
 
   viewDetails(particular) {
-    if (particular.mode == "M-Bill") {
-      console.log("particular.BillFor", particular.BillFor);
-      var billforeBufferList = particular.BillFor.split('-');
-      console.log("billforeBuffer:", billforeBufferList);
-      billforeBufferList.pop();
-      var billforeBuffer = billforeBufferList.join('-');
-      // var s: string = "https://way2society.com/maintenance_bills/RHG_TEST/October-December%202022/bill-RHG_TEST-202-October-December%202022-0.pdf";
-      var s: string = `https://way2society.com/maintenance_bills/${particular.SocietyCode}/${billforeBuffer}/bill-${particular.SocietyCode}-${particular.UnitID}-${billforeBuffer}-0.pdf`;
-      console.log({ "viewaDetails": s });
-      if (this.isValidUrl(s)) {
-        window.open(s, '_blank', 'location=no');
-      }
-      return;
-      //check pdf url 
-    }
+    // if (particular.mode == "M-Bill") {
+    //   console.log("particular.BillFor", particular.BillFor);
+    //   // var billforeBufferList = particular.BillFor.split('-');
+    //   // console.log("billforeBuffer:", billforeBufferList);
+    //   // billforeBufferList.pop();
+    //   // var billforeBuffer = billforeBufferList.join('-');
+    //   var s: string = "https://way2society.com/maintenance_bills/RHG_TEST/October-December%202022/bill-RHG_TEST-202-October-December%202022-0.pdf";
+    //   // https://way2society.com/maintenance_bills/SocietyCode/BillFor%20BillYear/bill-SocietyCode-202-BillFor%20 BillYear-0.pdf
+    //   // var s: string = `https://way2society.com/maintenance_bills/${particular.SocietyCode}/${particular.BillFor} ${particular.BillYear}/bill-${particular.SocietyCode}-${particular.UnitID}-${particular.BillFor} ${particular.BillYear}-0.pdf`;
+    //   console.log({ "viewaDetails": s });
+    //   // if (this.isValidUrl(s)) {
+    //   //   window.open(s, '_blank', 'location=no');
+    //   // }
+    //   this.isValidUrl(s).then((isValid) => {
+    //     if (isValid) {
+    //       window.open(s, '_blank', 'location=no');
+    //     }
+    //   });
+    //   return;
+    //   //check pdf url 
+    // }
     if ((particular.mode == "M-Bill" || particular.mode == "S-Bill") && particular.IsOpeningBill == 0) {
       this.showLoading();
       this.loaderView.showLoader('Loading ...');
@@ -234,13 +241,29 @@ export class DuesPage implements OnInit {
     }
 
   }
-  isValidUrl(string): boolean {
-    try {
-      new URL(string);
-      return true;
-    } catch (err) {
-      return false;
-    }
+  async isValidUrl(string): Promise<boolean> {
+    const isValid = await this.connectServer.checkUrlValidity(string);//.subscribe((isValid) => {
+    //   console.log({ "isValid": isValid });
+    //   if (isValid) {
+    //     console.log('URL is valid');
+    //   } else {
+    //     console
+    //       .log('URL is not valid');
+    //   }
+    // }, (onError) => {
+    //   console.log({ "onError": onError });
+
+    // });
+
+    return false;
+
+
+    // try {
+    //   new URL(string);
+    //   return true;
+    // } catch (err) {
+    //   return false;
+    // }
   }
   async showLoading() {
     const loading = await this.loadingCtrl.create({

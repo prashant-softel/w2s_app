@@ -1,0 +1,7 @@
+{
+    "/api": {
+        "target": "https://way2society.com",
+        "secure": false,
+        "changeOrigin": true
+    }
+}
