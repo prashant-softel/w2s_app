@@ -7,6 +7,8 @@ import { ActivatedRoute } from '@angular/router';
 import { GlobalVars } from 'src/service/globalvars';
 import { ConnectServer } from 'src/service/connectserver';
 import { LoaderView } from 'src/service/loaderview';
+import { HttpClient } from '@angular/common/http';
+// import axios from 'axios';
 @Component({
   selector: 'app-dues',
   templateUrl: './dues.page.html',
@@ -33,6 +35,8 @@ export class DuesPage implements OnInit {
     private params: NavParams,
     private route: ActivatedRoute,
     private loadingCtrl: LoadingController,
+    private http: HttpClient,
+
   ) {
     this.particulars = [];
     this.role = "";
@@ -146,7 +150,98 @@ export class DuesPage implements OnInit {
 
   }
 
-  viewDetails(particular) {
+  public openPdf(myData, particular) {
+    // console.log("this.userData.unitId :",this.userData.unitId);
+    var link = this.globalVars.HOST_NAME + 'pdf_api.php';
+
+
+    var myDataJson = {
+      "method": "getBillPdf",
+      "society_code": "RHG_TEST",
+      "Period_id": "116",
+      "Unit_no": "202",
+      "Bill_type": "0",
+      "societyId": "59",
+      "unitid": "16",
+      "role": "Member"
+    };//JSON.stringify(myData);
+    this.http.post(link, myDataJson, {
+      headers: {
+        'Content-Type': 'application/json'
+      }
+    })
+      .subscribe(data => {
+        console.log({ "responseData": data });
+        if (data["url"] != "" && data["url"] != "") {
+          window.open(data["url"], '_blank', 'location=no');
+
+        } else {
+          this.onMBillClick(particular);
+
+        }
+        return true;
+      }, error => {
+        console.log("Oooops!");
+        this.onMBillClick(particular);
+        return false;
+
+      });
+  }
+  onMBillClick(particular) {
+    this.showLoading();
+    this.loaderView.showLoader('Loading ...');
+    var objData1 = [];
+    objData1['PeriodID'] = particular.period;
+    objData1['BT'] = particular.billtype;
+    objData1['fetch'] = 1;
+    if (this.roleWise == "Admin" || this.roleWise == "AdminMember") {
+      objData1['UnitId'] = particular.Unit;
+
+    }
+    else {
+      objData1['UnitId'] = 0;
+    }
+    this.connectServer.getData("Bill", objData1).then(
+      resolve => {
+        this.loaderView.dismissLoader();
+        if (resolve['success'] == 1) {
+          let navigationExtras: NavigationExtras = {
+            queryParams:
+            {
+              details: resolve['response'],
+            }
+          };
+          this.navCtrl.navigateRoot(this.ViewBillPage, navigationExtras);
+          // this.navCtrl.push(ViewBillPage, {details : resolve['response']});
+        }
+      }
+    );
+  }
+
+  async viewDetails(particular) {
+    if (particular.mode == "M-Bill") {
+      // var pdfUrl: string = "https://way2society.com/maintenance_bills/RHG_TEST/October-December%202022/bill-RHG_TEST-202-October-December%202022-0.pdf";
+
+      this.globalVars.getMapDetails().then(
+        async value => {
+          var body = {
+            'method': "getBillPdf",
+            "society_code": "RHG_TEST",//particular.SocietyCode,
+            "Period_id": "116",//particular.period,
+            "Unit_no": "203",//value.MAP_UNIT_NO,
+            "Bill_type": "0",//particular.billtype,
+            "societyId": "59",//value.MAP_SOCIETY_ID,
+            "unitid": "17",//particular.UnitID,
+            "role": "Member",//value.MAP_USER_ROLE,
+          }
+            ;
+          console.log({ "body": body });
+          await this.openPdf(body, particular);
+
+        }
+      );
+      return;
+    }
     // if (particular.mode == "M-Bill") {
     //   console.log("particular.BillFor", particular.BillFor);
     //   // var billforeBufferList = particular.BillFor.split('-');
@@ -160,7 +255,7 @@ export class DuesPage implements OnInit {
     //   // if (this.isValidUrl(s)) {
     //   //   window.open(s, '_blank', 'location=no');
     //   // }
-    //   this.isValidUrl(s).then((isValid) => {
+    //   this.isValidUrl("https://www.w3.org/WAI/ER/tests/xhtml/testfiles/resources/pdf/dummy.pdf").then((isValid) => {
     //     if (isValid) {
     //       window.open(s, '_blank', 'location=no');
     //     }
@@ -241,30 +336,52 @@ export class DuesPage implements OnInit {
     }
 
   }
-  async isValidUrl(string): Promise<boolean> {
-    const isValid = await this.connectServer.checkUrlValidity(string);//.subscribe((isValid) => {
-    //   console.log({ "isValid": isValid });
-    //   if (isValid) {
-    //     console.log('URL is valid');
-    //   } else {
-    //     console
-    //       .log('URL is not valid');
-    //   }
-    // }, (onError) => {
-    //   console.log({ "onError": onError });
+  // async checkPDFExistence(pdfUrl: string): Promise<boolean> {
+  //   try {
+  //     const response = await axios.head(pdfUrl);
+  //     // Check if the response status is in the 2xx range, which indicates success
+  //     return response.status >= 200 && response.status < 300;
+  //   } catch (error) {
+  //     // If an error occurs (e.g., 404 Not Found), return false
+  //     return false;
+  //   }
+  //   return false;
+  // }
+  // async isValidUrl(string): Promise<boolean> {
+  //   this.checkPDFExistence(string)
+  //     .then(exists => {
+  //       if (exists) {
+  //         console.log('PDF exists.');
+  //       } else {
+  //         console.log('PDF does not exist or could not be accessed.');
+  //       }
+  //     })
+  //     .catch(error => {
+  //       console.error('Error checking PDF existence:', error);
+  //     });
+  //   // const isValid = await this.connectServer.checkUrlValidity(string);//.subscribe((isValid) => {
+  //   //   console.log({ "isValid": isValid });
+  //   //   if (isValid) {
+  //   //     console.log('URL is valid');
+  //   //   } else {
+  //   //     console
+  //   //       .log('URL is not valid');
+  //   //   }
+  //   // }, (onError) => {
+  //   //   console.log({ "onError": onError });
 
-    // });
+  //   // });
 
-    return false;
+  //   return false;
 
 
-    // try {
-    //   new URL(string);
-    //   return true;
-    // } catch (err) {
-    //   return false;
-    // }
-  }
+  //   // try {
+  //   //   new URL(string);
+  //   //   return true;
+  //   // } catch (err) {
+  //   //   return false;
+  //   // }
+  // }
   async showLoading() {
     const loading = await this.loadingCtrl.create({
       message: 'Please wait...',

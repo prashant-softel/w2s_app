@@ -9,8 +9,8 @@ android {
         applicationId "com.ionicframework.way2society869487"
         minSdkVersion rootProject.ext.minSdkVersion
         targetSdkVersion rootProject.ext.targetSdkVersion
-        versionCode 23231005
-        versionName "2.2.20231026"
+        versionCode 23231007
+        versionName "2.2.20240404"
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
         aaptOptions {
              // Files and dirs to omit from the packaged assets dir, modified to accommodate modern web apps.

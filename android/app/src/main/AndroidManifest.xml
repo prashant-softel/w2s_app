@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
-<manifest android:versionCode="20251205" android:versionName="2.2.20231026" xmlns:android="http://schemas.android.com/apk/res/android">
+<manifest android:versionCode="20251207" android:versionName="2.2.20240404"
+    xmlns:android="http://schemas.android.com/apk/res/android">
 
     <application
         android:allowBackup="true"
@@ -35,7 +36,7 @@
                 android:resource="@xml/file_paths"></meta-data>
         </provider>
         <meta-data android:name="com.google.firebase.messaging.default_notification_icon"
-        android:resource="@mipmap/ic_launcher" />
+            android:resource="@mipmap/ic_launcher" />
     </application>
 
     <!-- Permissions -->

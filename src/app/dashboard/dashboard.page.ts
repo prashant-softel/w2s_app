@@ -9,7 +9,7 @@ import { NavigationExtras } from '@angular/router';
 // import { SosmassagePage } from '../sosmassage/sosmassage';
 import { SosMessage } from '../sosmessage/sosmessage';
 import { MyvisitorsPage } from '../myvisitors/myvisitors.page';
-import { ImagePicker } from '@jonz94/capacitor-image-picker';
+// import { ImagePicker } from '@jonz94/capacitor-image-picker';
 
 
 

@@ -581,7 +581,24 @@ export class AddservicerequestPage implements OnInit {
       )
       .subscribe(res => {
         this.presentToast('Image successful uploaded.');
-        this.navCtrl.navigateForward(this.ServiceRequestPage);
+        // this.navCtrl.navigateForward(this.ServiceRequestPage);
+        var p = [];
+        if (this.globalVars.MAP_USER_ROLE == "Member") {
+          p['dash'] = "society";
+          console.log(p);
+        }
+        else {
+          p['dash'] = "admin";
+        }
+        let navigationExtras: NavigationExtras = {
+          queryParams:
+          {
+            details: p,
+          }
+        };
+
+        // this.navCtrl.navigateForward(this.ServiceRequestPage, { state: { details: p } });
+        this.navCtrl.navigateRoot(this.ServiceRequestPage, navigationExtras);
       },
         err => {
           // this.presentToast('Error while uploading file.');

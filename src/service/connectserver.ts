@@ -33,6 +33,8 @@ export class ConnectServer {
         .subscribe(data => {
           resolve(data);
         }, error => {
+          console.log({ "error": error });
+
           alert("We are unable to connect to our servers. Please try after some time.");
           var objResponse = [];
           objResponse['success'] = -1;
