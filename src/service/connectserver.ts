@@ -10,7 +10,7 @@ headers.append('content-type', 'application/json');
 @Injectable()
 export class ConnectServer {
   // serverURL='http://way2society.com:8080/W2S/';
-  serverURL = 'http://3.109.157.17:8080/Unichem_web/';
+  serverURL = 'http://13.233.216.100:8080/Unichem_web/';
 
   //serverURL='https://way2society.com:8443/W2S/';
   API_URL = '';

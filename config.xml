@@ -1,7 +1,7 @@
 <?xml version='1.0' encoding='utf-8'?>
-<widget id="com.ionicframework.way2society869487" version="2.2.20230803" xmlns="http://www.w3.org/ns/widgets" xmlns:cdv="http://cordova.apache.org/ns/1.0">
-    <name>Way2Society</name>
-    <description>Way2Society - Society Accounts Management</description>
+<widget id="com.ionicframework.unichem278148" version="2.2.20230803" xmlns="http://www.w3.org/ns/widgets" xmlns:cdv="http://cordova.apache.org/ns/1.0">
+    <name>W2S_Survey</name>
+    <description>W2S_Survey</description>
     <author email="cs@way2society.com" href="https://www.way2society.com/">W2S Team</author>
     <content src="index.html" />
     <access origin="*" />
