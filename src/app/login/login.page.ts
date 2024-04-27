@@ -41,7 +41,7 @@ export class LoginPage implements OnInit {
 
   constructor(
     private navCtrl: NavController,
-    private globalVars: GlobalVars,
+    public globalVars: GlobalVars,
     private connectServer: ConnectServer,
     private loaderView: LoaderView,
     private params: NavParams,

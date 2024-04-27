@@ -8,6 +8,11 @@ import { GlobalVars } from 'src/service/globalvars';
 import { ConnectServer } from 'src/service/connectserver';
 import { LoaderView } from 'src/service/loaderview';
 import { HttpClient } from '@angular/common/http';
+
+// import { PdfViewer } from 'capacitor-pdf-viewer-plugin';
+
+import { Browser } from '@capacitor/browser';
+import { Filesystem, FilesystemDirectory } from '@capacitor/filesystem';
 // import axios from 'axios';
 @Component({
   selector: 'app-dues',
@@ -36,6 +41,7 @@ export class DuesPage implements OnInit {
     private route: ActivatedRoute,
     private loadingCtrl: LoadingController,
     private http: HttpClient,
+    // private fileOpener: FileOp
 
   ) {
     this.particulars = [];
@@ -155,25 +161,30 @@ export class DuesPage implements OnInit {
     var link = this.globalVars.HOST_NAME + 'pdf_api.php';
 
 
-    var myDataJson = {
-      "method": "getBillPdf",
-      "society_code": "RHG_TEST",
-      "Period_id": "116",
-      "Unit_no": "202",
-      "Bill_type": "0",
-      "societyId": "59",
-      "unitid": "16",
-      "role": "Member"
-    };//JSON.stringify(myData);
-    this.http.post(link, myDataJson, {
+    // var myDataJson = {
+    //   "method": "getBillPdf",
+    //   "society_code": "RHG_TEST",
+    //   "Period_id": "116",
+    //   "Unit_no": "202",
+    //   "Bill_type": "0",
+    //   "societyId": "59",
+    //   "unitid": "16",
+    //   "role": "Member"
+    // };//
+    // var myDataJson = JSON.stringify(myData);
+    this.http.post(link, myData, {
       headers: {
         'Content-Type': 'application/json'
       }
     })
       .subscribe(data => {
         console.log({ "responseData": data });
-        if (data["url"] != "" && data["url"] != "") {
-          window.open(data["url"], '_blank', 'location=no');
+        if (data["url"] != null && data["url"] != "") {
+
+          // window.open(data["url"], '_blank', 'location=no');
+          Browser.open({ url: data["url"] });
+          // this.showFromUrl();
+          // Browser.open({ url: "https://www.w3.org/WAI/ER/tests/xhtml/testfiles/resources/pdf/dummy.pdf" });
 
         } else {
           this.onMBillClick(particular);
@@ -226,13 +237,13 @@ export class DuesPage implements OnInit {
         async value => {
           var body = {
             'method': "getBillPdf",
-            "society_code": "RHG_TEST",//particular.SocietyCode,
-            "Period_id": "116",//particular.period,
-            "Unit_no": "203",//value.MAP_UNIT_NO,
-            "Bill_type": "0",//particular.billtype,
-            "societyId": "59",//value.MAP_SOCIETY_ID,
-            "unitid": "17",//particular.UnitID,
-            "role": "Member",//value.MAP_USER_ROLE,
+            "society_code": particular.SocietyCode,
+            "Period_id": particular.period,
+            "Unit_no": value.MAP_UNIT_NO,
+            "Bill_type": particular.billtype,
+            "societyId": value.MAP_SOCIETY_ID,
+            "unitid": particular.UnitID,
+            "role": value.MAP_USER_ROLE,
           }
             ;
           console.log({ "body": body });
@@ -389,5 +400,18 @@ export class DuesPage implements OnInit {
       cssClass: 'loader-css-class'
     });
     loading.present();
+  }
+  showFromUrl() {
+    this.navCtrl.navigateRoot("pdf-viewer");
+
+    // const url = "https://www.adobe.com/content/dam/acom/en/devnet/acrobat/pdfs/pdf_open_parameters.pdf";
+    // // const { PdfViewer } = Plugins;
+    // PdfViewer.show({ url: url })
+    //   .then(res => {
+    //     console.log(res);
+    //   })
+    //   .catch(err => {
+    //     console.error(err);
+    //   });
   }
 }
