@@ -7,7 +7,7 @@ PODS:
     - Capacitor
   - CapacitorCamera (5.0.9):
     - Capacitor
-  - CapacitorCommunityPhotoviewer (3.0.6):
+  - CapacitorCommunityPhotoviewer (4.0.1):
     - Capacitor
     - ISVImageScrollView
     - SDWebImage
@@ -74,7 +74,7 @@ SPEC CHECKSUMS:
   CapacitorApp: 024e1b1bea5f883d79f6330d309bc441c88ad04a
   CapacitorBrowser: a6deae9e5bf87f62b62a753cff7992c5def9e771
   CapacitorCamera: 4892c5c392f60039d853dde78bc50ba19fbd113e
-  CapacitorCommunityPhotoviewer: 50c291a9443ffac6dde50de5dcf78e51e5981d05
+  CapacitorCommunityPhotoviewer: 52033b07d6930a0c823691750133591ede08055e
   CapacitorCordova: 3d3908a3d208a11a75f9df3b18c4405c4de76e1d
   CapacitorFilesystem: 9f3e3c7fea2fff12f46dd5b07a2914f2103e4cfc
   CapacitorHaptics: 1fffc1217c7e64a472d7845be50fb0c2f7d4204c
@@ -86,4 +86,4 @@ SPEC CHECKSUMS:
 
 PODFILE CHECKSUM: b0454ae1c7cd64939c3d60304b806df9ef92d39b
 
-COCOAPODS: 1.12.0
+COCOAPODS: 1.15.2
