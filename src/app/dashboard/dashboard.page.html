@@ -62,7 +62,7 @@
     </ion-segment>
   </ion-toolbar>-->
   <ion-list no-lines>
-    <ion-list text-wrap text-center text-uppercase style="margin-top: 15px;text-align: center;color:black">
+    <ion-list text-wrap text-center text-uppercase style="margin-top: 15px;text-align: center;">
       <strong style="white-space: pre-wrap;" (click)="selectSociety()">{{this.society}} </strong>
       <!-- <strong (click)="selectSociety()">{{globalVars.MAP_SOCIETY_NAME}}</strong>-->
     </ion-list>
@@ -405,7 +405,7 @@
           <button (click)="viewAddressProofRequest()"  ion-fab style="width: 50px;height: 50px;background-color: #337ab7;color: white;
           border-radius: 10rem;"><ion-icon name="document-text-outline" style="font-size: 1.5rem;" ></ion-icon></button>
           <span style="font-size: 0.9rem;margin-left: 0px;">Address<br/><span style="float: left;margin-left: 20%;">Proof</span></span>
-      
+
         </ion-col>
         <ion-col size="3">
           <button (click)="viewRenovationRequest()"  ion-fab style="width: 50px;height: 50px;background-color: #337ab7;color: white;
@@ -541,13 +541,13 @@
            border-radius: 10rem;"><ion-icon name="person" style="font-size: 1.5rem;" ></ion-icon></button>
            <span style="font-size: 0.9rem;margin-left: -5px;">Profile</span>
       </div>
-  
+
        <div style="float: left;width: 20%;" >
        <button (click)="payment()" ion-fab style="width: 40px;height: 40px;background-color: #337ab7;color: white;
        border-radius: 10rem;" ><ion-icon name="card" style="font-size: 1.5rem;"></ion-icon></button>
        <span style="font-size: 0.9rem;margin-left: 8px;">Pay</span>
       </div>
-  
+
        <div style="float: left;width: 20%;">
         <button (click)="sRequest()" ion-fab style="width: 40px;height: 40px;background-color: #337ab7;color: white;
         border-radius: 10rem;" ><ion-icon name="document-text-outline" style="font-size: 1.5rem;"></ion-icon></button>
@@ -558,13 +558,13 @@
 
 <!--</div>
 
-  
+
       <div style="float: left;width: 20%;">
            <button  (click)="viewEvents()" ion-fab style="width: 40px;height: 40px;background-color: #337ab7;color: white;
            border-radius: 10rem;" ><ion-icon name="calendar" style="font-size: 1.5rem;"></ion-icon></button>
            <span style="font-size: 0.9rem;margin-left: -5px;">Events</span>
       </div>
-  
+
         <div style="float: left;width: 20%;">
            <button (click)="viewNotices()" ion-fab style="width: 40px;height: 40px;background-color: #337ab7;color: white;
            border-radius: 10rem;" ><ion-icon name="copy" style="font-size: 1.5rem;"></ion-icon></button>

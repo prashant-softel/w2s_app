@@ -4,10 +4,10 @@
     <ion-buttons slot="start">
 			<ion-back-button defaultHref="profile" icon="chevron-back-outline" text="Back"></ion-back-button>
 		  </ion-buttons>
-    <ion-buttons slot="end" style="width:30%">
-      <ion-button><img style="width:70%" src="/assets/images/logo.png"></ion-button>
+    <ion-buttons slot="end">
+      <ion-button><img style="width:70%" src="/assets/images/icon_s.png"></ion-button>
     </ion-buttons>
-    
+
   </ion-toolbar>
 </ion-header>
 <ion-content padding *ngIf="Block_unit==1">
@@ -42,13 +42,13 @@
       <ion-col>
         <!--<ion-label floating>Member Name *</ion-label>-->
         <ion-input label="Member Name * " labelPlacement="floating" type="text"  value="" [(ngModel)]="userData.other_name" ></ion-input>
-        
+
       </ion-col>
     </ion-row>
     <ion-row style="padding-left: 10px;padding-right: 10px;">
       <ion-col>
         <ion-input label="Relation With Owner * " labelPlacement="floating" type="text"  value="" [(ngModel)]="userData.relation" ></ion-input>
-     </ion-col>      
+     </ion-col>
     </ion-row>
     <ion-row style="padding-left: 10px;padding-right: 10px;">
       <ion-col>
@@ -74,7 +74,7 @@
 				</ion-select>
        </ion-col>
       </ion-row>
-     
+
       <ion-row style="padding-left: 10px;padding-right: 10px;">
         <ion-col>
           <ion-select label="Publish Contact" placeholder="" style="color:#0d0d0d" [(ngModel)]="userData.other_publish_contact" >
@@ -115,7 +115,7 @@
         ></ion-input>
         <ion-popover trigger="date" size="cover">
           <ng-template>
-            <ion-datetime style="background: #ffffff;"
+            <ion-datetime
             min="{{userData.other_dob}}" max="{{max_year}}"
               presentation="date"
               [(ngModel)]="userData.other_dob"
@@ -134,7 +134,7 @@
       ></ion-input>
       <ion-popover trigger="date" size="cover">
         <ng-template>
-          <ion-datetime style="background: #ffffff;"
+          <ion-datetime
           min="{{userData.other_wed}}" max="{{max_year}}"
             presentation="date"
             [(ngModel)]="userData.other_wed"
@@ -148,7 +148,7 @@
           <ion-select label="Designation/Profession" placeholder="" style="color:#0d0d0d" [(ngModel)]="userData.other_desg" >
             <ion-select-option *ngFor="let d of desg_list" value="{{d.desg_id}}">{{d.desg}}</ion-select-option>
           </ion-select>
-        </ion-col>  
+        </ion-col>
       </ion-row>
       <ion-row style="padding-left: 10px;padding-right: 10px;">
         <ion-col>
@@ -167,10 +167,10 @@
             <ion-select-option value="0">No</ion-select-option>
             <ion-select-option value="1">Yes</ion-select-option>
           </ion-select>
-        </ion-col> 
+        </ion-col>
       </ion-row>
 
-       
+
       <ion-row style="padding-left: 10px;padding-right: 10px;">
         <ion-col style="text-align: center;">
           <p style="color:#FF0000;" ><strong>{{message}}</strong></p>
@@ -179,9 +179,9 @@
       <ion-row style="padding-left: 10px;padding-right: 10px;">
         <ion-col size="2"></ion-col>
         <ion-col size="8">
-      
+
           <ion-button color="primary" block (click)="submit()"  style="height: 35px;">Add Member</ion-button>
-        
+
         </ion-col>
         <ion-col size="2"></ion-col>
       </ion-row>

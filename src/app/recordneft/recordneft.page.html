@@ -4,17 +4,17 @@
     <ion-buttons slot="start">
 			<ion-back-button defaultHref="payment" icon="chevron-back-outline" text="Back"></ion-back-button>
 		  </ion-buttons>
-    <ion-buttons slot="end" style="width:30%">
-      <ion-button><img style="width:70%" src="/assets/images/logo.png"></ion-button>
+    <ion-buttons slot="end">
+      <ion-button><img style="width:70%" src="/assets/images/icon_s.png"></ion-button>
     </ion-buttons>
-    
+
   </ion-toolbar>
 </ion-header>
 <ion-content padding>
 	<ion-list no-lines>
     <ion-item text-center text-wrap style="text-align: center;">
       <p style="color:#FF0000;">Please Note : <b>This is not a payment gateway.</b> Please make NEFT Payment from your bank to society bank account and then enter Transaction ID here</p>
-     
+
     </ion-item>
     <ion-row>
       <ion-col>
@@ -23,8 +23,8 @@
       </ion-row>
     <ion-row style="padding-left: 10px;padding-right: 10px;">
       <ion-col>
-      <!--<ion-label floating>Bank Name*</ion-label>--> 
-        <ion-select label="Bank Name*" placeholder="Bank Name*" style="color:#0d0d0d" [(ngModel)]="userData.bank_id"  (ionChange)="onSelectBank($event)">
+      <!--<ion-label floating>Bank Name*</ion-label>-->
+        <ion-select label="Bank Name*" placeholder="Bank Name*" [(ngModel)]="userData.bank_id"  (ionChange)="onSelectBank($event)">
         <ion-select-option text-wrap *ngFor="let b of bank_list" value="{{b.BankID}}">{{b.BankName}} </ion-select-option>
       </ion-select>
     </ion-col>
@@ -45,7 +45,7 @@
       <ion-input label="Transaction Amount " labelPlacement="floating" type="tel" maxlength="25" value="" [(ngModel)]="userData.amount"></ion-input>
     </ion-col>
     </ion-row>
-   
+
     <ion-row style="padding-left: 10px;padding-right: 10px;">
       <ion-col>
     <!--<ion-label>Transaction Date</ion-label>-->
@@ -56,7 +56,7 @@
     ></ion-input>
     <ion-popover trigger="date" size="cover">
       <ng-template>
-        <ion-datetime style="background: #ffffff;"
+        <ion-datetime
         min="{{userData.trnx_date}}" max="{{max_year}}"
           presentation="date"
           [(ngModel)]="userData.trnx_date"
@@ -74,7 +74,7 @@
     <ion-row style="padding-left: 10px;padding-right: 10px;">
       <ion-col>
       <!--<ion-label floating>Payment For *</ion-label>-->
-      <ion-select label="Payment For *" placeholder="Payment For *" style="color:#0d0d0d" [(ngModel)]="userData.bill_type">
+      <ion-select label="Payment For *" placeholder="Payment For *" [(ngModel)]="userData.bill_type">
         <ion-select-option value=0>Maintenance Bill</ion-select-option>
         <ion-select-option value=1>Supplementary Bill</ion-select-option>
       </ion-select>
@@ -104,14 +104,14 @@
     <ion-button color="primary" block (click)="submit()">Submit</ion-button>
    </ion-col>
    <ion-col col-1></ion-col>
-   </ion-row>	
+   </ion-row>
    <ion-row>
 <ion-col>
   <p style="color:#FF0000; text-align: center;" ><strong>{{message}}</strong></p>
 </ion-col>
     </ion-row>
     <!--<ion-item>
-      <ion-row> 
+      <ion-row>
         <ion-col col-2></ion-col>
         <ion-col col-8>
           <button ion-button color="primary" block (click)="submit()">Submit</button>
@@ -120,8 +120,8 @@
     </ion-row>
         <p style="color:#FF0000;" ><strong>{{message}}</strong></p>
     </ion-item>-->
-    
-      
+
+
  </ion-list>
 </ion-content>
 

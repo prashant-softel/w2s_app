@@ -4,15 +4,15 @@
     <ion-buttons slot="start">
 			<ion-back-button defaultHref="events" icon="chevron-back-outline" text="Back"></ion-back-button>
 		  </ion-buttons>
-    <ion-buttons slot="end" style="width:30%">
-      <ion-button><img style="width:70%" src="/assets/images/logo.png"></ion-button>
+    <ion-buttons slot="end">
+      <ion-button><img style="width:70%" src="/assets/images/icon_s.png"></ion-button>
     </ion-buttons>
   </ion-toolbar>
 </ion-header>
 
 <ion-content padding>
 	<ion-card>
-    <ion-card-content  style="color: #0d0d0d;">
+    <ion-card-content>
       <ion-card-title>{{event_title}}</ion-card-title>
       <p  *ngIf="event_date !=end_date"><ion-icon name="calendar" primary>&nbsp;</ion-icon>{{event_date}} To {{end_date}}</p>
       <p *ngIf="event_date==end_date"><ion-icon  name="calendar" primary>&nbsp;</ion-icon>{{event_date}} </p>
@@ -30,7 +30,7 @@
           </a>
         </ion-col>
       </ion-row>
-      
+
       <p id="event_details"></p>
     </ion-card-content>
   </ion-card>

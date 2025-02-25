@@ -4,8 +4,8 @@
     <ion-buttons slot="start">
 			<ion-back-button defaultHref="task" icon="chevron-back-outline" text="Back"></ion-back-button>
 		  </ion-buttons>
-    <ion-buttons slot="end" style="width:30%">
-      <ion-button><img style="width:70%" src="/assets/images/logo.png"></ion-button>
+    <ion-buttons slot="end">
+      <ion-button><img style="width:70%" src="/assets/images/icon_s.png"></ion-button>
     </ion-buttons>
   </ion-toolbar>
 </ion-header>
@@ -13,7 +13,7 @@
 <ion-content>
   <ion-card>
     <ion-card-content>
-      <h2 style = "text-transform: uppercase;color: black;" class="text-center"><strong>{{taskDetails.Title}}</strong></h2>
+      <h2 style = "text-transform: uppercase;" class="text-center"><strong>{{taskDetails.Title}}</strong></h2>
     <ion-row style="color:#000000">
       <ion-col size="4"><strong>Notes : </strong></ion-col>
     </ion-row>
@@ -56,11 +56,11 @@
       <ion-col size="4" class="text-right">
        <!-- <circle-progress
           [percent]="taskDetails.PercentCompleted"
-          [radius]="20"           
+          [radius]="20"
           [outerStrokeWidth] = "5"
           [showInnerStroke] = "false"
           [outerStrokeColor] = "'#387ef5'"
-          [showSubtitle] = "false"            
+          [showSubtitle] = "false"
           [animation]="true"
           [animationDuration]="300"
           [titleFontSize] = "'12'">
@@ -84,7 +84,7 @@
 </ion-card>
 <ion-list  *ngIf="update">
   <hr/>
-  <ion-item>  
+  <ion-item>
     <ion-label floating> <strong>Status</strong></ion-label>
     <ion-select placeholder = "userData.status" [(ngModel)]="userData.status">
       <ion-select-option text-wrap value="1">Raised</ion-select-option>
@@ -116,7 +116,7 @@
       <ion-button color="primary" block (click)="cancelComment()">Cancel</ion-button>
       <!--<button ion-button (click)="cancelComment()">Cancel</button>-->
     </ion-col>
-    <ion-col size="2"></ion-col>  
+    <ion-col size="2"></ion-col>
   </ion-row>
 </ion-list>
 <ion-list no-lines *ngIf = "showHistory" style="padding-left: 5px;padding-right: 5px;">

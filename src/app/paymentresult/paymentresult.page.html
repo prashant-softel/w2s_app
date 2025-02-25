@@ -1,0 +1,132 @@
+<ion-header translucent="true">
+  <ion-toolbar>
+    <ion-title>Payment Result</ion-title>
+    <ion-buttons slot="start">
+      <ion-back-button defaultHref="dashboard" icon="chevron-back-outline" text="Back"></ion-back-button>
+    </ion-buttons>
+    <ion-buttons slot="end">
+      <img style="width:70%" src="/assets/images/icon_s.png" alt="Logo" class="logo">
+    </ion-buttons>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content class="ion-padding">
+  <ion-content class="ion-padding">
+    <ion-card *ngIf="paymentDetails.status == 'Success'">
+      <ion-card-header color="success">
+        <ion-card-title>Payment Success</ion-card-title>
+        <ion-icon name="checkmark-circle-outline" size="large"></ion-icon>
+      </ion-card-header>
+      <ion-card-content *ngIf="paymentDetails">
+        <div class="status-message">{{ paymentDetails.statusMessage }}</div>
+        <ion-list>
+          <ion-item>
+            <ion-label>Transaction ID:</ion-label>
+            <ion-label slot="end">{{ paymentDetails.txnid }}</ion-label>
+          </ion-item>
+          <ion-item>
+            <ion-label>Amount:</ion-label>
+            <ion-label slot="end">₹{{ paymentDetails.amount.toLocaleString("en-IN") }}</ion-label>
+          </ion-item>
+          <ion-item>
+            <ion-label>Owner:</ion-label>
+            <ion-label slot="end">{{ paymentDetails.ownerName }}</ion-label>
+          </ion-item>
+          <ion-item>
+            <ion-label>Society: {{ paymentDetails.societyName }}</ion-label><br/>
+<!--            <ion-label position="stacked"></ion-label>-->
+          </ion-item>
+<!--          <ion-item>-->
+<!--          </ion-item>-->
+          <ion-item>
+            <ion-label>{{ paymentDetails.unitPresentation }}:</ion-label>
+            <ion-label slot="end">{{ paymentDetails.unitNo }}</ion-label>
+          </ion-item>
+        </ion-list>
+        <div class="button-group">
+          <ion-button (click)="getPaymentDues()" color="primary" expand="block">Pay Again</ion-button>
+          <ion-button (click)="goToDashboard()" expand="block">Dashboard</ion-button>
+        </div>
+        <ion-button (click)="printPage()" expand="block">Print</ion-button>
+
+      </ion-card-content>
+    </ion-card>
+
+
+    <ion-card *ngIf="paymentDetails.status == 'Failure'">
+      <ion-card-header color="danger">
+        <ion-card-title>Payment Failed</ion-card-title>
+        <ion-icon name="close-circle-outline" size="large"></ion-icon>
+      </ion-card-header>
+
+      <ion-card-content *ngIf="paymentDetails">
+        <div class="status-message">{{ paymentDetails.statusMessage || 'Transaction has failed' }}</div>
+        <ion-list>
+          <ion-item>
+            <ion-label>Transaction ID:</ion-label>
+            <ion-label slot="end">{{ paymentDetails.txnid }}</ion-label>
+          </ion-item>
+          <ion-item>
+            <ion-label>Amount:</ion-label>
+            <ion-label slot="end">₹{{ paymentDetails.amount.toLocaleString("en-IN") }}</ion-label>
+          </ion-item>
+          <ion-item>
+            <ion-label>Owner:</ion-label>
+            <ion-label slot="end">{{ paymentDetails.ownerName }}</ion-label>
+          </ion-item>
+          <ion-item>
+            <ion-label>Society:</ion-label>
+            <ion-label>{{ paymentDetails.societyName }}</ion-label>
+          </ion-item>
+          <ion-item>
+            <ion-label>{{ paymentDetails.unitPresentation }}:</ion-label>
+            <ion-label slot="end">{{ paymentDetails.unitNo }}</ion-label>
+          </ion-item>
+        </ion-list>
+        <div class="button-group">
+          <ion-button (click)="getPaymentDues()" color="primary" expand="block">Try Again</ion-button>
+          <ion-button (click)="goToDashboard()" expand="block">Dashboard</ion-button>
+        </div>
+        <ion-button (click)="printPage()" expand="block">Print</ion-button>
+      </ion-card-content>
+    </ion-card>
+
+    <ion-card *ngIf="paymentDetails.status == 'Aborted'">
+      <ion-card-header color="warning">
+        <ion-card-title>Payment Cancelled</ion-card-title>
+        <ion-icon name="close-circle-outline" size="large"></ion-icon>
+      </ion-card-header>
+
+      <ion-card-content *ngIf="paymentDetails">
+        <div class="status-message">{{ paymentDetails.statusMessage || 'Transaction has been Cancelled.' }}</div>
+        <ion-list>
+          <ion-item>
+            <ion-label>Transaction ID:</ion-label>
+            <ion-label slot="end">{{ paymentDetails.txnid }}</ion-label>
+          </ion-item>
+          <ion-item>
+            <ion-label>Amount:</ion-label>
+            <ion-label slot="end">₹{{ paymentDetails.amount.toLocaleString("en-IN") }}</ion-label>
+          </ion-item>
+          <ion-item>
+            <ion-label>Owner:</ion-label>
+            <ion-label slot="end">{{ paymentDetails.ownerName }}</ion-label>
+          </ion-item>
+          <ion-item>
+            <ion-label>Society:</ion-label>
+            <ion-label>{{ paymentDetails.societyName }}</ion-label>
+          </ion-item>
+          <ion-item>
+            <ion-label>{{ paymentDetails.unitPresentation }}:</ion-label>
+            <ion-label slot="end">{{ paymentDetails.unitNo }}</ion-label>
+          </ion-item>
+        </ion-list>
+        <div class="button-group">
+          <ion-button (click)="getPaymentDues()" color="primary" expand="block">Try Again</ion-button>
+          <ion-button (click)="goToDashboard()" expand="block">Dashboard</ion-button>
+        </div>
+        <ion-button (click)="printPage()" expand="block">Print</ion-button>
+      </ion-card-content>
+    </ion-card>
+  </ion-content>
+</ion-content>

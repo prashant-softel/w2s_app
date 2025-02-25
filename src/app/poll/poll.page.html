@@ -4,10 +4,10 @@
     <ion-buttons slot="start">
 			<ion-back-button defaultHref="dashboard" icon="chevron-back-outline" text="Back"></ion-back-button>
 		  </ion-buttons>
-    <ion-buttons slot="end" style="width:30%">
-      <ion-button><img style="width:70%" src="/assets/images/logo.png"></ion-button>
+    <ion-buttons slot="end">
+      <ion-button><img style="width:70%" src="/assets/images/icon_s.png"></ion-button>
     </ion-buttons>
-    
+
   </ion-toolbar>
   <ion-toolbar no-border>
     <ion-segment [(ngModel)]="tab">
@@ -36,7 +36,7 @@
                 {{p.start_date}}
                 </ion-col>
               </ion-row>
-  
+
               <ion-row>
                 <ion-col col-4>
                 <strong>Ends On</strong>
@@ -50,12 +50,12 @@
     <!--<p text-center style="color: red;">{{message}}</p>-->
     <p *ngIf="pollmessage==2" text-center style="color: red;">Coming Soon !</p>
     </ion-list>
-  
+
     <ion-list no-lines *ngSwitchCase="'close'">
       <ion-searchbar (ionInput)="getItems2($event)"></ion-searchbar>
       <ion-card *ngFor="let p of temp_inactive_polls_array" style="margin-top: 0px;">
             <ion-card-content (click)="takepoll(p)" *ngIf="pollmessage== 1">
-  
+
               <ion-card-title style="font-size: x-large;"><strong>{{p.question}}</strong></ion-card-title>
                 <ion-row>
                 <ion-col col-4>
@@ -65,7 +65,7 @@
                 {{p.start_date}}
                 </ion-col>
               </ion-row>
-  
+
               <ion-row>
                 <ion-col col-4>
                 <strong>Ended On</strong>
@@ -74,12 +74,12 @@
                   {{p.end_date}}
                 </ion-col>
               </ion-row>
-  
+
           </ion-card-content>
         </ion-card>
     <!--<p text-center style="color: red;">{{message}}</p>-->
     <p *ngIf="pollmessage== 2 " text-center style="color: red;">Coming Soon !</p>
     </ion-list>
-  
+
     </div>
   </ion-content>

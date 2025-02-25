@@ -1,0 +1,68 @@
+<ion-header translucent="true">
+  <ion-toolbar>
+    <ion-title>Pay Online</ion-title>
+    <ion-buttons slot="start">
+      <ion-back-button defaultHref="payment" icon="chevron-back-outline" text="Back"></ion-back-button>
+    </ion-buttons>
+    <ion-buttons slot="end">
+      <img style="width:70%" src="/assets/images/icon_s.png" alt="Logo" class="logo">
+    </ion-buttons>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+  <ion-card>
+    <ion-card-content>
+      Conveniently pay your bill using CCAvenue®. No transaction fee on UPI payments (Promotional offer).
+    </ion-card-content>
+  </ion-card>
+
+  <ion-list>
+    <ion-item>
+      <ion-label>Owner Name:</ion-label>
+      <ion-label><strong>{{ paymentData.ownerName }}</strong></ion-label>
+    </ion-item>
+    <ion-item>
+      <ion-label>{{ paymentData.unitPresentation }}:</ion-label>
+      <ion-label><strong>{{ paymentData.unitNo }}</strong></ion-label>
+    </ion-item>
+  </ion-list>
+
+  <ion-list>
+    <ion-list-header>
+      <ion-label>Bill Details</ion-label>
+    </ion-list-header>
+
+    <ion-item *ngFor="let bill of paymentData.bills">
+      <ion-grid>
+        <ion-row>
+          <ion-col>
+            <ion-label><strong>{{ bill.type }} Bill</strong></ion-label>
+            <div class="amount-row"> <!-- Flexbox for amount and pay amount -->
+<!--              <ion-note>Due: ₹{{ bill.amount.toLocaleString("en-IN") }}</ion-note>-->
+              <ion-input label="Due Amount" labelPlacement="floating" class="pay-amount-input" type="text"
+                         [value]="('₹' + bill.amount.toLocaleString('en-IN'))" readonly="true">
+              </ion-input>
+              <ion-input label="Pay Due Amount" labelPlacement="floating" class="pay-amount-input" type="number"
+                         [(ngModel)]="bill.payAmount"
+                         (ngModelChange)="calculateTotal()" min="0">
+              </ion-input>
+            </div>
+            <ion-textarea rows="1" [(ngModel)]="bill.comments" label="Add comments (optional)"
+                          labelPlacement="floating"></ion-textarea>
+          </ion-col>
+        </ion-row>
+      </ion-grid>
+    </ion-item>
+  </ion-list>
+
+  <ion-item>
+    <ion-label>Total Amount to be paid:</ion-label>
+    <ion-label class="total-amount" slot="end">₹{{ paymentData.totalAmount.toLocaleString("en-IN") }}</ion-label>
+  </ion-item>
+
+  <div class="ion-padding">
+    <ion-button expand="block" type="submit" (click)="submitForm()">Pay</ion-button>
+    <p class="redirect-message">You will be redirected to an external site for payment.</p>
+  </div>
+</ion-content>

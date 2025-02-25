@@ -1,4 +1,13 @@
-ion-card
-{
- color: black;
+ion-card {
+ //color: black;
+  color: var(--ion-text-color);
 }
+//
+//.ccavenue-icon {
+//  width: 30px;
+//  height: 30px;
+//  background-image: url('/assets/images/paytm.png');
+//  background-size: contain;
+//  background-repeat: no-repeat;
+//  //margin-top: 10px; /* Moves it down */
+//}

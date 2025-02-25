@@ -4,8 +4,8 @@
       <ion-back-button defaultHref="dashboard" icon="chevron-back-outline" text="Back"></ion-back-button>
     </ion-buttons>
     <ion-title>Helpline Numbers</ion-title>
-    <ion-buttons slot="end" style="width:30%">
-      <ion-button><img style="width:70%" src="/assets/images/logo.png"></ion-button>
+    <ion-buttons slot="end">
+      <ion-button><img style="width:70%" src="/assets/images/icon_s.png"></ion-button>
     </ion-buttons>
   </ion-toolbar>
 </ion-header>
@@ -48,7 +48,7 @@
                 </ion-col>
               <ion-col col-4 text-center>
                 <button ion-button color="primary" block (click)="update()" >update</button>
-              
+
               </ion-col>
               <ion-col col-4>
               </ion-col>
@@ -117,7 +117,7 @@
         <ion-label floating style="font-weight: bold; text-align: center; margin-left: 50px;">DND Message for
           Security
         </ion-label>
-        <ion-input type="text" style="width: 100%; max-width: 90%;" 
+        <ion-input type="text" style="width: 100%; max-width: 90%;"
           [(ngModel)]="dndData.dnd_msg"></ion-input>
         <button (click)="SaveMessage()"
           style=" background-color: mediumseagreen; color: white; width: 70px; height: 20px; margin-top: 10px; margin-left: 50px;">Save</button>

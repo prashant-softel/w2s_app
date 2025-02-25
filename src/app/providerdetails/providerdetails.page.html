@@ -4,8 +4,8 @@
     <ion-buttons slot="start">
       <ion-back-button defaultHref="serviceprovider" icon="chevron-back-outline" text="Back"></ion-back-button>
     </ion-buttons>
-    <ion-buttons slot="end" style="width:30%">
-      <ion-button><img style="width:70%" src="/assets/images/logo.png"></ion-button>
+    <ion-buttons slot="end">
+      <ion-button><img style="width:70%" src="/assets/images/icon_s.png"></ion-button>
     </ion-buttons>
   </ion-toolbar>
   <ion-toolbar no-border *ngIf="roleWise=='AdminMember' || roleWise=='Admin' || roleWise=='SuperAdmin' ">
@@ -67,9 +67,9 @@
           <strong style="font-size: 18px; color: red; text-align: center;">Warning</strong>
         </ion-card-header>
         <ion-card-content>
-          <p style="text-align: center;color: black;">This page gives the attendance report of the service
+          <p style="text-align: center;">This page gives the attendance report of the service
             provider/domestic help. This feature is available with the subscription of security manager app.</p>
-          <p style="text-align: center;color: black;">To enable this feature please contact your society office or
+          <p style="text-align: center;">To enable this feature please contact your society office or
             secretory</p>
         </ion-card-content>
       </ion-card>
@@ -78,7 +78,7 @@
       </ion-list>
       <ion-card *ngIf="providerData['security_status'] != '0' &&  providerData['SecurityDBStatus'] !='NotConnected'">
         <ion-card-content>
-          <p style="text-align: center;color: black;">If you wish to give some stuff to your service provider you can
+          <p style="text-align: center;">If you wish to give some stuff to your service provider you can
             add your description and attach an image file so that it would be convenient for security guard while
             checking out the person in more secured way.</p>
           <ion-list>
@@ -559,7 +559,7 @@
                 displayFormat="DD/MMM/YYYY" min="2017" [(ngModel)]="userData.startDate"></ion-input>
               <ion-popover trigger="date" size="cover">
                 <ng-template>
-                  <ion-datetime style="background-color: #ffffff;" presentation="date" displayFormat="DD/MMM/YYYY"
+                  <ion-datetime presentation="date" displayFormat="DD/MMM/YYYY"
                     min="2017" [(ngModel)]="userData.startDate"></ion-datetime>
                 </ng-template>
               </ion-popover>
@@ -576,7 +576,7 @@
                 displayFormat="DD-MMM-YYYY" min="2017" [(ngModel)]="userData.endDate"></ion-input>
               <ion-popover trigger="date" size="cover" class="ion-text-end">
                 <ng-template>
-                  <ion-datetime style="background-color: #ffffff;" presentation="date" displayFormat="DD-MMM-YYYY"
+                  <ion-datetime presentation="date" displayFormat="DD-MMM-YYYY"
                     min="2017" [(ngModel)]="userData.endDate"></ion-datetime>
                 </ng-template>
               </ion-popover>

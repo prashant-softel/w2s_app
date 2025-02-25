@@ -4,8 +4,8 @@
 		<ion-buttons slot="start">
 			<ion-back-button defaultHref="dashboard" icon="chevron-back-outline" text="Back"></ion-back-button>
 		</ion-buttons>
-		<ion-buttons slot="end" style="width:30%">
-			<ion-button><img style="width:70%" src="/assets/images/logo.png"></ion-button>
+		<ion-buttons slot="end">
+			<ion-button><img style="width:70%" src="/assets/images/icon_s.png"></ion-button>
 		</ion-buttons>
 
 	</ion-toolbar>
@@ -86,7 +86,7 @@
 		</ion-row>-->
 			<div style="padding-left: 10px;padding-right: 10px;">
 				<ion-list *ngFor="let Cat of userData.cat_id; let iIndex=index;">
-					<ion-select label="Category *" placeholder="" style="color:#0d0d0d"
+					<ion-select label="Category *" placeholder=""
 						[(ngModel)]="userData.cat_id[iIndex]" (ionChange)="catSelected()">
 						<ion-select-option *ngFor="let d of cat_list" value="{{d.cat_id}}">{{d.cat}}</ion-select-option>
 					</ion-select>
@@ -106,7 +106,7 @@
 						value="{{ userData.dob | date: 'dd-MM-yyyy' }}" id="dob" class="ion-text-end"></ion-input>
 					<ion-popover trigger="dob" size="cover">
 						<ng-template>
-							<ion-datetime style="background: #ffffff;" min="1950" max="{{todayDate}}" presentation="dob"
+							<ion-datetime min="1950" max="{{todayDate}}" presentation="dob"
 								[(ngModel)]="userData.dob"></ion-datetime>
 						</ng-template>
 					</ion-popover>
@@ -125,7 +125,7 @@
 						class="ion-text-end"></ion-input>
 					<ion-popover trigger="sincedate" size="cover">
 						<ng-template>
-							<ion-datetime style="background: #ffffff;" min="2008" max="{{todayDate}}"
+							<ion-datetime min="2008" max="{{todayDate}}"
 								presentation="sincedate" [(ngModel)]="userData.working_since"></ion-datetime>
 						</ng-template>
 					</ion-popover>
@@ -140,7 +140,7 @@
 
 			<ion-row style="padding-left: 10px;padding-right: 10px;">
 				<ion-col>
-					<ion-select label="Married" placeholder="" style="color:#0d0d0d" [(ngModel)]="userData.married">
+					<ion-select label="Married" placeholder="" [(ngModel)]="userData.married">
 						<ion-select-option value="yes">Yes</ion-select-option>
 						<ion-select-option value="no">No</ion-select-option>
 					</ion-select>

@@ -286,7 +286,15 @@ export const routes: Routes = [
   {
     path: 'addprovider',
     loadComponent: () => import('./addprovider/addprovider.page').then(m => m.AddProviderPage)
+  },  {
+    path: 'paymentgateway',
+    loadComponent: () => import('./paymentgateway/paymentgateway.page').then( m => m.PaymentgatewayPage)
   },
+  {
+    path: 'paymentresult',
+    loadComponent: () => import('./paymentresult/paymentresult.page').then( m => m.PaymentresultPage)
+  },
+
 ];
 // import { Routes } from '@angular/router';
 

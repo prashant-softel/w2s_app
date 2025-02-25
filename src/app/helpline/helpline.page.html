@@ -4,24 +4,24 @@
 			<ion-back-button defaultHref="dashboard" icon="chevron-back-outline" text="Back"></ion-back-button>
 		  </ion-buttons>
 	  <ion-title>Helpline Numbers</ion-title>
-	  <ion-buttons slot="end" style="width:30%">
-		<ion-button><img style="width:70%" src="/assets/images/logo.png"></ion-button>
+	  <ion-buttons slot="end">
+		<ion-button><img style="width:70%" src="/assets/images/icon_s.png"></ion-button>
 	 </ion-buttons>
 	</ion-toolbar>
   </ion-header>
-  
+
   <ion-content padding>
 	<ion-list>
 		<ion-card >
 			<ion-card-content >
 				<ion-list  *ngFor="let h of Helpline_array; let i = index" [attr.data-index]="i"  >
-	
+
 					<ion-row *ngIf="i == 0 || h.category != Helpline_array[i - 1].category" style="background-color: #337ab7;color:#fff;" >
 				  <ion-col text-center>
 				   <strong style="text-transform: uppercase;">{{h.category}}</strong>
 				  </ion-col>
 				</ion-row>
-	
+
 				<ion-row>
 						 <ion-col>
 							<strong>{{h.name}}</strong>
@@ -38,7 +38,7 @@
 						</ion-col>
 					</ion-row>
 				</ion-list>
-			
+
 			</ion-card-content>
 		</ion-card>
 	</ion-list>

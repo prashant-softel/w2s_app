@@ -1,0 +1,40 @@
+ion-content {
+  --padding-start: 16px;
+  --padding-end: 16px;
+}
+
+.payment-message {
+  margin-bottom: 16px;
+}
+
+ion-card-header {
+  display: flex; // Use flexbox for layout
+  align-items: center; // Center items vertically
+
+  ion-card-title {
+    flex-grow: 1; // Allow title to take up available space
+  }
+
+  ion-icon {
+    margin-left: 10px;
+    font-size: xx-large; // Increase icon size
+  }
+}
+
+
+.button-group {
+  display: flex;
+  justify-content: space-around;
+  margin-bottom: 16px;
+
+  ion-button {
+    width: 48%; // Occupy almost half the width each (allows for small spacing)
+  }
+}
+
+.status-message {
+  margin-top: 16px;     // Spacing above the message
+  margin-bottom: 16px;  // Spacing below the message
+  text-align: center;   // Center the text
+  color: #555;          // Slightly darker text color (adjust as needed)
+}

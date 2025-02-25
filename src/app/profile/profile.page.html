@@ -4,10 +4,10 @@
     <ion-buttons slot="start">
 			<ion-back-button defaultHref="dashboard" icon="chevron-back-outline" text="Back"></ion-back-button>
 		  </ion-buttons>
-    <ion-buttons slot="end" style="width:30%">
-      <ion-button><img style="width:70%" src="/assets/images/logo.png"></ion-button>
+    <ion-buttons slot="end">
+      <ion-button><img style="width:70%" src="/assets/images/icon_s.png"></ion-button>
     </ion-buttons>
-    
+
   </ion-toolbar>
 
   <ion-toolbar no-border>
@@ -15,7 +15,7 @@
       <ion-segment-button value="home">
         <ion-icon name='home'></ion-icon>
       </ion-segment-button>
-     
+
       <ion-segment-button value="person">
         <ion-icon name='people'></ion-icon>
       </ion-segment-button>
@@ -42,20 +42,20 @@
           </ion-col>
         </ion-row>
         <ion-row>
-          <ion-col style="color: #0d0d0d;"><strong>Owner Name(s)</strong></ion-col>
+          <ion-col><strong>Owner Name(s)</strong></ion-col>
         </ion-row>
          <ion-row>
-          <ion-col text-wrap col-12  style="color: #0d0d0d;">
+          <ion-col text-wrap col-12>
             {{unit_details_array['owner_name']}}
           </ion-col>
         </ion-row>
         <hr>
         <ion-list *ngIf="ShowAddressField !='1'">
           <ion-row>
-            <ion-col  style="color: #0d0d0d;"><strong>Owner Address</strong></ion-col>
+            <ion-col><strong>Owner Address</strong></ion-col>
           </ion-row>
            <ion-row >
-            <ion-col text-wrap col-12  style="color: #0d0d0d;">
+            <ion-col text-wrap col-12>
               {{unit_details_array['alt_address']}}
             </ion-col>
           </ion-row>
@@ -66,7 +66,7 @@
           <!--<a href="#" (click)="UpdateAdd()">Update Address</a>-->
           </ion-list>
           <ion-list *ngIf="ShowAddressField =='1'">
-          <ion-item  style="color: #0d0d0d;">
+          <ion-item>
              <!--<ion-label floating>Owner Address</ion-label>
            <ion-textarea  rows="5" [(ngModel)]="userData.OwnerAddress"></ion-textarea>-->
             <ion-textarea rows="5" [(ngModel)]="userData.OwnerAddress" label="Owner Address" labelPlacement="floating" placeholder="Owner Address"></ion-textarea>
@@ -76,7 +76,7 @@
             <ion-col size="6" class="text-center">
               <!--<button ion-button color="primary" block (click)="UpdateAddress()">Update</button>-->
               <ion-button color="primary" block (click)="UpdateAddress()">Update</ion-button>
-            </ion-col>    
+            </ion-col>
             <ion-col size="3"></ion-col>
           </ion-row>
           </ion-list>
@@ -130,7 +130,7 @@
         </ion-row>
           </ion-card-content>
         </ion-card>
-       
+
 
         <ion-card *ngIf="Lien_details_array.length != 0">
           <ion-card-content>
@@ -139,7 +139,7 @@
             <strong>Lien Details</strong>
           </ion-col>
         </ion-row>
-        <ion-list *ngFor="let l of Lien_details_array" class="text-color"> 
+        <ion-list *ngFor="let l of Lien_details_array" class="text-color">
         <ion-row>
           <ion-col><strong>Bank name(s)</strong></ion-col>
         </ion-row>
@@ -183,7 +183,7 @@
     <ion-row>
       <ion-col size="10" style="padding: 1rem;text-align: center;">
         <strong>Associated Member Details</strong>
-       
+
       </ion-col>
          <ion-col> <span text-right style="float: left;color: #5cb85c;" (click)="addMember()"><ion-icon name="add-circle" style="font-size:30px;"></ion-icon></span></ion-col>
       </ion-row>
@@ -195,7 +195,7 @@
    </ion-col>
    </ion-row>
     </ion-item>-->
-   
+
      <!-- ***************************************Owner Details *********************** -->
      <ion-card >
       <ion-card-content>
@@ -267,7 +267,7 @@
       </ion-list>
       <ion-list  *ngFor="let p of member_details_coowner_array">
        <ion-list  >
-         <ion-row >
+         <ion-row>
         <ion-col col-4 class="text-left">
           <strong>Name</strong>
         </ion-col>
@@ -396,14 +396,14 @@
       <ion-row>
         <ion-col size="10" style="padding: 1rem;text-align: center;">
           <strong>Vehicle Details</strong>
-         
+
         </ion-col>
            <ion-col> <span text-right style="float: left;color: #5cb85c;" (click)="addVehicle()"><ion-icon name="add-circle" style="font-size:30px;"></ion-icon></span></ion-col>
         </ion-row>
       <!--<ion-row>
         <ion-col size="8" style="padding: 1rem;text-align: right;">
           <strong>Vehicle Details</strong>
-          
+
         </ion-col>
        <ion-col style="height: 2rem;">
         <span text-right style="float: left;color: #5cb85c;margin-top: 0.5rem;" (click)="addVehicle()"><ion-icon name="add-circle" style="font-size:30px;"></ion-icon></span></ion-col>
@@ -411,7 +411,7 @@
      <!--<ion-item text-center >
         <strong>Vehicle Details</strong>
         <span text-right style="float: right;color: #5cb85c;" ><ion-icon name="add-circle" style="font-size:30px;"></ion-icon></span>
-      </ion-item>--> 
+      </ion-item>-->
       <ion-card>
         <ion-card-content>
            <ion-row style="background-color: #337ab7;color:#fff;">
@@ -426,7 +426,7 @@
               </ion-col>
             </ion-row>
           </ion-list>
-    
+
            <ion-list *ngFor="let p of vehicle_details_car_array" class="text-color">
             <ion-row >
               <ion-col>
@@ -442,7 +442,7 @@
               <ion-col col-6 text-left>
                 <strong>Relation with owner</strong>
               </ion-col>
-           
+
               <ion-col text-wrap text-right>
                 {{p.relation}}
               </ion-col>
@@ -484,7 +484,7 @@
               <ion-col col-6 class="text-left">
                 <strong>Parking sticker no.</strong>
               </ion-col>
-    
+
               <ion-col text-wrap class="text-right" *ngIf = "p.parking_sticker != ''">
                 {{p.parking_sticker}}
               </ion-col>
@@ -496,7 +496,7 @@
               <ion-col col-4 class="text-left">
                 <strong>Car make</strong>
               </ion-col>
-    
+
               <ion-col text-wrap class="text-right">
                 {{p.car_make}}
               </ion-col>
@@ -505,7 +505,7 @@
               <ion-col col-4 class="text-left">
                 <strong>Car model</strong>
               </ion-col>
-    
+
               <ion-col text-wrap class="text-right">
                 {{p.car_model}}
               </ion-col>
@@ -514,7 +514,7 @@
               <ion-col col-4 class="text-left">
                 <strong>Car color</strong>
               </ion-col>
-    
+
               <ion-col text-wrap class="text-right">
                 {{p.car_color}}
               </ion-col>
@@ -538,20 +538,20 @@
           <ion-list *ngIf = "enablebutton == '1' && vehicle_details_car_array.length != 0 " class="text-color">
           <ion-row  >
             <ion-col class="text-left">
-              <strong>Note : </strong> 
+              <strong>Note : </strong>
             </ion-col>
           </ion-row>
-          <ion-row> 
+          <ion-row>
             <ion-col class="text-left">
-              You need to apply for parking lot evey year before 31 Dec. Managining committee will allocate parking lots around Feb. Please click on renew registration button above to submit your application to management. 
+              You need to apply for parking lot evey year before 31 Dec. Managining committee will allocate parking lots around Feb. Please click on renew registration button above to submit your application to management.
             </ion-col>
           </ion-row>
           </ion-list>
-          
+
    </ion-card-content>
   </ion-card>
   <!--  *********************************  (Bike) Vehicle Details ******************* -->
-    
+
 
   <ion-card>
     <ion-card-content>
@@ -596,7 +596,7 @@
       <ion-col text-wrap class="text-right" *ngIf = "p.ParkingType != '0'" >
         {{p.parking_type_name}}(Rs.{{p.parking_type_rate}})
       </ion-col>
-      <ion-col text-wrap class="text-right"  *ngIf = "p.ParkingType == '0'"> 
+      <ion-col text-wrap class="text-right"  *ngIf = "p.ParkingType == '0'">
         Not defined
       </ion-col>
     </ion-row>

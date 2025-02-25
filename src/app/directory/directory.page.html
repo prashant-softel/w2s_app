@@ -4,8 +4,8 @@
     <ion-buttons slot="start">
 			<ion-back-button defaultHref="dashboard" icon="chevron-back-outline" text="Back"></ion-back-button>
 		  </ion-buttons>
-	  <ion-buttons slot="end" style="width:30%">
-		<ion-button><img style="width:70%" src="/assets/images/logo.png"></ion-button>
+	  <ion-buttons slot="end">
+		<ion-button><img style="width:70%" src="/assets/images/icon_s.png"></ion-button>
 	 </ion-buttons>
 	</ion-toolbar>
   <ion-toolbar no-border >
@@ -26,7 +26,7 @@
           <div text-wrap><ion-icon name='people'></ion-icon>
         <!--Committee--></div>
       </ion-segment-button>
-      
+
     </ion-segment>
   </ion-toolbar>
   </ion-header>
@@ -40,7 +40,7 @@
         <ion-row  class="bill" >
               <ion-col  text-wrap>
                 {{p.unit_no}}
-              </ion-col>		
+              </ion-col>
               <ion-col size="9" text-wrap>
                 {{p.other_name}}
               </ion-col>
@@ -49,7 +49,7 @@
               <ion-row >
                 <ion-col col-3 *ngIf="p.intercom_no !== '0'">
                     <ion-icon name="home"></ion-icon>
-                </ion-col>		
+                </ion-col>
                 <ion-col text-right col-9 *ngIf="p.intercom_no">
                   {{p.intercom_no}}
               </ion-col>
@@ -59,7 +59,7 @@
               </ion-row>
               <ion-row *ngIf="p.other_publish_contact !== 0">
                 <ion-col col-3>
-                  <ion-icon name="call"></ion-icon> 
+                  <ion-icon name="call"></ion-icon>
                 </ion-col>
                 <ion-col text-right  col-9 *ngIf="p.mobile_o">
                   <a href="tel:{{p.mobile_o}}" class="button button-positive">{{p.mobile_o}}</a>
@@ -70,7 +70,7 @@
               </ion-row>
               <ion-row *ngIf="p.other_publish_contact !== 0">
                 <ion-col col-3 text-wrap>
-                  <ion-icon name="mail"></ion-icon> 
+                  <ion-icon name="mail"></ion-icon>
                 </ion-col>
                 <ion-col col-9 text-wrap text-right *ngIf="p.other_email">
                   {{p.other_email}}
@@ -91,36 +91,36 @@
               <ion-row  class="bill" >
                 <ion-col  text-wrap>
                   {{p.unit_no}}
-                </ion-col>		
+                </ion-col>
                 <ion-col size="9" text-wrap>
                   {{p.other_name}}
                 </ion-col>
                 </ion-row>
-                <ion-col> 
+                <ion-col>
                   <ion-row *ngIf="p.intercom_no !== '0'">
                     <ion-col col-3>
                         <ion-icon name="home"></ion-icon>
-                    </ion-col>		
+                    </ion-col>
                     <ion-col col-9 text-right *ngIf="p.intercom_no">
                         {{p.intercom_no}}
                     </ion-col>
                     <ion-col col-9 text-right text-wrap *ngIf="!p.intercom_no">
                       Not provided by User
                     </ion-col>
-                
+
                   </ion-row>
                   <ion-row>
                     <ion-col col-3>
                         <ion-icon name="water"></ion-icon>
-                    </ion-col>		
+                    </ion-col>
                     <ion-col col-9 text-right>
                         {{p.booldGroup}}
                     </ion-col>
                   </ion-row>
                   <ion-row *ngIf="p.other_publish_contact !== 0">
                     <ion-col col-3>
-                      <ion-icon name="call"></ion-icon> 
-                    </ion-col>		
+                      <ion-icon name="call"></ion-icon>
+                    </ion-col>
                     <ion-col col-9 text-right *ngIf="p.mobile_o">
                       <a href="tel:{{p.mobile_o}}" class="button button-positive">{{p.mobile_o}}</a>
                     </ion-col>
@@ -140,7 +140,7 @@
               <ion-row  class="bill" >
                 <ion-col  text-wrap>
                   {{p.unit_no}}
-                </ion-col>		
+                </ion-col>
                 <ion-col size="9" text-wrap>
                   {{p.other_name}}
                 </ion-col>
@@ -149,7 +149,7 @@
                   <ion-row *ngIf="p.intercom_no !== '0'">
                     <ion-col col-3>
                         <ion-icon name="home"></ion-icon>
-                    </ion-col>		
+                    </ion-col>
                     <ion-col text-right col-9 *ngIf="p.intercom_no">
                         {{p.intercom_no}}
                     </ion-col>
@@ -159,7 +159,7 @@
                   </ion-row>
                   <ion-row *ngIf="p.other_publish_contact !== 0">
                     <ion-col col-3>
-                      <ion-icon name="call"></ion-icon> 
+                      <ion-icon name="call"></ion-icon>
                     </ion-col>
                     <ion-col text-right  col-9 *ngIf="p.mobile_o">
                       <a href="tel:{{p.mobile_o}}" class="button button-positive">{{p.mobile_o}}</a>
@@ -170,12 +170,12 @@
                   </ion-row>
                   <ion-row >
                     <ion-col col-3 text-wrap>
-                      <ion-icon name="briefcase"></ion-icon> 
+                      <ion-icon name="briefcase"></ion-icon>
                     </ion-col>
                     <ion-col col-9 text-wrap text-right>
                        {{p.other_profile}}
                     </ion-col>
-                    
+
                   </ion-row>
               </ion-col>
               </ion-list>
@@ -184,7 +184,7 @@
         <!--Committee members-->
         <ion-list no-lines *ngSwitchCase="'committee'">
           <ion-searchbar (ionInput)="getItems4($event)"></ion-searchbar>
-          <ion-list  class="list-padding" no-lines *ngFor="let o of temp_otherArray">		
+          <ion-list  class="list-padding" no-lines *ngFor="let o of temp_otherArray">
             <ion-row class="bill">
              <ion-col style="text-align: center;"><strong>{{o.position}}</strong></ion-col>
             </ion-row>
@@ -221,15 +221,15 @@
 	      		</ion-col>
 	    	</ion-row><hr>
 	    </ion-list>
-			
-		
+
+
 		<ion-list text-center class="list-padding">
       <ion-row class="bill">
 				<ion-col style="text-align: center;"><strong>Commitee Member</strong></ion-col>
         </ion-row>
-	    
-			
-	    <ion-list no-lines *ngFor="let m of temp_memberArray">		
+
+
+	    <ion-list no-lines *ngFor="let m of temp_memberArray">
 			<ion-row>
 	      		<ion-col col-4>
 	        		<strong>Name</strong>
@@ -267,4 +267,4 @@
           </ion-list>
         </div>
         </ion-content>
- 
+

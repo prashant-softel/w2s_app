@@ -4,10 +4,10 @@
     <ion-buttons slot="start">
 			<ion-back-button defaultHref="dashboard" icon="chevron-back-outline" text="Back"></ion-back-button>
 		  </ion-buttons>
-    <ion-buttons slot="end" style="width:30%">
-      <ion-button><img style="width:70%" src="/assets/images/logo.png"></ion-button>
+    <ion-buttons slot="end">
+      <ion-button><img style="width:70%" src="/assets/images/icon_s.png"></ion-button>
     </ion-buttons>
-    
+
   </ion-toolbar>
 </ion-header>
 <ion-content>
@@ -36,7 +36,7 @@
 		  			></ion-input>
 		  		<ion-popover trigger="date" size="cover">
 				<ng-template>
-			  	<ion-datetime style="background: #ffffff;"
+			  	<ion-datetime
 			  		min="{{userData.duedate}}" max="{{max_year}}"
 					presentation="date"
 					[(ngModel)]="userData.duedate"
@@ -92,14 +92,14 @@
 			  <ion-button shape="round" icon-left (click)="presentActionSheet()"><ion-buttons text-center>
 				<ion-icon slot="start" name="camera"></ion-icon>Select Image
 			  </ion-buttons></ion-button>
-			  
+
 			</ion-col>
 		  </ion-row>
 		<ion-row >
 			<ion-col col-1></ion-col>
 			<ion-col text-center col-10>
 		  		<ion-button color="primary" block (click)="createTask()">Add Task</ion-button>
-		  		
+
 		 	</ion-col>
 		 	<ion-col col-1></ion-col>
 		</ion-row>
@@ -126,12 +126,12 @@
 				<h3 [hidden]="lastImage !== null"></h3>
 				<button ion-button round icon-left (click)="presentActionSheet()">
 			    	<ion-buttons  text-center>
-			    		<ion-icon name="camera"></ion-icon>Select Image		
+			    		<ion-icon name="camera"></ion-icon>Select Image
 			   	</ion-buttons>
 	  		</button>
-				
+
 		</ion-item>-->
-	
-		
+
+
 </ion-list>
 </ion-content>

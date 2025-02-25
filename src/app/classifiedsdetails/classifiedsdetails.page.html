@@ -4,8 +4,8 @@
     <ion-buttons slot="start">
 			<ion-back-button defaultHref="classifieds" icon="chevron-back-outline" text="Back"></ion-back-button>
 		  </ion-buttons>
-    <ion-buttons slot="end" style="width:30%">
-      <ion-button><img style="width:70%" src="/assets/images/logo.png"></ion-button>
+    <ion-buttons slot="end">
+      <ion-button><img style="width:70%" src="/assets/images/icon_s.png"></ion-button>
     </ion-buttons>
   </ion-toolbar>
   </ion-header>
@@ -15,10 +15,10 @@
       <img src="{{img}}" style="max-height : 50vh" (click)="selectItems()">
     </ion-card>
     <h5 class="text-center">Details</h5>
-    
+
   <ion-card text-wrap>
     <ion-list class="list-padding">
-      
+
         <ion-row>
           <ion-col>
             <h5>Location:</h5>
@@ -31,7 +31,7 @@
         </ion-row>
     </ion-list>
     <ion-list  class="list-padding">
-      
+
         <ion-row>
           <ion-col>
             <h5>Publish On:</h5>
@@ -47,17 +47,17 @@
   <h5  class="text-center">Contact Details</h5>
     <ion-card text-wrap>
       <ion-list  class="list-padding">
-       
+
         <h5 > <ion-icon name="briefcase" item-left large ></ion-icon> &nbsp;{{ad_title}}</h5>
       </ion-list>
-      
+
     <ion-list  class="list-padding">
-      
+
       <h5><ion-icon name="call" item-left large ></ion-icon> &nbsp;<a href="tel:{{phone}}" class="button button-positive">{{phone}}</a></h5>
     </ion-list>
-    
+
     <ion-list  class="list-padding">
-      
+
       <h5><ion-icon name="mail" item-left large ></ion-icon>&nbsp;{{email}}</h5>
     </ion-list>
   </ion-card>

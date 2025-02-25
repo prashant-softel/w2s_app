@@ -6,3 +6,51 @@
 {
     text-align: center;
 }
+
+/* In your component's SCSS file */
+ion-content {
+  //--ion-background-color: #fff;
+}
+
+ion-list {
+  //--ion-item-background: transparent;
+}
+
+.header-row {
+  font-weight: bold;
+  border-bottom: 1px solid var(--ion-color-step-150, #ddd); // Use Ionic color variable or fallback
+
+  @media (prefers-color-scheme: dark) {
+    --background: var(--ion-item-background-color-dark); // Use Ionic's dark mode variable
+    color: var(--ion-text-color-dark); // Use Ionic's dark mode text color
+    border-bottom-color: var(--ion-color-step-200, #eee);
+  }
+
+  @media (prefers-color-scheme: light) {
+    --background: #f0f0f0;  // Light mode background
+    color: #333; // Darker text color for light mode
+  }
+}
+
+.alternate-row {
+  @media (prefers-color-scheme: dark) {
+    --ion-item-background: var(--ion-background-color-dark);  // Slightly darker alternating row in dark mode
+  }
+  @media (prefers-color-scheme: light) {
+    --ion-item-background: #f8f8f8; // Light mode alternating row
+  }
+
+}
+
+.text-center {
+  text-align: center;
+}
+
+ion-col.ion-text-right {
+  text-align: right;
+}
+
+ion-item {
+  --padding-start: 10px;
+  --padding-end: 10px;
+}

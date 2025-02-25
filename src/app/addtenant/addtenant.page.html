@@ -4,8 +4,8 @@
     <ion-buttons slot="start">
 		<ion-back-button defaultHref="profile" icon="chevron-back-outline" text="Back"></ion-back-button>
 	</ion-buttons>
-    <ion-buttons slot="end" style="width:30%">
-      <ion-button><img style="width:70%" src="/assets/images/logo.png"></ion-button>
+    <ion-buttons slot="end">
+      <ion-button><img style="width:70%" src="/assets/images/icon_s.png"></ion-button>
     </ion-buttons>
   </ion-toolbar>
 </ion-header>
@@ -60,7 +60,7 @@
 					</ion-input>
         			<ion-popover trigger="dob" size="cover">
           				<ng-template>
-            				<ion-datetime style="background: #ffffff;"
+            				<ion-datetime
             					min="1940" max="{{todayDate}}"
               					presentation="dob"
               					[(ngModel)]="TenantData.TDob">
@@ -84,7 +84,7 @@
 					<ion-select label="Profession" placeholder="" style="color:#0d0d0d" [(ngModel)]="TenantData.Tprofession" >
 						<ion-select-option *ngFor="let p of profession_array" value="{{p.desg_id}}">{{p.desg}}</ion-select-option>
 					</ion-select>
-				</ion-col> 
+				</ion-col>
 			</ion-row>
 			<ion-row>
 				<ion-col>
@@ -94,14 +94,14 @@
 					</ion-input>
         			<ion-popover trigger="date" size="cover">
           				<ng-template>
-            				<ion-datetime style="background: #ffffff;"
+            				<ion-datetime
             					min="2018" max="2040"
               					presentation="date"
               					[(ngModel)]="TenantData.LeaseStart">
 							</ion-datetime>
           				</ng-template>
         			</ion-popover>
-				</ion-col>	
+				</ion-col>
 			</ion-row>
 			<ion-row>
 				<ion-col>
@@ -111,22 +111,22 @@
 					</ion-input>
         			<ion-popover trigger="date1" size="cover">
           				<ng-template>
-            				<ion-datetime style="background: #ffffff;"
+            				<ion-datetime
             					min="2018" max="2040"
               					presentation="date1"
               					[(ngModel)]="TenantData.LeaseEnd">
 							</ion-datetime>
           				</ng-template>
         			</ion-popover>
-				</ion-col>	
+				</ion-col>
 			</ion-row>
 			<ion-row *ngIf="ShowCIN !='1'">
 				<ion-col col-10 text-left> Additional people staying in the flat/unit</ion-col>
 				<ion-col text-right>
 				<ion-checkbox [(ngModel)]="CheckMoreTanent"  checked="false" (ionChange)="CheckMT();"></ion-checkbox>
-				</ion-col>	
+				</ion-col>
 			</ion-row>
-	
+
 			<ion-list *ngIf="ShowMoreTenant =='1'">
 				<ion-list >
 					  <ion-row style="background-color: #337ab7;color:#fff;">
@@ -155,7 +155,7 @@
 							</ion-input>
         					<ion-popover trigger="date" size="cover">
           						<ng-template>
-            						<ion-datetime style="background: #ffffff;"
+            						<ion-datetime
             						min="1940" max="{{todayDate}}"
               						presentation="date"
               						[(ngModel)]="TenantData.TenantFamily[iIndex]['DOB']">
@@ -232,7 +232,7 @@
 				  <ion-button shape="round" icon-left (click)="presentActionSheet('document', iIndex)"><ion-buttons text-center>
 					<ion-icon slot="start" name="camera"></ion-icon>Select Image
 				  </ion-buttons></ion-button>
-				  
+
 				</ion-col>
 			  </ion-row>
 		 </ion-list>
@@ -266,8 +266,7 @@
 		<ion-col size="3"></ion-col>
 	</ion-row>
 </ion-content>
-			
-			
-					
-					
-		
+
+
+
+

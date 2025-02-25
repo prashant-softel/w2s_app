@@ -6,13 +6,13 @@
 
 <ion-header [translucent]="true">
 
-  
+
     <ion-toolbar>
       <ion-buttons slot="start">
         <ion-back-button defaultHref="myvisitors" icon="chevron-back-outline" text="Back"></ion-back-button>
         </ion-buttons>
       <ion-title>Incoming Visitors</ion-title>
-      <ion-buttons slot="end" style="width:30%">
+      <ion-buttons slot="end">
       <ion-button><img style="width:50%" src="/assets/images/logo.png"></ion-button>
      </ion-buttons>
     </ion-toolbar>
@@ -197,7 +197,7 @@
             &nbsp;&nbsp;&nbsp;Approve With Note :
             <ion-list *ngFor="let t of ApproveMsg" style="width: fit-content">
               <ion-radio item-left value="{{ t }}"></ion-radio>
-              <ion-label style="color: black">{{ t }}</ion-label>
+              <ion-label>{{ t }}</ion-label>
             </ion-list>
           </ion-list>
           &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;OR
@@ -250,7 +250,7 @@
     </ion-row>
   </ion-list>
 
-  <ion-grid style="margin-top: -2px;" *ngIf="checkoutdesc == '1' && counterforitem =='0'"> 
+  <ion-grid style="margin-top: -2px;" *ngIf="checkoutdesc == '1' && counterforitem =='0'">
     <ion-list>
       <ion-label floating style="margin-left: 20px;">Enter Check Out Description *</ion-label>
       <ion-input type="text" style="margin-left: 20px; margin-top: 0; width: 100%; max-width: 90%;" value="Enter Checkout Description"  [(ngModel)]="checkoutnote"></ion-input>

@@ -37,7 +37,7 @@ export class AboutUsPage implements OnInit {
     this.version = globalVars.APP_VERSION;
     this.latest_version = globalVars.LATEST_APP_VERSION;
     this.war_version = globalVars.WAR_VERSION;
-
+    //  console.log(this.latest_version);
     if (this.platform.is('ios')) {
       this.app_link = "https://apps.apple.com/us/app/way2society/id1389751648";
     }

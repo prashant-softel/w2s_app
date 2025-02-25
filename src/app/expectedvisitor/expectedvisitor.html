@@ -44,7 +44,7 @@
           [(ngModel)]="ExpVisitor.Expdate"></ion-input>
         <ion-popover trigger="date" size="cover">
           <ng-template>
-            <ion-datetime style="background-color: #ffffff;" presentation="date" [(ngModel)]="ExpVisitor.Expdate"
+            <ion-datetime presentation="date" [(ngModel)]="ExpVisitor.Expdate"
               min="{{todayDate}}" max="2050" displayFormat="DD-MM-YYYY"></ion-datetime>
           </ng-template>
         </ion-popover>
@@ -55,7 +55,7 @@
           [(ngModel)]="ExpVisitor.ExpTime"></ion-input>
         <ion-popover trigger="time" size="cover">
           <ng-template>
-            <ion-datetime style="background-color: #ffffff;" presentation="time" [(ngModel)]="ExpVisitor.ExpTime"
+            <ion-datetime presentation="time" [(ngModel)]="ExpVisitor.ExpTime"
               displayFormat="h:mm A"></ion-datetime>
           </ng-template>
         </ion-popover>

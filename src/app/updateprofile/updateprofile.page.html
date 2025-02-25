@@ -4,8 +4,8 @@
     <ion-buttons slot="start">
 			<ion-back-button defaultHref="dashboard" icon="chevron-back-outline" text="Back"></ion-back-button>
 		  </ion-buttons>
-    <ion-buttons slot="end" style="width:30%">
-      <ion-button><img style="width:70%" src="/assets/images/logo.png"></ion-button>
+    <ion-buttons slot="end">
+      <ion-button><img style="width:70%" src="/assets/images/icon_s.png"></ion-button>
     </ion-buttons>
   </ion-toolbar>
  </ion-header>
@@ -24,19 +24,19 @@
           <ion-col size="6" class="text-left"><strong>Total Active Users</strong></ion-col>
           <ion-col class="text-right">
             <ion-icon name="people" style="font-size: 1.5em;"></ion-icon></ion-col>
-            <ion-col size="2" class="text-right"><strong>{{TotalActiveUser}}</strong></ion-col>   
+            <ion-col size="2" class="text-right"><strong>{{TotalActiveUser}}</strong></ion-col>
         </ion-row>
         <ion-row>
           <ion-col size="6" class="text-left"><strong>Total Active Units</strong></ion-col>
-          <ion-col class="text-right"> 
-            <ion-icon name="people-circle-outline"  style="font-size: 1.5em;"></ion-icon></ion-col> 
+          <ion-col class="text-right">
+            <ion-icon name="people-circle-outline"  style="font-size: 1.5em;"></ion-icon></ion-col>
             <ion-col size="2" class="text-right"><strong>{{TotalActiveUnits}}</strong></ion-col>
         </ion-row>
         <ion-row>
           <ion-col size="6" class="text-left"><strong>Total Inactive Units</strong></ion-col>
           <ion-col class="text-right">
             <ion-icon name="people-circle-outline"  style="font-size: 1.5em;"></ion-icon></ion-col>
-            <ion-col size="2" class="text-right"><strong>{{TotalInactiveUnits}}</strong></ion-col>  
+            <ion-col size="2" class="text-right"><strong>{{TotalInactiveUnits}}</strong></ion-col>
         </ion-row>
       </ion-card-content>
     </ion-card>
@@ -67,4 +67,3 @@
       </ion-card>
     </ion-list>
   </ion-content>
-  
