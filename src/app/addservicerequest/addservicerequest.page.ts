@@ -34,7 +34,7 @@ interface LocalFile {
   standalone: true,
   imports: [IonicModule, CommonModule, FormsModule],
   providers: [
-    // Camera, FileTransfer, 
+    // Camera, FileTransfer,
     // File
     // , FilePath
   ]
@@ -502,7 +502,7 @@ export class AddservicerequestPage implements OnInit {
        // console.log({"hgshjsj": win.Ionic.WebView.convertFileSrc( img)});
        // return win.Ionic.WebView.convertFileSrc("file:///data/user/0/io.ionic.starter/cache/" + img);
        return "file:///data/user/0/io.ionic.starter/cache/" + img;
- 
+
      }
    }*/
 
@@ -558,30 +558,31 @@ export class AddservicerequestPage implements OnInit {
 
   async uploadImage() {
     const file = this.images[0];
+
     const response = await fetch(file.data);
     const blob = await response.blob();
+
     const formData = new FormData();
     formData.append('file', blob, file.name);
-    formData.append('filename', file.name);
+    formData.append('fileName', file.name);
+    formData.append('service_request_id', this.servicerequest_id);
+    formData.append('feature', '2');
+    formData.append('token', this.globalVars.USER_TOKEN);
+    formData.append('tkey', this.globalVars.MAP_TKEY);
+
     const loading = await this.loadingCtrl.create({
       message: 'Uploading image...',
     });
+
     await loading.present();
-    var url = "https://way2society.com/upload_image_from_mobile.php";
-    this.http.post(url, formData,
-      {
-        params: {
-          'fileName': file.name, 'service_request_id': this.servicerequest_id, 'feature': 2, 'token': this.globalVars.USER_TOKEN, 'tkey': this.globalVars.MAP_TKEY
-        }
-      })
-      .pipe(
-        finalize(() => {
-          loading.dismiss();
-        })
-      )
+
+    const url = "https://way2society.com/upload_image_from_mobile.php";
+
+    this.http.post(url, formData)
+      .pipe(finalize(() => loading.dismiss()))
       .subscribe(res => {
-        this.presentToast('Image successful uploaded.');
-        // this.navCtrl.navigateForward(this.ServiceRequestPage);
+        this.presentToast('Image successfully uploaded.');
+
         var p = [];
         if (this.globalVars.MAP_USER_ROLE == "Member") {
           p['dash'] = "society";
@@ -592,19 +593,17 @@ export class AddservicerequestPage implements OnInit {
         }
         let navigationExtras: NavigationExtras = {
           queryParams:
-          {
-            details: p,
-          }
+            {
+              details: p,
+            }
         };
 
         // this.navCtrl.navigateForward(this.ServiceRequestPage, { state: { details: p } });
         this.navCtrl.navigateRoot(this.ServiceRequestPage, navigationExtras);
-      },
-        err => {
-          // this.presentToast('Error while uploading file.');
+      }, err => {
           this.presentToast('Image successful uploaded.');
           this.navCtrl.navigateForward(this.ServiceRequestPage);
-        }
-      );
+      });
   }
+
 }
