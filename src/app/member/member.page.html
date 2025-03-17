@@ -108,39 +108,43 @@
         </ion-row>
         <ion-row style="padding-left: 10px;padding-right: 10px;">
           <ion-col>
-          <ion-input label="Date Of Birth" labelPlacement="floating"
-          value="{{ userData.other_dob | date: 'dd-MM-yyyy' }}"
-          id="date"
-          class="ion-text-end"
-        ></ion-input>
-        <ion-popover trigger="date" size="cover">
-          <ng-template>
-            <ion-datetime
-            min="{{userData.other_dob}}" max="{{max_year}}"
-              presentation="date"
-              [(ngModel)]="userData.other_dob"
-            ></ion-datetime>
-          </ng-template>
-        </ion-popover>
+            <ion-input label="Date Of Birth" labelPlacement="floating"
+  value="{{ userData.other_dob | date: 'dd-MM-yyyy' }}"
+  id="dob"
+  class="ion-text-end">
+</ion-input>
+
+<ion-popover trigger="dob" size="cover">
+  <ng-template>
+    <ion-datetime
+      min="{{min_dob_year}}" 
+      max="{{max_year}}"
+      presentation="date"
+      [(ngModel)]="userData.other_dob">
+    </ion-datetime>
+  </ng-template>
+</ion-popover>
         </ion-col>
       </ion-row>
 
       <ion-row style="padding-left: 10px;padding-right: 10px;">
         <ion-col>
-        <ion-input label="Wedding Anniversary" labelPlacement="floating"
-        value="{{ userData.other_wed | date: 'dd-MM-yyyy' }}"
-        id="date"
-        class="ion-text-end"
-      ></ion-input>
-      <ion-popover trigger="date" size="cover">
-        <ng-template>
-          <ion-datetime
-          min="{{userData.other_wed}}" max="{{max_year}}"
-            presentation="date"
-            [(ngModel)]="userData.other_wed"
-          ></ion-datetime>
-        </ng-template>
-      </ion-popover>
+          <ion-input label="Wedding Anniversary" labelPlacement="floating"
+          value="{{ userData.other_wed | date: 'dd-MM-yyyy' }}"
+          id="wed"
+          class="ion-text-end">
+        </ion-input>
+        
+        <ion-popover trigger="wed" size="cover">
+          <ng-template>
+            <ion-datetime
+              min="{{min_wed_year}}" 
+              max="{{max_year}}"
+              presentation="date"
+              [(ngModel)]="userData.other_wed">
+            </ion-datetime>
+          </ng-template>
+        </ion-popover>
       </ion-col>
     </ion-row>
       <ion-row style="padding-left: 10px;padding-right: 10px;">
