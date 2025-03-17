@@ -24,7 +24,10 @@ export class MemberPage implements OnInit {
   Block_unit = 0;
   Block_desc = "";
   userData: { member_id: any, mem_other_family_id: any, other_name: any, relation: any, other_mobile: any, other_email: any, other_adhaar: any, other_gender: any, other_publish_contact: number, child_bg: any, other_dob: any, other_wed: any, other_desg: any, ssc: any, other_profile: any, other_publish_profile: number, set: any, coowner: any, send_commu_emails: any };
-  max_year: any;
+  max_year: string;
+  min_dob_year: string;
+  min_wed_year: string;
+  //max_year: any;
   //todayDate : any;
   mode: number;
   uID: any;
@@ -42,6 +45,20 @@ export class MemberPage implements OnInit {
     private route: ActivatedRoute) {
     var todayDate = new Date().toISOString();
 
+    const currentDate = new Date();
+    
+    // Max date (Today)
+    this.max_year = currentDate.toISOString().split('T')[0]; 
+
+    // Min date for DOB (10 years ago)
+    const tenYearsAgo = new Date();
+    tenYearsAgo.setFullYear(currentDate.getFullYear() - 50);
+    this.min_dob_year = tenYearsAgo.toISOString().split('T')[0];
+
+    // Min date for Wedding Anniversary (e.g., 50 years ago)
+    const fiftyYearsAgo = new Date();
+    fiftyYearsAgo.setFullYear(currentDate.getFullYear() - 30);
+    this.min_wed_year = fiftyYearsAgo.toISOString().split('T')[0];
     this.mode = 0;
     this.uID = 0;
     this.editable_name = 1;
@@ -66,7 +83,7 @@ export class MemberPage implements OnInit {
   }
   ngOnInit() {
     var d = new Date();
-    this.max_year = d.getFullYear() + 2;
+    //this.max_year = d.getFullYear() + 2;
     let details: any;
     this.route.queryParams.subscribe(params => {
       details = params["details"];

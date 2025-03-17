@@ -117,7 +117,7 @@
 <ion-popover trigger="dob" size="cover">
   <ng-template>
     <ion-datetime
-      min="{{min_dob_year}}"
+	  min="{{min_dob_year}}" 
       max="{{max_year}}"
       presentation="date"
       [(ngModel)]="userData.other_dob">
@@ -134,11 +134,11 @@
           id="wed"
           class="ion-text-end">
         </ion-input>
-
-        <ion-popover trigger="wed" size="cover">
+		
+		<ion-popover trigger="wed" size="cover">
           <ng-template>
             <ion-datetime
-              min="{{min_wed_year}}"
+              min="{{min_wed_year}}" 
               max="{{max_year}}"
               presentation="date"
               [(ngModel)]="userData.other_wed">
