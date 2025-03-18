@@ -81,7 +81,7 @@
 			</ion-row>
 			<ion-row>
 				<ion-col>
-					<ion-select label="Profession" placeholder="" style="color:#0d0d0d" [(ngModel)]="TenantData.Tprofession" >
+					<ion-select label="Profession" placeholder="" [(ngModel)]="TenantData.Tprofession" >
 						<ion-select-option *ngFor="let p of profession_array" value="{{p.desg_id}}">{{p.desg}}</ion-select-option>
 					</ion-select>
 				</ion-col>

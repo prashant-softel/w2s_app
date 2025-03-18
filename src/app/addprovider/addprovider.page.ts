@@ -5,7 +5,7 @@ import { FormsModule } from '@angular/forms';
 import { GlobalVars } from 'src/service/globalvars';
 import { LoaderView } from 'src/service/loaderview';
 import { ConnectServer } from 'src/service/connectserver';
-import { NavigationExtras } from '@angular/router';
+import { NavigationExtras, Router } from '@angular/router';
 import { NavController, NavParams, ActionSheetController, ToastController, Platform, LoadingController, IonicModule } from '@ionic/angular';
 
 // import { File } from '@ionic-native/file/ngx';
@@ -39,7 +39,7 @@ interface LocalFile {
   ],
   imports: [IonicModule, CommonModule, FormsModule,],
   providers: [
-    // Camera, FileTransfer, 
+    // Camera, FileTransfer,
     // File
     // , FilePath
   ]
@@ -86,6 +86,7 @@ export class AddProviderPage implements OnInit {
     private platform: Platform,
     private loaderView: LoaderView,
     private params: NavParams,
+    private router: Router,
     // private camera: Camera,
     // private transfer: FileTransfer,
     // private file: File,
@@ -318,15 +319,15 @@ export class AddProviderPage implements OnInit {
               var p = [];
               p['tab'] = '0';
               p['dash'] = "society";
-              //this.navCtrl.setRoot(ServiceproviderPage,{details : p});
-              let navigationExtras: NavigationExtras = {
-                queryParams:
+              let navigationExtras: NavigationExtras =
                 {
-                  details: p,
-                }
-              };
-
-              this.navCtrl.navigateForward(this.ServiceproviderPage, { state: { details: p } });
+                  queryParams:
+                    {
+                      details: p,
+                    }
+                };
+              //this.navCtrl.push(ServiceproviderPage, {details : p});
+              this.navCtrl.navigateRoot(this.ServiceproviderPage, navigationExtras);
             }
             else {
               // alert("call image function");
@@ -388,7 +389,7 @@ export class AddProviderPage implements OnInit {
         handler: () => {
           this.selectImage(CameraSource.Camera, documentType, documentIndex);
 
-          //tobeun  this.takePicture(this.camera.PictureSourceType.CAMERA, documentType, documentIndex); 
+          //tobeun  this.takePicture(this.camera.PictureSourceType.CAMERA, documentType, documentIndex);
         }
       },
       {
@@ -624,7 +625,7 @@ export class AddProviderPage implements OnInit {
        // console.log({"hgshjsj": win.Ionic.WebView.convertFileSrc( img)});
        // return win.Ionic.WebView.convertFileSrc("file:///data/user/0/io.ionic.starter/cache/" + img);
        return "file:///data/user/0/io.ionic.starter/cache/" + img;
- 
+
      }
    }*/
 
@@ -659,7 +660,7 @@ export class AddProviderPage implements OnInit {
        // console.log({"hgshjsj": win.Ionic.WebView.convertFileSrc( img)});
        // return win.Ionic.WebView.convertFileSrc("file:///data/user/0/io.ionic.starter/cache/" + img);
        return "file:///data/user/0/io.ionic.starter/cache/" + Doc_img;
- 
+
      }
    }*/
 

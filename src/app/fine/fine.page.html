@@ -43,10 +43,10 @@
     <ion-row style="padding-left: 10px;padding-right: 10px;">
       <ion-col>
 
-        <ion-select placeholder="Select Unit *" style="color:#0d0d0d" [(ngModel)]="userData.unit_id">
+        <ion-select placeholder="Select Unit *" [(ngModel)]="userData.unit_id">
           <ion-select-option *ngFor="let u of UnitList" value="{{u.unit_id}}">{{u.unit_name}}</ion-select-option>
         </ion-select>
-        <!--<ion-select label="Select Unit *" placeholder="Select Unit *" style="color:#0d0d0d" [(ngModel)]="userData.unit_id">
+        <!--<ion-select label="Select Unit *" placeholder="Select Unit *" [(ngModel)]="userData.unit_id">
             <ion-select-option *ngFor="let u of UnitList" value="{{u.unit_id}}">{{u.unit_name}}</ion-select-option>
           </ion-select>-->
       </ion-col>

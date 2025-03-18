@@ -50,7 +50,7 @@
           <ion-row>
             <ion-col class="text-center">
               <!--<ion-label floating>Please select</ion-label>-->
-                  <ion-select placeholder="Please select" style="color:#0d0d0d" [(ngModel)]="userData.unit_id" (ionChange)="fetchDues()">
+                  <ion-select placeholder="Please select" [(ngModel)]="userData.unit_id" (ionChange)="fetchDues()">
                     <ion-select-option *ngFor="let u of Unit_list" value="{{u.unit_id}}">{{u.unit_no}} [ {{u.owner_name}} ]</ion-select-option>
                   </ion-select>
             </ion-col>

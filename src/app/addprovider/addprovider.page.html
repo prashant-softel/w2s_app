@@ -360,33 +360,33 @@
 			</ion-list>
 			<div *ngFor="let doc of userData.document_id; let iIndex=index;">
 				<ion-list>
-					<ion-select label="Select document Name" placeholder="" style="color:#0d0d0d"
+					<ion-select label="Select document Name" placeholder=""
 						[(ngModel)]="userData.document_id[iIndex]" (ionChange)="docSelected()">
 						<ion-select-option *ngFor="let d of doc_list"
 							value="{{d.document_id}}">{{d.document}}</ion-select-option>
 					</ion-select>
 				</ion-list>
-				<ion-row *ngIf="showButton(iIndex)">
-					<ion-col>
-						Selected file : {{userData.Doc_img[iIndex]}}
-						<ion-card>
-							<img src="" [hidden]="userData.Doc_img[iIndex] === null" style="max-height : 50vh"
-								(click)="selectItems()">
-						</ion-card>
-						<!-- <ion-card>
-					<img src="userData.Doc_img[iIndex] === null" [hidden]="lastImage === null" style="max-height : 50vh"
-					  (click)="selectItems()">
-				  </ion-card>-->
-						<h3 [hidden]="userData.Doc_img[iIndex] !== null"></h3>
+<!--				<ion-row *ngIf="showButton(iIndex)">-->
+<!--					<ion-col>-->
+<!--						Selected file : {{userData.Doc_img[iIndex]}}-->
+<!--						<ion-card>-->
+<!--							<img src="" [hidden]="userData.Doc_img[iIndex] === null" style="max-height : 50vh"-->
+<!--								(click)="selectItems()">-->
+<!--						</ion-card>-->
+<!--						&lt;!&ndash; <ion-card>-->
+<!--					<img src="userData.Doc_img[iIndex] === null" [hidden]="lastImage === null" style="max-height : 50vh"-->
+<!--					  (click)="selectItems()">-->
+<!--				  </ion-card>&ndash;&gt;-->
+<!--						<h3 [hidden]="userData.Doc_img[iIndex] !== null"></h3>-->
 
-						<!-- <ion-button shape="round" icon-left
-							(click)="presentActionSheet('document', iIndex)"><ion-buttons text-center>
-								<ion-icon slot="start" name="camera"></ion-icon>Attach Image
-							</ion-buttons></ion-button> -->
-					</ion-col>
+<!--						&lt;!&ndash; <ion-button shape="round" icon-left-->
+<!--							(click)="presentActionSheet('document', iIndex)"><ion-buttons text-center>-->
+<!--								<ion-icon slot="start" name="camera"></ion-icon>Attach Image-->
+<!--							</ion-buttons></ion-button> &ndash;&gt;-->
+<!--					</ion-col>-->
 
-				</ion-row>
-				<!--<ion-item *ngIf="showButton(iIndex)">
+<!--				</ion-row>-->
+				<ion-item *ngIf="showButton(iIndex)">
 			Selected file : {{userData.Doc_img[iIndex]}}
 			  <ion-card>
 			<img src="" [hidden]="userData.Doc_img[iIndex] === null" style="max-height : 50vh"(click)= "selectItems()">
@@ -398,7 +398,7 @@
 			  <ion-icon name="camera"></ion-icon>Attach Image
 			  </ion-buttons>
 				</button>
-			</ion-item>-->
+			</ion-item>
 			</div>
 			<ion-row style="padding-left: 10px;padding-right: 10px;" *ngIf="addmoredoc == 1">
 				<ion-col>
@@ -429,7 +429,7 @@
 			</ion-list>
 			<div>
 				<ion-list *ngFor="let Unit of userData.unit_id; let iIndex=index;">
-					<ion-select label="Select Unit " placeholder="" style="color:#0d0d0d"
+					<ion-select label="Select Unit " placeholder=""
 						[(ngModel)]="userData.unit_id[iIndex]" (ionChange)="unitSelected()">
 						<ion-select-option *ngFor="let d of Unit_list" value="{{d.unit_id}}">{{d.unit_no}} [
 							{{d.owner_name}} ]</ion-select-option>
