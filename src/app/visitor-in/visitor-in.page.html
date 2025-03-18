@@ -191,30 +191,38 @@
       </ion-card-content>
     </ion-card>
     <ion-card *ngIf="enumvalue !== 1 && visitor_approval_value === 0">
-      <ion-card-content no-padding text-wrap>
-        <ion-col col-6>
-          <ion-list radio-group *ngIf="ApproveMsg" [(ngModel)]="approvalvalue">
-            &nbsp;&nbsp;&nbsp;Approve With Note :
-            <ion-list *ngFor="let t of ApproveMsg" style="width: fit-content">
-              <ion-radio item-left value="{{ t }}"></ion-radio>
-              <ion-label>{{ t }}</ion-label>
-            </ion-list>
-          </ion-list>
-          &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;OR
-          <ion-list>
-            <ion-input type="text" value="" placeholder="Enter Your Custom Note.."
-              [(ngModel)]="approvalvaluetxt"></ion-input>
-          </ion-list>
-        </ion-col>
+      <ion-card-content>
+        <ion-col>
+          <ion-item *ngIf="ApproveMsg">
+            <ion-label>Approve With Note:</ion-label>
+          </ion-item>
 
+          <ion-radio-group *ngIf="ApproveMsg" [(ngModel)]="approvalvalue">
+            <ion-item *ngFor="let t of ApproveMsg">
+              <ion-label>{{ t }}</ion-label>
+              <ion-radio slot="start" value="{{ t }}"></ion-radio>
+            </ion-item>
+          </ion-radio-group>
+
+          <ion-item>
+            <ion-label>OR</ion-label>
+          </ion-item>
+
+          <ion-item>
+            <ion-input type="text" placeholder="Enter Your Custom Note.." [(ngModel)]="approvalvaluetxt"></ion-input>
+          </ion-item>
+        </ion-col>
       </ion-card-content>
     </ion-card>
     <ion-row *ngIf="enumvalue !== 1 && visitor_approval_value === 0">
       <ion-col text-center col-6>
-        <button ion-button color="primary" block (click)="Insert(1)" style="background-color: green">Approve</button>
+<!--        <button ion-button color="primary" block (click)="Insert(1)" style="background-color: green">Approve</button>-->
+        <ion-button expand="block" color="success"  (click)="Insert(1)">Approve</ion-button>
+
       </ion-col>
       <ion-col col-6>
-        <button ion-button color="primary" block (click)="Insert(2)" style="background-color: red">Deny</button>
+<!--        <button ion-button color="primary" block (click)="Insert(2)" style="background-color: red">Deny</button>-->
+        <ion-button expand="block" color="danger"  (click)="Insert(2)">Deny</ion-button>
       </ion-col>
     </ion-row>
 

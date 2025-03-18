@@ -308,7 +308,8 @@ export class VisitorInPage implements OnInit {
 
           console.log(resolve['details']);
           console.log('ApprovalMsgDetails : ' + resolve['details']['ApprovalMsgDetails'][0]);
-          var VisitorDetailsList = resolve['details']['displayData']['visitors'][0];
+          // var VisitorDetailsList = resolve['details']['displayData']['visitors'][0];
+          var VisitorDetailsList = resolve['details']['VisitorDetails']['visitors'][0];
           //console.log(VisitorDetailsList);
           this.VisitorDetails = VisitorDetailsList;
           var approveList = resolve['details']['ApprovalMsgDetails'];
@@ -332,7 +333,7 @@ export class VisitorInPage implements OnInit {
           this.company = this.displayData['company'];
           this.ApprovalFlag = this.displayData['FlagStatus'];
           console.log('visitor-detail', this.VisitorDetails);
-          var VList = VisitorDetailsList['displayData'][0];
+          var VList = VisitorDetailsList['VisitorDetails'][0];
           this.fetchVisitorList = VList;
           this.FullName = this.fetchVisitorList['FullName'];
 

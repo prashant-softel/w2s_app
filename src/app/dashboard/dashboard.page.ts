@@ -202,7 +202,7 @@ export class DashboardPage implements OnInit {
       this.role = this.globalVars.MAP_USER_ROLE;
     }
 
-    // Tab View role wise 
+    // Tab View role wise
     if (this.role == "Member" || this.role == "Tenant") {
       this.UserTab = "MemTab";
     }
@@ -384,7 +384,7 @@ export class DashboardPage implements OnInit {
 
               if (this.currentDate <= this.SocietySubscriptionDate) {
                 if (this.SocietySubscription != '0') {
-                  //this.presentAlert(); 
+                  //this.presentAlert();
                 }
                 this.AccessUI = "0";
                 // alert("inside if ");
@@ -396,13 +396,13 @@ export class DashboardPage implements OnInit {
                 if ((this.SocietySubscription == '1') && (this.roleWise == "Admin" || this.roleWise == "SuperAdmin")) {
                   this.AccessUI = "0";
                   this.blockAcount = "0";
-                  //this.presentAlert(); 
+                  //this.presentAlert();
                   // alert("inside else1 ");
                 }
                 else if ((this.SocietySubscription == '2') && (this.roleWise == "Admin" || this.roleWise == "SuperAdmin" || this.roleWise == "Manager" || this.roleWise == "Member" || this.roleWise == "AdminMember")) {
                   this.blockAcount = "1";
                   this.AccessUI = "0";
-                  //this.presentAlert(); 
+                  //this.presentAlert();
                   // alert("inside else2 ");
                 }
                 else if (this.SocietySubscription == '0') {
@@ -441,7 +441,7 @@ export class DashboardPage implements OnInit {
             var FeatureSetting = resolve['response']['FetureSetting'];
             //console.log('FeatureSetting ' + FeatureSetting[0]['send_approval_tovisitor']);
             var visitor_approval_status = FeatureSetting[0]['send_approval_tovisitor'];
-            //this.globalVars.setVisitor_Approval_Status(visitor_approval_status);
+            this.globalVars.setVisitor_Approval_Status(visitor_approval_status);
           }
 
 
@@ -450,7 +450,7 @@ export class DashboardPage implements OnInit {
           // alert("Session timeout please login again!");
 
           // localStorage.clear();
-          // this.globalVars.clearStorage(); 
+          // this.globalVars.clearStorage();
           this.navCtrl.navigateRoot(this.LoginPage);
 
         }
@@ -483,19 +483,19 @@ export class DashboardPage implements OnInit {
       };
       this.navCtrl.navigateRoot(this.DuesPage, navigationExtras);
       //alert("call1");
-      /*this.loaderView.showLoader('Loading ...');  
+      /*this.loaderView.showLoader('Loading ...');
        var objData = [];
        objData['fetch'] =1;   /// New Version
         objData['UnitID'] = 0;
-   
+
       this.connectServer.getData("MemberLedger", objData).then(
-        resolve => { 
+        resolve => {
                       this.loaderView.dismissLoader();
                       if(resolve['success'] == 1)
                       {
-                       
+
                           let navigationExtras: NavigationExtras = {
-                           queryParams: 
+                           queryParams:
                            {
                              details :resolve['response'],
                            }
@@ -506,11 +506,11 @@ export class DashboardPage implements OnInit {
       );*/
     }
     else {
-      //this.presentAlert(); 
+      //this.presentAlert();
       /*let navigationExtras: NavigationExtras = {
        queryParams: {
            userName:'TESTTSTSTS' ,
-          
+
        }
    };
      this.navCtrl.navigateRoot(this.SocietyPage,navigationExtras);*/
@@ -524,7 +524,7 @@ export class DashboardPage implements OnInit {
       this.navCtrl.navigateRoot(this.EventsPage);
     }
     else {
-      // this.presentAlert(); 
+      // this.presentAlert();
     }
 
   }
@@ -533,7 +533,7 @@ export class DashboardPage implements OnInit {
       this.navCtrl.navigateRoot(this.NoticesPage);
     }
     else {
-      //this.presentAlert(); 
+      //this.presentAlert();
     }
 
   }
@@ -549,10 +549,10 @@ export class DashboardPage implements OnInit {
       };
       this.navCtrl.navigateRoot(this.ServiceRequestPage, navigationExtras);
       //this.navCtrl.navigateRoot(this.ServiceRequestPage, {details : p});  //issue please check
-      //this.navCtrl.navigateRoot(this.ServiceRequestPage); 
+      //this.navCtrl.navigateRoot(this.ServiceRequestPage);
     }
     else {
-      //this.presentAlert(); 
+      //this.presentAlert();
     }
 
   }
@@ -564,7 +564,7 @@ export class DashboardPage implements OnInit {
       this.navCtrl.navigateRoot(this.NoticesPage);
     }
     else {
-      //this.presentAlert(); 
+      //this.presentAlert();
     }
 
   }
@@ -580,7 +580,7 @@ export class DashboardPage implements OnInit {
       this.navCtrl.navigateRoot(this.PaymentPage);
     }
     else {
-      //this.presentAlert(); 
+      //this.presentAlert();
     }
   }
   viewAlbums() {
@@ -591,7 +591,7 @@ export class DashboardPage implements OnInit {
       this.navCtrl.navigateRoot(this.PhotoAlbumPage);
     }
     else {
-      // this.presentAlert(); 
+      // this.presentAlert();
     }
   }
   /* profile()
@@ -603,20 +603,20 @@ export class DashboardPage implements OnInit {
      if(this.AccessUI == "0")
      {
       let navigationExtras: NavigationExtras = {
-        queryParams: 
+        queryParams:
         {
           details : p,
-                   
+
         }
       };
         this.navCtrl.navigateRoot(this.ProfilePage,navigationExtras);
-       
+
     }
      else
      {
-         //this.presentAlert(); 
+         //this.presentAlert();
      }
-    
+
    }*/
 
   profile() {
@@ -637,7 +637,7 @@ export class DashboardPage implements OnInit {
       }
       /*else if(this.roleWise =="Tenant")
       {
-        this.navCtrl.push(TenantProfilePage, {details : p});  
+        this.navCtrl.push(TenantProfilePage, {details : p});
       }*/
       else {
         this.navCtrl.navigateRoot(this.UpdateprofilePage);
@@ -645,7 +645,7 @@ export class DashboardPage implements OnInit {
 
     }
     else {
-      //this.presentAlert(); 
+      //this.presentAlert();
     }
     //if(this.roleWise =="Member" || this.roleWise =="AdminMember")
 
@@ -658,7 +658,7 @@ export class DashboardPage implements OnInit {
       this.navCtrl.navigateRoot(this.EventsPage);
     }
     else {
-      //this.presentAlert(); 
+      //this.presentAlert();
     }
 
   }
@@ -667,10 +667,10 @@ export class DashboardPage implements OnInit {
     p['dash'] = "society";
     if (this.AccessUI == "0") {
       this.navCtrl.navigateRoot(this.DirectoryPage);
-      //this.navCtrl.push(DirectoryPage, {details : p}); 
+      //this.navCtrl.push(DirectoryPage, {details : p});
     }
     else {
-      //this.presentAlert(); 
+      //this.presentAlert();
     }
 
   }
@@ -688,7 +688,7 @@ export class DashboardPage implements OnInit {
       this.navCtrl.navigateRoot(this.PollPage, navigationExtras);
     }
     else {
-      //this.presentAlert(); 
+      //this.presentAlert();
     }
 
   }
@@ -703,11 +703,11 @@ export class DashboardPage implements OnInit {
           details: p,
         }
       };
-      //this.navCtrl.push(ServiceproviderPage, {details : p});  
+      //this.navCtrl.push(ServiceproviderPage, {details : p});
       this.navCtrl.navigateRoot(this.ServiceproviderPage, navigationExtras);
     }
     else {
-      //this.presentAlert(); 
+      //this.presentAlert();
     }
 
   }
@@ -739,7 +739,7 @@ export class DashboardPage implements OnInit {
             //this.navCtrl.navigateRoot(this.ViewregistrationPage);
           }
           else {
-            //this.presentAlert(); 
+            //this.presentAlert();
           }
         }
       }
@@ -758,7 +758,7 @@ export class DashboardPage implements OnInit {
           this.navCtrl.navigateRoot(this.MyvisitorsPage, navigationExtras);
         }
         else {
-          //this.presentAlert(); 
+          //this.presentAlert();
         }
       }
     }
@@ -785,7 +785,7 @@ export class DashboardPage implements OnInit {
       this.navCtrl.navigateRoot(this.TaskPage);
     }
     else {
-      //this.presentAlert(); 
+      //this.presentAlert();
     }
     // alert("Comming Soon !");
 
@@ -797,7 +797,7 @@ export class DashboardPage implements OnInit {
       this.navCtrl.navigateRoot(this.ViewimposefinePage);
     }
     else {
-      //this.presentAlert(); 
+      //this.presentAlert();
     }
 
   }
@@ -817,7 +817,7 @@ export class DashboardPage implements OnInit {
       this.navCtrl.navigateRoot(this.ServiceproviderPage, navigationExtras);
     }
     else {
-      //this.presentAlert(); 
+      //this.presentAlert();
     }
 
   }
@@ -838,7 +838,7 @@ export class DashboardPage implements OnInit {
       //this.navCtrl.push(ServiceproviderPage,{details : p});
     }
     else {
-      //this.presentAlert(); 
+      //this.presentAlert();
     }
 
   }
@@ -856,7 +856,7 @@ export class DashboardPage implements OnInit {
       //this.navCtrl.push(TenantsPage,{details : p});
     }
     else {
-      //this.presentAlert(); 
+      //this.presentAlert();
     }
 
   }
@@ -870,7 +870,7 @@ export class DashboardPage implements OnInit {
       this.navCtrl.push(RenovationRequestPage,{details : p});
     }
     else{
-      this.presentAlert(); 
+      this.presentAlert();
     }*/
 
   }
@@ -889,7 +889,7 @@ export class DashboardPage implements OnInit {
       //this.navCtrl.push(AddressproofRequest,{details : p});
     }
     else {
-      //this.presentAlert(); 
+      //this.presentAlert();
     }
 
   }
@@ -927,7 +927,7 @@ export class DashboardPage implements OnInit {
 
     }
     else {
-      // this.presentAlert(); 
+      // this.presentAlert();
     }
 
   }

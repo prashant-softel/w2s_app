@@ -3,7 +3,7 @@ import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { IonicModule, NavController, NavParams, Platform, } from '@ionic/angular';
 import { NavigationExtras } from '@angular/router';
-//import * as moment from 'moment'; 
+//import * as moment from 'moment';
 import { ActivatedRoute } from '@angular/router';
 import { GlobalVars } from 'src/service/globalvars';
 import { ConnectServer } from 'src/service/connectserver';
@@ -46,9 +46,9 @@ export class MemberPage implements OnInit {
     var todayDate = new Date().toISOString();
 
     const currentDate = new Date();
-    
+
     // Max date (Today)
-    this.max_year = currentDate.toISOString().split('T')[0]; 
+    this.max_year = currentDate.toISOString().split('T')[0];
 
     // Min date for DOB (10 years ago)
     const tenYearsAgo = new Date();
@@ -57,7 +57,7 @@ export class MemberPage implements OnInit {
 
     // Min date for Wedding Anniversary (e.g., 50 years ago)
     const fiftyYearsAgo = new Date();
-    fiftyYearsAgo.setFullYear(currentDate.getFullYear() - 30);
+    fiftyYearsAgo.setFullYear(currentDate.getFullYear() - 50);
     this.min_wed_year = fiftyYearsAgo.toISOString().split('T')[0];
     this.mode = 0;
     this.uID = 0;
