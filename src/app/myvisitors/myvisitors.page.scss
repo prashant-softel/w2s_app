@@ -10,3 +10,20 @@
 {
     text-align: center;
 }
+
+.visitor-image {
+  max-height: 50vh;
+  border-radius: 50%;
+  background-position: center center;
+  background-size: cover;
+  width: 100%;
+  height: 60px;
+}
+.align-items-center {
+  display: flex;
+  align-items: center;
+}
+
+.waiting-approval {
+  background-color: #ffffcc; /* Light yellow */
+}

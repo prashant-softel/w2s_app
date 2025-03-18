@@ -29,136 +29,97 @@
       <!--  ************************************* Current Visitor Tab *************************  --------------->
       <ion-list no-lines *ngSwitchCase="'current'">
         <ion-card *ngFor="let p of Visitor_Inside_Array">
-          <ion-card-content (click)="VisitorDetails(p)" *ngIf="p.Entry_flag =='1'">
-            <ion-row>
-              <ion-col size="3" class="text-left" *ngIf="p.VisitorImage !=''">
-                <!-- <img src="{{img_src}}{{p.VisitorImage}}" style="max-height : 50vh;border-radius: 50%;background-position: center center;background-size: cover;width: 100%;height: 60px;"  onerror="this.src='images\no-image.jpg';"> -->
-              </ion-col>
-              <ion-col size="3" class="text-left" *ngIf="p.VisitorImage ==''">
-                <img src="/assets/images/no-image.jpg"
-                  style="max-height : 50vh;border-radius: 50%;background-position: center center;background-size: cover;width: 100%;height: 65px; " />
-              </ion-col>
-              <ion-col class="text-left" size="2"><strong style="float: left;margin-top: 10px;">Name:
-                </strong></ion-col>
-              <ion-col class="text-right" size="7" style="white-space: normal !important; width: 50%">
-                <strong style="float: right;margin-top: 10px;">{{p.VisitorName}}</strong>
-              </ion-col>
-            </ion-row>
-            <ion-row>
-              <ion-col size="3" class="text-right"></ion-col>
-              <ion-col size="4" class="text-left" style="margin-top: -10%;">
-                <strong>Purpose: </strong>
-              </ion-col>
-              <ion-col size="5" text-wrap class="text-right" style="margin-top: -10%;">
-                <strong>{{p.purpose_name}}</strong>
-              </ion-col>
-            </ion-row>
-            <ion-row style="color:  green">
-              <ion-col size="6" class="text-left" style="margin-top: -4%;">
-                <strong>Approval Status: </strong>
-              </ion-col>
-              <ion-col size="6" text-wrap class="text-right" style="margin-top: -4%;">
-                <strong>Approved</strong>
-              </ion-col>
-            </ion-row>
+          <ion-card-content (click)="VisitorDetails(p)" *ngIf="p.Entry_flag == '1'">
+            <ion-grid>
+              <ion-row class="align-items-center">
+                <ion-col size="3" size-md="2" class="text-left" *ngIf="p.VisitorImage != ''">
+                  <img [src]="img_src + p.VisitorImage" class="visitor-image" onerror="this.src='/assets/images/no-image.jpg'" />
+                </ion-col>
+                <ion-col size="3" size-md="2" class="text-left" *ngIf="p.VisitorImage == ''">
+                  <img src="/assets/images/no-image.jpg" class="visitor-image" />
+                </ion-col>
+                <ion-col size="3" size-md="2" class="text-right"><strong>Name:</strong></ion-col>
+                <ion-col size="6" size-md="8" class="text-left"><strong>{{ p.VisitorName }}</strong></ion-col>
+              </ion-row>
+              <ion-row class="align-items-center">
+                <ion-col size="4" class="text-left"><strong>Purpose:</strong></ion-col>
+                <ion-col size="8" class="text-right ion-text-wrap"><strong>{{ p.purpose_name }}</strong></ion-col>
+              </ion-row>
+              <ion-row class="align-items-center" style="color: green;">
+                <ion-col size="6" class="text-left"><strong>Approval Status:</strong></ion-col>
+                <ion-col size="6" class="text-right"><strong>Approved</strong></ion-col>
+              </ion-row>
+            </ion-grid>
           </ion-card-content>
-          <ion-card-content (click)="VisitorDetails(p)" *ngIf="p.Entry_flag =='3'">
-            <ion-row>
-              <ion-col size="3" class="text-left" *ngIf="p.VisitorImage !=''">
-                <!-- <img src="{{img_src}}{{p.VisitorImage}}" style="max-height : 50vh;border-radius: 50%;background-position: center center;background-size: cover;width: 100%;height: 60px;"  onerror="this.src='images/no-image.jpg';"> -->
-              </ion-col>
-              <ion-col size="3" class="text-left" *ngIf="p.VisitorImage ==''">
-                <img src="/assets/images/no-image.jpg"
-                  style="max-height : 50vh;border-radius: 50%;background-position: center center;background-size: cover;width: 100%;height: 65px; ">
-              </ion-col>
-              <ion-col class="text-left" size="2"><strong style="float: left;margin-top: 10px;">Name:
-                </strong></ion-col>
-              <ion-col class="text-right" size="7" style="white-space: normal !important; width: 50%">
-                <strong style="float: right;margin-top: 10px;">{{p.VisitorName}}</strong>
-              </ion-col>
-            </ion-row>
-            <ion-row>
-              <ion-col size="3" class="text-right"></ion-col>
-              <ion-col size="4" class="text-left" style="margin-top: -10%;">
-                <strong>Purpose: </strong>
-              </ion-col>
-              <ion-col size="5" text-wrap class="text-right" style="margin-top: -10%;">
-                <strong>{{p.purpose_name}}</strong>
-              </ion-col>
-            </ion-row>
-            <ion-row style="color: blue">
-              <ion-col size="6" class="text-left" style="margin-top: -4%;">
-                <strong>Approval Status: </strong>
-              </ion-col>
-              <ion-col size="6" text-wrap class="text-right" style="margin-top: -4%;">
-                <strong>Without Approval</strong>
-              </ion-col>
-            </ion-row>
+
+          <ion-card-content (click)="VisitorDetails(p)" *ngIf="p.Entry_flag == '3'">
+            <ion-grid>
+              <ion-row class="align-items-center">
+                <ion-col size="3" class="text-left" *ngIf="p.VisitorImage != ''">
+                  <img [src]="img_src + p.VisitorImage" class="visitor-image" onerror="this.src='/assets/images/no-image.jpg'" />
+                </ion-col>
+                <ion-col size="3" class="text-left" *ngIf="p.VisitorImage == ''">
+                  <img src="/assets/images/no-image.jpg" class="visitor-image" />
+                </ion-col>
+                <ion-col size="3" class="text-right"><strong>Name:</strong></ion-col>
+                <ion-col size="6" class="text-left"><strong>{{ p.VisitorName }}</strong></ion-col>
+              </ion-row>
+              <ion-row class="align-items-center">
+                <ion-col size="4" class="text-left"><strong>Purpose:</strong></ion-col>
+                <ion-col size="8" class="text-right ion-text-wrap"><strong>{{ p.purpose_name }}</strong></ion-col>
+              </ion-row>
+              <ion-row class="align-items-center" style="color: blue;">
+                <ion-col size="6" class="text-left"><strong>Approval Status:</strong></ion-col>
+                <ion-col size="6" class="text-right"><strong>Without Approval</strong></ion-col>
+              </ion-row>
+            </ion-grid>
           </ion-card-content>
-          <ion-card-content (click)="VisitorDetails(p)" *ngIf="p.Entry_flag =='0'" style="background-color:  #ffffcc">
-            <ion-row>
-              <ion-col size="3" class="text-left" *ngIf="p.VisitorImage !=''">
-                <!-- <img src="{{img_src}}{{p.VisitorImage}}" style="max-height : 50vh;border-radius: 50%;background-position: center center;background-size: cover;width: 100%;height: 60px;"  onerror="this.src='images/no-image.jpg';"> -->
-              </ion-col>
-              <ion-col size="3" class="text-left" *ngIf="p.VisitorImage ==''">
-                <img src=""
-                  style="max-height : 50vh;border-radius: 50%;background-position: center center;background-size: cover;width: 100%;height: 65px; ">
-              </ion-col>
-              <ion-col class="text-left" size="2"><strong style="float: left;margin-top: 10px;">Name:
-                </strong></ion-col>
-              <ion-col class="text-right" size="7" style="white-space: normal !important; width: 50%">
-                <strong style="float: right;margin-top: 10px;">{{p.VisitorName}}</strong>
-              </ion-col>
-            </ion-row>
-            <ion-row>
-              <ion-col size="3" class="text-right"></ion-col>
-              <ion-col size="4" class="text-left" style="margin-top: -10%;">
-                <strong>Purpose: </strong>
-              </ion-col>
-              <ion-col size="5" text-wrap class="text-right" style="margin-top: -10%;">
-                <strong>{{p.purpose_name}}</strong>
-              </ion-col>
-            </ion-row>
-            <ion-row>
-              <ion-col text-wrap class="text-center" style="margin-top: -4%; align-content: center;"
-                class="slide-in-both-ways">
-                <strong>Waiting for your approval</strong>
-              </ion-col>
-            </ion-row>
+
+          <ion-card-content (click)="VisitorDetails(p)" *ngIf="p.Entry_flag == '0'" style="background-color: #ffffcc">
+            <ion-grid>
+              <ion-row class="align-items-center">
+                <ion-col size="3" class="text-left" *ngIf="p.VisitorImage != ''">
+                  <img [src]="img_src + p.VisitorImage" class="visitor-image" onerror="this.src='/assets/images/no-image.jpg'" />
+                </ion-col>
+                <ion-col size="3" class="text-left" *ngIf="p.VisitorImage == ''">
+                  <img src="/assets/images/no-image.jpg" class="visitor-image" />
+                </ion-col>
+                <ion-col size="3" class="text-right"><strong>Name:</strong></ion-col>
+                <ion-col size="6" class="text-left"><strong>{{ p.VisitorName }}</strong></ion-col>
+              </ion-row>
+              <ion-row class="align-items-center">
+                <ion-col size="4" class="text-left"><strong>Purpose:</strong></ion-col>
+                <ion-col size="8" class="text-right ion-text-wrap"><strong>{{ p.purpose_name }}</strong></ion-col>
+              </ion-row>
+              <ion-row class="align-items-center text-center">
+                <ion-col><strong>Waiting for your approval</strong></ion-col>
+              </ion-row>
+            </ion-grid>
           </ion-card-content>
-          <ion-card-content (click)="VisitorDetails(p)" *ngIf="p.Entry_flag =='2'">
-            <ion-row>
-              <ion-col size="3" class="text-left" *ngIf="p.VisitorImage !=''">
-                <!-- <img src="{{img_src}}{{p.VisitorImage}}" style="max-height : 50vh;border-radius: 50%;background-position: center center;background-size: cover;width: 100%;height: 60px;"  onerror="this.src='images/no-image.jpg';"> -->
-              </ion-col>
-              <ion-col size="3" class="text-left" *ngIf="p.VisitorImage ==''">
-                <img src="/assets/images/no-image.jpg"
-                  style="max-height : 50vh;border-radius: 50%;background-position: center center;background-size: cover;width: 100%;height: 65px; ">
-              </ion-col>
-              <ion-col class="text-left" size="2"><strong style="float: left;margin-top: 10px;">Name:
-                </strong></ion-col>
-              <ion-col class="text-right" size="7" style="white-space: normal !important; width: 50%">
-                <strong style="float: right;margin-top: 10px;">{{p.VisitorName}}</strong>
-              </ion-col>
-            </ion-row>
-            <ion-row>
-              <ion-col size="3" class="text-right"></ion-col>
-              <ion-col size="4" class="text-left" style="margin-top: -10%;">
-                <strong>Purpose: </strong>
-              </ion-col>
-              <ion-col size="5" text-wrap class="text-right" style="margin-top: -10%;">
-                <strong>{{p.purpose_name}}</strong>
-              </ion-col>
-            </ion-row>
-            <ion-row style="color:red">
-              <ion-col size="6" class="text-left" style="margin-top: -4%;">
-                <strong>Approval Status: </strong>
-              </ion-col>
-              <ion-col size="6" text-wrap class="text-right" style="margin-top: -4%;">
-                <strong>Denied</strong>
-              </ion-col>
-            </ion-row>
+
+          <ion-card-content (click)="VisitorDetails(p)" *ngIf="p.Entry_flag == '2'">
+            <ion-grid>
+              <ion-row class="align-items-center">
+                <ion-col size="3" class="text-left" *ngIf="p.VisitorImage != ''">
+                  <img [src]="img_src + p.VisitorImage" class="visitor-image" onerror="this.src='/assets/images/no-image.jpg'" />
+                </ion-col>
+                <ion-col size="3" class="text-left" *ngIf="p.VisitorImage == ''">
+                  <img src="/assets/images/no-image.jpg" class="visitor-image" />
+                </ion-col>
+                <ion-col size="3" class="text-right"><strong>Name:</strong></ion-col>
+                <ion-col size="6" class="text-left"><strong>{{ p.VisitorName }}</strong></ion-col>
+              </ion-row>
+              <ion-row class="align-items-center">
+                <ion-col size="4" class="text-left"><strong>Purpose:</strong></ion-col>
+                <ion-col size="8" class="text-right ion-text-wrap"><strong>{{ p.purpose_name }}</strong></ion-col>
+              </ion-row>
+              <ion-row class="align-items-center" style="color: red;">
+                <ion-col size="6" class="text-left"><strong>Approval Status:</strong></ion-col>
+                <ion-col size="6" class="text-right"><strong>Denied</strong></ion-col>
+              </ion-row>
+            </ion-grid>
           </ion-card-content>
+
         </ion-card>
         <ion-row *ngIf="Visitor_Inside_Array.length ==0">
           <p>&nbsp;</p>
@@ -271,8 +232,8 @@
 
   </ion-list>
   <ion-fab slot="fixed" vertical="bottom" horizontal="end">
-    <ion-fab-button (click)="addExpectedVisitor()" style="background-color: #f6f6f6;">
-      <ion-icon name="add" style="color:#fff;font-size:30px;"></ion-icon>
+    <ion-fab-button (click)="addExpectedVisitor()">
+      <ion-icon name="add" style="font-size:30px;"></ion-icon>
     </ion-fab-button>
   </ion-fab>
   <ion-list *ngIf="VisitorFeature =='0'">
