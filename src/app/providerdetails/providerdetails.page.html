@@ -16,7 +16,7 @@
       <ion-segment-button value="address">
         <ion-icon name='home'></ion-icon>
       </ion-segment-button>
-      <ion-segment-button value="star">
+      <ion-segment-button value="star" style="display: none">
         <ion-icon name='star'></ion-icon>
       </ion-segment-button>
       <ion-segment-button value="report">
@@ -32,7 +32,7 @@
       <ion-segment-button value="personal">
         <ion-icon name='person'></ion-icon>
       </ion-segment-button>
-      <ion-segment-button value="star">
+      <ion-segment-button value="star" style="display: none">
         <ion-icon name='star'></ion-icon>
       </ion-segment-button>
     </ion-segment>
@@ -45,7 +45,7 @@
       <ion-segment-button value="address">
         <ion-icon name='home'></ion-icon>
       </ion-segment-button>
-      <ion-segment-button value="star">
+      <ion-segment-button value="star" style="display: none">
         <ion-icon name='star'></ion-icon>
       </ion-segment-button>
       <ion-segment-button value="report">
@@ -487,7 +487,7 @@
       </ion-list>
     </ion-list>
     <!-- ************** ******************** Reviw tab ************************* -->
-    <ion-list no-lines *ngSwitchCase="'star'">
+    <ion-list no-lines *ngSwitchCase="'star'" style="display: none">
       <ion-card *ngIf="Rate != 0">
         <ion-card-content>
           <ion-list>
