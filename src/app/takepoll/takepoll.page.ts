@@ -173,6 +173,9 @@ export class TakepollPage implements OnInit {
 						this.counter[i] = this.options_array[i]['counter'];
 						this.totalVote += Number(this.counter[i]);
 					}
+          if (this.barChart) {
+            this.barChart.destroy();
+          }
 					this.barChart = new Chart(this.barCanvas.nativeElement, {
 						type: 'bar',
 						data: {
@@ -218,9 +221,9 @@ export class TakepollPage implements OnInit {
 						{
 							scales:
 							{
-								/*	yAxes: 
+								/*	yAxes:
 									   [{
-									 ticks: 
+									 ticks:
 									 {
 										beginAtZero:true
 									 }
@@ -242,11 +245,11 @@ export class TakepollPage implements OnInit {
 			alert("Please Select Vote Option!");
 		}
 		else {
-			let details: any;
-			this.route.queryParams.subscribe(params => {
-				details = params["details"];
-			});
-			this.details = details;//this.navParams.get("details");
+			// let details: any;
+			// this.route.queryParams.subscribe(params => {
+			// 	details = params["details"];
+			// });
+			// this.details = details;//this.navParams.get("details");
 			this.group_id = this.details['group_id'];
 			this.poll_id = this.details['poll_id'];
 			this.society_id = this.details['society_id'];
@@ -262,7 +265,7 @@ export class TakepollPage implements OnInit {
 					this.loaderView.dismissLoader();
 					if (resolve['success'] == 1) {
 						// this.displayData(this.navParams.get("details"));
-						this.displayData(details);
+						this.displayData({ details: this.details });
 					}
 				}
 			);
@@ -277,11 +280,11 @@ export class TakepollPage implements OnInit {
 	}
 
 	updatevote() {
-		let details: any;
-		this.route.queryParams.subscribe(params => {
-			details = params["details"];
-		});
-		this.details = details;//this.navParams.get("details");
+		// let details: any;
+		// this.route.queryParams.subscribe(params => {
+		// 	details = params["details"];
+		// });
+		// this.details = details;//this.navParams.get("details");
 		this.poll_id = this.details['poll_id'];
 		this.society_id = this.details['society_id'];
 		var obj = [];
@@ -295,7 +298,7 @@ export class TakepollPage implements OnInit {
 			resolve => {
 				this.loaderView.dismissLoader();
 				if (resolve['success'] == 1) {
-					this.displayData(this.details);
+					this.displayData({ details: this.details });
 					//this.displayData(this.navParams.get("details"));
 				}
 			}

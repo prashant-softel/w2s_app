@@ -124,7 +124,8 @@
         </ion-row>
 
         <ion-row *ngIf="(allow_vote==1 && user_option != 0)">
-          <ion-col><p text-right (click)="RevoteOption()"><a class="item" href="#">Revote</a></p></ion-col>
+          <ion-col><p text-right>
+            <a class="item" (click)="RevoteOption()">Revote</a> </p></ion-col>
         </ion-row>
         <ion-row *ngIf="(allow_vote==1 && user_option != 0 && active == true ) && (Revote == 1) ">
           <ion-col size="6">
